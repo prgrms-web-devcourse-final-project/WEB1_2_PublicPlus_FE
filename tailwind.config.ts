@@ -1,4 +1,6 @@
 import type { Config } from 'tailwindcss';
+import forms from '@tailwindcss/forms';
+import lineClamp from '@tailwindcss/line-clamp';
 
 export default {
   content: [
@@ -85,12 +87,13 @@ export default {
         'safe-bottom': 'env(safe-area-inset-bottom)'
       },
       fontSize: {
-        xs: ['0.75rem', { lineHeight: '1rem' }],
-        sm: ['0.875rem', { lineHeight: '1.25rem' }],
-        base: ['1rem', { lineHeight: '1.5rem' }],
-        lg: ['1.125rem', { lineHeight: '1.75rem' }],
-        xl: ['1.25rem', { lineHeight: '1.75rem' }],
-        '2xl': ['1.5rem', { lineHeight: '2rem' }]
+        '2xs': ['0.625rem', { lineHeight: '0.875rem' }], // 10px
+        xs: ['0.75rem', { lineHeight: '1rem' }], // 12px
+        sm: ['0.875rem', { lineHeight: '1.25rem' }], // 14px
+        m: ['1rem', { lineHeight: '1.5rem' }], // 16px
+        lg: ['1.125rem', { lineHeight: '1.75rem' }], // 18px
+        xl: ['1.25rem', { lineHeight: '1.75rem' }], // 20px
+        '2xl': ['1.5rem', { lineHeight: '2rem' }] // 24px
       },
       borderRadius: {
         sm: '0.375rem',
@@ -107,5 +110,5 @@ export default {
       }
     }
   },
-  plugins: []
+  plugins: [forms, lineClamp]
 } satisfies Config;

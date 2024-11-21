@@ -1,38 +1,47 @@
 // components/common/Header/Header.tsx
-import Image from 'next/image'
-import Link from 'next/link'
-import styles from './Header.module.css'
+
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
+import styles from './Header.module.css';
 
 export const Header = () => {
+  const [hasNotifications, setHasNotifications] = useState(false);
+
+  const notificationIcon = hasNotifications
+    ? '/icons/notification-new.png'
+    : '/icons/notification.png';
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        {
-          <Link
-            href="/"
-            className={styles.logo}>
-            <Image
-              src="/icons/logo.png"
-              alt="PublicPlus"
-              width={60}
-              height={40}
-            />
-          </Link>
-        }
+        <Link
+          href="/"
+          className={styles.logo}>
+          <Image
+            src="/icons/logo.png"
+            alt="PublicPlus"
+            width={66}
+            height={40}
+          />
+        </Link>
 
         <div className={styles.iconGroup}>
-          <button className={styles.iconButton}>
+          <button
+            className={styles.iconButton}
+            onClick={() => setHasNotifications(!hasNotifications)}>
             <Image
-              src="/icons/notification.png"
+              src={notificationIcon}
               alt="알림"
               width={26}
               height={26}
             />
           </button>
-          <button className={`${styles.iconButton} ${styles.calendarIcon}`}>
+          <button className={styles.iconButton}>
             <Image
               src="/icons/calendar.png"
-              alt="캘린더"
+              alt="내 일정"
               width={22}
               height={22}
             />
@@ -48,5 +57,5 @@ export const Header = () => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};

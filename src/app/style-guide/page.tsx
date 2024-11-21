@@ -5,15 +5,32 @@ import { Header } from '@/components/common/Header';
 
 export default function StyleGuidePage() {
   return (
-    <div className="container mx-auto my-20 space-y-8 p-6">
+    <div className="mx-auto my-20 space-y-8 p-4">
       <Header />
       <h1 className="mb-6 text-2xl font-bold">스타일 가이드</h1>
-      {/* 색상 팔레트 섹션 -----------------------------------------------------------------------------------*/}
+      {/* 폰트 크기 데모 ----------------------------------------------------------------------*/}
       <section>
-        <h2 className="mb-4 text-xl font-semibold">색상 팔레트</h2>
-        <ColorPalette />
+        <h2 className="mb-4 text-xl font-semibold">폰트 크기</h2>
+        <div className="space-y-4">
+          <p className="text-2xs">2xs: 10px 텍스트</p>
+          <p className="text-xs">xs: 12px 텍스트</p>
+          <p className="text-sm">sm: 14px 텍스트</p>
+          <p className="text-md">md: 16px 텍스트</p>
+          <p className="text-lg">lg: 18px 텍스트</p>
+          <p className="text-xl">xl: 20px 텍스트</p>
+          <p className="text-2xl">2xl: 24px 텍스트</p>
+        </div>
       </section>
-
+      {/* 그림자 및 테두리 반경 데모 ----------------------------------------------------------*/}
+      <section>
+        <h2 className="mb-4 text-xl font-semibold">그림자 및 테두리 반경</h2>
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          <div className="rounded-sm bg-white p-4 shadow-sm">Shadow SM</div>
+          <div className="rounded bg-white p-4 shadow">Shadow Default</div>
+          <div className="rounded bg-white p-4 shadow-md">Shadow md</div>
+          <div className="rounded bg-white p-4 shadow-lg">Shadow lg</div>
+        </div>
+      </section>
       {/* 반응형 중단점 데모--------------------------------------------------------------------------------- */}
       <section>
         <h2 className="mb-4 text-xl font-semibold">반응형 중단점</h2>
@@ -165,29 +182,12 @@ export default function StyleGuidePage() {
         </div>
       </section>
 
-      {/* 폰트 크기 데모 ----------------------------------------------------------------------*/}
+      {/* 색상 팔레트 섹션 -----------------------------------------------------------------------------------*/}
       <section>
-        <h2 className="mb-4 text-xl font-semibold">폰트 크기</h2>
-        <div className="space-y-4">
-          <p className="text-2xs">2xs: 10px 텍스트</p>
-          <p className="text-xs">xs: 12px 텍스트</p>
-          <p className="text-sm">sm: 14px 텍스트</p>
-          <p className="text-base">base: 16px 텍스트</p>
-          <p className="text-lg">lg: 18px 텍스트</p>
-          <p className="text-xl">xl: 20px 텍스트</p>
-          <p className="text-2xl">2xl: 24px 텍스트</p>
-        </div>
+        <h2 className="mb-4 text-xl font-semibold">색상 팔레트</h2>
+        <ColorPalette />
       </section>
-      {/* 그림자 및 테두리 반경 데모 ----------------------------------------------------------*/}
-      <section>
-        <h2 className="mb-4 text-xl font-semibold">그림자 및 테두리 반경</h2>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          <div className="rounded-sm bg-white p-4 shadow-sm">Shadow SM</div>
-          <div className="rounded bg-white p-4 shadow">Shadow Default</div>
-          <div className="rounded-lg bg-white p-4 shadow-md">Shadow MD</div>
-          <div className="rounded-xl bg-white p-4 shadow-lg">Shadow LG</div>
-        </div>
-      </section>
+
       <BottomNav activeTab="home" />
     </div>
   );
