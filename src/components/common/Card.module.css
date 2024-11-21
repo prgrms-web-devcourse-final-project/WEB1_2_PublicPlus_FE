@@ -1,0 +1,20 @@
+/* Card.module.css */
+.card {
+  @apply overflow-hidden rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg;
+}
+
+.cardImage {
+  @apply relative w-36 object-cover;
+}
+
+.cardContent {
+  @apply p-4;
+}
+
+.price {
+  @apply text-sm text-gray-500;
+}
+
+.reservable {
+  @apply text-xs text-blue-600;
+}
