@@ -7,6 +7,15 @@ export default {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}'
   ],
   theme: {
+    screens: {
+      xs: '340px', // 최소 모바일 사이즈
+      mobile: '360px', // 기준 모바일 사이즈
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1600px'
+    },
     extend: {
       colors: {
         // 기본 테마 색상
