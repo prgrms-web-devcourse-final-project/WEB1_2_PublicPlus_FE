@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 export default {
   content: [
@@ -6,10 +6,11 @@ export default {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}'
   ],
+  darkMode: 'media',
   theme: {
     screens: {
-      xs: '340px', // 최소 모바일 사이즈
-      mobile: '360px', // 기준 모바일 사이즈
+      xs: '340px',
+      mobile: '360px',
       sm: '640px',
       md: '768px',
       lg: '1024px',
@@ -22,32 +23,61 @@ export default {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
 
-        // 브랜드 색상
+        // 프로젝트 주요 색상
         primary: {
-          DEFAULT: '#0080FF', // 주요 액션 버튼
-          hover: '#1F90FF',
-          light: '#DBEAFE'
+          DEFAULT: '#0080FF',
+          50: '#F0F8FF',
+          100: '#C7E1FF',
+          200: '#A3CDFF',
+          300: '#7FB9FF',
+          400: '#4BA1FF',
+          500: '#0080FF',
+          600: '#0070E6',
+          700: '#0060CC',
+          800: '#0050B3',
+          900: '#004099'
         },
         secondary: {
-          DEFAULT: '#4B5563', // 보조 액션
-          hover: '#374151'
+          DEFAULT: '#03258C',
+          50: '#E6E8FF',
+          100: '#C4CAFF',
+          200: '#A1ADFF',
+          300: '#7E90FF',
+          400: '#5B73FF',
+          500: '#03258C',
+          600: '#021E75',
+          700: '#01165E',
+          800: '#010F47',
+          900: '#000830'
         },
-        success: '#10B981',
-        error: '#EF4444',
-        warning: '#F59E0B',
 
-        // 그레이스케일
-        gray: {
-          50: '#F9FAFB',
-          100: '#F3F4F6',
-          200: '#E5E7EB',
-          300: '#D1D5DB',
-          400: '#9CA3AF',
-          500: '#6B7280',
-          600: '#4B5563',
-          700: '#374151',
-          800: '#1F2937',
-          900: '#111827'
+        // 시맨틱 색상
+        success: {
+          DEFAULT: '#10B981',
+          50: '#E6F5EC',
+          100: '#C2EBD4',
+          200: '#86EFAC',
+          300: '#4ADE80',
+          500: '#22C55E',
+          900: '#14532D'
+        },
+        error: {
+          DEFAULT: '#DC2626',
+          50: '#FFE5E5',
+          100: '#FFB8B8',
+          200: '#FCA5A5',
+          300: '#F87171',
+          500: '#EF4444',
+          900: '#7F1D1D'
+        },
+        warning: {
+          DEFAULT: '#F59E0B',
+          50: '#FFF3CC',
+          100: '#FFE680',
+          200: '#FDE047',
+          300: '#FCD34D',
+          500: '#F59E0B',
+          900: '#8C5E10'
         }
       },
       spacing: {
@@ -66,7 +96,7 @@ export default {
         sm: '0.375rem',
         DEFAULT: '0.5rem',
         lg: '0.75rem',
-        xl: '1rem'
+        xl: '1.5rem'
       },
       boxShadow: {
         sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
@@ -78,4 +108,4 @@ export default {
     }
   },
   plugins: []
-} satisfies Config
+} satisfies Config;
