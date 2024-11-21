@@ -1,0 +1,24 @@
+/* components/common/Header/Header.module.css */
+.header {
+  @apply fixed left-0 right-0 top-0 z-50 h-14 bg-white;
+}
+
+.container {
+  @apply flex h-full items-center justify-between px-4;
+}
+
+.logo {
+  @apply flex items-center;
+}
+
+.iconGroup {
+  @apply flex items-center gap-5;
+}
+
+.iconButton {
+  @apply flex items-center justify-center;
+}
+
+.calendarIcon {
+  @apply mr-[2px]; /* 2px 마진 추가 */
+}

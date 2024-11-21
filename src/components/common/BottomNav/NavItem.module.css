@@ -1,0 +1,20 @@
+/* components/common/BottomNav/NavItem.module.css */
+.navItem {
+  @apply flex flex-col items-center gap-1;
+}
+
+.iconWrapper {
+  @apply flex h-5 w-5 items-center justify-center;
+}
+
+.icon {
+  @apply h-full w-full object-contain;
+}
+
+.label {
+  @apply text-xs text-gray-300 opacity-60;
+}
+
+.label.active {
+  @apply text-gray-100 opacity-100;
+}
