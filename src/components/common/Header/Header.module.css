@@ -1,0 +1,20 @@
+/* components/common/Header/Header.module.css */
+.header {
+  @apply fixed left-0 right-0 top-0 z-50 h-16 bg-white;
+}
+
+.container {
+  @apply flex h-full items-center justify-center justify-between px-6;
+}
+
+.logo {
+  @apply flex items-center;
+}
+
+.iconGroup {
+  @apply flex items-center gap-2;
+}
+
+.iconButton {
+  @apply flex items-center justify-center rounded-lg border border-gray-200 p-2;
+}
