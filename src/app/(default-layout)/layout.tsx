@@ -1,5 +1,5 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import { BottomNav } from '@/components/common/BottomNav';
+import { Header } from '@/components/common/Header';
 
 export default function RootLayout({
   children,
@@ -12,7 +12,7 @@ export default function RootLayout({
     <>
       <Header />
       <main className="container">{children}</main>
-      <Footer />
+      <BottomNav activeTab={'search'} />
       {posterModal}
     </>
   );
