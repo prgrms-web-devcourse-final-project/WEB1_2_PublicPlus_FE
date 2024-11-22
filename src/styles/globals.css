@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  --font-roboto: 'Roboto', system-ui, sans-serif;
+  --font-noto-sans-kr: 'Noto Sans KR', system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+/* 기본 폰트 설정 - Noto Sans */
+html {
+  font-family: var(--font-noto-sans-kr);
+}
+
+/* 영문 페이지에서만 Roboto 적용 */
+html[lang='en'] {
+  font-family: var(--font-roboto);
+}
+
+/* 한글을 제외한 모든 영문 텍스트는 Roboto로 유지 */
+html[lang='ko'] *:not([lang='ko']) {
+  font-family: var(--font-roboto);
+}
