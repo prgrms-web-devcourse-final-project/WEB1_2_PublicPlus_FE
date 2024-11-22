@@ -4,7 +4,7 @@
 }
 
 .iconWrapper {
-  @apply flex h-5 w-5 items-center justify-center;
+  @apply flex h-10 w-10 items-center justify-center;
 }
 
 .icon {

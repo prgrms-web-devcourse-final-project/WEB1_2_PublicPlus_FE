@@ -15,14 +15,14 @@ export const Header = () => {
 
   return (
     <header className={styles.header}>
-      <div className={styles.container}>
+      <div className={styles.iconWrap}>
         <Link
           href="/"
           className={styles.logo}>
           <Image
             src="/icons/logo.png"
             alt="PublicPlus"
-            width={66}
+            width={70}
             height={40}
           />
         </Link>
