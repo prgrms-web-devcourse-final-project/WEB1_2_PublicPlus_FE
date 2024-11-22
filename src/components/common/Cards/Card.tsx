@@ -10,6 +10,7 @@ interface CardProps {
   footer?: ReactNode;
   imageAlt?: string;
   className?: string;
+  color?: 'wh' | 'sky';
 }
 
 export const Card = ({
@@ -18,23 +19,28 @@ export const Card = ({
   content,
   footer,
   imageAlt = 'Card Image',
-  className = ''
-}: CardProps) => (
-  <div className={`${styles.card} ${className} flex`}>
-    <div className="mr-4 flex flex-1 flex-col justify-between space-y-4">
-      {title && <h3 className="text-m">{title}</h3>}
-      {content && <div className="space-y-3">{content}</div>}
-      {footer && <div>{footer}</div>}
-    </div>
-    {image && (
-      <div className={styles.cardImage}>
-        <Image
-          src={image}
-          alt={imageAlt}
-          fill
-          className="rounded-lg object-cover"
-        />
+  className = '',
+  color = 'wh'
+}: CardProps) => {
+  const bgColor = color === 'sky' ? 'bg-primary-50' : 'bg-white';
+
+  return (
+    <div className={`${styles.card} ${className} ${bgColor} flex`}>
+      <div className="mr-4 flex flex-1 flex-col justify-between space-y-4">
+        {title && <h3 className="text-m">{title}</h3>}
+        {content && <div className="space-y-3">{content}</div>}
+        {footer && <div>{footer}</div>}
       </div>
-    )}
-  </div>
-);
+      {image && (
+        <div className={styles.cardImage}>
+          <Image
+            src={image}
+            alt={imageAlt}
+            fill
+            className="rounded-lg object-cover"
+          />
+        </div>
+      )}
+    </div>
+  );
+};

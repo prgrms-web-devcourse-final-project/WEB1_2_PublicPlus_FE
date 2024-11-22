@@ -13,7 +13,7 @@ export const Button = ({
   fullWidth = false,
   disabled = false
 }: ButtonProps) => {
-  const baseStyle = 'rounded font-medium transition-colors focus:outline-none';
+  const baseStyle = 'rounded transition-colors focus:outline-none';
 
   const variants = {
     primary: `
@@ -46,8 +46,8 @@ export const Button = ({
   };
 
   const sizes = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2 text-base',
+    sm: 'px-3 py-2 pb-3 text-sm',
+    md: 'px-4 py-2 pb-3 text-m',
     lg: 'px-6 py-3 text-lg',
     badge: 'px-3 py-1 text-xs rounded-full'
   };

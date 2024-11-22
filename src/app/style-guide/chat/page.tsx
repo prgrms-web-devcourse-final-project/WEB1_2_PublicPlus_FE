@@ -1,6 +1,6 @@
 // app/chat/page.tsx
 'use client';
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/common/Button/Button';
 import { ChatInput } from '@/components/common/Chat/ChatInput';
 import { ChatMessage } from '@/components/common/Chat/ChatMessage';
 import { Loading } from '@/components/common/Loading';
