@@ -10,6 +10,7 @@ interface Props {
 // 빌드 시 생성할 정적 경로들을 지정
 export async function generateStaticParams(): Promise<{ id: string }[]> {
   try {
+    // 실제 API로 시설 목록을 가져오는 방법 (예시로 id '1', '2', '3' 사용)
     return [{ id: '1' }, { id: '2' }, { id: '3' }];
   } catch (error) {
     console.error('Failed to fetch static params:', error);
@@ -24,11 +25,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-export default function FacilityDetail({ params }: Props) {
-  const validIds = ['1', '2', '3']; // 실제 데이터와 동기화 필요
-  if (!validIds.includes(params.id)) {
-    return <div>존재하지 않는 시설입니다.</div>;
-  }
-
-  return <div>시설 상세 페이지: {params.id}</div>;
-}
+// 클라이언트 컴포넌트를 렌더링하기 위해서 다른 파일로 클라이언트 코드를 분리합니다.
+export { default } from './client'; // 클라이언트 파일을 import
