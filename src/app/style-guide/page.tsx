@@ -6,12 +6,19 @@ import { facilities, meetings } from '@/components/common/Cards/constants';
 import { FacilityCard } from '@/components/common/Cards/FacilityCard';
 import { MeetingCard } from '@/components/common/Cards/MeetingCard';
 import { Header } from '@/components/common/Header';
+import Link from 'next/link';
 
 export default function StyleGuidePage() {
   return (
     <div className="container mx-auto space-y-8 px-4">
       <Header />
       <h1 className="mb-6 text-2xl font-bold">스타일 가이드</h1>
+      {/* chat페이지 */}
+      <div>
+        <Link href={'/style-guide/chat'}>
+          <Button>채팅, 토스트, 로딩 컴포넌트</Button>
+        </Link>
+      </div>
 
       {/* 폰트 크기 데모 */}
       <section>

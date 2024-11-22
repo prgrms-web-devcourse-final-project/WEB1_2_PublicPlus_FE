@@ -25,19 +25,19 @@ export const ChatMessage = ({
         />
       </div>
     )}
-    <div className="flex max-w-[70%] flex-col">
+    <div className="flex max-w-[280px] max-w-[70%] flex-col">
       {!isMine && (
         <span className="mb-1 text-sm text-gray-600">{username}</span>
       )}
       <div
         className={`px-4 py-2 ${
           isMine
-            ? 'self-end rounded-2xl rounded-br-none bg-blue-500 text-white'
-            : // 보낸 메시지: 오른쪽 상단 모서리 네모
-              'self-start rounded-2xl rounded-bl-none bg-gray-100 text-gray-900'
-          // 받은 메시지: 왼쪽 상단 모서리 네모
+            ? 'self-end rounded-xl rounded-br-none bg-blue-500 text-white'
+            : 'self-start rounded-xl rounded-bl-none bg-gray-100 text-gray-900'
         }`}>
-        <p className="break-words">{message}</p>
+        <p className="overflow-wrap-break-word whitespace-pre-wrap break-words">
+          {message}
+        </p>
         <span className="mt-1 block text-right text-xs opacity-70">
           {timestamp}
         </span>

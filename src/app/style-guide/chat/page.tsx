@@ -1,10 +1,22 @@
 // app/chat/page.tsx
 'use client';
-import { ChatInput } from '@/components/common/ChatInput';
-import { ChatMessage } from '@/components/common/ChatMessage';
+import { Button } from '@/components/common/Button';
+import { ChatInput } from '@/components/common/Chat/ChatInput';
+import { ChatMessage } from '@/components/common/Chat/ChatMessage';
+import { Loading } from '@/components/common/Loading';
+import { useToast } from '@/components/common/Toast/Toast';
 import { useState } from 'react';
 
 export default function ChatPage() {
+  const { showToast, ToastComponent } = useToast();
+
+  const handleClick = () => {
+    showToast({
+      message: '토스트 메시지입니다!!!',
+      type: 'success',
+      duration: 1000
+    });
+  };
   // 메시지 상태 관리
   const [messages, setMessages] = useState([
     {
@@ -47,6 +59,12 @@ export default function ChatPage() {
 
   return (
     <div className="flex h-screen flex-col">
+      <div
+        onClick={handleClick}
+        className="text-center">
+        <Button> 토스트 메시지 클릭!!!</Button>
+      </div>
+      {ToastComponent}
       {/* 채팅 메시지 영역 */}
       <div className="flex-1 overflow-y-auto p-4">
         {messages.map(msg => (
@@ -58,7 +76,13 @@ export default function ChatPage() {
           />
         ))}
       </div>
-
+      {/* 로딩 컴포넌트 */}
+      <div className="space-y-4 p-10 text-center">
+        <h1>로딩 컴포넌트</h1>
+        <Loading size="sm" />
+        <Loading />
+        <Loading size="lg" />
+      </div>
       {/* 채팅 입력 컴포넌트 */}
       <ChatInput
         value={inputMessage}
