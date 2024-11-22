@@ -1,6 +1,9 @@
 import ColorPalette from '@/components/ColorPalette';
 import { BottomNav } from '@/components/common/BottomNav';
 import { Button } from '@/components/common/Button';
+import { facilities, meetings } from '@/components/common/Cards/constants';
+import { FacilityCard } from '@/components/common/Cards/FacilityCard';
+import { MeetingCard } from '@/components/common/Cards/MeetingCard';
 import { Header } from '@/components/common/Header';
 
 export default function StyleGuidePage() {
@@ -179,6 +182,31 @@ export default function StyleGuidePage() {
             fullWidth>
             Full Width Badge
           </Button>
+        </div>
+      </section>
+
+      {/* 카드 섹션 추가 */}
+      <section>
+        <h2 className="mb-4 text-xl font-semibold">시설 카드</h2>
+        <div className="space-y-4">
+          {facilities.map((facility, index) => (
+            <FacilityCard
+              key={index}
+              {...facility}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h2 className="mb-4 text-xl font-semibold">모임 카드</h2>
+        <div className="space-y-4">
+          {meetings.map((meeting, index) => (
+            <MeetingCard
+              key={index}
+              {...meeting}
+            />
+          ))}
         </div>
       </section>
 

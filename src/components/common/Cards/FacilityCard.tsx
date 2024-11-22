@@ -1,7 +1,7 @@
 // components/common/cards/FacilityCard.tsx
 import Image from 'next/image';
 import styles from './Card.module.css';
-import { Tag } from './Tag';
+import { Tag } from '../Tag';
 
 export interface FacilityCardProps {
   image?: string;
