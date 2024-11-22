@@ -10,7 +10,7 @@ export interface FacilityCardProps {
   tags: string[];
   reservationType: '국민체육센터' | '주민센터 문의' | '온라인 직접 예약';
 }
-
+// components/common/cards/FacilityCard.tsx
 export const FacilityCard = ({
   image,
   title,
@@ -18,11 +18,11 @@ export const FacilityCard = ({
   tags,
   reservationType
 }: FacilityCardProps) => (
-  <div className={`${styles.card} flex h-40`}>
-    <div className="flex flex-1 flex-col justify-between">
+  <div className={`${styles.card} flex min-h-[10rem]`}>
+    <div className="mr-4 flex flex-1 flex-col justify-between gap-2">
       <div>
         <h3 className="text-md font-medium">{title}</h3>
-        <div className="mt-2 flex gap-1">
+        <div className="mt-2 flex flex-wrap gap-1">
           {tags.map(tag => (
             <Tag
               key={tag}

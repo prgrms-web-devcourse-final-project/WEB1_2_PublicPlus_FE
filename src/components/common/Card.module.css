@@ -10,11 +10,3 @@
 .cardContent {
   @apply p-4;
 }
-
-.price {
-  @apply text-sm text-gray-500;
-}
-
-.reservable {
-  @apply text-xs text-blue-600;
-}
