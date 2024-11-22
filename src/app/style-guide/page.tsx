@@ -1,6 +1,7 @@
 import ColorPalette from '@/components/ColorPalette';
 import { BottomNav } from '@/components/common/BottomNav';
 import { Button } from '@/components/common/Button';
+import { Card } from '@/components/common/Cards/Card';
 import { facilities, meetings } from '@/components/common/Cards/constants';
 import { FacilityCard } from '@/components/common/Cards/FacilityCard';
 import { MeetingCard } from '@/components/common/Cards/MeetingCard';
@@ -8,7 +9,7 @@ import { Header } from '@/components/common/Header';
 
 export default function StyleGuidePage() {
   return (
-    <div className="container mx-auto my-20 space-y-8 px-4">
+    <div className="container mx-auto space-y-8 px-4">
       <Header />
       <h1 className="mb-6 text-2xl font-bold">스타일 가이드</h1>
 
@@ -188,6 +189,19 @@ export default function StyleGuidePage() {
 
       {/* 카드 섹션 추가 */}
       <section>
+        <h2 className="mb-4 text-xl font-semibold">기본 카드</h2>
+        <Card
+          className="mb-8"
+          title="카드 제목"
+          image="/jjang.jpeg"
+          content={
+            <div>
+              <p>카드 내용</p>
+            </div>
+          }
+          footer={<div className="text-sm text-gray-500">추가 정보</div>}
+        />
+
         <h2 className="mb-4 text-xl font-semibold">시설 카드</h2>
         <div className="space-y-4">
           {facilities.map((facility, index) => (

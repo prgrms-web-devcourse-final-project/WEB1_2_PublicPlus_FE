@@ -4,7 +4,7 @@
 }
 
 .cardImage {
-  @apply relative w-36 object-cover;
+  @apply relative h-36 w-36 object-cover;
 }
 
 .cardContent {
