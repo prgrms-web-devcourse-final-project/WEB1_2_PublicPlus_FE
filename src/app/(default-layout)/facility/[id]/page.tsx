@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-export default function FacilityDetailPage({ params }: Props) {
+export default function FacilityDetail({ params }: Props) {
   const validIds = ['1', '2', '3']; // 실제 데이터와 동기화 필요
   if (!validIds.includes(params.id)) {
     return <div>존재하지 않는 시설입니다.</div>;

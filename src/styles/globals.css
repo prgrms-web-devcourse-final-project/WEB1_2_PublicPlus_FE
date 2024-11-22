@@ -17,14 +17,12 @@
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-}
-
 /* 기본 폰트 설정 - Noto Sans */
 html {
   font-family: var(--font-noto-sans-kr);
+  /* 16px 브라우저 글꼴 크기의 62.5%는 10px입니다 */
+  /* 16px * 0.625 = 10px */
+  font-size: 62.5%;
 }
 
 /* 영문 페이지에서만 Roboto 적용 */
@@ -35,4 +33,15 @@ html[lang='en'] {
 /* 한글을 제외한 모든 영문 텍스트는 Roboto로 유지 */
 html[lang='ko'] *:not([lang='ko']) {
   font-family: var(--font-roboto);
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-size: 1.6rem; /* 1.6 * 10px = 16px */
+}
+
+.container {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }

@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 import forms from '@tailwindcss/forms';
 import lineClamp from '@tailwindcss/line-clamp';
+import { PluginAPI } from 'tailwindcss/types/config';
 
 export default {
   content: [
@@ -11,15 +12,18 @@ export default {
   darkMode: 'media',
   theme: {
     screens: {
-      xs: '340px',
-      mobile: '360px',
-      sm: '640px',
-      md: '768px',
-      lg: '1024px',
-      xl: '1280px',
-      '2xl': '1600px'
+      xs: '340px', // 최소 340px 대응
+      sm: '360px', // 모바일 해상도 기준 360px
+      md: '768px', // 중간 해상도
+      lg: '1024px', // 큰 화면
+      xl: '1280px', // 엑스트라 큰 화면
+      '2xl': '1600px' // 더 큰 화면
     },
     extend: {
+      container: {
+        center: true, // 컨테이너를 화면 가운데로 정렬
+        padding: '2rem' // 컨테이너 내부 여백 설정
+      },
       colors: {
         // 기본 테마 색상
         background: 'var(--background)',
@@ -110,5 +114,17 @@ export default {
       }
     }
   },
-  plugins: [forms, lineClamp]
+  plugins: [
+    forms,
+    lineClamp,
+    function ({ addBase }: { addBase: PluginAPI['addBase'] }) {
+      addBase({
+        '@media (max-width: 340px)': {
+          '.container': {
+            minWidth: '340px' // 최소 너비 340px로 설정
+          }
+        }
+      });
+    }
+  ]
 } satisfies Config;
