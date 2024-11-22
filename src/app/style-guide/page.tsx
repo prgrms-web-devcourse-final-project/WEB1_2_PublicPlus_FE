@@ -1,45 +1,104 @@
+'use client';
+import { useState } from 'react';
+import Link from 'next/link';
+
 import ColorPalette from '@/components/ColorPalette';
 import { BottomNav } from '@/components/common/BottomNav';
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/common/Button/Button';
+import { Card } from '@/components/common/Cards/Card';
+import { facilities, meetings } from '@/components/common/Cards/constants';
+import { FacilityCard } from '@/components/common/Cards/FacilityCard';
+import { MeetingCard } from '@/components/common/Cards/MeetingCard';
 import { Header } from '@/components/common/Header';
+import { SearchBar } from '@/components/common/SearchBar';
+import { Modal } from '@/components/common/Modal';
+import { NotificationItem } from '@/components/common/NotificationItem';
 
 export default function StyleGuidePage() {
+  const [search, setSearch] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className="mx-auto my-20 space-y-8 p-4">
+    <div className="container mx-auto space-y-16 px-4">
       <Header />
       <h1 className="mb-6 text-2xl font-bold">스타일 가이드</h1>
-      {/* 폰트 크기 데모 ----------------------------------------------------------------------*/}
+      {/* chat페이지 ---------------------------------------------------- */}
+      <div>
+        <Link href={'/style-guide/chat'}>
+          <Button>채팅, 토스트, 로딩 컴포넌트 보러가기~ 클릭</Button>
+        </Link>
+      </div>
+      <div onClick={() => setIsOpen(true)}>
+        <Button>모달 열기</Button>
+      </div>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        message="정말 삭제하시겠습니까?"
+        confirmText="삭제"
+        cancelText="취소"
+        onConfirm={() => {
+          // 확인 버튼 클릭 시 실행할 로직
+          console.log('confirmed');
+        }}
+      />
+      {/* 알림목록 - 알림 항목 컴포넌트 ---------------------------------------------------- */}
+      <h2 className="mb-4 text-xl font-semibold">알림 항목 컴포넌트</h2>
+      <NotificationItem
+        message="AB님이 모임 참가 요청을 보냈습니다."
+        time="2분 전"
+        variant="new"
+        onAccept={() => {
+          // 수락 처리 로직
+          console.log('수락됨');
+        }}
+      />{' '}
+      <NotificationItem
+        message="AB님이 모임 참가 요청을 보냈습니다."
+        time="2분 전"
+        onAccept={() => {
+          // 수락 처리 로직
+          console.log('수락됨');
+        }}
+      />
+      {/* 검색 바 컴포넌트 ---------------------------------------------------- */}
+      <h2 className="mb-4 text-xl font-semibold">검색 바</h2>
+      <SearchBar
+        value={search}
+        onChange={setSearch}
+        placeholder="검색어를 입력하세요"
+        className="mx-auto max-w-xl"
+      />
+      {/* 폰트 크기 데모 ---------------------------------------------------- */}
       <section>
         <h2 className="mb-4 text-xl font-semibold">폰트 크기</h2>
         <div className="space-y-4">
           <p className="text-2xs">2xs: 10px 텍스트</p>
           <p className="text-xs">xs: 12px 텍스트</p>
           <p className="text-sm">sm: 14px 텍스트</p>
-          <p className="text-md">md: 16px 텍스트</p>
+          <p className="text-m">m: 16px 텍스트</p>
           <p className="text-lg">lg: 18px 텍스트</p>
           <p className="text-xl">xl: 20px 텍스트</p>
           <p className="text-2xl">2xl: 24px 텍스트</p>
         </div>
       </section>
-      {/* 그림자 및 테두리 반경 데모 ----------------------------------------------------------*/}
+      {/* 그림자 및 테두리 반경 데모 ---------------------------------------------------- */}
       <section>
         <h2 className="mb-4 text-xl font-semibold">그림자 및 테두리 반경</h2>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
           <div className="rounded-sm bg-white p-4 shadow-sm">Shadow SM</div>
           <div className="rounded bg-white p-4 shadow">Shadow Default</div>
-          <div className="rounded bg-white p-4 shadow-md">Shadow md</div>
-          <div className="rounded bg-white p-4 shadow-lg">Shadow lg</div>
+          <div className="rounded-lg bg-white p-4 shadow-md">Shadow md</div>
+          <div className="rounded-xl bg-white p-4 shadow-lg">Shadow lg</div>
         </div>
       </section>
-      {/* 반응형 중단점 데모--------------------------------------------------------------------------------- */}
+      {/* 반응형 중단점 데모----------------------------------------------------  */}
       <section>
         <h2 className="mb-4 text-xl font-semibold">반응형 중단점</h2>
-        <div className="w-full bg-gray-200 p-4 text-center text-gray-50 xs:bg-gray-300 mobile:bg-gray-400 sm:bg-gray-500 md:bg-gray-600 lg:bg-gray-700 xl:bg-gray-800 2xl:bg-gray-900">
+        <div className="w-full bg-gray-200 p-4 text-center text-gray-50 xs:bg-gray-300 sm:bg-gray-400 md:bg-gray-500 lg:bg-gray-600 xl:bg-gray-700 2xl:bg-gray-800">
           반응형 중단점 테스트 (화면 크기에 따라 배경색 변경)
         </div>
       </section>
-      <h1 className="mb-6 text-2xl font-bold">스타일 가이드</h1>
-
       {/* 버튼 Variants 섹션----------------------------------------------------------------------------------------- */}
       <section>
         <h2 className="mb-4 text-xl font-semibold">버튼 Variants</h2>
@@ -76,7 +135,6 @@ export default function StyleGuidePage() {
           </div>
         </div>
       </section>
-
       {/* 버튼 사이즈 섹션 */}
       <section>
         <h2 className="mb-4 text-xl font-semibold">버튼 크기</h2>
@@ -154,7 +212,6 @@ export default function StyleGuidePage() {
           </div>
         </div>
       </section>
-
       {/* Full Width 버튼 */}
       <section>
         <h2 className="mb-4 text-xl font-semibold">Full Width 버튼</h2>
@@ -181,13 +238,70 @@ export default function StyleGuidePage() {
           </Button>
         </div>
       </section>
+      {/* 카드 섹션 추가 ----------------------------------------------------------- */}
+      <section>
+        <h2 className="mb-4 text-xl font-semibold">기본 카드</h2>
+        <Card
+          className="mb-8"
+          title="카드 제목"
+          image="/jjang.jpeg"
+          content={
+            <div>
+              <p>카드 내용</p>
+            </div>
+          }
+          footer={<div className="text-sm text-gray-500">추가 정보</div>}
+        />
+        <Card
+          className="mb-8"
+          title="카드 제목"
+          image="/jjang.jpeg"
+          content={
+            <div>
+              <p>카드 내용</p>
+            </div>
+          }
+          footer={<div className="text-sm text-gray-500">추가 정보</div>}
+          color="sky"
+        />
+        <Card
+          className="mb-8"
+          title="카드 제목"
+          content={
+            <div>
+              <p>카드 내용</p>
+            </div>
+          }
+          footer={<div className="text-sm text-gray-500">추가 정보</div>}
+          color="sky"
+        />
 
+        <h2 className="mb-4 text-xl font-semibold">시설 카드</h2>
+        <div className="space-y-4">
+          {facilities.map((facility, index) => (
+            <FacilityCard
+              key={index}
+              {...facility}
+            />
+          ))}
+        </div>
+      </section>
+      <section>
+        <h2 className="mb-4 text-xl font-semibold">모임 카드</h2>
+        <div className="space-y-4">
+          {meetings.map((meeting, index) => (
+            <MeetingCard
+              key={index}
+              {...meeting}
+            />
+          ))}
+        </div>
+      </section>
       {/* 색상 팔레트 섹션 -----------------------------------------------------------------------------------*/}
       <section>
         <h2 className="mb-4 text-xl font-semibold">색상 팔레트</h2>
         <ColorPalette />
       </section>
-
       <BottomNav activeTab="home" />
     </div>
   );

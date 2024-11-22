@@ -91,18 +91,18 @@ export default {
         'safe-bottom': 'env(safe-area-inset-bottom)'
       },
       fontSize: {
-        '2xs': ['0.625rem', { lineHeight: '0.875rem' }], // 10px
-        xs: ['0.75rem', { lineHeight: '1rem' }], // 12px
-        sm: ['0.875rem', { lineHeight: '1.25rem' }], // 14px
-        m: ['1rem', { lineHeight: '1.5rem' }], // 16px
-        lg: ['1.125rem', { lineHeight: '1.75rem' }], // 18px
-        xl: ['1.25rem', { lineHeight: '1.75rem' }], // 20px
-        '2xl': ['1.5rem', { lineHeight: '2rem' }] // 24px
+        '2xs': ['1rem', { lineHeight: '0.875rem' }], // 10px
+        xs: ['1.2rem', { lineHeight: '1rem' }], // 12px
+        sm: ['1.4rem', { lineHeight: '1.25rem' }], // 14px
+        m: ['1.6rem', { lineHeight: '1.5rem' }], // 16px
+        lg: ['1.8rem', { lineHeight: '1.75rem' }], // 18px
+        xl: ['2rem', { lineHeight: '1.75rem' }], // 20px
+        '2xl': ['2.4rem', { lineHeight: '2rem' }] // 24px
       },
       borderRadius: {
         sm: '0.375rem',
         DEFAULT: '0.5rem',
-        lg: '0.75rem',
+        lg: '1rem',
         xl: '1.5rem'
       },
       boxShadow: {
@@ -111,6 +111,9 @@ export default {
           '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
         md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
         lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)'
+      },
+      overflowWrap: {
+        'break-word': 'break-word'
       }
     }
   },

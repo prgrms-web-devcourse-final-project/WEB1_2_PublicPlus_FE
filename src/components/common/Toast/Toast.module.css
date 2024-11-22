@@ -1,0 +1,55 @@
+/* components/common/Toast/Toast.module.css */
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 100%);
+  }
+  80% {
+    opacity: 0.8;
+    transform: translate(-50%, -10%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  20% {
+    opacity: 0.8;
+    transform: translate(-50%, -10%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 100%);
+  }
+}
+
+.toast {
+  position: fixed;
+  bottom: 7rem;
+  left: 50%;
+  transform: translate(-50%, 100%);
+  opacity: 0;
+  transition:
+    transform 0.4s cubic-bezier(0.36, 0, 0.66, 1),
+    opacity 0.4s cubic-bezier(0.36, 0, 0.66, 1);
+  z-index: 50;
+  width: 320px;
+  max-width: 90%;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.toast-enter {
+  animation: slideUp 0.4s cubic-bezier(0.36, 0, 0.66, 1) forwards;
+}
+
+.toast-exit {
+  animation: slideDown 0.4s cubic-bezier(0.36, 0, 0.66, 1) forwards;
+}

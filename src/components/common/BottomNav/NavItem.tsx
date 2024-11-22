@@ -1,8 +1,8 @@
 // components/common/BottomNav/NavItem.tsx
-import Link from 'next/link'
-import Image from 'next/image'
-import styles from './NavItem.module.css'
-import { NavItemProps } from './types'
+import Link from 'next/link';
+import Image from 'next/image';
+import styles from './NavItem.module.css';
+import { NavItemProps } from './types';
 
 export const NavItem = ({ label, href, iconSrc, active }: NavItemProps) => {
   return (
@@ -22,5 +22,5 @@ export const NavItem = ({ label, href, iconSrc, active }: NavItemProps) => {
         {label}
       </span>
     </Link>
-  )
-}
+  );
+};
