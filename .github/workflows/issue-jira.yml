@@ -18,7 +18,7 @@ jobs:
       - name: Checkout main code
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.ref }}
 
       - name: Issue Parser
         uses: stefanbuck/github-issue-praser@v3
@@ -64,7 +64,7 @@ jobs:
       - name: Checkout main code
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.ref }}
 
       - name: Create branch with Ticket number
         run: |
@@ -88,4 +88,3 @@ jobs:
           token: ${{ secrets.TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: 'Jira Issue Created: [${{ steps.create.outputs.issue }}](${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.create.outputs.issue }})'
-      
