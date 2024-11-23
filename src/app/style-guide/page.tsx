@@ -3,7 +3,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 import ColorPalette from '@/components/ColorPalette';
-import { BottomNav } from '@/components/common/BottomNav';
 import { Button } from '@/components/common/Button/Button';
 import { Card } from '@/components/common/Cards/Card';
 import { facilities, meetings } from '@/components/common/Cards/constants';
@@ -13,6 +12,7 @@ import { Header } from '@/components/common/Header';
 import { SearchBar } from '@/components/common/SearchBar';
 import { Modal } from '@/components/common/Modal';
 import { NotificationItem } from '@/components/common/NotificationItem';
+import { Navigation } from '@/components/common/Navigation/Navigation';
 
 export default function StyleGuidePage() {
   const [search, setSearch] = useState('');
@@ -302,7 +302,7 @@ export default function StyleGuidePage() {
         <h2 className="mb-4 text-xl font-semibold">색상 팔레트</h2>
         <ColorPalette />
       </section>
-      <BottomNav activeTab="home" />
+      <Navigation activeTab="home" />
     </div>
   );
 }

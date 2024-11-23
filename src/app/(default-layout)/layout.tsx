@@ -1,5 +1,5 @@
-import { BottomNav } from '@/components/common/BottomNav';
 import { Header } from '@/components/common/Header';
+import { Navigation } from '@/components/common/Navigation/Navigation';
 
 export default function RootLayout({
   children
@@ -10,7 +10,7 @@ export default function RootLayout({
     <>
       <Header />
       <main className="container">{children}</main>
-      <BottomNav activeTab={'search'} />
+      <Navigation activeTab={'search'} />
     </>
   );
 }
