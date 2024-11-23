@@ -3,8 +3,13 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+interface Facility {
+  facilityId: number;
+  facilityName: string;
+}
+
 export default function Facility() {
-  const [facilities, setFacilities] = useState<any[]>([]);
+  const [facilities, setFacilities] = useState<Facility[]>([]);
 
   useEffect(() => {
     fetch('/api/facilities')
