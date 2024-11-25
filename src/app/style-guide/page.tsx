@@ -286,7 +286,7 @@ export default function StyleGuidePage() {
         <Card
           className="mb-8"
           title="카드 제목"
-          image="/jjang.jpeg"
+          imageSrc="/jjang.jpeg"
           content={
             <div>
               <p>카드 내용</p>
@@ -297,7 +297,7 @@ export default function StyleGuidePage() {
         <Card
           className="mb-8"
           title="카드 제목"
-          image="/jjang.jpeg"
+          imageSrc="/jjang.jpeg"
           content={
             <div>
               <p>카드 내용</p>

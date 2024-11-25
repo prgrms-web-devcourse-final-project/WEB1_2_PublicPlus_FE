@@ -24,7 +24,7 @@ export const MeetingCard = ({
   image
 }: MeetingCardProps) => (
   <Card
-    image={image || '/jjang.jpeg'}
+    imageSrc={image || '/jjang.jpeg'}
     imageAlt={title}
     title={title}
     content={

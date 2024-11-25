@@ -6,14 +6,18 @@ export const facilities: FacilityCardProps[] = [
     title: '보라매공원테니스장 1번 코트',
     price: '5,000',
     tags: ['국민체육센터', '주차장 무료', '예약필수'],
-    reservationType: '온라인 직접 예약' // 리터럴 타입과 일치해야 함
+    reservationType: '온라인 직접 예약', // 리터럴 타입과 일치해야 함
+    domain: '',
+    id: ''
   },
   {
     image: '/jjang.jpeg',
     title: '보라매공원테니스장 2번 코트',
     price: '5,000',
     tags: ['와이파이 제공', '주차장 무료'],
-    reservationType: '온라인 직접 예약'
+    reservationType: '온라인 직접 예약',
+    domain: '',
+    id: ''
   }
 ];
 export const meetings = [
