@@ -45,3 +45,11 @@ body {
   padding-top: 5.6rem;
   padding-bottom: 5.6rem;
 }
+
+.category-swiper {
+  padding: 1rem;
+}
+
+.category-swiper .swiper-slide {
+  width: auto;
+}
