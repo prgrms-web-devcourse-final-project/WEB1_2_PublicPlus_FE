@@ -1,4 +1,4 @@
-import { FacilityFilterDTO } from '@/types/facility/request';
+import { FacilityFilterDTO } from '@/entities/facility/model/types/request';
 import { api } from './axios';
 
 export const facilityApi = {

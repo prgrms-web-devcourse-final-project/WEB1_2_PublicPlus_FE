@@ -2,7 +2,7 @@ import { FacilityCard } from '@/components/common/Cards/FacilityCard';
 import { useFilterStore } from '@/features/facility/filter/model/store';
 import { Pagination } from '@/features/facility/pagination/ui/pagination';
 import { facilityApi } from '@/shared/api/endpoints';
-import { Facility } from '@/types/facility';
+import { Facility } from '@/entities/facility/model/types';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 

@@ -1,4 +1,4 @@
-import { Facility } from '@/types/facility';
+import { Facility } from '@/entities/facility/model/types';
 import { create } from 'zustand';
 
 interface FacilityStore {

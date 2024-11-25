@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
-import type { FacilityDetail } from '@/types/facility';
+import type { FacilityDetail } from '@/entities/facility/model/types';
 
 export default function FacilityDetailClient() {
   const params = useParams();

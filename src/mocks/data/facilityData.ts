@@ -1,4 +1,4 @@
-import { Facility, FacilityDetail } from '@/types/facility';
+import { Facility, FacilityDetail } from '@/entities/facility/model/types';
 
 // 시설 목록 데이터
 export const facilities: Facility[] = [

@@ -1,7 +1,10 @@
 import { HttpResponse, http } from 'msw';
 import { facilities, facilitiesDetail } from '../data/facilityData';
-import { FacilityFilterDTO, FacilityParams } from '@/types/facility/request';
-import { FacilityResponse } from '@/types/facility/response';
+import {
+  FacilityFilterDTO,
+  FacilityParams
+} from '@/entities/facility/model/types/request';
+import { FacilityResponse } from '@/entities/facility/model/types/response';
 
 export const facilityHandlers = [
   // 시설 목록 조회
