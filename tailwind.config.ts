@@ -12,12 +12,10 @@ export default {
   darkMode: 'media',
   theme: {
     screens: {
-      xs: '340px', // 최소 340px 대응
-      sm: '360px', // 모바일 해상도 기준 360px
+      xs: '',
+      sm: '',
       md: '768px', // 중간 해상도
-      lg: '1024px', // 큰 화면
-      xl: '1280px', // 엑스트라 큰 화면
-      '2xl': '1600px' // 더 큰 화면
+      lg: '1024px' // 큰 화면
     },
     extend: {
       container: {
