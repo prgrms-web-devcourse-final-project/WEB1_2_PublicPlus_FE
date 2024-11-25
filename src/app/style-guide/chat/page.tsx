@@ -3,7 +3,6 @@
 import { Button } from '@/components/common/Button/Button';
 import { ChatInput } from '@/components/common/Chat/ChatInput';
 import { ChatMessage } from '@/components/common/Chat/ChatMessage';
-import { Loading } from '@/components/common/Loading';
 import { useToast } from '@/components/common/Toast/Toast';
 import { useState } from 'react';
 
@@ -75,13 +74,6 @@ export default function ChatPage() {
             isMine={msg.isMine}
           />
         ))}
-      </div>
-      {/* 로딩 컴포넌트 */}
-      <div className="space-y-4 p-10 text-center">
-        <h1>로딩 컴포넌트</h1>
-        <Loading size="sm" />
-        <Loading />
-        <Loading size="lg" />
       </div>
       {/* 채팅 입력 컴포넌트 */}
       <ChatInput

@@ -1,4 +1,4 @@
-/* components/common/BottomNav/NavItem.module.css */
+/* NavItem.module.css */
 .navItem {
   @apply flex flex-col items-center gap-1;
 }

@@ -3,7 +3,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 import ColorPalette from '@/components/ColorPalette';
-import { BottomNav } from '@/components/common/BottomNav';
 import { Button } from '@/components/common/Button/Button';
 import { Card } from '@/components/common/Cards/Card';
 import { facilities, meetings } from '@/components/common/Cards/constants';
@@ -13,6 +12,9 @@ import { Header } from '@/components/common/Header';
 import { SearchBar } from '@/components/common/SearchBar';
 import { Modal } from '@/components/common/Modal';
 import { NotificationItem } from '@/components/common/NotificationItem';
+import { Navigation } from '@/components/common/Navigation/Navigation';
+import { Loading } from '@/components/common/Loading';
+import ErrorMessage from '@/components/common/ErrorMsg';
 
 export default function StyleGuidePage() {
   const [search, setSearch] = useState('');
@@ -22,53 +24,93 @@ export default function StyleGuidePage() {
     <div className="container mx-auto space-y-16 px-4">
       <Header />
       <h1 className="mb-6 text-2xl font-bold">스타일 가이드</h1>
-      {/* chat페이지 ---------------------------------------------------- */}
-      <div>
-        <Link href={'/style-guide/chat'}>
-          <Button>채팅, 토스트, 로딩 컴포넌트 보러가기~ 클릭</Button>
+
+      {/* filter페이지 ---------------------------------------------------- */}
+      <section>
+        <Link href={'/style-guide/filter'}>
+          <Button>필터키워드</Button>
         </Link>
-      </div>
-      <div onClick={() => setIsOpen(true)}>
-        <Button>모달 열기</Button>
-      </div>
-      <Modal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        message="정말 삭제하시겠습니까?"
-        confirmText="삭제"
-        cancelText="취소"
-        onConfirm={() => {
-          // 확인 버튼 클릭 시 실행할 로직
-          console.log('confirmed');
-        }}
-      />
+      </section>
+      {/* 에러메시지 컴포넌트 ---------------------------------------------------- */}
+      <section>
+        <h2 className="mb-4 text-xl font-semibold">
+          로딩, 에러메시지 컴포넌트
+        </h2>
+        <div>
+          <h3>로딩 컴포넌트 컴포넌트</h3>
+          {/* 로딩 컴포넌트 */}
+          <div className="space-y-4 p-10 text-center">
+            <h1>로딩 컴포넌트</h1>
+            <Loading size="sm" />
+            <Loading />
+            <Loading size="lg" />
+          </div>
+        </div>
+        <div>
+          <h3>에러메시지 컴포넌트</h3>
+          <ErrorMessage />
+          {/* 직접 메시지 전달 */}
+          <ErrorMessage message="에러메세지 직접 입력할 경우!" />
+        </div>
+      </section>
+      {/* chat페이지 ---------------------------------------------------- */}
+      <section>
+        <h2 className="mb-4 text-xl font-semibold">채팅, 토스트컴포넌트</h2>
+        <div>
+          <Link href={'/style-guide/chat'}>
+            <Button>채팅, 토스트 컴포넌트 보러가기~ 클릭</Button>
+          </Link>
+        </div>
+      </section>
+      {/* 모달 ---------------------------------------------------- */}
+      <section>
+        <h2 className="mb-4 text-xl font-semibold">모달컴포넌트</h2>
+        <div onClick={() => setIsOpen(true)}>
+          <Button>모달 열기</Button>
+        </div>
+        <Modal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          message="정말 삭제하시겠습니까?"
+          confirmText="삭제"
+          cancelText="취소"
+          onConfirm={() => {
+            // 확인 버튼 클릭 시 실행할 로직
+            console.log('confirmed');
+          }}
+        />
+      </section>
       {/* 알림목록 - 알림 항목 컴포넌트 ---------------------------------------------------- */}
-      <h2 className="mb-4 text-xl font-semibold">알림 항목 컴포넌트</h2>
-      <NotificationItem
-        message="AB님이 모임 참가 요청을 보냈습니다."
-        time="2분 전"
-        variant="new"
-        onAccept={() => {
-          // 수락 처리 로직
-          console.log('수락됨');
-        }}
-      />{' '}
-      <NotificationItem
-        message="AB님이 모임 참가 요청을 보냈습니다."
-        time="2분 전"
-        onAccept={() => {
-          // 수락 처리 로직
-          console.log('수락됨');
-        }}
-      />
+      <section>
+        <h2 className="mb-4 text-xl font-semibold">알림 항목 컴포넌트</h2>
+        <NotificationItem
+          message="AB님이 모임 참가 요청을 보냈습니다."
+          time="2분 전"
+          variant="new"
+          onAccept={() => {
+            // 수락 처리 로직
+            console.log('수락됨');
+          }}
+        />{' '}
+        <NotificationItem
+          message="AB님이 모임 참가 요청을 보냈습니다."
+          time="2분 전"
+          onAccept={() => {
+            // 수락 처리 로직
+            console.log('수락됨');
+          }}
+        />
+      </section>
       {/* 검색 바 컴포넌트 ---------------------------------------------------- */}
-      <h2 className="mb-4 text-xl font-semibold">검색 바</h2>
-      <SearchBar
-        value={search}
-        onChange={setSearch}
-        placeholder="검색어를 입력하세요"
-        className="mx-auto max-w-xl"
-      />
+      <section>
+        <h2 className="mb-4 text-xl font-semibold">검색 바</h2>
+        <SearchBar
+          value={search}
+          onChange={setSearch}
+          placeholder="검색어를 입력하세요"
+          className="mx-auto max-w-xl"
+        />
+      </section>
       {/* 폰트 크기 데모 ---------------------------------------------------- */}
       <section>
         <h2 className="mb-4 text-xl font-semibold">폰트 크기</h2>
@@ -302,7 +344,7 @@ export default function StyleGuidePage() {
         <h2 className="mb-4 text-xl font-semibold">색상 팔레트</h2>
         <ColorPalette />
       </section>
-      <BottomNav activeTab="home" />
+      <Navigation activeTab="home" />
     </div>
   );
 }
