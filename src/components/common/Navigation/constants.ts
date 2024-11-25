@@ -1,4 +1,4 @@
-// components/common/BottomNav/constants.ts
+// constants.ts
 import { NavItemType } from './types';
 
 export const NAV_ITEMS: NavItemType[] = [

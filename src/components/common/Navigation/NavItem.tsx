@@ -1,4 +1,4 @@
-// components/common/BottomNav/NavItem.tsx
+// NavItem.tsx
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './NavItem.module.css';
