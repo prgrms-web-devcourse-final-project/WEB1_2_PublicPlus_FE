@@ -10,7 +10,7 @@ interface MeetingCardProps {
   currentMembers: number;
   maxMembers: number;
   tags: string[];
-  imageSrc?: string;
+  image?: string;
 }
 
 export const MeetingCard = ({
@@ -21,10 +21,10 @@ export const MeetingCard = ({
   currentMembers,
   maxMembers,
   tags,
-  imageSrc
+  image
 }: MeetingCardProps) => (
   <Card
-    imageSrc={imageSrc || '/jjang.jpeg'}
+    imageSrc={image || '/jjang.jpeg'}
     imageAlt={title}
     title={title}
     content={
