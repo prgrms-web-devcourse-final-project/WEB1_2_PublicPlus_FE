@@ -1,6 +1,7 @@
 import '@/styles/globals.css';
 import { defaultMetadata } from '@/metadata/default-metadata';
 import { MSWComponent } from '@/components/MSWComponent';
+import { Providers } from './providers';
 
 export const metadata = defaultMetadata;
 
@@ -20,7 +21,9 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <MSWComponent>{children}</MSWComponent>
+        <MSWComponent>
+          <Providers>{children}</Providers>
+        </MSWComponent>
       </body>
     </html>
   );
