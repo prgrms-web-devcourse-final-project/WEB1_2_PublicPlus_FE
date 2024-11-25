@@ -3,27 +3,13 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
-
-interface Facility {
-  facilityId: string;
-  facilityName: string;
-  facilityCategory: string;
-  area: string;
-  facilityImage: string;
-  priceType: boolean;
-  location: {
-    latitude: number;
-    longitude: number;
-  };
-  reservationStartDate: string;
-  reservationEndDate: string;
-}
+import type { FacilityDetail } from '@/types/facility';
 
 export default function FacilityDetailClient() {
   const params = useParams();
   const id = params?.id as string;
 
-  const [facility, setFacility] = useState<Facility | null>(null);
+  const [facility, setFacility] = useState<FacilityDetail | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
 
@@ -32,11 +18,11 @@ export default function FacilityDetailClient() {
       if (!id) return;
 
       try {
-        const response = await fetch(`/api/facilities/${id}`);
+        const response = await fetch(`/api/facility-details/list/${id}`);
         if (!response.ok) {
           throw new Error('시설을 찾을 수 없습니다.');
         }
-        const data: Facility = await response.json();
+        const data: FacilityDetail = await response.json();
         setFacility(data);
       } catch (error) {
         setError((error as Error).message);

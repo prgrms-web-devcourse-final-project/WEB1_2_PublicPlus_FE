@@ -1,6 +1,6 @@
 // components/common/cards/FacilityCard.tsx
-import { Card } from './Card';
 import { Tag } from '../Tag';
+import { LinkCard } from './LinkCard';
 
 export interface FacilityCardProps {
   image?: string;
@@ -8,6 +8,8 @@ export interface FacilityCardProps {
   price: string;
   tags: string[];
   reservationType: '국민체육센터' | '주민센터 문의' | '온라인 직접 예약';
+  domain: string;
+  id: string;
 }
 
 export const FacilityCard = ({
@@ -15,10 +17,12 @@ export const FacilityCard = ({
   title,
   price,
   tags,
-  reservationType
+  reservationType,
+  domain,
+  id
 }: FacilityCardProps) => (
-  <Card
-    image={image || '/default-facility-image.jpg'}
+  <LinkCard
+    imageSrc={image}
     imageAlt={title}
     title={title}
     className="min-h-[10rem]"
@@ -34,14 +38,18 @@ export const FacilityCard = ({
     }
     footer={
       <>
-        <div className="mb-2 text-xs text-gray-500">{reservationType}</div>
+        <div className="mb-2 text-xs text-gray-500">
+          예약 방법: {reservationType}
+        </div>
         <div className="flex items-center justify-between">
           <div className="text-sm text-gray-500">
-            <span className="font-semibold text-gray-900">{price}원</span> /
+            <span className="font-semibold text-gray-900">{price}</span> /
             기본요금
           </div>
         </div>
       </>
     }
+    domain={domain}
+    id={id}
   />
 );
