@@ -1,4 +1,5 @@
 import { HttpResponse, http } from 'msw';
+import { authHandlers } from './authHandlers';
 
 const facilities = [
   {
@@ -38,5 +39,6 @@ export const handlers = [
         { status: 404 }
       );
     }
-  })
+  }),
+  ...authHandlers
 ];

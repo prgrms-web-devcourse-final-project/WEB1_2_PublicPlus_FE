@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import styles from './CustomHeader.module.css';
 
 interface CustomHeaderProps {
-  title: string;
+  title?: string;
   rightButton?: {
     icon: string;
     alt: string;
@@ -32,8 +32,7 @@ export const CustomHeader = ({ title, rightButton }: CustomHeaderProps) => {
             height={24}
           />
         </button>
-
-        <h1 className={styles.headerTitle}>{title}</h1>
+        {title && <h1 className={styles.headerTitle}>{title}</h1>}
 
         {rightButton && (
           <button
