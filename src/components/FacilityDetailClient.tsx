@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import type { FacilityDetail } from '@/entities/facility/model/types';
+import Loading from '@/components/Suspense/Loading';
 
 export default function FacilityDetailClient() {
   const params = useParams();
@@ -39,11 +40,7 @@ export default function FacilityDetailClient() {
   }
 
   if (loading) {
-    return (
-      <div className="flex min-h-[400px] items-center justify-center">
-        <div className="animate-pulse">로딩 중...</div>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (error) {
