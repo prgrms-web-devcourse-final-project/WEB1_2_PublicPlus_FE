@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 export default function RootLayout({
   children
 }: Readonly<{
@@ -7,9 +5,6 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <header>
-        <Link href="/">🏠 HOME</Link>
-      </header>
       <main className="container">{children}</main>
     </>
   );
