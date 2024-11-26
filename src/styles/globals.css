@@ -42,8 +42,8 @@ body {
 }
 
 .container {
-  padding-top: 5.6rem;
-  padding-bottom: 5.6rem;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
 }
 
 .category-swiper {
@@ -52,4 +52,39 @@ body {
 
 .category-swiper .swiper-slide {
   width: auto;
+}
+
+/* globals.css */
+:root {
+  --max-width: 768px;
+  --layout-bg-color: #ffffff;
+}
+
+body {
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
+  min-width: 340px;
+  background-color: var(--layout-bg-color);
+}
+
+@media (min-width: 768px) {
+  body::before,
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background-color: rgba(138, 138, 138, 0.1);
+    z-index: 9999;
+  }
+
+  body::before {
+    left: calc(50% - 384px);
+  }
+
+  body::after {
+    right: calc(50% - 384px);
+  }
 }

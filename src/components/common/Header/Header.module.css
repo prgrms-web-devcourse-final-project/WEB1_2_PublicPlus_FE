@@ -1,10 +1,13 @@
 /* components/common/Header/Header.module.css */
 .header {
   @apply fixed left-0 right-0 top-0 z-50 h-[56px] bg-white;
+  width: 100%; /* 전체 너비 사용 */
+  max-width: 768px; /* 최대 너비 고정 */
+  margin: 0 auto; /* 중앙 정렬 */
 }
-
 .iconWrap {
-  @apply flex h-full items-center justify-center justify-between px-6;
+  @apply flex h-full items-center justify-center justify-between px-4 md:px-6;
+  width: 100%; /* 전체 너비 사용 */
 }
 
 .logo {
