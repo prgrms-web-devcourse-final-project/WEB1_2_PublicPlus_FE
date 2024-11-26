@@ -1,4 +1,4 @@
-export type TabType = 'home' | 'search' | 'chat' | 'calendar' | 'profile';
+export type TabType = 'home' | 'facility' | 'chat' | 'meeting' | 'profile';
 
 export interface NavItemType {
   label: string;
