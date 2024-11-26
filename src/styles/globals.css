@@ -42,8 +42,9 @@ body {
 }
 
 .container {
-  padding-top: 6rem;
-  padding-bottom: 6rem;
+  padding: 0 16px;
+  padding-top: 7rem;
+  padding-bottom: 7rem;
 }
 
 .category-swiper {
@@ -54,9 +55,9 @@ body {
   width: auto;
 }
 
-/* globals.css */
+/* 최대너비 지정 */
 :root {
-  --max-width: 768px;
+  --max-width: 600px;
   --layout-bg-color: #ffffff;
 }
 
@@ -81,10 +82,10 @@ body {
   }
 
   body::before {
-    left: calc(50% - 384px);
+    left: calc(50% - 300px); /* 600px의 절반인 300px로 조정 */
   }
 
   body::after {
-    right: calc(50% - 384px);
+    right: calc(50% - 300px); /* 600px의 절반인 300px로 조정 */
   }
 }
