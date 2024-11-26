@@ -2,6 +2,9 @@ import '@/styles/globals.css';
 import { defaultMetadata } from '@/metadata/default-metadata';
 import { MSWComponent } from '@/components/MSWComponent';
 import { Providers } from './providers';
+import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary';
+import { Suspense } from 'react';
+import Loading from '@/components/Suspense/Loading';
 
 export const metadata = defaultMetadata;
 
@@ -21,9 +24,13 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <MSWComponent>
-          <Providers>{children}</Providers>
-        </MSWComponent>
+        <ErrorBoundary>
+          <Suspense fallback={<Loading />}>
+            <MSWComponent>
+              <Providers>{children}</Providers>
+            </MSWComponent>
+          </Suspense>
+        </ErrorBoundary>
       </body>
     </html>
   );
