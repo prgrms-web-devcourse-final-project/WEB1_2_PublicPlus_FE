@@ -7,7 +7,7 @@ export default function SignupLayout({
   return (
     <div>
       <CustomHeader />
-      <div className="p-4">
+      <div>
         <h1 className="text-center text-2xl font-bold">회원가입</h1>
         <div className="mb-12 mt-16">{children}</div>
       </div>

@@ -45,11 +45,13 @@ export function PasswordForm() {
         error={confirmError}
       />
       <Button
+        variant="line"
         fullWidth
+        size="lg"
         onclickHandler={handleSubmit}
         // disabled={!!passwordError || !!confirmError}
       >
-        회원가입
+        다음 단계
       </Button>
     </div>
   );

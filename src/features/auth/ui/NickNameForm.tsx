@@ -16,7 +16,7 @@ export function NicknameForm() {
       <input
         type="text"
         placeholder="입력해주세요."
-        className="w-full rounded-lg border p-3"
+        className="w-full rounded border p-3"
         value={nickname}
         onChange={e => setNickname(e.target.value)}
       />

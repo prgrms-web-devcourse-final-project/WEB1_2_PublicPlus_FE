@@ -73,6 +73,9 @@ export default function LoginPage() {
           </button>
         </div>
       </div>
+      <div className='text-gray-800"'>
+        <Link href={'/signup/email'}>회원가입</Link>
+      </div>
     </div>
   );
 }

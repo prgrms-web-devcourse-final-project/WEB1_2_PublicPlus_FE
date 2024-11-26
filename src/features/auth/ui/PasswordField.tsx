@@ -16,7 +16,7 @@ export function PasswordField({
         <input
           type="password"
           placeholder="비밀번호를 입력해주세요."
-          className={`flex-1 rounded-lg border p-3 ${
+          className={`flex-1 rounded border p-3 ${
             error ? 'border-red-500' : ''
           }`}
           value={password}
