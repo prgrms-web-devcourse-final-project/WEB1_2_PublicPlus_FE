@@ -18,8 +18,8 @@ export default function LoginContainer() {
       const success = await login(email, password);
 
       if (success) {
-        // 로그인 성공 시 대시보드로 리다이렉트
-        router.push('/dashboard');
+        // 로그인 성공 시 리다이렉트
+        router.push('/');
       } else {
         // 로그인 실패 시 에러 상태 설정
         setError('로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');
@@ -32,7 +32,7 @@ export default function LoginContainer() {
 
   return (
     <>
-      <div className="mb-8">
+      <div className="mb-12">
         <LoginForm
           email={email}
           password={password}

@@ -107,7 +107,8 @@ export const useAuthStore = create<AuthState>()(
       partialize: state => ({
         // 저장할 상태 선택 (사용자 정보와 토큰만 유지)
         user: state.user,
-        token: state.token
+        token: state.token,
+        isAuthenticated: state.isAuthenticated
       })
     }
   )

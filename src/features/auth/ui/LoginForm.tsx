@@ -16,7 +16,7 @@ export default function LoginForm({
   onLogin
 }: LoginFormProps) {
   return (
-    <div className="py-8">
+    <div className="w-full">
       <input
         type="email"
         placeholder="이메일"
@@ -31,7 +31,9 @@ export default function LoginForm({
         onChange={e => onPasswordChange(e.target.value)}
         className="form-input mb-4 w-full rounded border p-3"
       />
-      <div onClick={onLogin}>
+      <div
+        className="mt-4"
+        onClick={onLogin}>
         <Button
           size="md"
           fullWidth>
