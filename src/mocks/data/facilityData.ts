@@ -153,7 +153,60 @@ export const facilitiesDetail: FacilityDetail[] = [
     facilityLocation: '서울특별시 강남구 테니스로 123',
     facilityDescription: '시설 주의사항 EX......',
     serviceStartDate: '2024-12-01T08:00:00',
-    serviceEndDate: '2025-01-31T22:00:00'
+    serviceEndDate: '2025-01-31T22:00:00',
+    // 후기 관련 데이터
+    externalReviews: [
+      {
+        title: '보라매공원 테니스장 시설 좋아요! 가족들과 함께~',
+        url: 'https://blog.naver.com/example1',
+        content:
+          '코트 상태가 매우 좋습니다. 조명도 밝고 바닥도 깨끗해요. 다음에 또 이용하고 싶네요!',
+        date: '2024.02.15',
+        thumbnail: 'https://picsum.photos/200' // 적절한 이미지로 교체 필요
+      },
+      {
+        title: '주말 테니스 즐기기 좋은 보라매공원 테니스장 후기',
+        url: 'https://example.tistory.com/1',
+        content:
+          '코트 상태가 매우 좋습니다. 조명도 밝고 바닥도 깨끗해요. 다음에 또 이용하고 싶네요!',
+        date: '2024.02.10',
+        thumbnail: 'https://picsum.photos/200'
+      },
+      {
+        title: '보라매공원 테니스장 예약방법 & 이용후기',
+        url: 'https://blog.naver.com/example2',
+        content:
+          '코트 상태가 매우 좋습니다. 조명도 밝고 바닥도 깨끗해요. 다음에 또 이용하고 싶네요!',
+        date: '2024.02.05',
+        thumbnail: 'https://picsum.photos/200'
+      }
+    ],
+    reviews: [
+      {
+        id: '1',
+        userName: '김테니스',
+        userImage: 'https://picsum.photos/200',
+        date: '2024.02.20',
+        content:
+          '코트 상태가 매우 좋습니다. 조명도 밝고 바닥도 깨끗해요. 다음에 또 이용하고 싶네요!'
+      },
+      {
+        id: '2',
+        userName: '박라켓',
+        userImage: 'https://picsum.photos/200',
+        date: '2024.02.18',
+        content:
+          '주차도 편하고 시설도 좋았어요. 다만 주말에는 사람이 많아서 예약이 어려워요.'
+      },
+      {
+        id: '3',
+        userName: '정코트',
+        date: '2024.02.15',
+        content:
+          '처음 이용해봤는데 만족스러웠습니다. 관리도 잘 되어있고 코트 상태도 좋네요.',
+        userImage: ''
+      }
+    ]
   },
   {
     facilityId: 'F002',

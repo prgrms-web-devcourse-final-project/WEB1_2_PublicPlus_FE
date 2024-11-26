@@ -1,18 +1,50 @@
-// components/common/Header/Header.tsx
-
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
 import { useState } from 'react';
 import styles from './Header.module.css';
 
-export const Header = () => {
+interface HeaderProps {
+  detailTitle?: string; // 디테일 페이지의 타이틀
+}
+
+export const Header = ({ detailTitle }: HeaderProps) => {
   const [hasNotifications, setHasNotifications] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // facility/[id] 패턴의 URL인지 확인
+  const isDetailPage = pathname?.includes('/facility/');
 
   const notificationIcon = hasNotifications
     ? '/icons/notification-new.png'
     : '/icons/notification.png';
 
+  // 디테일 페이지용 헤더
+  if (isDetailPage) {
+    return (
+      <header className={styles.header}>
+        <div className={styles.iconWrap}>
+          <button
+            className={styles.backButton}
+            onClick={() => router.back()}>
+            <Image
+              src="/icons/back-arrow.png" // 뒤로가기 아이콘 이미지 필요
+              alt="뒤로가기"
+              width={24}
+              height={24}
+            />
+          </button>
+          <h1 className={styles.detailTitle}>
+            {detailTitle || '시설 상세'} {/* 기본값 제공 */}
+          </h1>
+        </div>
+      </header>
+    );
+  }
+
+  // 기본 헤더
   return (
     <header className={styles.header}>
       <div className={styles.iconWrap}>

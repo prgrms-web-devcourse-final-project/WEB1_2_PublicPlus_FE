@@ -5,6 +5,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --borderColor: #ececec;
 
   --font-roboto: 'Roboto', system-ui, sans-serif;
   --font-noto-sans-kr: 'Noto Sans KR', system-ui, sans-serif;

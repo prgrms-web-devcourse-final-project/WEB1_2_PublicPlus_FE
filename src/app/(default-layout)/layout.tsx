@@ -8,7 +8,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <Header />
+      <Header detailTitle="시설명" />
       <main className="container">{children}</main>
       <Navigation activeTab={'search'} />
     </>

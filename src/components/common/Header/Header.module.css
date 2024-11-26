@@ -4,7 +4,7 @@
 }
 
 .iconWrap {
-  @apply flex h-full items-center justify-center justify-between px-6;
+  @apply relative flex h-full items-center justify-between px-6;
 }
 
 .logo {
@@ -17,4 +17,29 @@
 
 .iconButton {
   @apply flex h-16 w-16 items-center justify-center rounded-lg border border-gray-200;
+}
+
+.backButton {
+  @apply absolute left-[1.5rem];
+  border: none;
+  background: none;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  border: 1px solid var(--borderColor);
+}
+
+.detailTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 100%;
+  text-align: center;
+}
+
+/* 디테일 페이지의 헤더 아이콘 정렬 */
+.iconWrap {
+  display: flex;
+  align-items: center;
 }

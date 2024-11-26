@@ -26,6 +26,7 @@ export default {
         // 기본 테마 색상
         background: 'var(--background)',
         foreground: 'var(--foreground)',
+        borderColor: 'var(--borderColor)',
 
         // 프로젝트 주요 색상
         primary: {

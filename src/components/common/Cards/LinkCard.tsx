@@ -11,8 +11,10 @@ interface CardProps {
   imageAlt?: string;
   className?: string;
   color?: 'wh' | 'sky';
-  domain: string;
-  id: string;
+  domain?: string;
+  id?: string;
+  target?: string;
+  url?: string;
 }
 
 export const LinkCard = ({
@@ -24,13 +26,16 @@ export const LinkCard = ({
   className = '',
   color = 'wh',
   domain,
-  id
+  id,
+  target,
+  url
 }: CardProps) => {
   const bgColor = color === 'sky' ? 'bg-primary-50' : 'bg-white';
 
   return (
     <Link
-      href={`/${domain}/${id}`}
+      href={url ? url : `/${domain}/${id}`}
+      target={target}
       className={`${styles.card} ${className} ${bgColor} flex`}>
       <div className="mr-4 flex flex-1 flex-col justify-between space-y-4">
         {title && <h3 className="text-m">{title}</h3>}
