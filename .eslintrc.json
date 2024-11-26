@@ -4,5 +4,8 @@
     "next/typescript",
     "prettier",
     "plugin:storybook/recommended"
-  ]
+  ],
+  "rules": {
+    "react/no-unescaped-entities": "off"
+  }
 }

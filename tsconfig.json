@@ -29,5 +29,11 @@
     ".next/types/**/*.ts",
     "src/app/providers/index.txs"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "**/*.stories.tsx",
+    "**/*.stories.ts",
+    "src/stories/**/*",
+    "storybook-static"
+  ]
 }
