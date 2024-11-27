@@ -1,16 +1,15 @@
 import { UserProfile } from '@/features/mypage/ui/UserProfile';
 import { MypageTap } from '@/features/mypage/ui/MypageTap';
-
 export default function ProfilePage() {
-  // 실제 사용자 데이터 API나 상태관리에서 가져올 예정
   const userData = {
     email: 'user@example.com',
     nickname: '사용자',
-    profileImage: '/jjang.jpeg'
+    profileImage: '/jjang.jpeg',
+    description: '' // 빈 문자열이면 기본 텍스트 표시
   };
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-4">
       <UserProfile
         email={userData.email}
         nickname={userData.nickname}

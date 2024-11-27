@@ -2,32 +2,28 @@
 import { useMemo, useState } from 'react';
 import { UserInfo } from './UserInfo';
 
-type TabType = 'intro' | 'schedule' | 'favorites';
+type ProfileTabType = 'intro' | 'schedule' | 'favorites';
 
 export const MypageTap = () => {
-  const [activeTab, setActiveTab] = useState<TabType>('intro');
+  const [activeTab, setActiveTab] = useState<ProfileTabType>('intro');
 
   const renderTabContent = useMemo(() => {
     switch (activeTab) {
       case 'intro':
         return <UserInfo />;
-      case 'schedule':
-        return <ScheduleSection />;
-      case 'favorites':
-        return <FavoritesSection />;
     }
   }, [activeTab]);
 
   return (
     <div>
-      <div className="mb-4 flex justify-around">
-        {['intro', 'schedule', 'favorites'].map(tab => (
+      <div className="mb-8 flex justify-start">
+        {['intro'].map(tab => (
           <button
             key={tab}
-            onClick={() => setActiveTab(tab as TabType)}
+            onClick={() => setActiveTab(tab as ProfileTabType)}
             className={`px-4 py-2 ${
               activeTab === tab
-                ? 'border-b-2 border-blue-500 text-blue-500'
+                ? 'border-b-2 border-primary-800 text-primary-800'
                 : 'text-gray-500'
             }`}>
             {tab === 'intro'
@@ -42,6 +38,3 @@ export const MypageTap = () => {
     </div>
   );
 };
-
-const ScheduleSection = () => <div>사용자 일정</div>;
-const FavoritesSection = () => <div>즐겨찾기 목록</div>;

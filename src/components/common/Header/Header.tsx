@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Header.module.css';
 
 interface HeaderProps {
@@ -13,6 +13,21 @@ export const Header = ({ detailTitle }: HeaderProps) => {
   const [hasNotifications, setHasNotifications] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+
+  // 임시로 알림 데이터를 가져오는 부분 ------------------
+  useEffect(() => {
+    const checkNewNotifications = async () => {
+      try {
+        // const response = await fetchNotifications();
+        // setHasNotifications(response.hasUnread);
+        setHasNotifications(true);
+      } catch (error) {
+        console.error('Failed to fetch notifications:', error);
+      }
+    };
+
+    checkNewNotifications();
+  }, []);
 
   // facility/[id] 패턴의 URL인지 확인
   const isDetailPage = pathname?.includes('/facility/');
@@ -62,7 +77,7 @@ export const Header = ({ detailTitle }: HeaderProps) => {
         <div className={styles.iconGroup}>
           <button
             className={styles.iconButton}
-            onClick={() => setHasNotifications(!hasNotifications)}>
+            onClick={() => router.push('/notifications')}>
             <Image
               src={notificationIcon}
               alt="알림"

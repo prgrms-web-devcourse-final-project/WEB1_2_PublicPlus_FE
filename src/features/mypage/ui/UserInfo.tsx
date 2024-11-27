@@ -1,28 +1,52 @@
-import { Button } from '@/components/common/Button/Button';
-import { Card } from '@/components/common/Cards/Card';
+import { Tag } from '@/components/common/Tag';
+import { UserInfoCard } from '@/components/common/Cards/UserInfoCard';
+import { useRouter } from 'next/navigation';
 
-export const UserInfo = () => {
+interface UserInfoProps {
+  description?: string;
+}
+
+interface UserInfoProps {
+  description?: string;
+}
+
+export const UserInfo = ({ description = '' }: UserInfoProps) => {
+  const router = useRouter();
   return (
     <div className="space-y-4">
-      <Card
-        title="내 소개"
-        content={
-          <p className="text-gray-600">
-            안녕하세요! 건강한 삶을 추구하며 다양한 운동을 즐깁니다.
+      <UserInfoCard
+        title="내 소개글"
+        buttonLabel={
+          !description || description === '' ? '작성하기' : '수정하기'
+        }
+        onClick={() => router.push('/profile/edit/description')}>
+        <div className="my-2">
+          <p className="text-xs text-gray-600">
+            {!description || description === ''
+              ? '아직 작성되지 않았습니다.'
+              : description}
           </p>
-        }
-      />
+        </div>
+      </UserInfoCard>
 
-      <Card
+      <UserInfoCard
         title="관심 운동"
-        content={
-          <div className="flex space-x-2">
-            <Button variant="badge">🏋️ 웨이트 트레이닝</Button>
-            <Button variant="badge">🚴 사이클링</Button>
-            <Button variant="badge">🧘 요가</Button>
-          </div>
-        }
-      />
+        onClick={() => alert('관심운동 구현한다면 추가될 예정입니다.')}>
+        <div className="my-2 flex flex-wrap gap-2">
+          <Tag
+            label="🏋️ 웨이트 트레이닝"
+            variant="line"
+          />
+          <Tag
+            label="🚴 사이클링"
+            variant="line"
+          />
+          <Tag
+            label="🧘 요가"
+            variant="line"
+          />
+        </div>
+      </UserInfoCard>
     </div>
   );
 };
