@@ -11,7 +11,7 @@ export const FacilityHeader = ({ facility }: FacilityHeaderProps) => {
 
   return (
     <>
-      <div className="relative aspect-[4/3] w-full">
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.2rem]">
         <Image
           src={facility.facilityImage}
           alt={facility.facilityName}
