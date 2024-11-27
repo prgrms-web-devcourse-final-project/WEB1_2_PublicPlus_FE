@@ -1,10 +1,14 @@
+import { FacilityDetailsResponseDTO } from '@/api/generated';
 import { LinkCard } from '@/components/common/Cards/LinkCard';
-import { FacilityDetail } from '@/entities/facility/model/types';
 // import KakaoMap from '@/shared/ui/Map/KakaoMap';
 import { LinkIcon } from 'lucide-react';
 import Link from 'next/link';
 
-export const FacilityInfo = ({ facility }: { facility: FacilityDetail }) => {
+export const FacilityInfo = ({
+  facility
+}: {
+  facility: FacilityDetailsResponseDTO;
+}) => {
   return (
     <div className="space-y-4 p-4 pb-20">
       <div className="rounded-lg bg-white p-4">

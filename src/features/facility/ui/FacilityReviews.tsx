@@ -1,8 +1,8 @@
+import { FacilityDetailsResponseDTO } from '@/api/generated';
 import { Card } from '@/components/common/Cards/Card';
-import type { FacilityDetail } from '@/entities/facility/model/types';
 
 interface FacilityReviewsProps {
-  facility: FacilityDetail;
+  facility: FacilityDetailsResponseDTO;
 }
 
 export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {

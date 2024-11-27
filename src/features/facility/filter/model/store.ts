@@ -1,4 +1,4 @@
-import { FacilityFilterDTO } from '@/entities/facility/model/types/request';
+import { FacilityFilterDTO } from '@/api/generated';
 import { create } from 'zustand';
 
 interface FilterStore {

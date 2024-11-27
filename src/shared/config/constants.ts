@@ -15,13 +15,31 @@ export const FACILITY_CATEGORIES = [
 ] as const;
 
 export const AREAS = [
-  { value: '서울', label: '서울' },
-  { value: '부산', label: '부산' },
-  { value: '대구', label: '대구' },
-  { value: '인천', label: '인천' },
-  { value: '광주', label: '광주' },
-  { value: '대전', label: '대전' },
-  { value: '울산', label: '울산' }
+  { value: '강남구' },
+  { value: '강동구' },
+  { value: '강북구' },
+  { value: '강서구' },
+  { value: '관악구' },
+  { value: '광진구' },
+  { value: '구로구' },
+  { value: '금천구' },
+  { value: '노원구' },
+  { value: '도봉구' },
+  { value: '동대문구' },
+  { value: '동작구' },
+  { value: '마포구' },
+  { value: '서대문구' },
+  { value: '서초구' },
+  { value: '성동구' },
+  { value: '성북구' },
+  { value: '송파구' },
+  { value: '양천구' },
+  { value: '영등포구' },
+  { value: '용산구' },
+  { value: '은평구' },
+  { value: '종로구' },
+  { value: '중구' },
+  { value: '중랑구' }
 ] as const;
 
 export const PRICE_TYPES = [

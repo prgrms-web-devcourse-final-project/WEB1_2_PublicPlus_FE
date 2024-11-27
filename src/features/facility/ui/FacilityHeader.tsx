@@ -1,9 +1,9 @@
 import Image from 'next/image';
-import type { FacilityDetail } from '@/entities/facility/model/types';
 import { useFacilityStore } from '../model/store';
+import { FacilityDetailsResponseDTO } from '@/api/generated';
 
 interface FacilityHeaderProps {
-  facility: FacilityDetail;
+  facility: FacilityDetailsResponseDTO;
 }
 
 export const FacilityHeader = ({ facility }: FacilityHeaderProps) => {
