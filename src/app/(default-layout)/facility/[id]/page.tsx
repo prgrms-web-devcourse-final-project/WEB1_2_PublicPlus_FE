@@ -1,4 +1,4 @@
-import FacilityDetailClient from '@/components/FacilityDetailClient';
+import FacilityDetail from '@/widgets/facility/facility-detail';
 import { generateMetadata } from '@/metadata/generate-metadata';
 
 export const metadata = generateMetadata({
@@ -7,9 +7,5 @@ export const metadata = generateMetadata({
 });
 
 export default function FacilityPage() {
-  return (
-    <div className="container mx-auto px-4">
-      <FacilityDetailClient />
-    </div>
-  );
+  return <FacilityDetail />;
 }

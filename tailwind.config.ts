@@ -5,8 +5,12 @@ import { PluginAPI } from 'tailwindcss/types/config';
 
 export default {
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/shared/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/entities/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/features/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/widgets/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}'
   ],
   darkMode: 'media',
@@ -26,6 +30,7 @@ export default {
         // 기본 테마 색상
         background: 'var(--background)',
         foreground: 'var(--foreground)',
+        borderColor: 'var(--borderColor)',
 
         // 프로젝트 주요 색상
         primary: {
