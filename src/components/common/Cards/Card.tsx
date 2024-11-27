@@ -31,7 +31,7 @@ export const Card = ({
         {content && <div className="space-y-3">{content}</div>}
         {footer && <div>{footer}</div>}
       </div>
-      {imageSrc && (
+      {imageSrc !== 'https://placehold.co/200' ? (
         <div className={styles.cardImage}>
           <Image
             src={imageSrc}
@@ -40,6 +40,8 @@ export const Card = ({
             className="rounded-lg object-cover"
           />
         </div>
+      ) : (
+        ''
       )}
     </div>
   );
