@@ -1,9 +1,9 @@
-import { Facility } from '@/entities/facility/model/types';
+import { FacilityResponseDTO } from '@/api/generated';
 import { create } from 'zustand';
 
 interface FacilityStore {
-  facilities: Facility[];
-  setFacilities: (facilities: Facility[]) => void;
+  facilities: FacilityResponseDTO[];
+  setFacilities: (facilities: FacilityResponseDTO[]) => void;
 }
 
 export const useFacilityStore = create<FacilityStore>(set => ({

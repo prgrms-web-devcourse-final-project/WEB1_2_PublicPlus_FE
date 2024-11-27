@@ -1,3 +1,5 @@
+import { ExternalReview, Review } from '@/entities/review/model/types';
+
 // 기본 시설 정보 인터페이스
 export interface Facility {
   facilityId: string;
@@ -22,6 +24,8 @@ export interface FacilityDetail extends Facility {
   facilityDescription: string;
   serviceStartDate: string;
   serviceEndDate: string;
+  reviews?: Review[];
+  externalReviews?: ExternalReview[];
 }
 
 export interface PageInfo {
