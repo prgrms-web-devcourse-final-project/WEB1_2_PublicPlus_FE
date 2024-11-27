@@ -12,6 +12,7 @@
     "generate-api": "openapi-generator-cli generate -i swagger.json -g typescript-axios -o src/api/generated --skip-validate-spec"
   },
   "dependencies": {
+    "@faker-js/faker": "^9.2.0",
     "@storybook/addon-a11y": "^8.4.5",
     "@storybook/addon-viewport": "^8.4.5",
     "@tanstack/react-query": "^5.61.3",

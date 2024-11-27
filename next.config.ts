@@ -51,7 +51,15 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    domains: ['picsum.photos', 'placehold.co', 'example.com'] // 허용할 외부 이미지 호스트네임
+    domains: ['picsum.photos', 'placehold.co', 'example.com'], // 허용할 외부 이미지 호스트네임
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+        port: '',
+        pathname: '**'
+      }
+    ]
   }
 };
 

@@ -16,5 +16,5 @@
 }
 
 .label.active {
-  @apply text-gray-100 opacity-100;
+  @apply text-gray-50 opacity-100;
 }

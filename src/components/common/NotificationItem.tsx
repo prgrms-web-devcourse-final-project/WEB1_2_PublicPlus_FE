@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import { Button } from './Button/Button';
+import { Button } from '@/components/common/Button/Button';
 
 interface NotificationItemProps {
   message: string;
   time?: string;
   onAccept?: () => void;
-  variant?: 'default' | 'new'; // 배경색 variant 추가
+  variant?: 'default' | 'new';
 }
 
 export const NotificationItem = ({
@@ -18,27 +18,29 @@ export const NotificationItem = ({
 
   return (
     <div
-      className={`flex items-center justify-between ${bgColor} p-4 py-6 shadow-sm`}>
-      <div className="flex items-start gap-3">
+      className={`flex h-[88px] min-h-[88px] items-start justify-between ${bgColor} rounded-sm p-4 py-8 shadow-sm`}>
+      <div className="flex w-full items-start gap-3">
         <div className="">
           <Image
             width={24}
             height={24}
             src="/jjang.jpeg"
             alt="프로필사진"
-            className="w-full rounded-full"
+            className="rounded-full"
           />
         </div>
 
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-1 flex-col justify-between">
           <p className="text-sm text-gray-900">{message}</p>
           {onAccept && (
-            <div onClick={onAccept}>
+            <div
+              className="mt-4"
+              onClick={onAccept}>
               <Button size="sm">수락</Button>
             </div>
           )}
         </div>
-        <div className="text-xs text-gray-500">{time}</div>
+        <div className="ml-2 flex-shrink-0 text-xs text-gray-500">{time}</div>
       </div>
     </div>
   );

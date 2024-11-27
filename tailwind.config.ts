@@ -1,6 +1,5 @@
 import type { Config } from 'tailwindcss';
 import forms from '@tailwindcss/forms';
-import lineClamp from '@tailwindcss/line-clamp';
 import { PluginAPI } from 'tailwindcss/types/config';
 
 export default {
@@ -35,7 +34,7 @@ export default {
         // 프로젝트 주요 색상
         primary: {
           DEFAULT: '#0080FF',
-          50: '#F0F8FF',
+          50: '#EEF3FF',
           100: '#C7E1FF',
           200: '#A3CDFF',
           300: '#7FB9FF',
@@ -122,7 +121,6 @@ export default {
   },
   plugins: [
     forms,
-    lineClamp,
     function ({ addBase }: { addBase: PluginAPI['addBase'] }) {
       addBase({
         '@media (max-width: 340px)': {
