@@ -43,8 +43,9 @@ body {
 }
 
 .container {
-  padding-top: 5.6rem;
-  padding-bottom: 5.6rem;
+  padding: 0 16px;
+  padding-top: 7rem;
+  padding-bottom: 7rem;
 }
 
 .category-swiper {
@@ -53,4 +54,39 @@ body {
 
 .category-swiper .swiper-slide {
   width: auto;
+}
+
+/* 최대너비 지정 */
+:root {
+  --max-width: 600px;
+  --layout-bg-color: #ffffff;
+}
+
+body {
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
+  min-width: 340px;
+  background-color: var(--layout-bg-color);
+}
+
+@media (min-width: 768px) {
+  body::before,
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background-color: rgba(138, 138, 138, 0.1);
+    z-index: 9999;
+  }
+
+  body::before {
+    left: calc(50% - 300px); /* 600px의 절반인 300px로 조정 */
+  }
+
+  body::after {
+    right: calc(50% - 300px); /* 600px의 절반인 300px로 조정 */
+  }
 }

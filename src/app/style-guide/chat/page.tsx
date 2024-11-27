@@ -3,6 +3,7 @@
 import { Button } from '@/components/common/Button/Button';
 import { ChatInput } from '@/components/common/Chat/ChatInput';
 import { ChatMessage } from '@/components/common/Chat/ChatMessage';
+import { CustomHeader } from '@/components/common/Header/CustomHeader';
 import { useToast } from '@/components/common/Toast/Toast';
 import { useState } from 'react';
 
@@ -58,6 +59,13 @@ export default function ChatPage() {
 
   return (
     <div className="flex h-screen flex-col">
+      <CustomHeader
+        title="채팅함"
+        rightButton={{
+          icon: '/icons/more_horiz.png',
+          alt: '버튼'
+        }}
+      />
       <div
         onClick={handleClick}
         className="text-center">

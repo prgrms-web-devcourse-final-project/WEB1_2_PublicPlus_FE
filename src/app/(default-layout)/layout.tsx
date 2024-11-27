@@ -7,10 +7,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <Header detailTitle="시설명" />
-      <main className="container">{children}</main>
-      <Navigation activeTab={'search'} />
-    </>
+    <div className="mx-auto min-h-screen w-full max-w-[768px]">
+      <div className="flex min-h-screen flex-col">
+        <Header detailTitle="시설명" />
+        <main className="container flex-grow px-4">{children}</main>
+        <Navigation activeTab={'search'} />
+      </div>
+    </div>
   );
 }
