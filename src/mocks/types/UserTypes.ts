@@ -1,17 +1,38 @@
 export interface User {
-  id: string;
+  userId: string;
   email: string;
-  name: string;
   password: string;
+  name: string;
+  nickname: string;
+  profilePath: string;
+  description: string;
+  role: 'USER' | 'ADMIN';
 }
+
 export interface LoginResponse {
-  accessToken: string;
-  user: Omit<User, 'password'>; // password 제외
+  bearer: string;
+  access_token: string;
+  refresh_token: string;
+  user: {
+    userId: string;
+    email: string;
+    nickname: string;
+  };
   message?: string;
 }
 
 export interface SignupRequest {
   email: string;
   password: string;
-  name: string;
+  checkPassword: string;
+  nickname: string;
+}
+
+export interface EmailVerificationRequest {
+  email: string;
+}
+
+export interface ProfileUpdateRequest {
+  nickname?: string;
+  description?: string;
 }
