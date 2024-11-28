@@ -1,8 +1,20 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import { ChatMessage } from '@/components/common/Chat/ChatMessage';
 import { ChatInput } from '@/components/common/Chat/ChatInput';
 import { CustomHeader } from '@/components/common/Header/CustomHeader';
+import { ChatRoomInfoModal } from '@/features/chat/ui/ChatRoomInfoModal';
+interface ChatRoom {
+  id: string;
+  name: string;
+  latestMessage: string;
+  latestTimestamp: string;
+  type: 'group' | 'personal';
+  sports: string;
+  status: 'active' | 'completed';
+  messages: Message[];
+}
 
 interface Message {
   id: string;
@@ -13,31 +25,126 @@ interface Message {
   profileImage?: string;
 }
 
-export default function ChatRoom() {
-  // 채팅방 정보 상태 추가
-  const [roomInfo] = useState({
-    name: '테니스합시덩',
-    lastMessage: '안녕하세요~~~',
-    timestamp: '오후 11:35'
-  });
+const CHAT_ROOMS: ChatRoom[] = [
+  {
+    id: '1',
+    name: '농구에 미친 사럼들',
+    latestMessage: '종합운동장에서 하는 거 맞나요??',
+    latestTimestamp: '2024.11.28',
+    type: 'group',
+    sports: '농구',
+    status: 'active',
+    messages: [
+      {
+        id: '1',
+        message: '종합운동장 몇 시에 모일까요?',
+        timestamp: '오후 2:30',
+        isMine: false,
+        username: '농구러',
+        profileImage: ''
+      },
+      {
+        id: '2',
+        message: '오후 6시 종합운동장 농구장에서 만나요!',
+        timestamp: '오후 2:35',
+        isMine: true
+      }
+    ]
+  },
+  {
+    id: '2',
+    name: '김철수',
+    latestMessage: '오늘 저녁 러닝 ㄱ?',
+    latestTimestamp: '2024.11.28',
+    type: 'personal',
+    sports: '',
+    status: 'completed',
+    messages: [
+      {
+        id: '1',
+        message: '오늘 저녁 러닝 ㄱ?',
+        timestamp: '오후 2:31',
+        isMine: false,
+        username: '김철수',
+        profileImage: ''
+      },
+      {
+        id: '2',
+        message: '네, 몇 시쯤 갈까요?',
+        timestamp: '오후 2:32',
+        isMine: true
+      }
+    ]
+  },
+  {
+    id: '3',
+    name: '축구 동호회',
+    latestMessage: '다음 경기 일정 잡자',
+    latestTimestamp: '2024.11.27',
+    type: 'group',
+    sports: '축구',
+    status: 'active',
+    messages: [
+      {
+        id: '1',
+        message: '다음 경기 일정 언제로 할까요?',
+        timestamp: '오후 3:00',
+        isMine: false,
+        username: '축구러',
+        profileImage: ''
+      },
+      {
+        id: '2',
+        message: '다음 주 토요일 오후 2시 어떠세요?',
+        timestamp: '오후 3:05',
+        isMine: true
+      }
+    ]
+  },
+  {
+    id: '4',
+    name: '이영희',
+    latestMessage: '테니스 레슨 끝났어',
+    latestTimestamp: '2024.11.26',
+    type: 'personal',
+    sports: '',
+    status: 'completed',
+    messages: [
+      {
+        id: '1',
+        message: '테니스 레슨 끝났어',
+        timestamp: '오후 4:00',
+        isMine: false,
+        username: '이영희',
+        profileImage: ''
+      },
+      {
+        id: '2',
+        message: '수고하셨어요!',
+        timestamp: '오후 4:05',
+        isMine: true
+      }
+    ]
+  }
+];
 
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      message: '안녕하세요! 테니스 모임에 대해 문의드립니다.',
-      timestamp: '오후 2:30',
-      isMine: false,
-      username: '사용자',
-      profileImage: '/jjang.jpeg'
-    },
-    {
-      id: '2',
-      message: '네, 어떤 점이 궁금하신가요?',
-      timestamp: '오후 2:31',
-      isMine: true
-    }
-  ]);
+export default function ChatRoomDetail() {
+  const params = useParams();
+  const chatRoomId = typeof params?.id === 'string' ? params.id : '';
+
+  const [roomInfo, setRoomInfo] = useState<ChatRoom | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
+  const [isSideModalOpen, setIsSideModalOpen] = useState(false);
+
+  useEffect(() => {
+    const selectedRoom = CHAT_ROOMS.find(room => room.id === chatRoomId);
+
+    if (selectedRoom) {
+      setRoomInfo(selectedRoom);
+      setMessages(selectedRoom.messages);
+    }
+  }, [chatRoomId]);
 
   const handleSend = () => {
     if (!inputValue.trim()) return;
@@ -57,13 +164,13 @@ export default function ChatRoom() {
   };
 
   const handleMoreClick = () => {
-    // 더보기 버튼 클릭 시 실행할 함수
-    console.log('더보기 버튼 클릭');
-    // 여기에 원하는 로직 추가
+    setIsSideModalOpen(true);
   };
 
+  if (!roomInfo) return <div>채팅방을 찾을 수 없습니다.</div>;
+
   return (
-    <div className="flex h-[calc(100vh-13rem)] flex-col">
+    <div className="flex h-[calc(100vh-14rem)] flex-col">
       <CustomHeader
         title={roomInfo.name}
         rightButton={{
@@ -92,6 +199,14 @@ export default function ChatRoom() {
           onSend={handleSend}
         />
       </div>
+
+      {/* 사이드 모달 */}
+      {isSideModalOpen && roomInfo && (
+        <ChatRoomInfoModal
+          roomInfo={roomInfo}
+          onClose={() => setIsSideModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

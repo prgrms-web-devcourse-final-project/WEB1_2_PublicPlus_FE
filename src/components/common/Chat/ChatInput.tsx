@@ -5,7 +5,7 @@ interface ChatInputProps {
   onSend: () => void; // 메시지 전송 시 호출되는 함수
 }
 export const ChatInput = ({ value, onChange, onSend }: ChatInputProps) => (
-  <div className="flex items-center gap-2 bg-white py-2">
+  <div className="flex items-center gap-2 bg-white pt-4">
     <input
       type="text"
       value={value}

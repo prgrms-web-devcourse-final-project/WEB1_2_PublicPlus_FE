@@ -1,5 +1,5 @@
 .navigation {
-  @apply fixed bottom-0 left-0 right-0 z-50 flex h-24 min-h-24 items-center justify-around bg-primary px-4 pb-safe-bottom;
+  @apply fixed bottom-0 left-0 right-0 z-30 flex h-24 min-h-24 items-center justify-around bg-primary px-4 pb-safe-bottom;
   width: 100%; /* 전체 너비 사용 */
   max-width: 600px; /* 최대 너비 고정 */
   margin: 0 auto; /* 중앙 정렬 */
