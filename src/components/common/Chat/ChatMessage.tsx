@@ -3,8 +3,8 @@ interface ChatMessageProps {
   message: string;
   timestamp: string;
   isMine: boolean;
-  profileImage?: string; // 프로필 이미지 추가
-  username?: string; // 사용자 이름 추가
+  profileImage?: string;
+  username?: string;
 }
 export const ChatMessage = ({
   message,
