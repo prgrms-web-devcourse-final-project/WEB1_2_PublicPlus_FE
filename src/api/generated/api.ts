@@ -30,49 +30,49 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerM
  */
 export interface ActivityCreateDTO {
     /**
-     * 
+     * 모임의 제목
      * @type {string}
      * @memberof ActivityCreateDTO
      */
     'title'?: string;
     /**
-     * 
+     * 구글 캘린더의 Event ID
      * @type {string}
      * @memberof ActivityCreateDTO
      */
     'eventId'?: string;
     /**
-     * 
+     * 모임에 대한 설명
      * @type {string}
      * @memberof ActivityCreateDTO
      */
     'description'?: string;
     /**
-     * 
+     * 모임 장소
      * @type {string}
      * @memberof ActivityCreateDTO
      */
     'location'?: string;
     /**
-     * 
+     * 모임 시작 시간 (ISO 8601 형식)
      * @type {string}
      * @memberof ActivityCreateDTO
      */
     'startTime'?: string;
     /**
-     * 
+     * 모임 종료 시간 (ISO 8601 형식)
      * @type {string}
      * @memberof ActivityCreateDTO
      */
     'endTime'?: string;
     /**
-     * 
+     * 구글 캘린더 ID
      * @type {string}
      * @memberof ActivityCreateDTO
      */
     'googleCalenderId'?: string;
     /**
-     * 
+     * 모임 최대 참석자 수
      * @type {number}
      * @memberof ActivityCreateDTO
      */
@@ -139,6 +139,12 @@ export interface ActivityResponseDTO {
  * @interface ActivityUpdateDTO
  */
 export interface ActivityUpdateDTO {
+    /**
+     * 
+     * @type {number}
+     * @memberof ActivityUpdateDTO
+     */
+    'activityId'?: number;
     /**
      * 
      * @type {string}
@@ -1702,25 +1708,6 @@ export interface Events {
 /**
  * 
  * @export
- * @interface FCMTokenRequest
- */
-export interface FCMTokenRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof FCMTokenRequest
-     */
-    'userId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FCMTokenRequest
-     */
-    'token'?: string;
-}
-/**
- * 
- * @export
  * @interface FacilityDetailsResponseDTO
  */
 export interface FacilityDetailsResponseDTO {
@@ -1808,6 +1795,18 @@ export interface FacilityDetailsResponseDTO {
      * @memberof FacilityDetailsResponseDTO
      */
     'serviceEndDate'?: string;
+    /**
+     * 위도
+     * @type {number}
+     * @memberof FacilityDetailsResponseDTO
+     */
+    'latitude'?: number;
+    /**
+     * 경도
+     * @type {number}
+     * @memberof FacilityDetailsResponseDTO
+     */
+    'longitude'?: number;
 }
 
 export const FacilityDetailsResponseDTOFacilityCategoryEnum = {
@@ -1976,53 +1975,78 @@ export interface FacilityFilterDTO {
 /**
  * 
  * @export
+ * @interface FacilityLocationDTO
+ */
+export interface FacilityLocationDTO {
+    /**
+     * 검색할 시설의 위도
+     * @type {number}
+     * @memberof FacilityLocationDTO
+     */
+    'latitude'?: number;
+    /**
+     * 검색할 시설의 경도
+     * @type {number}
+     * @memberof FacilityLocationDTO
+     */
+    'longitude'?: number;
+    /**
+     * 검색할 반경 (킬로미터 단위)
+     * @type {number}
+     * @memberof FacilityLocationDTO
+     */
+    'radius'?: number;
+}
+/**
+ * 
+ * @export
  * @interface FacilityResponseDTO
  */
 export interface FacilityResponseDTO {
     /**
-     * 
+     * 시설 ID
      * @type {string}
      * @memberof FacilityResponseDTO
      */
     'facilityId'?: string;
     /**
-     * 
+     * 시설 이름
      * @type {string}
      * @memberof FacilityResponseDTO
      */
     'facilityName'?: string;
     /**
-     * 
+     * 시설 카테고리
      * @type {string}
      * @memberof FacilityResponseDTO
      */
     'facilityCategory'?: FacilityResponseDTOFacilityCategoryEnum;
     /**
-     * 
+     * 시설 지역
      * @type {string}
      * @memberof FacilityResponseDTO
      */
     'area'?: string;
     /**
-     * 
+     * 시설 가격 정보
      * @type {boolean}
      * @memberof FacilityResponseDTO
      */
     'priceType'?: boolean;
     /**
-     * 
+     * 시설 이미지 URL
      * @type {string}
      * @memberof FacilityResponseDTO
      */
     'facilityImage'?: string;
     /**
-     * 
+     * 예약 시작 날짜
      * @type {string}
      * @memberof FacilityResponseDTO
      */
     'reservationStartDate'?: string;
     /**
-     * 
+     * 예약 종료 날짜
      * @type {string}
      * @memberof FacilityResponseDTO
      */
@@ -2069,12 +2093,6 @@ export interface FieldInfo {
     'name'?: string;
     /**
      * 
-     * @type {Array<FieldInfoTersMethodForFieldInner>}
-     * @memberof FieldInfo
-     */
-    'tersMethodForField'?: Array<FieldInfoTersMethodForFieldInner>;
-    /**
-     * 
      * @type {boolean}
      * @memberof FieldInfo
      */
@@ -2097,6 +2115,165 @@ export interface FieldInfo {
      * @memberof FieldInfo
      */
     'classInfo'?: ClassInfo;
+    /**
+     * 
+     * @type {Array<FieldInfoTersMethodForField>}
+     * @memberof FieldInfo
+     */
+    'tersMethodForField'?: Array<FieldInfoTersMethodForField>;
+}
+/**
+ * 
+ * @export
+ * @interface FieldInfoDeclaringExecutable
+ */
+export interface FieldInfoDeclaringExecutable {
+    /**
+     * 
+     * @type {string}
+     * @memberof FieldInfoDeclaringExecutable
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof FieldInfoDeclaringExecutable
+     */
+    'modifiers'?: number;
+    /**
+     * 
+     * @type {Array<FieldInfoDeclaringExecutableTypeParameters>}
+     * @memberof FieldInfoDeclaringExecutable
+     */
+    'typeParameters'?: Array<FieldInfoDeclaringExecutableTypeParameters>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FieldInfoDeclaringExecutable
+     */
+    'synthetic'?: boolean;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof FieldInfoDeclaringExecutable
+     */
+    'declaredAnnotations'?: Array<object>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FieldInfoDeclaringExecutable
+     */
+    'varArgs'?: boolean;
+    /**
+     * 
+     * @type {Array<FieldInfoFieldAnnotatedType>}
+     * @memberof FieldInfoDeclaringExecutable
+     */
+    'annotatedParameterTypes'?: Array<FieldInfoFieldAnnotatedType>;
+    /**
+     * 
+     * @type {number}
+     * @memberof FieldInfoDeclaringExecutable
+     */
+    'parameterCount'?: number;
+    /**
+     * 
+     * @type {Array<Array<object>>}
+     * @memberof FieldInfoDeclaringExecutable
+     */
+    'parameterAnnotations'?: Array<Array<object>>;
+    /**
+     * 
+     * @type {Array<FieldInfoFieldGenericType>}
+     * @memberof FieldInfoDeclaringExecutable
+     */
+    'genericParameterTypes'?: Array<FieldInfoFieldGenericType>;
+    /**
+     * 
+     * @type {Array<FieldInfoFieldGenericType>}
+     * @memberof FieldInfoDeclaringExecutable
+     */
+    'genericExceptionTypes'?: Array<FieldInfoFieldGenericType>;
+    /**
+     * 
+     * @type {FieldInfoFieldAnnotatedType}
+     * @memberof FieldInfoDeclaringExecutable
+     */
+    'annotatedReturnType'?: FieldInfoFieldAnnotatedType;
+    /**
+     * 
+     * @type {FieldInfoFieldAnnotatedType}
+     * @memberof FieldInfoDeclaringExecutable
+     */
+    'annotatedReceiverType'?: FieldInfoFieldAnnotatedType;
+    /**
+     * 
+     * @type {Array<FieldInfoFieldAnnotatedType>}
+     * @memberof FieldInfoDeclaringExecutable
+     */
+    'annotatedExceptionTypes'?: Array<FieldInfoFieldAnnotatedType>;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof FieldInfoDeclaringExecutable
+     */
+    'annotations'?: Array<object>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FieldInfoDeclaringExecutable
+     * @deprecated
+     */
+    'accessible'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface FieldInfoDeclaringExecutableTypeParameters
+ */
+export interface FieldInfoDeclaringExecutableTypeParameters {
+    /**
+     * 
+     * @type {object}
+     * @memberof FieldInfoDeclaringExecutableTypeParameters
+     */
+    'genericDeclaration'?: object;
+    /**
+     * 
+     * @type {Array<FieldInfoFieldAnnotatedType>}
+     * @memberof FieldInfoDeclaringExecutableTypeParameters
+     */
+    'annotatedBounds'?: Array<FieldInfoFieldAnnotatedType>;
+    /**
+     * 
+     * @type {string}
+     * @memberof FieldInfoDeclaringExecutableTypeParameters
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {Array<FieldInfoFieldGenericType>}
+     * @memberof FieldInfoDeclaringExecutableTypeParameters
+     */
+    'bounds'?: Array<FieldInfoFieldGenericType>;
+    /**
+     * 
+     * @type {string}
+     * @memberof FieldInfoDeclaringExecutableTypeParameters
+     */
+    'typeName'?: string;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof FieldInfoDeclaringExecutableTypeParameters
+     */
+    'annotations'?: Array<object>;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof FieldInfoDeclaringExecutableTypeParameters
+     */
+    'declaredAnnotations'?: Array<object>;
 }
 /**
  * 
@@ -2201,403 +2378,250 @@ export interface FieldInfoFieldGenericType {
 /**
  * 
  * @export
- * @interface FieldInfoTersMethodForFieldInner
+ * @interface FieldInfoParameters
  */
-export interface FieldInfoTersMethodForFieldInner {
+export interface FieldInfoParameters {
     /**
      * 
      * @type {string}
-     * @memberof FieldInfoTersMethodForFieldInner
+     * @memberof FieldInfoParameters
      */
     'name'?: string;
     /**
      * 
      * @type {number}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'modifiers'?: number;
-    /**
-     * 
-     * @type {Array<FieldInfoTersMethodForFieldInnerTypeParametersInner>}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'typeParameters'?: Array<FieldInfoTersMethodForFieldInnerTypeParametersInner>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'synthetic'?: boolean;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'declaredAnnotations'?: Array<object>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FieldInfoTersMethodForFieldInner
-     * @deprecated
-     */
-    'accessible'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'varArgs'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'parameterCount'?: number;
-    /**
-     * 
-     * @type {Array<Array<object>>}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'parameterAnnotations'?: Array<Array<object>>;
-    /**
-     * 
-     * @type {Array<FieldInfoFieldGenericType>}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'genericParameterTypes'?: Array<FieldInfoFieldGenericType>;
-    /**
-     * 
-     * @type {Array<FieldInfoFieldGenericType>}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'genericExceptionTypes'?: Array<FieldInfoFieldGenericType>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'default'?: boolean;
-    /**
-     * 
-     * @type {FieldInfoFieldGenericType}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'genericReturnType'?: FieldInfoFieldGenericType;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'bridge'?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'defaultValue'?: object;
-    /**
-     * 
-     * @type {FieldInfoFieldAnnotatedType}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'annotatedReturnType'?: FieldInfoFieldAnnotatedType;
-    /**
-     * 
-     * @type {Array<FieldInfoFieldAnnotatedType>}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'annotatedParameterTypes'?: Array<FieldInfoFieldAnnotatedType>;
-    /**
-     * 
-     * @type {Array<FieldInfoTersMethodForFieldInnerParametersInner>}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'parameters'?: Array<FieldInfoTersMethodForFieldInnerParametersInner>;
-    /**
-     * 
-     * @type {FieldInfoFieldAnnotatedType}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'annotatedReceiverType'?: FieldInfoFieldAnnotatedType;
-    /**
-     * 
-     * @type {Array<FieldInfoFieldAnnotatedType>}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'annotatedExceptionTypes'?: Array<FieldInfoFieldAnnotatedType>;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof FieldInfoTersMethodForFieldInner
-     */
-    'annotations'?: Array<object>;
-}
-/**
- * 
- * @export
- * @interface FieldInfoTersMethodForFieldInnerParametersInner
- */
-export interface FieldInfoTersMethodForFieldInnerParametersInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInner
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInner
+     * @memberof FieldInfoParameters
      */
     'modifiers'?: number;
     /**
      * 
      * @type {boolean}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInner
+     * @memberof FieldInfoParameters
      */
     'synthetic'?: boolean;
     /**
      * 
      * @type {Array<object>}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInner
+     * @memberof FieldInfoParameters
      */
     'annotations'?: Array<object>;
     /**
      * 
      * @type {Array<object>}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInner
+     * @memberof FieldInfoParameters
      */
     'declaredAnnotations'?: Array<object>;
     /**
      * 
      * @type {FieldInfoFieldAnnotatedType}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInner
+     * @memberof FieldInfoParameters
      */
     'annotatedType'?: FieldInfoFieldAnnotatedType;
     /**
      * 
      * @type {FieldInfoFieldGenericType}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInner
+     * @memberof FieldInfoParameters
      */
     'parameterizedType'?: FieldInfoFieldGenericType;
     /**
      * 
      * @type {boolean}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInner
+     * @memberof FieldInfoParameters
      */
     'varArgs'?: boolean;
     /**
      * 
      * @type {boolean}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInner
+     * @memberof FieldInfoParameters
      */
     'namePresent'?: boolean;
     /**
      * 
-     * @type {FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInner
+     * @type {FieldInfoDeclaringExecutable}
+     * @memberof FieldInfoParameters
      */
-    'declaringExecutable'?: FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable;
+    'declaringExecutable'?: FieldInfoDeclaringExecutable;
     /**
      * 
      * @type {boolean}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInner
+     * @memberof FieldInfoParameters
      */
     'implicit'?: boolean;
 }
 /**
  * 
  * @export
- * @interface FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable
+ * @interface FieldInfoTersMethodForField
  */
-export interface FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable {
+export interface FieldInfoTersMethodForField {
     /**
      * 
      * @type {string}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable
+     * @memberof FieldInfoTersMethodForField
      */
     'name'?: string;
     /**
      * 
      * @type {number}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable
+     * @memberof FieldInfoTersMethodForField
      */
     'modifiers'?: number;
     /**
      * 
-     * @type {Array<FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutableTypeParametersInner>}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable
+     * @type {Array<FieldInfoTypeParameters>}
+     * @memberof FieldInfoTersMethodForField
      */
-    'typeParameters'?: Array<FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutableTypeParametersInner>;
+    'typeParameters'?: Array<FieldInfoTypeParameters>;
     /**
      * 
      * @type {boolean}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable
+     * @memberof FieldInfoTersMethodForField
      */
     'synthetic'?: boolean;
     /**
      * 
      * @type {Array<object>}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable
+     * @memberof FieldInfoTersMethodForField
      */
     'declaredAnnotations'?: Array<object>;
     /**
      * 
      * @type {boolean}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable
+     * @memberof FieldInfoTersMethodForField
+     * @deprecated
+     */
+    'accessible'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FieldInfoTersMethodForField
      */
     'varArgs'?: boolean;
     /**
      * 
-     * @type {Array<FieldInfoFieldAnnotatedType>}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable
-     */
-    'annotatedParameterTypes'?: Array<FieldInfoFieldAnnotatedType>;
-    /**
-     * 
      * @type {number}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable
+     * @memberof FieldInfoTersMethodForField
      */
     'parameterCount'?: number;
     /**
      * 
      * @type {Array<Array<object>>}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable
+     * @memberof FieldInfoTersMethodForField
      */
     'parameterAnnotations'?: Array<Array<object>>;
     /**
      * 
      * @type {Array<FieldInfoFieldGenericType>}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable
+     * @memberof FieldInfoTersMethodForField
      */
     'genericParameterTypes'?: Array<FieldInfoFieldGenericType>;
     /**
      * 
      * @type {Array<FieldInfoFieldGenericType>}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable
+     * @memberof FieldInfoTersMethodForField
      */
     'genericExceptionTypes'?: Array<FieldInfoFieldGenericType>;
     /**
      * 
+     * @type {boolean}
+     * @memberof FieldInfoTersMethodForField
+     */
+    'default'?: boolean;
+    /**
+     * 
+     * @type {FieldInfoFieldGenericType}
+     * @memberof FieldInfoTersMethodForField
+     */
+    'genericReturnType'?: FieldInfoFieldGenericType;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FieldInfoTersMethodForField
+     */
+    'bridge'?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof FieldInfoTersMethodForField
+     */
+    'defaultValue'?: object;
+    /**
+     * 
      * @type {FieldInfoFieldAnnotatedType}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable
+     * @memberof FieldInfoTersMethodForField
      */
     'annotatedReturnType'?: FieldInfoFieldAnnotatedType;
     /**
      * 
+     * @type {Array<FieldInfoFieldAnnotatedType>}
+     * @memberof FieldInfoTersMethodForField
+     */
+    'annotatedParameterTypes'?: Array<FieldInfoFieldAnnotatedType>;
+    /**
+     * 
+     * @type {Array<FieldInfoParameters>}
+     * @memberof FieldInfoTersMethodForField
+     */
+    'parameters'?: Array<FieldInfoParameters>;
+    /**
+     * 
      * @type {FieldInfoFieldAnnotatedType}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable
+     * @memberof FieldInfoTersMethodForField
      */
     'annotatedReceiverType'?: FieldInfoFieldAnnotatedType;
     /**
      * 
      * @type {Array<FieldInfoFieldAnnotatedType>}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable
+     * @memberof FieldInfoTersMethodForField
      */
     'annotatedExceptionTypes'?: Array<FieldInfoFieldAnnotatedType>;
     /**
      * 
      * @type {Array<object>}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable
+     * @memberof FieldInfoTersMethodForField
      */
     'annotations'?: Array<object>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutable
-     * @deprecated
-     */
-    'accessible'?: boolean;
 }
 /**
  * 
  * @export
- * @interface FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutableTypeParametersInner
+ * @interface FieldInfoTypeParameters
  */
-export interface FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutableTypeParametersInner {
-    /**
-     * 
-     * @type {object}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutableTypeParametersInner
-     */
-    'genericDeclaration'?: object;
+export interface FieldInfoTypeParameters {
     /**
      * 
      * @type {Array<FieldInfoFieldAnnotatedType>}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutableTypeParametersInner
+     * @memberof FieldInfoTypeParameters
      */
     'annotatedBounds'?: Array<FieldInfoFieldAnnotatedType>;
     /**
      * 
      * @type {string}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutableTypeParametersInner
+     * @memberof FieldInfoTypeParameters
      */
     'name'?: string;
     /**
      * 
      * @type {Array<FieldInfoFieldGenericType>}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutableTypeParametersInner
+     * @memberof FieldInfoTypeParameters
      */
     'bounds'?: Array<FieldInfoFieldGenericType>;
     /**
      * 
      * @type {string}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutableTypeParametersInner
+     * @memberof FieldInfoTypeParameters
      */
     'typeName'?: string;
     /**
      * 
      * @type {Array<object>}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutableTypeParametersInner
+     * @memberof FieldInfoTypeParameters
      */
     'annotations'?: Array<object>;
     /**
      * 
      * @type {Array<object>}
-     * @memberof FieldInfoTersMethodForFieldInnerParametersInnerDeclaringExecutableTypeParametersInner
-     */
-    'declaredAnnotations'?: Array<object>;
-}
-/**
- * 
- * @export
- * @interface FieldInfoTersMethodForFieldInnerTypeParametersInner
- */
-export interface FieldInfoTersMethodForFieldInnerTypeParametersInner {
-    /**
-     * 
-     * @type {Array<FieldInfoFieldAnnotatedType>}
-     * @memberof FieldInfoTersMethodForFieldInnerTypeParametersInner
-     */
-    'annotatedBounds'?: Array<FieldInfoFieldAnnotatedType>;
-    /**
-     * 
-     * @type {string}
-     * @memberof FieldInfoTersMethodForFieldInnerTypeParametersInner
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {Array<FieldInfoFieldGenericType>}
-     * @memberof FieldInfoTersMethodForFieldInnerTypeParametersInner
-     */
-    'bounds'?: Array<FieldInfoFieldGenericType>;
-    /**
-     * 
-     * @type {string}
-     * @memberof FieldInfoTersMethodForFieldInnerTypeParametersInner
-     */
-    'typeName'?: string;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof FieldInfoTersMethodForFieldInnerTypeParametersInner
-     */
-    'annotations'?: Array<object>;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof FieldInfoTersMethodForFieldInnerTypeParametersInner
+     * @memberof FieldInfoTypeParameters
      */
     'declaredAnnotations'?: Array<object>;
 }
@@ -2748,6 +2772,79 @@ export interface NotificationDTO {
      * @memberof NotificationDTO
      */
     'userId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface Page
+ */
+export interface Page {
+    /**
+     * 
+     * @type {number}
+     * @memberof Page
+     */
+    'totalElements'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Page
+     */
+    'totalPages'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Page
+     */
+    'size'?: number;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof Page
+     */
+    'content'?: Array<object>;
+    /**
+     * 
+     * @type {number}
+     * @memberof Page
+     */
+    'number'?: number;
+    /**
+     * 
+     * @type {Array<SortObject>}
+     * @memberof Page
+     */
+    'sort'?: Array<SortObject>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Page
+     */
+    'first'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Page
+     */
+    'last'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof Page
+     */
+    'numberOfElements'?: number;
+    /**
+     * 
+     * @type {PageableObject}
+     * @memberof Page
+     */
+    'pageable'?: PageableObject;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Page
+     */
+    'empty'?: boolean;
 }
 /**
  * 
@@ -2915,10 +3012,10 @@ export interface PageableObject {
     'sort'?: Array<SortObject>;
     /**
      * 
-     * @type {number}
+     * @type {boolean}
      * @memberof PageableObject
      */
-    'pageSize'?: number;
+    'paged'?: boolean;
     /**
      * 
      * @type {number}
@@ -2927,10 +3024,10 @@ export interface PageableObject {
     'pageNumber'?: number;
     /**
      * 
-     * @type {boolean}
+     * @type {number}
      * @memberof PageableObject
      */
-    'paged'?: boolean;
+    'pageSize'?: number;
     /**
      * 
      * @type {boolean}
@@ -3603,10 +3700,10 @@ export class CalendarControllerApi extends BaseAPI {
 
 
 /**
- * EmailVerificationControllerApi - axios parameter creator
+ * EmailControllerApi - axios parameter creator
  * @export
  */
-export const EmailVerificationControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const EmailControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 이메일 인증을 위한 코드를 발송합니다
@@ -3701,11 +3798,11 @@ export const EmailVerificationControllerApiAxiosParamCreator = function (configu
 };
 
 /**
- * EmailVerificationControllerApi - functional programming interface
+ * EmailControllerApi - functional programming interface
  * @export
  */
-export const EmailVerificationControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = EmailVerificationControllerApiAxiosParamCreator(configuration)
+export const EmailControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = EmailControllerApiAxiosParamCreator(configuration)
     return {
         /**
          * 이메일 인증을 위한 코드를 발송합니다
@@ -3717,7 +3814,7 @@ export const EmailVerificationControllerApiFp = function(configuration?: Configu
         async sendCode(email: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.sendCode(email, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EmailVerificationControllerApi.sendCode']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EmailControllerApi.sendCode']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -3731,18 +3828,18 @@ export const EmailVerificationControllerApiFp = function(configuration?: Configu
         async verifyCode(email: string, code: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.verifyCode(email, code, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EmailVerificationControllerApi.verifyCode']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EmailControllerApi.verifyCode']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
 
 /**
- * EmailVerificationControllerApi - factory interface
+ * EmailControllerApi - factory interface
  * @export
  */
-export const EmailVerificationControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = EmailVerificationControllerApiFp(configuration)
+export const EmailControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = EmailControllerApiFp(configuration)
     return {
         /**
          * 이메일 인증을 위한 코드를 발송합니다
@@ -3769,22 +3866,22 @@ export const EmailVerificationControllerApiFactory = function (configuration?: C
 };
 
 /**
- * EmailVerificationControllerApi - object-oriented interface
+ * EmailControllerApi - object-oriented interface
  * @export
- * @class EmailVerificationControllerApi
+ * @class EmailControllerApi
  * @extends {BaseAPI}
  */
-export class EmailVerificationControllerApi extends BaseAPI {
+export class EmailControllerApi extends BaseAPI {
     /**
      * 이메일 인증을 위한 코드를 발송합니다
      * @summary 이메일 발송
      * @param {string} email 인증번호를 보낼 email 주소
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof EmailVerificationControllerApi
+     * @memberof EmailControllerApi
      */
     public sendCode(email: string, options?: RawAxiosRequestConfig) {
-        return EmailVerificationControllerApiFp(this.configuration).sendCode(email, options).then((request) => request(this.axios, this.basePath));
+        return EmailControllerApiFp(this.configuration).sendCode(email, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3794,10 +3891,10 @@ export class EmailVerificationControllerApi extends BaseAPI {
      * @param {string} code 받은 인증번호
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof EmailVerificationControllerApi
+     * @memberof EmailControllerApi
      */
     public verifyCode(email: string, code: string, options?: RawAxiosRequestConfig) {
-        return EmailVerificationControllerApiFp(this.configuration).verifyCode(email, code, options).then((request) => request(this.axios, this.basePath));
+        return EmailControllerApiFp(this.configuration).verifyCode(email, code, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -4158,6 +4255,39 @@ export const FacilityControllerApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAll: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/facility-detail/all`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer Authentication required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 시설 상세 정보를 삭제합니다.
          * @summary 시설 상세 정보 삭제
          * @param {string} facilityId 
@@ -4304,6 +4434,47 @@ export const FacilityControllerApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
+         * 시설의 이름으로 상세 정보를 가져옵니다.
+         * @summary 시설 상세 정보 가져오기
+         * @param {string} facilityName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFacilityDetail: async (facilityName: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'facilityName' is not null or undefined
+            assertParamExists('getFacilityDetail', 'facilityName', facilityName)
+            const localVarPath = `/api/facility-detail`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer Authentication required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (facilityName !== undefined) {
+                localVarQueryParameter['facilityName'] = facilityName;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 시설 ID로 상세 정보를 조회합니다.
          * @summary 시설 상세 정보 페이지 조회
          * @param {string} facilityId 
@@ -4335,6 +4506,46 @@ export const FacilityControllerApiAxiosParamCreator = function (configuration?: 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 주어진 위도, 경도, 반경에 해당하는 시설들을 검색합니다.
+         * @summary 위치기반 시설 검색
+         * @param {FacilityLocationDTO} facilityLocationDTO 위치 정보와 반경을 포함한 검색 요청 데이터
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchByLocation: async (facilityLocationDTO: FacilityLocationDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'facilityLocationDTO' is not null or undefined
+            assertParamExists('searchByLocation', 'facilityLocationDTO', facilityLocationDTO)
+            const localVarPath = `/api/facility-detail/location`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer Authentication required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(facilityLocationDTO, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4408,6 +4619,17 @@ export const FacilityControllerApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteAll(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: string; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAll(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FacilityControllerApi.deleteAll']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 시설 상세 정보를 삭제합니다.
          * @summary 시설 상세 정보 삭제
          * @param {string} facilityId 
@@ -4458,6 +4680,19 @@ export const FacilityControllerApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * 시설의 이름으로 상세 정보를 가져옵니다.
+         * @summary 시설 상세 정보 가져오기
+         * @param {string} facilityName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFacilityDetail(facilityName: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFacilityDetail(facilityName, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FacilityControllerApi.getFacilityDetail']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 시설 ID로 상세 정보를 조회합니다.
          * @summary 시설 상세 정보 페이지 조회
          * @param {string} facilityId 
@@ -4468,6 +4703,19 @@ export const FacilityControllerApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.readFacilityDetails(facilityId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FacilityControllerApi.readFacilityDetails']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 주어진 위도, 경도, 반경에 해당하는 시설들을 검색합니다.
+         * @summary 위치기반 시설 검색
+         * @param {FacilityLocationDTO} facilityLocationDTO 위치 정보와 반경을 포함한 검색 요청 데이터
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async searchByLocation(facilityLocationDTO: FacilityLocationDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Page>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchByLocation(facilityLocationDTO, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FacilityControllerApi.searchByLocation']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4502,6 +4750,14 @@ export const FacilityControllerApiFactory = function (configuration?: Configurat
          */
         addAllFacilityDetails(options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.addAllFacilityDetails(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAll(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: string; }> {
+            return localVarFp.deleteAll(options).then((request) => request(axios, basePath));
         },
         /**
          * 시설 상세 정보를 삭제합니다.
@@ -4542,6 +4798,16 @@ export const FacilityControllerApiFactory = function (configuration?: Configurat
             return localVarFp.getAllFacilityDetails(options).then((request) => request(axios, basePath));
         },
         /**
+         * 시설의 이름으로 상세 정보를 가져옵니다.
+         * @summary 시설 상세 정보 가져오기
+         * @param {string} facilityName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFacilityDetail(facilityName: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.getFacilityDetail(facilityName, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 시설 ID로 상세 정보를 조회합니다.
          * @summary 시설 상세 정보 페이지 조회
          * @param {string} facilityId 
@@ -4550,6 +4816,16 @@ export const FacilityControllerApiFactory = function (configuration?: Configurat
          */
         readFacilityDetails(facilityId: string, options?: RawAxiosRequestConfig): AxiosPromise<FacilityDetailsResponseDTO> {
             return localVarFp.readFacilityDetails(facilityId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 주어진 위도, 경도, 반경에 해당하는 시설들을 검색합니다.
+         * @summary 위치기반 시설 검색
+         * @param {FacilityLocationDTO} facilityLocationDTO 위치 정보와 반경을 포함한 검색 요청 데이터
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchByLocation(facilityLocationDTO: FacilityLocationDTO, options?: RawAxiosRequestConfig): AxiosPromise<Page> {
+            return localVarFp.searchByLocation(facilityLocationDTO, options).then((request) => request(axios, basePath));
         },
         /**
          * 시설 상세 정보를 업데이트합니다.
@@ -4581,6 +4857,16 @@ export class FacilityControllerApi extends BaseAPI {
      */
     public addAllFacilityDetails(options?: RawAxiosRequestConfig) {
         return FacilityControllerApiFp(this.configuration).addAllFacilityDetails(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FacilityControllerApi
+     */
+    public deleteAll(options?: RawAxiosRequestConfig) {
+        return FacilityControllerApiFp(this.configuration).deleteAll(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4630,6 +4916,18 @@ export class FacilityControllerApi extends BaseAPI {
     }
 
     /**
+     * 시설의 이름으로 상세 정보를 가져옵니다.
+     * @summary 시설 상세 정보 가져오기
+     * @param {string} facilityName 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FacilityControllerApi
+     */
+    public getFacilityDetail(facilityName: string, options?: RawAxiosRequestConfig) {
+        return FacilityControllerApiFp(this.configuration).getFacilityDetail(facilityName, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * 시설 ID로 상세 정보를 조회합니다.
      * @summary 시설 상세 정보 페이지 조회
      * @param {string} facilityId 
@@ -4639,6 +4937,18 @@ export class FacilityControllerApi extends BaseAPI {
      */
     public readFacilityDetails(facilityId: string, options?: RawAxiosRequestConfig) {
         return FacilityControllerApiFp(this.configuration).readFacilityDetails(facilityId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 주어진 위도, 경도, 반경에 해당하는 시설들을 검색합니다.
+     * @summary 위치기반 시설 검색
+     * @param {FacilityLocationDTO} facilityLocationDTO 위치 정보와 반경을 포함한 검색 요청 데이터
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FacilityControllerApi
+     */
+    public searchByLocation(facilityLocationDTO: FacilityLocationDTO, options?: RawAxiosRequestConfig) {
+        return FacilityControllerApiFp(this.configuration).searchByLocation(facilityLocationDTO, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4665,14 +4975,14 @@ export const FcmControllerApiAxiosParamCreator = function (configuration?: Confi
     return {
         /**
          * 
-         * @param {FCMTokenRequest} fCMTokenRequest 
+         * @param {UserLoginDTO} userLoginDTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        saveToken: async (fCMTokenRequest: FCMTokenRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'fCMTokenRequest' is not null or undefined
-            assertParamExists('saveToken', 'fCMTokenRequest', fCMTokenRequest)
-            const localVarPath = `/api/fcm/save-token`;
+        handleFcmToken: async (userLoginDTO: UserLoginDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userLoginDTO' is not null or undefined
+            assertParamExists('handleFcmToken', 'userLoginDTO', userLoginDTO)
+            const localVarPath = `/api/fcm`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4695,7 +5005,7 @@ export const FcmControllerApiAxiosParamCreator = function (configuration?: Confi
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(fCMTokenRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(userLoginDTO, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4714,14 +5024,14 @@ export const FcmControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {FCMTokenRequest} fCMTokenRequest 
+         * @param {UserLoginDTO} userLoginDTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async saveToken(fCMTokenRequest: FCMTokenRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.saveToken(fCMTokenRequest, options);
+        async handleFcmToken(userLoginDTO: UserLoginDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleFcmToken(userLoginDTO, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FcmControllerApi.saveToken']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FcmControllerApi.handleFcmToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -4736,12 +5046,12 @@ export const FcmControllerApiFactory = function (configuration?: Configuration, 
     return {
         /**
          * 
-         * @param {FCMTokenRequest} fCMTokenRequest 
+         * @param {UserLoginDTO} userLoginDTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        saveToken(fCMTokenRequest: FCMTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.saveToken(fCMTokenRequest, options).then((request) => request(axios, basePath));
+        handleFcmToken(userLoginDTO: UserLoginDTO, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.handleFcmToken(userLoginDTO, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4755,13 +5065,13 @@ export const FcmControllerApiFactory = function (configuration?: Configuration, 
 export class FcmControllerApi extends BaseAPI {
     /**
      * 
-     * @param {FCMTokenRequest} fCMTokenRequest 
+     * @param {UserLoginDTO} userLoginDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FcmControllerApi
      */
-    public saveToken(fCMTokenRequest: FCMTokenRequest, options?: RawAxiosRequestConfig) {
-        return FcmControllerApiFp(this.configuration).saveToken(fCMTokenRequest, options).then((request) => request(this.axios, this.basePath));
+    public handleFcmToken(userLoginDTO: UserLoginDTO, options?: RawAxiosRequestConfig) {
+        return FcmControllerApiFp(this.configuration).handleFcmToken(userLoginDTO, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -5266,84 +5576,23 @@ export class NotificationControllerApi extends BaseAPI {
 
 
 /**
- * Oauth2ControllerApi - axios parameter creator
+ * OAuth2ControllerApi - axios parameter creator
  * @export
  */
-export const Oauth2ControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const OAuth2ControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * OAUTH2.0을 통해 로그인합니다
+         * @summary 소셜 로그인
+         * @param {string} provider 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        googleOauth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/user/oauth2/google`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer Authentication required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        kakaoOauth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/user/oauth2/kakao`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer Authentication required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        naverOauth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/user/oauth2/naver`;
+        oauthLogin: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provider' is not null or undefined
+            assertParamExists('oauthLogin', 'provider', provider)
+            const localVarPath = `/api/oauth2/{provider}`
+                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5374,117 +5623,65 @@ export const Oauth2ControllerApiAxiosParamCreator = function (configuration?: Co
 };
 
 /**
- * Oauth2ControllerApi - functional programming interface
+ * OAuth2ControllerApi - functional programming interface
  * @export
  */
-export const Oauth2ControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = Oauth2ControllerApiAxiosParamCreator(configuration)
+export const OAuth2ControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OAuth2ControllerApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * OAUTH2.0을 통해 로그인합니다
+         * @summary 소셜 로그인
+         * @param {string} provider 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async googleOauth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.googleOauth(options);
+        async oauthLogin(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.oauthLogin(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['Oauth2ControllerApi.googleOauth']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async kakaoOauth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.kakaoOauth(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['Oauth2ControllerApi.kakaoOauth']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async naverOauth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.naverOauth(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['Oauth2ControllerApi.naverOauth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OAuth2ControllerApi.oauthLogin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
 
 /**
- * Oauth2ControllerApi - factory interface
+ * OAuth2ControllerApi - factory interface
  * @export
  */
-export const Oauth2ControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = Oauth2ControllerApiFp(configuration)
+export const OAuth2ControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OAuth2ControllerApiFp(configuration)
     return {
         /**
-         * 
+         * OAUTH2.0을 통해 로그인합니다
+         * @summary 소셜 로그인
+         * @param {string} provider 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        googleOauth(options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.googleOauth(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        kakaoOauth(options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.kakaoOauth(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        naverOauth(options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.naverOauth(options).then((request) => request(axios, basePath));
+        oauthLogin(provider: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.oauthLogin(provider, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Oauth2ControllerApi - object-oriented interface
+ * OAuth2ControllerApi - object-oriented interface
  * @export
- * @class Oauth2ControllerApi
+ * @class OAuth2ControllerApi
  * @extends {BaseAPI}
  */
-export class Oauth2ControllerApi extends BaseAPI {
+export class OAuth2ControllerApi extends BaseAPI {
     /**
-     * 
+     * OAUTH2.0을 통해 로그인합니다
+     * @summary 소셜 로그인
+     * @param {string} provider 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof Oauth2ControllerApi
+     * @memberof OAuth2ControllerApi
      */
-    public googleOauth(options?: RawAxiosRequestConfig) {
-        return Oauth2ControllerApiFp(this.configuration).googleOauth(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof Oauth2ControllerApi
-     */
-    public kakaoOauth(options?: RawAxiosRequestConfig) {
-        return Oauth2ControllerApiFp(this.configuration).kakaoOauth(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof Oauth2ControllerApi
-     */
-    public naverOauth(options?: RawAxiosRequestConfig) {
-        return Oauth2ControllerApiFp(this.configuration).naverOauth(options).then((request) => request(this.axios, this.basePath));
+    public oauthLogin(provider: string, options?: RawAxiosRequestConfig) {
+        return OAuth2ControllerApiFp(this.configuration).oauthLogin(provider, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
