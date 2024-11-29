@@ -9,7 +9,7 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "generate-api": "openapi-generator-cli generate -i swagger.json -g typescript-axios -o src/api/generated --skip-validate-spec"
+    "generate-api": "openapi-generator-cli generate -i src/api/generated/swagger.json -g typescript-axios -o src/api/generated --skip-validate-spec"
   },
   "dependencies": {
     "@faker-js/faker": "^9.2.0",
