@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import { ChatMessage } from '@/components/common/Chat/ChatMessage';
 import { ChatInput } from '@/components/common/Chat/ChatInput';
 import { CustomHeader } from '@/components/common/Header/CustomHeader';
-import { ChatRoomInfoModal } from '@/features/chat/ui/ChatRoomInfoModal';
+import { ChatRoomInfoModal } from '@/features/chat/ui/ChatRoomInfoModal/ChatRoomInfoModal';
 interface ChatRoom {
   id: string;
   name: string;
