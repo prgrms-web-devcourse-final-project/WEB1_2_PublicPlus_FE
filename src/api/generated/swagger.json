@@ -18,16 +18,16 @@
   } ],
   "tags" : [ {
     "name" : "FacilityController",
-    "description" : "시설 검색정보, 상세정보를 다루는 API입니다."
-  }, {
-    "name" : "EmailController",
-    "description" : "이메일 인증메일을 보내거나 이메일에 대한 확인 검증을 합니다"
+    "description" : "FacilitySearch and FacilityDetailPage API"
   }, {
     "name" : "UserController",
     "description" : "사용자 관련 처리를 하는 컨트롤러입니다(회원가입,로그인,로그아웃,토큰 등등)"
   }, {
-    "name" : "OAuth2Controller",
-    "description" : "소셜 로그인 기능을 이용해 로그인합니다(스웨거로는 테스트 불가)"
+    "name" : "EmailAuthenticationController",
+    "description" : "이메일 인증메일을 보내거나 이메일에 대한 확인 검증을 합니다"
+  }, {
+    "name" : "ActivityController",
+    "description" : "About googleCalendar And Activity API"
   } ],
   "paths" : {
     "/api/meetingboard/{mbId}" : {
@@ -422,7 +422,9 @@
     },
     "/api/activity/{activityId}" : {
       "get" : {
-        "tags" : [ "activity-controller" ],
+        "tags" : [ "ActivityController" ],
+        "summary" : "모임을 ID로 검색",
+        "description" : "특정 ID에 해당하는 모임 정보를 반환합니다.",
         "operationId" : "getActivity",
         "parameters" : [ {
           "name" : "activityId",
@@ -437,7 +439,17 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "OK",
+            "description" : "검색 성공",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ActivityResponseDTO"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "해당 ID의 모임이 존재하지 않음",
             "content" : {
               "*/*" : {
                 "schema" : {
@@ -449,7 +461,9 @@
         }
       },
       "put" : {
-        "tags" : [ "activity-controller" ],
+        "tags" : [ "ActivityController" ],
+        "summary" : "모임 수정",
+        "description" : "모임 정보를 업데이트하고, 수정된 정보를 반환합니다.",
         "operationId" : "updateActivity",
         "parameters" : [ {
           "name" : "activityId",
@@ -474,7 +488,27 @@
         },
         "responses" : {
           "200" : {
-            "description" : "OK",
+            "description" : "모임 수정 성공",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ActivityResponseDTO"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "요청 데이터가 유효하지 않음",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ActivityResponseDTO"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "해당 ID의 모임이 존재하지 않음",
             "content" : {
               "*/*" : {
                 "schema" : {
@@ -486,7 +520,9 @@
         }
       },
       "delete" : {
-        "tags" : [ "activity-controller" ],
+        "tags" : [ "ActivityController" ],
+        "summary" : "모임 삭제",
+        "description" : "특정 ID의 모임을 삭제합니다.",
         "operationId" : "deleteActivity",
         "parameters" : [ {
           "name" : "activityId",
@@ -501,7 +537,20 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "OK",
+            "description" : "모임 삭제 성공",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "해당 ID의 모임이 존재하지 않음",
             "content" : {
               "*/*" : {
                 "schema" : {
@@ -771,12 +820,7 @@
             "description" : "정상 반환",
             "content" : {
               "application/json" : {
-                "example" : {
-                  "bearer" : "Bearer",
-                  "access_token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-                  "refresh_token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-                  "userId" : "sda1fsd3-ds6au-fs3fds5"
-                }
+                "example" : "{\n  \"bearer\": \"Bearer\",\n  \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\",\n  \"refresh_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"  \"userId\": \"sda1fsd3-ds6au-fs3fds5\"}"
               }
             }
           },
@@ -1160,7 +1204,7 @@
     },
     "/api/email" : {
       "get" : {
-        "tags" : [ "EmailController" ],
+        "tags" : [ "EmailAuthenticationController" ],
         "summary" : "검증",
         "description" : "보낸 코드값이 서버의 저장값과 일치하는지 확인합니다",
         "operationId" : "verifyCode",
@@ -1197,19 +1241,17 @@
             "content" : {
               "application/json" : {
                 "example" : {
-                  "httpStatus" : "OK",
                   "message" : "인증 성공"
                 }
               }
             }
           },
           "400" : {
-            "description" : "인증 실패 : 인증번호 불일치",
+            "description" : "인증 실패",
             "content" : {
               "application/json" : {
                 "example" : {
-                  "httpStatus" : "BAD_REQUEST",
-                  "message" : "인증번호가 일치하지 않습니다"
+                  "message" : "인증 실패"
                 }
               }
             }
@@ -1217,7 +1259,7 @@
         }
       },
       "post" : {
-        "tags" : [ "EmailController" ],
+        "tags" : [ "EmailAuthenticationController" ],
         "summary" : "이메일 발송",
         "description" : "이메일 인증을 위한 코드를 발송합니다",
         "operationId" : "sendCode",
@@ -1241,14 +1283,13 @@
             "content" : {
               "application/json" : {
                 "example" : {
-                  "httpStatus" : "OK",
                   "message" : "발송 완료"
                 }
               }
             }
           },
           "400" : {
-            "description" : "이미 인증을 보낸 메일일 경우",
+            "description" : "이미 가입되어있는 이메일인 경우",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1256,21 +1297,7 @@
                 },
                 "example" : {
                   "httpStatus" : "BAD_REQUEST",
-                  "message" : "이미 인증을 요청한 메일입니다"
-                }
-              }
-            }
-          },
-          "500" : {
-            "description" : "서버에서 메일 전송이 실패할 경우",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                },
-                "example" : {
-                  "httpStatus" : "INTERVAL_SERVER_ERROR",
-                  "message" : "메일 전송에 실패했습니다."
+                  "message" : "이미 가입된 이메일입니다"
                 }
               }
             }
@@ -1279,8 +1306,48 @@
       }
     },
     "/api/activity" : {
+      "get" : {
+        "tags" : [ "ActivityController" ],
+        "summary" : "사용자의 모임 검색",
+        "description" : "특정 사용자 이메일에 해당하는 모임 목록을 페이지 형태로 반환합니다.",
+        "operationId" : "getActivitesByUser",
+        "parameters" : [ {
+          "name" : "userEmail",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "검색 성공",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PageActivityResponseDTO"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "요청 파라미터가 유효하지 않음",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PageActivityResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
       "post" : {
-        "tags" : [ "activity-controller" ],
+        "tags" : [ "ActivityController" ],
+        "summary" : "모임 생성",
+        "description" : "새로운 모임을 생성하고, 생성된 모임 정보를 반환합니다.",
         "operationId" : "createActivity",
         "requestBody" : {
           "content" : {
@@ -1294,7 +1361,17 @@
         },
         "responses" : {
           "200" : {
-            "description" : "OK",
+            "description" : "모임 생성 성공",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ActivityResponseDTO"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "생성 데이터가 유효하지 않음",
             "content" : {
               "*/*" : {
                 "schema" : {
@@ -1393,6 +1470,60 @@
               "application/json" : {
                 "example" : {
                   "message" : "소개글 수정 완료"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/oauth2/naver" : {
+      "get" : {
+        "tags" : [ "oauth-2-controller" ],
+        "operationId" : "naverOauth",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/oauth2/kakao" : {
+      "get" : {
+        "tags" : [ "oauth-2-controller" ],
+        "operationId" : "kakaoOauth",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/oauth2/google" : {
+      "get" : {
+        "tags" : [ "oauth-2-controller" ],
+        "operationId" : "googleOauth",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "string"
                 }
               }
             }
@@ -1511,39 +1642,6 @@
         "responses" : {
           "204" : {
             "description" : "로그아웃 완료"
-          }
-        }
-      }
-    },
-    "/api/oauth2/{provider}" : {
-      "get" : {
-        "tags" : [ "OAuth2Controller" ],
-        "summary" : "소셜 로그인",
-        "description" : "OAUTH2.0을 통해 로그인합니다",
-        "operationId" : "OauthLogin",
-        "parameters" : [ {
-          "name" : "provider",
-          "in" : "path",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "정상 반환",
-            "content" : {
-              "application/json" : {
-                "example" : {
-                  "bearer" : "Bearer",
-                  "access_token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-                  "refresh_token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-                  "userId" : "sda1fsd3-ds6au-fs3fds5"
-                }
-              }
-            }
           }
         }
       }
@@ -1688,6 +1786,16 @@
       "delete" : {
         "tags" : [ "event-controller" ],
         "operationId" : "deleteEvent",
+        "parameters" : [ {
+          "name" : "googleCalenderId",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -1797,32 +1905,50 @@
         "properties" : {
           "activityId" : {
             "type" : "integer",
-            "format" : "int64"
+            "description" : "모임 ID",
+            "format" : "int64",
+            "example" : 2
           },
           "title" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "모임 제목",
+            "example" : "수정된 팀 회의 제목"
           },
           "eventId" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "구글 캘린더 이벤트 ID",
+            "example" : "updated123xyz"
           },
           "description" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "모임 설명",
+            "example" : "수정된 회의 설명입니다."
           },
           "location" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "모임 장소",
+            "example" : "서울 컨퍼런스룸 B"
           },
           "startTime" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "모임 시작 시간 (ISO 8601 형식)",
+            "example" : "2024-12-01T09:30:00"
           },
           "endTime" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "모임 종료 시간 (ISO 8601 형식)",
+            "example" : "2024-12-01T11:30:00"
           },
           "googleCalenderId" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "구글 캘린더 ID",
+            "example" : "secondary (보조 캘린더)"
           },
           "maxAttendees" : {
             "type" : "integer",
-            "format" : "int32"
+            "description" : "모임 최대 참석자 수",
+            "format" : "int32",
+            "example" : 15
           }
         }
       },
@@ -1935,23 +2061,6 @@
           }
         }
       },
-      "ErrorResponseDTO" : {
-        "type" : "object",
-        "properties" : {
-          "errorCode" : {
-            "type" : "string",
-            "description" : "에러 코드"
-          },
-          "message" : {
-            "type" : "string",
-            "description" : "에러 메시지"
-          },
-          "details" : {
-            "type" : "string",
-            "description" : "에러에 대한 세부 설명"
-          }
-        }
-      },
       "FacilityDetailsResponseDTO" : {
         "type" : "object",
         "properties" : {
@@ -2040,34 +2149,67 @@
           }
         }
       },
+      "ErrorResponseDTO" : {
+        "type" : "object",
+        "properties" : {
+          "errorCode" : {
+            "type" : "string",
+            "description" : "에러 코드"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "에러 메시지"
+          },
+          "details" : {
+            "type" : "string",
+            "description" : "에러에 대한 세부 설명"
+          }
+        }
+      },
       "ActivityResponseDTO" : {
         "type" : "object",
         "properties" : {
           "title" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "모임의 제목입니다",
+            "example" : "주간 미팅"
           },
           "description" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "모임의 설명입니다",
+            "example" : "주간 회의를 위한 미팅입니다."
           },
           "location" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "모임 지역입니다",
+            "example" : "컨퍼런스 룸 A"
           },
           "startTime" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "모임 시작시간입니다  (ISO 8601 로 이루어져있습니다)",
+            "example" : "2024-12-01T10:00:00"
           },
           "endTime" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "모임 종료시간입니다 (ISO 8601 format)",
+            "example" : "2024-12-01T12:00:00"
           },
           "maxParticipants" : {
             "type" : "integer",
-            "format" : "int32"
+            "description" : "최대 참가자 수 입니다",
+            "format" : "int32",
+            "example" : 20
           },
           "currentParticipants" : {
             "type" : "integer",
-            "format" : "int32"
+            "description" : "현재 참가자 수 입니다",
+            "format" : "int32",
+            "example" : 1
           },
           "eventId" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "구글캘린더 이벤트 아이디 입니다",
+            "example" : "i3jjae75dd0u8q2plutff32b40"
           }
         }
       },
@@ -2179,22 +2321,22 @@
           "title" : {
             "type" : "string",
             "description" : "모임의 제목",
-            "example" : "Weekly Team Meeting"
+            "example" : "주간 팀 회의"
           },
           "eventId" : {
             "type" : "string",
-            "description" : "구글 캘린더의 Event ID",
+            "description" : "구글 캘린더 이벤트 ID",
             "example" : "abc123xyz"
           },
           "description" : {
             "type" : "string",
-            "description" : "모임에 대한 설명",
-            "example" : "This is our regular weekly meeting to discuss project updates."
+            "description" : "모임 설명",
+            "example" : "주간 회의입니다."
           },
           "location" : {
             "type" : "string",
             "description" : "모임 장소",
-            "example" : "Seoul Conference Room A"
+            "example" : "서울 컨퍼런스룸 A"
           },
           "startTime" : {
             "type" : "string",
@@ -2209,7 +2351,7 @@
           "googleCalenderId" : {
             "type" : "string",
             "description" : "구글 캘린더 ID",
-            "example" : "primary(기본 캘린더)"
+            "example" : "primary (기본 캘린더)"
           },
           "maxAttendees" : {
             "type" : "integer",
@@ -2307,11 +2449,11 @@
           "paged" : {
             "type" : "boolean"
           },
-          "pageNumber" : {
+          "pageSize" : {
             "type" : "integer",
             "format" : "int32"
           },
-          "pageSize" : {
+          "pageNumber" : {
             "type" : "integer",
             "format" : "int32"
           },
@@ -2969,6 +3111,55 @@
             "type" : "array",
             "items" : {
               "$ref" : "#/components/schemas/FacilityDetailsResponseDTO"
+            }
+          },
+          "number" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "sort" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SortObject"
+            }
+          },
+          "first" : {
+            "type" : "boolean"
+          },
+          "last" : {
+            "type" : "boolean"
+          },
+          "numberOfElements" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "pageable" : {
+            "$ref" : "#/components/schemas/PageableObject"
+          },
+          "empty" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "PageActivityResponseDTO" : {
+        "type" : "object",
+        "properties" : {
+          "totalElements" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "totalPages" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "size" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "content" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ActivityResponseDTO"
             }
           },
           "number" : {
