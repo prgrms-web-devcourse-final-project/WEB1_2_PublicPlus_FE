@@ -27,7 +27,7 @@ jobs:
         run: pnpm install
 
       - name: Generate API Client
-        run: pnpm generate:api
+        run: pnpm generate-api
 
       - name: Commit Changes
         run: |
