@@ -20,14 +20,11 @@
     "name" : "FacilityController",
     "description" : "시설 검색정보, 상세정보를 다루는 API입니다."
   }, {
-    "name" : "EmailController",
-    "description" : "이메일 인증메일을 보내거나 이메일에 대한 확인 검증을 합니다"
-  }, {
-    "name" : "UserController",
+    "name" : "사용자 컨트롤러",
     "description" : "사용자 관련 처리를 하는 컨트롤러입니다(회원가입,로그인,로그아웃,토큰 등등)"
   }, {
-    "name" : "OAuth2Controller",
-    "description" : "소셜 로그인 기능을 이용해 로그인합니다(스웨거로는 테스트 불가)"
+    "name" : "이메일 인증 컨트롤러",
+    "description" : "이메일 인증메일을 보내거나 이메일에 대한 확인 검증을 합니다"
   } ],
   "paths" : {
     "/api/meetingboard/{mbId}" : {
@@ -537,7 +534,7 @@
     },
     "/api/user/refresh/header" : {
       "post" : {
-        "tags" : [ "UserController" ],
+        "tags" : [ "사용자 컨트롤러" ],
         "summary" : "토큰 재발급",
         "description" : "HTTP헤더에 담긴 refresh_token을 이용해 access_token을 재발급합니다",
         "operationId" : "resignAccessTokenByHeader",
@@ -584,7 +581,7 @@
     },
     "/api/user/refresh/cookie" : {
       "post" : {
-        "tags" : [ "UserController" ],
+        "tags" : [ "사용자 컨트롤러" ],
         "summary" : "토큰 재발급",
         "description" : "(현재미구현)쿠키에 담긴 refresh토큰을 이용해 access토큰을 재발급합니다",
         "operationId" : "resignAccessTokenByCookie",
@@ -631,7 +628,7 @@
     },
     "/api/user/profile/{userId}" : {
       "post" : {
-        "tags" : [ "UserController" ],
+        "tags" : [ "사용자 컨트롤러" ],
         "summary" : "프로필 사진 변경",
         "description" : "UserId를 이용해 프로필 사진을 변경합니다",
         "operationId" : "changeProfile",
@@ -698,7 +695,7 @@
     },
     "/api/user/password/{userId}" : {
       "post" : {
-        "tags" : [ "UserController" ],
+        "tags" : [ "사용자 컨트롤러" ],
         "summary" : "비밀번호 변경",
         "description" : "UserId를 이용해 비밀번호를 변경합니다",
         "operationId" : "changePassword",
@@ -752,7 +749,7 @@
     },
     "/api/user/login" : {
       "post" : {
-        "tags" : [ "UserController" ],
+        "tags" : [ "사용자 컨트롤러" ],
         "summary" : "로그인",
         "description" : "이메일, 암호를 입력하여 로그인합니다",
         "operationId" : "login",
@@ -771,12 +768,7 @@
             "description" : "정상 반환",
             "content" : {
               "application/json" : {
-                "example" : {
-                  "bearer" : "Bearer",
-                  "access_token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-                  "refresh_token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-                  "userId" : "sda1fsd3-ds6au-fs3fds5"
-                }
+                "example" : "{\n  \"bearer\": \"Bearer\",\n  \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\",\n  \"refresh_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"  \"userId\": \"sda1fsd3-ds6au-fs3fds5\"}"
               }
             }
           },
@@ -799,7 +791,7 @@
     },
     "/api/user/join" : {
       "post" : {
-        "tags" : [ "UserController" ],
+        "tags" : [ "사용자 컨트롤러" ],
         "summary" : "회원가입",
         "description" : "이메일, 암호, 닉네임을 입력하여 회원가입을 합니다",
         "operationId" : "join",
@@ -927,15 +919,15 @@
         }
       }
     },
-    "/api/fcm" : {
+    "/api/fcm/save-token" : {
       "post" : {
         "tags" : [ "fcm-controller" ],
-        "operationId" : "handleFcmToken",
+        "operationId" : "saveToken",
         "requestBody" : {
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/UserLoginDTO"
+                "$ref" : "#/components/schemas/FCMTokenRequest"
               }
             }
           },
@@ -947,7 +939,7 @@
             "content" : {
               "*/*" : {
                 "schema" : {
-                  "type" : "object"
+                  "type" : "string"
                 }
               }
             }
@@ -997,87 +989,6 @@
               "*/*" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ReviewDTO"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/facility-detail/location" : {
-      "post" : {
-        "tags" : [ "FacilityController" ],
-        "summary" : "위치기반 시설 검색",
-        "description" : "주어진 위도, 경도, 반경에 해당하는 시설들을 검색합니다.",
-        "operationId" : "searchByLocation",
-        "requestBody" : {
-          "description" : "위치 정보와 반경을 포함한 검색 요청 데이터",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/FacilityLocationDTO"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "description" : "성공적으로 시설 목록을 반환",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Page"
-                },
-                "example" : {
-                  "totalElements" : 2,
-                  "totalPages" : 1,
-                  "size" : 5,
-                  "content" : [ {
-                    "facilityId" : "S241010135430829736",
-                    "facilityName" : "서울대공원 리틀야구장",
-                    "facilityCategory" : "BASEBALL_FIELD",
-                    "area" : "과천시",
-                    "priceType" : false,
-                    "facilityImage" : "https://example.com/image1.jpg",
-                    "reservationStartDate" : "2024-10-14T10:00:00",
-                    "reservationEndDate" : "2024-10-16T16:00:00"
-                  }, {
-                    "facilityId" : "S241010135430829737",
-                    "facilityName" : "서울대공원 풋살장",
-                    "facilityCategory" : "FOOTBALL_FIELD",
-                    "area" : "과천시",
-                    "priceType" : true,
-                    "facilityImage" : "https://example.com/image2.jpg",
-                    "reservationStartDate" : "2024-10-15T10:00:00",
-                    "reservationEndDate" : "2024-10-17T16:00:00"
-                  } ],
-                  "number" : 0,
-                  "sort" : [ {
-                    "direction" : "ASC",
-                    "nullHandling" : "NATIVE",
-                    "ascending" : true,
-                    "property" : "facilityName",
-                    "ignoreCase" : true
-                  } ],
-                  "first" : true,
-                  "last" : true,
-                  "numberOfElements" : 2,
-                  "pageable" : {
-                    "offset" : 0,
-                    "sort" : [ {
-                      "direction" : "ASC",
-                      "nullHandling" : "NATIVE",
-                      "ascending" : true,
-                      "property" : "facilityName",
-                      "ignoreCase" : true
-                    } ],
-                    "paged" : true,
-                    "pageSize" : 5,
-                    "pageNumber" : 0,
-                    "unpaged" : false
-                  },
-                  "empty" : false
                 }
               }
             }
@@ -1160,7 +1071,7 @@
     },
     "/api/email" : {
       "get" : {
-        "tags" : [ "EmailController" ],
+        "tags" : [ "이메일 인증 컨트롤러" ],
         "summary" : "검증",
         "description" : "보낸 코드값이 서버의 저장값과 일치하는지 확인합니다",
         "operationId" : "verifyCode",
@@ -1197,19 +1108,17 @@
             "content" : {
               "application/json" : {
                 "example" : {
-                  "httpStatus" : "OK",
                   "message" : "인증 성공"
                 }
               }
             }
           },
           "400" : {
-            "description" : "인증 실패 : 인증번호 불일치",
+            "description" : "인증 실패",
             "content" : {
               "application/json" : {
                 "example" : {
-                  "httpStatus" : "BAD_REQUEST",
-                  "message" : "인증번호가 일치하지 않습니다"
+                  "message" : "인증 실패"
                 }
               }
             }
@@ -1217,7 +1126,7 @@
         }
       },
       "post" : {
-        "tags" : [ "EmailController" ],
+        "tags" : [ "이메일 인증 컨트롤러" ],
         "summary" : "이메일 발송",
         "description" : "이메일 인증을 위한 코드를 발송합니다",
         "operationId" : "sendCode",
@@ -1241,14 +1150,13 @@
             "content" : {
               "application/json" : {
                 "example" : {
-                  "httpStatus" : "OK",
                   "message" : "발송 완료"
                 }
               }
             }
           },
           "400" : {
-            "description" : "이미 인증을 보낸 메일일 경우",
+            "description" : "이미 가입되어있는 이메일인 경우",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1256,21 +1164,7 @@
                 },
                 "example" : {
                   "httpStatus" : "BAD_REQUEST",
-                  "message" : "이미 인증을 요청한 메일입니다"
-                }
-              }
-            }
-          },
-          "500" : {
-            "description" : "서버에서 메일 전송이 실패할 경우",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                },
-                "example" : {
-                  "httpStatus" : "INTERVAL_SERVER_ERROR",
-                  "message" : "메일 전송에 실패했습니다."
+                  "message" : "이미 가입된 이메일입니다"
                 }
               }
             }
@@ -1308,7 +1202,7 @@
     },
     "/api/user/nickname/{userId}" : {
       "patch" : {
-        "tags" : [ "UserController" ],
+        "tags" : [ "사용자 컨트롤러" ],
         "summary" : "닉네임 변경",
         "description" : "UserId를 이용해 닉네임을 변경합니다(도메인 규칙 : 2~10자 사이의 한글,영어소문자,숫자만)",
         "operationId" : "updateNickname",
@@ -1362,7 +1256,7 @@
     },
     "/api/user/description/{userId}" : {
       "patch" : {
-        "tags" : [ "UserController" ],
+        "tags" : [ "사용자 컨트롤러" ],
         "summary" : "소개글 변경",
         "description" : "UserId를 이용해 소개글을 변경합니다",
         "operationId" : "updateDescription",
@@ -1421,6 +1315,24 @@
         }
       }
     },
+    "/login/oauth2/code/kakao" : {
+      "get" : {
+        "tags" : [ "oauth-2-controller" ],
+        "operationId" : "test1",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/calendars" : {
       "get" : {
         "tags" : [ "calendar-controller" ],
@@ -1441,7 +1353,7 @@
     },
     "/api/user/{userId}" : {
       "get" : {
-        "tags" : [ "UserController" ],
+        "tags" : [ "사용자 컨트롤러" ],
         "summary" : "회원 정보 조회",
         "description" : "UserId를 이용해 회원정보를 조회합니다",
         "operationId" : "findMyInformation",
@@ -1474,7 +1386,7 @@
         }
       },
       "delete" : {
-        "tags" : [ "UserController" ],
+        "tags" : [ "사용자 컨트롤러" ],
         "summary" : "회원 탈퇴",
         "description" : "UserId를 이용해 회원정보를 삭제합니다",
         "operationId" : "deleteUser",
@@ -1504,46 +1416,13 @@
     },
     "/api/user/logout" : {
       "get" : {
-        "tags" : [ "UserController" ],
+        "tags" : [ "사용자 컨트롤러" ],
         "summary" : "로그아웃",
         "description" : "로그아웃을 합니다.",
         "operationId" : "logout",
         "responses" : {
           "204" : {
             "description" : "로그아웃 완료"
-          }
-        }
-      }
-    },
-    "/api/oauth2/{provider}" : {
-      "get" : {
-        "tags" : [ "OAuth2Controller" ],
-        "summary" : "소셜 로그인",
-        "description" : "OAUTH2.0을 통해 로그인합니다",
-        "operationId" : "OauthLogin",
-        "parameters" : [ {
-          "name" : "provider",
-          "in" : "path",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "정상 반환",
-            "content" : {
-              "application/json" : {
-                "example" : {
-                  "bearer" : "Bearer",
-                  "access_token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-                  "refresh_token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-                  "userId" : "sda1fsd3-ds6au-fs3fds5"
-                }
-              }
-            }
           }
         }
       }
@@ -1559,46 +1438,6 @@
               "*/*" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/Events"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/facility-detail" : {
-      "get" : {
-        "tags" : [ "FacilityController" ],
-        "summary" : "시설 상세 정보 가져오기",
-        "description" : "시설의 이름으로 상세 정보를 가져옵니다.",
-        "operationId" : "getFacilityDetail",
-        "parameters" : [ {
-          "name" : "facilityName",
-          "in" : "query",
-          "required" : true,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "성공적으로 데이터를 가져왔습니다.",
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "type" : "object"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "시설을 찾을 수 없습니다.",
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "type" : "object"
                 }
               }
             }
@@ -1711,27 +1550,6 @@
           }
         }
       }
-    },
-    "/api/facility-detail/all" : {
-      "delete" : {
-        "tags" : [ "FacilityController" ],
-        "operationId" : "deleteAll",
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "type" : "object",
-                  "additionalProperties" : {
-                    "type" : "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components" : {
@@ -1795,10 +1613,6 @@
       "ActivityUpdateDTO" : {
         "type" : "object",
         "properties" : {
-          "activityId" : {
-            "type" : "integer",
-            "format" : "int64"
-          },
           "title" : {
             "type" : "string"
           },
@@ -1875,7 +1689,7 @@
           "facilityCategory" : {
             "type" : "string",
             "description" : "시설 카테고리",
-            "example" : "FOOTBALL_FIELD",
+            "example" : "FOOTBALL",
             "enum" : [ "FOOTBALL_FIELD", "FUTSAL_FIELD", "FOOT_VOLLEYBALL_FIELD", "BASEBALL_FIELD", "TENNIS_FIELD", "BASKETBALL_FIELD", "VOLLEYBALL_FIELD", "MULTIPURPOSE_FIELD", "SPORTS_FIELD", "GYM", "BADMINTON_FIELD", "TABLE_TENNIS_FIELD", "EDUCATIONAL_FACILITY", "SWIMMING_POOL", "GOLF_FIELD" ]
           },
           "area" : {
@@ -1932,23 +1746,6 @@
             "type" : "string",
             "description" : "서비스 종료 날짜 (String 형식)",
             "example" : "2024-12-31"
-          }
-        }
-      },
-      "ErrorResponseDTO" : {
-        "type" : "object",
-        "properties" : {
-          "errorCode" : {
-            "type" : "string",
-            "description" : "에러 코드"
-          },
-          "message" : {
-            "type" : "string",
-            "description" : "에러 메시지"
-          },
-          "details" : {
-            "type" : "string",
-            "description" : "에러에 대한 세부 설명"
           }
         }
       },
@@ -2025,18 +1822,23 @@
             "type" : "string",
             "description" : "서비스 종료 날짜",
             "example" : "2024-12-31"
+          }
+        }
+      },
+      "ErrorResponseDTO" : {
+        "type" : "object",
+        "properties" : {
+          "errorCode" : {
+            "type" : "string",
+            "description" : "에러 코드"
           },
-          "latitude" : {
-            "type" : "number",
-            "description" : "위도",
-            "format" : "double",
-            "example" : 37.5741
+          "message" : {
+            "type" : "string",
+            "description" : "에러 메시지"
           },
-          "longitude" : {
-            "type" : "number",
-            "description" : "경도",
-            "format" : "double",
-            "example" : 126.884
+          "details" : {
+            "type" : "string",
+            "description" : "에러에 대한 세부 설명"
           }
         }
       },
@@ -2177,81 +1979,112 @@
         "type" : "object",
         "properties" : {
           "title" : {
-            "type" : "string",
-            "description" : "모임의 제목",
-            "example" : "Weekly Team Meeting"
+            "type" : "string"
           },
           "eventId" : {
-            "type" : "string",
-            "description" : "구글 캘린더의 Event ID",
-            "example" : "abc123xyz"
+            "type" : "string"
           },
           "description" : {
-            "type" : "string",
-            "description" : "모임에 대한 설명",
-            "example" : "This is our regular weekly meeting to discuss project updates."
+            "type" : "string"
           },
           "location" : {
-            "type" : "string",
-            "description" : "모임 장소",
-            "example" : "Seoul Conference Room A"
+            "type" : "string"
           },
           "startTime" : {
-            "type" : "string",
-            "description" : "모임 시작 시간 (ISO 8601 형식)",
-            "example" : "2024-11-30T09:00:00"
+            "type" : "string"
           },
           "endTime" : {
-            "type" : "string",
-            "description" : "모임 종료 시간 (ISO 8601 형식)",
-            "example" : "2024-11-30T11:00:00"
+            "type" : "string"
           },
           "googleCalenderId" : {
-            "type" : "string",
-            "description" : "구글 캘린더 ID",
-            "example" : "primary(기본 캘린더)"
+            "type" : "string"
           },
           "maxAttendees" : {
             "type" : "integer",
-            "description" : "모임 최대 참석자 수",
-            "format" : "int32",
-            "example" : 10
+            "format" : "int32"
           }
         }
       },
-      "FacilityLocationDTO" : {
+      "FCMTokenRequest" : {
         "type" : "object",
         "properties" : {
-          "latitude" : {
-            "type" : "number",
-            "description" : "검색할 시설의 위도",
-            "format" : "double",
-            "example" : 37.436429919747084
+          "userId" : {
+            "type" : "string"
           },
-          "longitude" : {
-            "type" : "number",
-            "description" : "검색할 시설의 경도",
-            "format" : "double",
-            "example" : 127.01409711887952
-          },
-          "radius" : {
-            "type" : "number",
-            "description" : "검색할 반경 (킬로미터 단위)",
-            "format" : "double",
-            "example" : 5
+          "token" : {
+            "type" : "string"
           }
         }
       },
-      "Page" : {
+      "FacilityFilterDTO" : {
         "type" : "object",
         "properties" : {
-          "totalElements" : {
-            "type" : "integer",
-            "format" : "int64"
+          "facilityName" : {
+            "type" : "string",
+            "description" : "시설 이름"
           },
+          "facilityCategory" : {
+            "type" : "string",
+            "description" : "시설 카테고리",
+            "example" : "축구장",
+            "default" : "축구장"
+          },
+          "area" : {
+            "type" : "string",
+            "description" : "시설 지역",
+            "example" : "마포구",
+            "default" : "마포구"
+          },
+          "priceType" : {
+            "type" : "boolean",
+            "description" : "시설 가격 유형(무료/유료)",
+            "example" : true,
+            "default" : true
+          }
+        }
+      },
+      "FacilityResponseDTO" : {
+        "type" : "object",
+        "properties" : {
+          "facilityId" : {
+            "type" : "string"
+          },
+          "facilityName" : {
+            "type" : "string"
+          },
+          "facilityCategory" : {
+            "type" : "string",
+            "enum" : [ "FOOTBALL_FIELD", "FUTSAL_FIELD", "FOOT_VOLLEYBALL_FIELD", "BASEBALL_FIELD", "TENNIS_FIELD", "BASKETBALL_FIELD", "VOLLEYBALL_FIELD", "MULTIPURPOSE_FIELD", "SPORTS_FIELD", "GYM", "BADMINTON_FIELD", "TABLE_TENNIS_FIELD", "EDUCATIONAL_FACILITY", "SWIMMING_POOL", "GOLF_FIELD" ]
+          },
+          "area" : {
+            "type" : "string"
+          },
+          "priceType" : {
+            "type" : "boolean"
+          },
+          "facilityImage" : {
+            "type" : "string"
+          },
+          "reservationStartDate" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "reservationEndDate" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }
+      },
+      "PageFacilityResponseDTO" : {
+        "type" : "object",
+        "properties" : {
           "totalPages" : {
             "type" : "integer",
             "format" : "int32"
+          },
+          "totalElements" : {
+            "type" : "integer",
+            "format" : "int64"
           },
           "size" : {
             "type" : "integer",
@@ -2260,7 +2093,7 @@
           "content" : {
             "type" : "array",
             "items" : {
-              "type" : "object"
+              "$ref" : "#/components/schemas/FacilityResponseDTO"
             }
           },
           "number" : {
@@ -2304,14 +2137,14 @@
               "$ref" : "#/components/schemas/SortObject"
             }
           },
+          "pageSize" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
           "paged" : {
             "type" : "boolean"
           },
           "pageNumber" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "pageSize" : {
             "type" : "integer",
             "format" : "int32"
           },
@@ -2336,128 +2169,6 @@
             "type" : "string"
           },
           "ignoreCase" : {
-            "type" : "boolean"
-          }
-        }
-      },
-      "FacilityFilterDTO" : {
-        "type" : "object",
-        "properties" : {
-          "facilityName" : {
-            "type" : "string",
-            "description" : "시설 이름"
-          },
-          "facilityCategory" : {
-            "type" : "string",
-            "description" : "시설 카테고리",
-            "example" : "축구장",
-            "default" : "축구장"
-          },
-          "area" : {
-            "type" : "string",
-            "description" : "시설 지역",
-            "example" : "마포구",
-            "default" : "마포구"
-          },
-          "priceType" : {
-            "type" : "boolean",
-            "description" : "시설 가격 유형(무료/유료)",
-            "example" : true,
-            "default" : true
-          }
-        }
-      },
-      "FacilityResponseDTO" : {
-        "type" : "object",
-        "properties" : {
-          "facilityId" : {
-            "type" : "string",
-            "description" : "시설 ID",
-            "example" : "S241010135430829736"
-          },
-          "facilityName" : {
-            "type" : "string",
-            "description" : "시설 이름",
-            "example" : "서울대공원 리틀야구장 2024. 11월(추첨)"
-          },
-          "facilityCategory" : {
-            "type" : "string",
-            "description" : "시설 카테고리",
-            "example" : "BASEBALL_FIELD",
-            "enum" : [ "FOOTBALL_FIELD", "FUTSAL_FIELD", "FOOT_VOLLEYBALL_FIELD", "BASEBALL_FIELD", "TENNIS_FIELD", "BASKETBALL_FIELD", "VOLLEYBALL_FIELD", "MULTIPURPOSE_FIELD", "SPORTS_FIELD", "GYM", "BADMINTON_FIELD", "TABLE_TENNIS_FIELD", "EDUCATIONAL_FACILITY", "SWIMMING_POOL", "GOLF_FIELD" ]
-          },
-          "area" : {
-            "type" : "string",
-            "description" : "시설 지역",
-            "example" : "과천시"
-          },
-          "priceType" : {
-            "type" : "boolean",
-            "description" : "시설 가격 정보",
-            "example" : false
-          },
-          "facilityImage" : {
-            "type" : "string",
-            "description" : "시설 이미지 URL",
-            "example" : "https://yeyak.seoul.go.kr/web/common/file/FileDown.do?file_id=1728536177983WXNLQGCX4V5595HK8AC80ADS8"
-          },
-          "reservationStartDate" : {
-            "type" : "string",
-            "description" : "예약 시작 날짜",
-            "format" : "date-time"
-          },
-          "reservationEndDate" : {
-            "type" : "string",
-            "description" : "예약 종료 날짜",
-            "format" : "date-time"
-          }
-        }
-      },
-      "PageFacilityResponseDTO" : {
-        "type" : "object",
-        "properties" : {
-          "totalElements" : {
-            "type" : "integer",
-            "format" : "int64"
-          },
-          "totalPages" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "size" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "content" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/FacilityResponseDTO"
-            }
-          },
-          "number" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "sort" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/SortObject"
-            }
-          },
-          "first" : {
-            "type" : "boolean"
-          },
-          "last" : {
-            "type" : "boolean"
-          },
-          "numberOfElements" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "pageable" : {
-            "$ref" : "#/components/schemas/PageableObject"
-          },
-          "empty" : {
             "type" : "boolean"
           }
         }
@@ -2953,13 +2664,13 @@
       "PageFacilityDetailsResponseDTO" : {
         "type" : "object",
         "properties" : {
-          "totalElements" : {
-            "type" : "integer",
-            "format" : "int64"
-          },
           "totalPages" : {
             "type" : "integer",
             "format" : "int32"
+          },
+          "totalElements" : {
+            "type" : "integer",
+            "format" : "int64"
           },
           "size" : {
             "type" : "integer",
@@ -3512,12 +3223,6 @@
       "FieldInfo_typeParameters" : {
         "type" : "object",
         "properties" : {
-          "annotatedBounds" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/FieldInfo_field_annotatedType"
-            }
-          },
           "name" : {
             "type" : "string"
           },
@@ -3525,6 +3230,12 @@
             "type" : "array",
             "items" : {
               "$ref" : "#/components/schemas/FieldInfo_field_genericType"
+            }
+          },
+          "annotatedBounds" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/FieldInfo_field_annotatedType"
             }
           },
           "typeName" : {
@@ -3547,15 +3258,6 @@
       "FieldInfo_declaringExecutable_typeParameters" : {
         "type" : "object",
         "properties" : {
-          "genericDeclaration" : {
-            "type" : "object"
-          },
-          "annotatedBounds" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/FieldInfo_field_annotatedType"
-            }
-          },
           "name" : {
             "type" : "string"
           },
@@ -3563,6 +3265,15 @@
             "type" : "array",
             "items" : {
               "$ref" : "#/components/schemas/FieldInfo_field_genericType"
+            }
+          },
+          "genericDeclaration" : {
+            "type" : "object"
+          },
+          "annotatedBounds" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/FieldInfo_field_annotatedType"
             }
           },
           "typeName" : {
