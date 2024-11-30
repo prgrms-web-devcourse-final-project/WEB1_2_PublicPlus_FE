@@ -1,8 +1,10 @@
 name: API Client Generation
 on:
   push:
+    branches:
+      - QTVY-111-swaggerhub # 특정 브랜치 지정
     paths:
-      - 'src/api/generated/swagger.json'
+      - 'src/api/generated/swagger.json' # 특정 경로의 파일 변경 시에만 트리거
 
 jobs:
   generate-api:

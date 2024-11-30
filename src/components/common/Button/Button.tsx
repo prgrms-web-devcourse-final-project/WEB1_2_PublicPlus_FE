@@ -6,6 +6,7 @@ interface ButtonProps {
   disabled?: boolean;
   onclickHandler?: () => void;
   className?: string;
+  type?: 'button' | 'submit' | 'reset' | undefined;
 }
 
 export const Button = ({
@@ -15,7 +16,8 @@ export const Button = ({
   fullWidth = false,
   disabled = false,
   onclickHandler = () => {},
-  className = ''
+  className = '',
+  type = 'button'
 }: ButtonProps) => {
   const baseStyle = 'rounded transition-colors focus:outline-none';
 
@@ -60,6 +62,7 @@ export const Button = ({
 
   return (
     <button
+      type={type}
       className={` ${baseStyle} ${variants[variant]} ${sizes[size]} ${fullWidthClass} ${className}`}
       disabled={disabled}
       onClick={onclickHandler}>
