@@ -13,14 +13,14 @@ export const QUERY_KEYS = {
 
 export const useReviews = (facilityId: string | undefined) => {
   const queryClient = useQueryClient();
-  const queryKey = facilityId ? QUERY_KEYS.reviews.list(facilityId) : null;
+  const queryKey = facilityId ? QUERY_KEYS.reviews.list(facilityId) : [];
 
   const {
     data: reviews,
     isLoading,
     isError
   } = useQuery({
-    queryKey: queryKey ? queryKey : [],
+    queryKey: queryKey,
     queryFn: () => {
       if (!facilityId) throw new Error('Facility ID is required');
       return reviewService.getReviewsByFacility(facilityId);
@@ -61,7 +61,7 @@ export const useReviews = (facilityId: string | undefined) => {
   return {
     reviews,
     isLoading,
-    isError, // 오류 상태 추가
+    isError,
     createReview: createMutation.mutate,
     updateReview: updateMutation.mutate,
     deleteReview: deleteMutation.mutate

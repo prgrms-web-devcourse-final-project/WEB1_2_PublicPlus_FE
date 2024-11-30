@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FacilityDetailsResponseDTO, ReviewDTO } from '@/api/generated';
 import { Card } from '@/components/common/Cards/Card';
@@ -7,6 +6,7 @@ import { useReviews } from '@/features/review/model/queries';
 import { ReviewForm } from '@/features/review/ui/ReviewForm';
 import { Rating } from '@/widgets/rating/Rating';
 import { useAuthStore } from '../../../../stores/authStore';
+import { useReviewStore } from '@/features/review/model/store';
 
 interface FacilityReviewsProps {
   facility: FacilityDetailsResponseDTO;
@@ -15,15 +15,14 @@ interface FacilityReviewsProps {
 export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
   const router = useRouter();
   const { isAuthenticated, user } = useAuthStore();
-  const [editingId, setEditingId] = useState<number | null>(null);
-  const [isWriting, setIsWriting] = useState(false);
+
+  const { isWriting, editingId, setIsWriting, setEditingId } = useReviewStore();
 
   // Hook은 항상 최상위에서 호출
   const { reviews, createReview, updateReview, deleteReview } = useReviews(
     facility.facilityId
   );
 
-  // 시설 정보 없을 때의 처리는 렌더링 부분에서
   if (!facility.facilityId) {
     return <div>시설 정보를 찾을 수 없습니다.</div>;
   }
