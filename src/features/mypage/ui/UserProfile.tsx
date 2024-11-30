@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import { Pencil } from 'lucide-react';
+import { LogOut, Pencil } from 'lucide-react';
 import { UserProfileProps } from '../types';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/entities/User';
@@ -19,7 +19,7 @@ export const UserProfile = ({
   };
 
   return (
-    <div className="flex h-[20vh] max-h-[300px] min-h-[240px] w-full items-center justify-center rounded-xl bg-primary-50">
+    <div className="relative flex h-[20vh] max-h-[300px] min-h-[240px] w-full items-center justify-center rounded-xl bg-primary-50">
       <div className="flex flex-col items-center space-y-8">
         <div className="relative">
           <div className="overflow-hidden rounded-full">
@@ -44,13 +44,13 @@ export const UserProfile = ({
         <div className="space-y-4 text-center">
           <p className="text-lg font-semibold">{nickname}</p>
           <p className="text-sm text-gray-500">{email}</p>
-          <button
-            onClick={handleLogout}
-            className="text-sm text-red-500 hover:text-red-700">
-            로그아웃
-          </button>
         </div>
       </div>
+      <button
+        onClick={handleLogout}
+        className="absolute right-4 top-4 rounded-lg border border-gray-300 p-2 text-sm text-gray-400 hover:border-gray-700 hover:text-gray-700">
+        <LogOut width={20} />
+      </button>
     </div>
   );
 };

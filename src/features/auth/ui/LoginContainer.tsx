@@ -22,7 +22,7 @@ export default function LoginContainer() {
 
   return (
     <>
-      <div className="mb-12">
+      <div className="mx-auto mb-12 max-w-xl">
         <LoginForm
           email={email}
           password={password}

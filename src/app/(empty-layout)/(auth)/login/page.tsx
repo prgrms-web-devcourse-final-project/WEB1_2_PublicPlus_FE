@@ -11,11 +11,10 @@ export default function LoginPage() {
   const { isAuthenticated, userId, tokens } = useAuthStore();
 
   useEffect(() => {
-    // 토큰과 사용자 정보 모두 존재할 때만 리다이렉트
     if (isAuthenticated && userId && tokens.access_token) {
       router.push('/');
     }
-  }, [isAuthenticated, userId, tokens, router]);
+  }, [isAuthenticated, userId, tokens.access_token, router]);
 
   // 인증되지 않은 경우에만 로그인 페이지 렌더링
   if (isAuthenticated) {
@@ -23,20 +22,20 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="">
+    <div className="text-center">
       <Link href={'/login'}>
         <Image
-          width={90}
+          width={100}
           height={50}
           src={'/icons/logo.png'}
           alt="공공플러스"
-          className="mb-16"
+          className="mx-auto my-24"
         />
       </Link>
 
       <LoginContainer />
 
-      <div className="mt-8 flex flex-col items-center">
+      <div className="mb-8 mt-8 flex flex-col items-center">
         <div className="flex gap-4">
           {/* 소셜 로그인 버튼들 */}
           <button className="rounded-full p-2 hover:bg-gray-50">
@@ -68,7 +67,7 @@ export default function LoginPage() {
           </button>
         </div>
       </div>
-      <div className='text-gray-800"'>
+      <div className="text-sm text-primary-800">
         <Link href={'/signup/email'}>회원가입</Link>
       </div>
     </div>
