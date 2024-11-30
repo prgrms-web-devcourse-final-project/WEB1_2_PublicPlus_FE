@@ -2146,6 +2146,7 @@ export interface FieldInfo {
  *
  * @export
  * @interface FieldInfoDeclaringExecutable
+ * @interface FieldInfoDeclaringExecutable
  */
 export interface FieldInfoDeclaringExecutable {
   /**
@@ -2249,6 +2250,7 @@ export interface FieldInfoDeclaringExecutable {
 /**
  *
  * @export
+ * @interface FieldInfoDeclaringExecutableTypeParameters
  * @interface FieldInfoDeclaringExecutableTypeParameters
  */
 export interface FieldInfoDeclaringExecutableTypeParameters {
@@ -2399,6 +2401,7 @@ export interface FieldInfoFieldGenericType {
  *
  * @export
  * @interface FieldInfoParameters
+ * @interface FieldInfoParameters
  */
 export interface FieldInfoParameters {
   /**
@@ -2471,6 +2474,7 @@ export interface FieldInfoParameters {
 /**
  *
  * @export
+ * @interface FieldInfoTersMethodForField
  * @interface FieldInfoTersMethodForField
  */
 export interface FieldInfoTersMethodForField {
@@ -2605,6 +2609,7 @@ export interface FieldInfoTersMethodForField {
 /**
  *
  * @export
+ * @interface FieldInfoTypeParameters
  * @interface FieldInfoTypeParameters
  */
 export interface FieldInfoTypeParameters {
@@ -3971,6 +3976,7 @@ export class CalendarControllerApi extends BaseAPI {
 
 /**
  * EmailControllerApi - axios parameter creator
+ * EmailControllerApi - axios parameter creator
  * @export
  */
 export const EmailControllerApiAxiosParamCreator = function (
@@ -4092,6 +4098,7 @@ export const EmailControllerApiAxiosParamCreator = function (
 
 /**
  * EmailControllerApi - functional programming interface
+ * EmailControllerApi - functional programming interface
  * @export
  */
 export const EmailControllerApiFp = function (configuration?: Configuration) {
@@ -4166,6 +4173,7 @@ export const EmailControllerApiFp = function (configuration?: Configuration) {
 
 /**
  * EmailControllerApi - factory interface
+ * EmailControllerApi - factory interface
  * @export
  */
 export const EmailControllerApiFactory = function (
@@ -4212,7 +4220,9 @@ export const EmailControllerApiFactory = function (
 
 /**
  * EmailControllerApi - object-oriented interface
+ * EmailControllerApi - object-oriented interface
  * @export
+ * @class EmailControllerApi
  * @class EmailControllerApi
  * @extends {BaseAPI}
  */
@@ -6781,6 +6791,7 @@ export class NotificationControllerApi extends BaseAPI {
 
 /**
  * OAuth2ControllerApi - axios parameter creator
+ * OAuth2ControllerApi - axios parameter creator
  * @export
  */
 export const OAuth2ControllerApiAxiosParamCreator = function (
@@ -6842,6 +6853,7 @@ export const OAuth2ControllerApiAxiosParamCreator = function (
 
 /**
  * OAuth2ControllerApi - functional programming interface
+ * OAuth2ControllerApi - functional programming interface
  * @export
  */
 export const OAuth2ControllerApiFp = function (configuration?: Configuration) {
@@ -6883,6 +6895,7 @@ export const OAuth2ControllerApiFp = function (configuration?: Configuration) {
 
 /**
  * OAuth2ControllerApi - factory interface
+ * OAuth2ControllerApi - factory interface
  * @export
  */
 export const OAuth2ControllerApiFactory = function (
@@ -6912,7 +6925,9 @@ export const OAuth2ControllerApiFactory = function (
 
 /**
  * OAuth2ControllerApi - object-oriented interface
+ * OAuth2ControllerApi - object-oriented interface
  * @export
+ * @class OAuth2ControllerApi
  * @class OAuth2ControllerApi
  * @extends {BaseAPI}
  */

@@ -53,8 +53,8 @@ export const Modal = ({
       />
       <div
         ref={modalRef}
-        className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 transform rounded-xl bg-gray-100 p-6 shadow-xl">
-        <h2 className="mb-4 flex justify-center text-lg font-semibold text-gray-900">
+        className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 transform rounded-xl bg-gray-100 p-6 py-8 shadow-xl">
+        <h2 className="mb-4 flex justify-center text-m font-semibold text-gray-900">
           {title}
         </h2>
         <div className="space-y-8">
@@ -62,12 +62,12 @@ export const Modal = ({
           <div className="flex justify-center gap-3">
             <button
               onClick={handleConfirm}
-              className="rounded-lg px-16 py-2 text-gray-600 hover:bg-gray-200">
+              className="rounded-lg px-16 py-2 text-sm text-gray-600 hover:bg-gray-200">
               {confirmText}
             </button>
             <button
               onClick={onClose}
-              className="rounded-lg px-16 py-2 text-gray-500 hover:bg-gray-200">
+              className="rounded-lg px-16 py-2 text-sm text-gray-500 hover:bg-gray-200">
               {cancelText}
             </button>
           </div>
