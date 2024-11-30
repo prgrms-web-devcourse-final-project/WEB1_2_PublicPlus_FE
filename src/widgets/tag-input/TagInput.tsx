@@ -46,7 +46,7 @@ export const TagInput = ({
   };
 
   return (
-    <div className={cn('space-y-2', className)}>
+    <div className={cn('space-y-4', className)}>
       <div className="flex flex-wrap gap-2">
         {value.map((tag, index) => (
           <span

@@ -46,7 +46,7 @@ export const ReviewForm = ({
           value={content}
           onChange={e => setContent(e.target.value)}
           placeholder="리뷰를 작성해주세요"
-          className="min-h-[100px]"
+          className="min-h-[100px] w-full"
         />
         <TagInput
           value={tags}
