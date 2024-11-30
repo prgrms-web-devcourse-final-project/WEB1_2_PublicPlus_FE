@@ -90,3 +90,23 @@ body {
     right: calc(50% - 300px); /* 600px의 절반인 300px로 조정 */
   }
 }
+
+/* 스크롤바 커스텀 */
+@supports selector(::-webkit-scrollbar) {
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 1px;
+  }
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background: rgba(241, 241, 241, 0.3);
+  }
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background: rgba(193, 193, 193, 0.6);
+    border-radius: 4px;
+  }
+}
+
+/* Firefox */
+.scrollbar-custom {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(193, 193, 193, 0.3) rgba(241, 241, 241, 0.6);
+}
