@@ -129,6 +129,7 @@ export default {
           }
         }
       });
-    }
+    },
+    require('tailwindcss-animate') // 애니메이션 플러그인 추가
   ]
 } satisfies Config;
