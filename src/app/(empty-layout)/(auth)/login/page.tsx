@@ -3,24 +3,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuthStore } from '../../../../../stores/authStore';
 import LoginContainer from '@/features/auth/ui/LoginContainer';
+import { useAuthStore } from '@/entities/User';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { isAuthenticated, user, token } = useAuthStore();
+  const { isAuthenticated, userId, tokens } = useAuthStore();
 
   useEffect(() => {
-    console.log('인증 상태:', {
-      isAuthenticated,
-      user,
-      token
-    });
     // 토큰과 사용자 정보 모두 존재할 때만 리다이렉트
-    if (isAuthenticated && user && token) {
+    if (isAuthenticated && userId && tokens.access_token) {
       router.push('/');
     }
-  }, [isAuthenticated, user, token, router]);
+  }, [isAuthenticated, userId, tokens, router]);
 
   // 인증되지 않은 경우에만 로그인 페이지 렌더링
   if (isAuthenticated) {
@@ -28,7 +23,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4">
+    <div className="">
       <Link href={'/login'}>
         <Image
           width={90}
