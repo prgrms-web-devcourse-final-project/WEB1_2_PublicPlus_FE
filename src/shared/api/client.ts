@@ -4,9 +4,7 @@ import {
   ReviewControllerApi
 } from '@/api/generated';
 
-const config = new Configuration({
-  basePath: process.env.NEXT_PUBLIC_API_URL || '/api'
-});
+const config = new Configuration({});
 
 export const api = {
   facility: new FacilityControllerApi(config),

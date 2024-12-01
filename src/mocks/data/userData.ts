@@ -1,14 +1,13 @@
 // src/mocks/data/userData.ts
 
+import { UserType } from '@/entities/User';
 import { faker } from '@faker-js/faker';
-import { User } from '../types/UserTypes';
 
 // 모의 사용자 데이터
-export const mockUsers: User[] = [
+export const mockUsers: UserType[] = [
   {
     userId: faker.string.uuid(),
     email: 'test@example.com',
-    name: '테스트유저',
     password: 'password123',
     nickname: '운동하는개발자',
     profilePath: faker.image.avatarGitHub(),
