@@ -7,7 +7,7 @@ export function middleware(request: NextRequest) {
   const authToken = request.cookies.get('auth-storage');
 
   // 공개 경로 정의
-  const publicPaths = ['/login', '/'];
+  const publicPaths = ['/login'];
 
   // 인증이 필요한 경로
   const protectedPaths = ['/profile'];
