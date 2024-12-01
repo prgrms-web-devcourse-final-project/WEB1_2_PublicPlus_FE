@@ -60,6 +60,52 @@ jobs:
             const reportPath = path.join(lhciDir, latestReport);
             const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
 
+            const formatAssertions = (report) => {
+              const assertions = [];
+              
+              // 브라우저 콘솔 에러
+              if (report.audits['errors-in-console']?.score === 0) {
+                assertions.push({
+                  category: '브라우저 오류',
+                  issue: 'Console 에러가 발견되었습니다.',
+                  fix: '브라우저 콘솔에 기록된 에러를 확인하고 수정해주세요.',
+                  link: 'https://developer.chrome.com/docs/lighthouse/best-practices/errors-in-console/'
+                });
+              }
+
+              // 접근성 문제
+              if (report.audits['html-has-lang']?.score === 0) {
+                assertions.push({
+                  category: '접근성',
+                  issue: 'HTML lang 속성이 없습니다.',
+                  fix: '<html> 태그에 lang 속성을 추가해주세요. 예: <html lang="ko">',
+                  link: 'https://dequeuniversity.com/rules/axe/4.9/html-has-lang'
+                });
+              }
+
+              // SEO 문제
+              if (report.audits['meta-description']?.score === 0) {
+                assertions.push({
+                  category: 'SEO',
+                  issue: 'meta description이 없습니다.',
+                  fix: '<head> 태그 내에 메타 설명을 추가해주세요.',
+                  link: 'https://developer.chrome.com/docs/lighthouse/seo/meta-description/'
+                });
+              }
+
+              // 성능 문제
+              if (report.audits['unused-css-rules']?.details?.items?.length > 0) {
+                assertions.push({
+                  category: '성능',
+                  issue: '사용하지 않는 CSS가 있습니다.',
+                  fix: '불필요한 CSS를 제거하거나 필요한 CSS만 로드하도록 수정해주세요.',
+                  link: 'https://developer.chrome.com/docs/lighthouse/performance/unused-css-rules/'
+                });
+              }
+
+              return assertions;
+            };
+
             const formatScore = (value = 0) => {
               return Math.round(value * 100);
             };
@@ -122,6 +168,14 @@ jobs:
             - Commit: [\`${context.sha.substring(0, 7)}\`](${context.payload.repository.html_url}/commit/${context.sha})
             - Message: ${context.payload.head_commit?.message || '(no message)'}
             - Author: ${context.payload.head_commit?.author?.name || '(unknown)'}
+
+            ### ❌ 품질 검증 실패 항목
+            ${formatAssertions(report).map(assertion => `
+            #### ${assertion.category}
+            - **문제**: ${assertion.issue}
+            - **개선방안**: ${assertion.fix}
+            - **참고문서**: [가이드 문서](${assertion.link})
+            `).join('\n')}
 
             ### 🎯 Lighthouse 점수
             | 카테고리 | 점수 | 상태 |
