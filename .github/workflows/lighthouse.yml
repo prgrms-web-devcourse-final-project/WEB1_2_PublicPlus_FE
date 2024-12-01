@@ -1,8 +1,10 @@
 name: Lighthouse CI
 
 on:
-  push:
   pull_request:
+    branches:
+      - develop # develop 브랜치로 가는 PR만 실행
+    types: [closed] # PR이 닫힐 때 실행
 
 permissions:
   issues: write
@@ -10,7 +12,7 @@ permissions:
 
 jobs:
   lighthouse-audit:
-    if: github.event_name != 'issues'
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
     name: Lighthouse Audit
     runs-on: ubuntu-latest
     steps:
