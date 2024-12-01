@@ -1,13 +1,8 @@
 name: Lighthouse CI
 
 on:
-  push: # branches 지정을 제거하여 모든 브랜치에서 동작하도록 함
-  workflow_dispatch:
-    inputs:
-      url:
-        description: 'URL to run Lighthouse on'
-        required: false
-        default: 'http://localhost:8080'
+  push:
+  pull_request:
 
 permissions:
   issues: write
@@ -15,6 +10,7 @@ permissions:
 
 jobs:
   lighthouse-audit:
+    if: github.event_name != 'issues'
     name: Lighthouse Audit
     runs-on: ubuntu-latest
     steps:
