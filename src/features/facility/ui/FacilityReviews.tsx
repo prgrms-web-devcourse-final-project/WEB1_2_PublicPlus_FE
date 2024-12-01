@@ -5,8 +5,8 @@ import { Button } from '@/components/common/Button/Button';
 import { useReviews } from '@/features/review/model/queries';
 import { ReviewForm } from '@/features/review/ui/ReviewForm';
 import { Rating } from '@/widgets/rating/Rating';
-import { useAuthStore } from '../../../../stores/authStore';
 import { useReviewStore } from '@/features/review/model/store';
+import { useAuthStore } from '@/entities/User';
 
 interface FacilityReviewsProps {
   facility: FacilityDetailsResponseDTO;
@@ -14,7 +14,7 @@ interface FacilityReviewsProps {
 
 export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
   const router = useRouter();
-  const { isAuthenticated, user } = useAuthStore();
+  const { isAuthenticated, userId } = useAuthStore();
 
   const { isWriting, editingId, setIsWriting, setEditingId } = useReviewStore();
 
@@ -119,7 +119,7 @@ export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
                     />
                     <p className="text-sm text-gray-600">{review.content}</p>
                   </div>
-                  {user?.id === review.userId && (
+                  {userId && (
                     <div className="flex gap-2">
                       <Button
                         variant="line"

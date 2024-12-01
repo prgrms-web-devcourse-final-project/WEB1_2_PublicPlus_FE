@@ -1,5 +1,5 @@
 import FacilityDetail from '@/widgets/facility/facility-detail';
-import { generateMetadata } from '@/metadata/generate-metadata';
+import { generateMetadata } from '@/shared/config/metadata/generate-metadata';
 
 export const metadata = generateMetadata({
   title: '시설 상세 정보',
