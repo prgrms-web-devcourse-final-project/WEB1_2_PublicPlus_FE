@@ -99,7 +99,7 @@ export default function KakaoMap({
         searchOption
       );
     },
-    [selectedCategories, showMarkers, showInfoWindows]
+    [selectedCategories, showMarkers, showInfoWindows, searchRadius]
   );
 
   // 지도 초기화 함수
@@ -152,7 +152,7 @@ export default function KakaoMap({
       circle.setMap(mapInstance);
       circleRef.current = circle;
     },
-    [name, options]
+    [name, options, mapLevel]
   );
 
   // 스크립트 로드
