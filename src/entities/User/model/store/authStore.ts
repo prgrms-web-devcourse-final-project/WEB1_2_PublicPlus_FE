@@ -1,8 +1,9 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import axios, { AxiosError } from 'axios';
+
+import { UserJoinDTO, UserLoginDTO } from '@/api/generated';
+import { userService } from '@/entities/User/api/userService';
 import { AuthState } from '../types/AuthState';
-import { ErrorResponseDTO, UserJoinDTO, UserLoginDTO } from '@/api/generated';
 
 export const useAuthStore = create<AuthState>()(
   persist(
@@ -12,6 +13,7 @@ export const useAuthStore = create<AuthState>()(
         access_token: null,
         refresh_token: null
       },
+      tokenExpiry: null,
       isAuthenticated: false,
       isLoading: false,
       error: null,
@@ -20,29 +22,24 @@ export const useAuthStore = create<AuthState>()(
         set({ isLoading: true, error: null });
 
         try {
-          const response = await axios.post<{
-            userId: string;
-            access_token: string;
-            refresh_token: string;
-          }>('/api/user/login', loginData);
+          const response = await userService.login(loginData);
 
-          // 쿠키에 명시적으로 저장
           document.cookie = `auth-storage=${JSON.stringify({
             state: {
-              userId: response.data.userId,
+              userId: response.userId,
               tokens: {
-                access_token: response.data.access_token,
-                refresh_token: response.data.refresh_token
+                access_token: response.access_token,
+                refresh_token: response.refresh_token
               },
               isAuthenticated: true
             }
-          })}; path=/; secure; samesite=strict; max-age=86400`; // 24시간 유효
+          })}; path=/; secure; samesite=strict; max-age=86400`;
 
           set({
-            userId: response.data.userId,
+            userId: response.userId,
             tokens: {
-              access_token: response.data.access_token,
-              refresh_token: response.data.refresh_token
+              access_token: response.access_token ?? null,
+              refresh_token: response.refresh_token ?? null
             },
             isAuthenticated: true,
             isLoading: false,
@@ -51,11 +48,8 @@ export const useAuthStore = create<AuthState>()(
 
           return true;
         } catch (error) {
-          const axiosError = error as AxiosError;
           const errorMessage =
-            (axiosError.response?.data as ErrorResponseDTO)?.message ||
-            axiosError.message ||
-            '로그인 실패';
+            error instanceof Error ? error.message : '로그인 실패';
 
           set({
             isAuthenticated: false,
@@ -70,15 +64,12 @@ export const useAuthStore = create<AuthState>()(
         set({ isLoading: true, error: null });
 
         try {
-          await axios.post('/api/user/join', joinData);
+          await userService.join(joinData);
           set({ isLoading: false, error: null });
           return true;
         } catch (error) {
-          const axiosError = error as AxiosError;
           const errorMessage =
-            (axiosError.response?.data as ErrorResponseDTO)?.message ||
-            axiosError.message ||
-            '회원가입 실패';
+            error instanceof Error ? error.message : '회원가입 실패';
 
           set({
             isLoading: false,
@@ -88,20 +79,29 @@ export const useAuthStore = create<AuthState>()(
         }
       },
 
-      logout: () => {
-        // 쿠키 삭제
-        document.cookie =
-          'auth-storage=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
+      logout: async () => {
+        try {
+          set({
+            userId: null,
+            tokens: {
+              access_token: null,
+              refresh_token: null
+            },
+            isAuthenticated: false,
+            error: null
+          });
 
-        set({
-          userId: null,
-          tokens: {
-            access_token: null,
-            refresh_token: null
-          },
-          isAuthenticated: false,
-          error: null
-        });
+          document.cookie.split(';').forEach(c => {
+            document.cookie = c
+              .replace(/^ +/, '')
+              .replace(
+                /=.*/,
+                '=;expires=' + new Date().toUTCString() + ';path=/'
+              );
+          });
+        } catch (error) {
+          console.error('Logout failed', error);
+        }
       },
 
       refreshToken: async () => {
@@ -110,33 +110,19 @@ export const useAuthStore = create<AuthState>()(
         if (!tokens.refresh_token) return false;
 
         try {
-          const response = await axios.post<{
-            access_token: string;
-            refresh_token: string;
-          }>(
-            '/api/user/refresh/header',
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${tokens.refresh_token}`
-              }
-            }
-          );
+          const response = await userService.refreshToken();
 
           set(state => ({
             tokens: {
               ...state.tokens,
-              access_token: response.data.access_token
+              access_token: response.access_token ?? state.tokens.access_token
             }
           }));
 
           return true;
         } catch (error) {
-          const axiosError = error as AxiosError;
           const errorMessage =
-            (axiosError.response?.data as ErrorResponseDTO)?.message ||
-            axiosError.message ||
-            '토큰 재발급 실패';
+            error instanceof Error ? error.message : '토큰 재발급 실패';
 
           set({
             error: errorMessage
@@ -150,12 +136,11 @@ export const useAuthStore = create<AuthState>()(
     {
       name: 'auth-storage',
       storage: createJSONStorage(() => localStorage),
-      partialize: (state: AuthState) =>
-        ({
-          userId: state.userId,
-          tokens: state.tokens,
-          isAuthenticated: state.isAuthenticated
-        }) as AuthState
+      partialize: (state: AuthState) => ({
+        userId: state.userId,
+        tokens: state.tokens,
+        isAuthenticated: state.isAuthenticated
+      })
     }
   )
 );
