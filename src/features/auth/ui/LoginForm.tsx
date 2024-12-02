@@ -22,14 +22,14 @@ export default function LoginForm({
         placeholder="이메일"
         value={email}
         onChange={e => onEmailChange(e.target.value)}
-        className="form-input mb-4 w-full rounded border p-3"
+        className="form-input mb-4 w-full rounded border p-3 text-sm"
       />
       <input
         type="password"
         placeholder="비밀번호"
         value={password}
         onChange={e => onPasswordChange(e.target.value)}
-        className="form-input mb-4 w-full rounded border p-3"
+        className="form-input mb-4 w-full rounded border p-3 text-sm"
       />
       <div
         className="mt-4"

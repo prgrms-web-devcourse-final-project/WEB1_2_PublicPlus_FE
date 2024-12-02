@@ -3,7 +3,7 @@ export interface UserType {
   email: string;
   password: string;
   nickname: string;
-  profilePath?: string;
-  description?: string;
+  profilePath?: string | null;
+  description?: string | null;
   role: 'USER' | 'ADMIN';
 }

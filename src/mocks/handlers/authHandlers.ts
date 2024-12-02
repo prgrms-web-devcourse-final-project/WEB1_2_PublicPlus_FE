@@ -3,11 +3,24 @@ import { faker } from '@faker-js/faker';
 import { mockUsers } from '../data/userData';
 import { UserLoginDTO, UserJoinDTO, ErrorResponseDTO } from '@/api/generated';
 
+// 이메일 인증 코드 저장소
+const emailVerificationCodes: Record<string, string> = {};
+
 export const authHandlers = [
   // 로그인 핸들러
   http.post('/api/user/login', async ({ request }) => {
     const body = (await request.json()) as UserLoginDTO;
     const { email, password } = body;
+
+    // 필수 필드 검증
+    if (!email || !password) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'LOGIN_INVALID',
+        message: '이메일과 비밀번호를 입력해주세요',
+        details: '로그인 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
 
     const user = mockUsers.find(
       u => u.email === email && u.password === password
@@ -17,6 +30,7 @@ export const authHandlers = [
       return HttpResponse.json(
         {
           userId: user.userId,
+          authentication: 'Bearer',
           access_token: faker.string.uuid(),
           refresh_token: faker.string.uuid()
         },
@@ -33,12 +47,88 @@ export const authHandlers = [
     return HttpResponse.json(errorResponse, { status: 400 });
   }),
 
-  // 회원가입 핸들러 (추가)
-  http.post('/api/user/join', async ({ request }) => {
-    const body = (await request.json()) as UserJoinDTO;
-    const { email, password, nickname } = body;
+  // 이메일 인증 코드 발송 핸들러
+  http.post('/api/email', ({ request }) => {
+    const url = new URL(request.url);
+    const email = url.searchParams.get('email');
 
-    // 간단한 중복 검사 로직
+    if (!email) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'EMAIL_INVALID',
+        message: '유효한 이메일 주소를 입력해주세요',
+        details: '이메일 인증 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    // 6자리 인증 코드 생성
+    const verificationCode = faker.string.numeric(6);
+
+    // 이메일별 인증 코드 저장
+    emailVerificationCodes[email] = verificationCode;
+    console.log(`Verification code for ${email}: ${verificationCode}`);
+
+    return HttpResponse.json(null, { status: 200 });
+  }),
+
+  // 이메일 인증 코드 검증 핸들러
+  http.get('/api/email', ({ request }) => {
+    const url = new URL(request.url);
+    const email = url.searchParams.get('email');
+    const code = url.searchParams.get('code');
+
+    if (!email || !code) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'VERIFICATION_INVALID',
+        message: '이메일과 인증 코드를 입력해주세요',
+        details: '인증 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    // 저장된 인증 코드와 일치 여부 확인
+    if (emailVerificationCodes[email] !== code) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'VERIFICATION_FAILED',
+        message: '인증 코드가 일치하지 않습니다',
+        details: '인증 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    // 인증 성공 후 코드 삭제
+    delete emailVerificationCodes[email];
+
+    return HttpResponse.json(null, { status: 200 });
+  }),
+
+  // 회원가입 핸들러 수정 (이메일 인증 추가)
+  http.post('/api/user/join', async ({ request }) => {
+    const body = (await request.json()) as UserJoinDTO & {
+      verificationCode: string;
+    };
+    const { email, password, nickname, checkPassword } = body;
+
+    // 필수 필드
+    if (!email || !password || !nickname || !checkPassword) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'JOIN_INVALID',
+        message: '필수 정보가 누락되었습니다',
+        details: '회원가입 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    if (password !== checkPassword) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'PASSWORD_FAILED',
+        message: '비밀번호가 일치하지 않습니다.',
+        details: '회원가입 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    // 기존 이메일 중복 검사
     const existingUser = mockUsers.find(u => u.email === email);
     if (existingUser) {
       const errorResponse: ErrorResponseDTO = {
@@ -50,7 +140,21 @@ export const authHandlers = [
     }
 
     // 회원가입 성공 로직
-    return HttpResponse.json({}, { status: 201 });
+    const newUser = {
+      userId: faker.string.uuid(),
+      email,
+      password,
+      nickname,
+      profilePath: null,
+      description: null,
+      role: 'USER' as const
+    };
+    mockUsers.push(newUser);
+
+    // 인증 코드 삭제
+    delete emailVerificationCodes[email];
+
+    return HttpResponse.json(newUser, { status: 201 });
   }),
 
   // 토큰 재발급 핸들러
@@ -66,12 +170,11 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 401 });
     }
 
-    const refreshToken = authHeader.split(' ')[1];
-
     return HttpResponse.json(
       {
+        authentication: 'Bearer',
         access_token: faker.string.uuid(),
-        refresh_token: refreshToken
+        refresh_token: faker.string.uuid()
       },
       { status: 200 }
     );
