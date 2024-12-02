@@ -1,16 +1,9 @@
 import { Tag } from '@/components/common/Tag';
 import { UserInfoCard } from '@/components/common/Cards/UserInfoCard';
 import { useRouter } from 'next/navigation';
+import { UserInformation } from '../types';
 
-interface UserInfoProps {
-  description?: string;
-}
-
-interface UserInfoProps {
-  description?: string;
-}
-
-export const UserInfo = ({ description = '' }: UserInfoProps) => {
+export const UserInfo = ({ description = '' }: UserInformation) => {
   const router = useRouter();
   return (
     <div className="space-y-4">

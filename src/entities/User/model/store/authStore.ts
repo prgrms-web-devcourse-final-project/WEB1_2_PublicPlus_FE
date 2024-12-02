@@ -13,7 +13,6 @@ export const useAuthStore = create<AuthState>()(
         access_token: null,
         refresh_token: null
       },
-      tokenExpiry: null,
       isAuthenticated: false,
       isLoading: false,
       error: null,

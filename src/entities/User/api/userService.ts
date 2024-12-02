@@ -111,5 +111,26 @@ export const userService = {
       }
       throw error;
     }
+  },
+
+  // 회원 정보 조회 메서드 추가
+  findMyInformation: async (userId: string) => {
+    try {
+      // userId가 없는 경우 에러 처리
+      if (!userId) {
+        throw new Error('사용자 ID가 없습니다.');
+      }
+
+      const response = await api.user.findMyInformation(userId);
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorResponse = error.response?.data as ErrorResponseDTO;
+        throw new Error(
+          errorResponse?.message || '회원 정보 조회에 실패했습니다.'
+        );
+      }
+      throw error;
+    }
   }
 };
