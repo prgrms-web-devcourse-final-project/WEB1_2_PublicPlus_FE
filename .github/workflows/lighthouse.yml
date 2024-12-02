@@ -162,10 +162,10 @@ jobs:
             const body = `## 🚨 웹사이트 성능 측정 결과
 
             ### 📌 실행 정보
-            - Branch: \`${context.ref.replace('refs/heads/', '')}\`
-            - Commit: [\`${context.sha.substring(0, 7)}\`](${context.payload.repository.html_url}/commit/${context.sha})
-            - Message: ${context.payload.head_commit?.message || '(no message)'}
-            - Author: ${context.payload.head_commit?.author?.name || '(unknown)'}
+            - PR: #${context.payload.pull_request.number}
+            - Title: ${context.payload.pull_request.title}
+            - Author: ${context.payload.pull_request.user.login}
+            - Branch: ${context.payload.pull_request.head.ref} → ${context.payload.pull_request.base.ref}
 
             ### ❌ 품질 검증 실패 항목
             ${formatAssertions(report).map(assertion => `

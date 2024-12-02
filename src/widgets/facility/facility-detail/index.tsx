@@ -21,6 +21,8 @@ export default function FacilityDetail() {
 
   const { data: facility, isLoading, error } = useFacilityDetail(id);
 
+  console.log('facility 시설 데이터: ', facility);
+
   if (!id) {
     return <div className="p-4 text-center">잘못된 접근입니다.</div>;
   }
