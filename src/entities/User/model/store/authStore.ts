@@ -1,9 +1,8 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import axios, { AxiosError } from 'axios';
-import { UserLoginDTO, UserJoinDTO, ErrorResponse } from '@/api/generated';
-import { LoginResponse } from '../types/UserLogin';
 import { AuthState } from '../types/AuthState';
+import { ErrorResponseDTO, UserJoinDTO, UserLoginDTO } from '@/api/generated';
 
 export const useAuthStore = create<AuthState>()(
   persist(
@@ -21,10 +20,11 @@ export const useAuthStore = create<AuthState>()(
         set({ isLoading: true, error: null });
 
         try {
-          const response = await axios.post<LoginResponse>(
-            '/api/user/login',
-            loginData
-          );
+          const response = await axios.post<{
+            userId: string;
+            access_token: string;
+            refresh_token: string;
+          }>('/api/user/login', loginData);
 
           // 쿠키에 명시적으로 저장
           document.cookie = `auth-storage=${JSON.stringify({
@@ -53,7 +53,7 @@ export const useAuthStore = create<AuthState>()(
         } catch (error) {
           const axiosError = error as AxiosError;
           const errorMessage =
-            (axiosError.response?.data as ErrorResponse)?.message ||
+            (axiosError.response?.data as ErrorResponseDTO)?.message ||
             axiosError.message ||
             '로그인 실패';
 
@@ -76,7 +76,7 @@ export const useAuthStore = create<AuthState>()(
         } catch (error) {
           const axiosError = error as AxiosError;
           const errorMessage =
-            (axiosError.response?.data as ErrorResponse)?.message ||
+            (axiosError.response?.data as ErrorResponseDTO)?.message ||
             axiosError.message ||
             '회원가입 실패';
 
@@ -103,13 +103,17 @@ export const useAuthStore = create<AuthState>()(
           error: null
         });
       },
+
       refreshToken: async () => {
         const { tokens } = get();
 
         if (!tokens.refresh_token) return false;
 
         try {
-          const response = await axios.post(
+          const response = await axios.post<{
+            access_token: string;
+            refresh_token: string;
+          }>(
             '/api/user/refresh/header',
             {},
             {
@@ -130,7 +134,7 @@ export const useAuthStore = create<AuthState>()(
         } catch (error) {
           const axiosError = error as AxiosError;
           const errorMessage =
-            (axiosError.response?.data as ErrorResponse)?.message ||
+            (axiosError.response?.data as ErrorResponseDTO)?.message ||
             axiosError.message ||
             '토큰 재발급 실패';
 
