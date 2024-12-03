@@ -251,7 +251,6 @@ export const authHandlers = [
     const body = (await request.json()) as UserChangeInfoDTO;
     const { description } = body;
 
-    // 소개글 길이 제한
     if (description && description.length > 200) {
       const errorResponse: ErrorResponseDTO = {
         errorCode: 'DESCRIPTION_INVALID',
@@ -261,7 +260,6 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 400 });
     }
 
-    // 사용자 찾기
     const userIndex = mockUsers.findIndex(u => u.userId === userId);
     if (userIndex === -1) {
       const errorResponse: ErrorResponseDTO = {
@@ -272,13 +270,72 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 404 });
     }
 
-    // 소개글 업데이트
     mockUsers[userIndex].description = description || null;
 
     return HttpResponse.json(
       {
         userId: userId,
         description: description
+      },
+      { status: 200 }
+    );
+  }),
+  // 프로필 사진 변경
+  http.post('/api/user/profile/:userId', async ({ request, params }) => {
+    const { userId } = params;
+    const body = await request.formData();
+    const multipartFile = body.get('multipartFile') as File | null;
+
+    const userIndex = mockUsers.findIndex(u => u.userId === userId);
+    if (userIndex === -1) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'USER_NOT_FOUND',
+        message: '해당 사용자를 찾을 수 없습니다',
+        details: '프로필 사진 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 404 });
+    }
+
+    if (!multipartFile || !(multipartFile instanceof File)) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'FILE_INVALID',
+        message: '유효한 파일을 업로드해주세요',
+        details: '프로필 사진 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    if (multipartFile.size > 5 * 1024 * 1024) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'FILE_SIZE_EXCEEDED',
+        message: '파일 크기는 5MB를 초과할 수 없습니다',
+        details: '프로필 사진 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    if (!allowedTypes.includes(multipartFile.type)) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'FILE_TYPE_INVALID',
+        message: 'JPG, PNG 형식의 이미지만 업로드 가능합니다',
+        details: '프로필 사진 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    const fileExtension = multipartFile.type.split('/')[1];
+    const newFileName = `${userId}_${Date.now()}.${fileExtension}`;
+
+    // 실제 S3/CloudFront 환경과 유사한 경로 생성
+    const profileImagePath = `/profile/${newFileName}`;
+
+    mockUsers[userIndex].profile_image = profileImagePath;
+
+    return HttpResponse.json(
+      {
+        userId: userId,
+        profile_image: profileImagePath
       },
       { status: 200 }
     );

@@ -11,8 +11,8 @@ export const UserProfile = () => {
   const { data: userInfo } = useUserQuery();
 
   const handleLogout = () => {
-    router.push('/login');
     logout();
+    router.push('/login');
   };
 
   return (
