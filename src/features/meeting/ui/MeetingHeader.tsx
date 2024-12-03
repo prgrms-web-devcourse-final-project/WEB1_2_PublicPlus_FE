@@ -14,8 +14,8 @@ export function MeetingHeader({ meeting }: MeetingHeaderProps) {
     <>
       <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.2rem]">
         <Image
-          src={meeting.meetingImage}
-          alt={meeting.meetingName}
+          src={meeting.meetingImage || '/jjang.jpeg'}
+          alt={meeting.meetingName || '이미지 설명'}
           fill
           className="object-cover"
           priority
