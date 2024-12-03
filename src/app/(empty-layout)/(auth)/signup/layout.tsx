@@ -8,8 +8,8 @@ export default function SignupLayout({
     <div>
       <CustomHeader />
       <div>
-        <h1 className="text-center text-2xl font-bold">회원가입</h1>
-        <div className="mb-12 mt-16">{children}</div>
+        <h1 className="mt-24 text-center text-2xl font-bold">회원가입</h1>
+        <div className="mb-12">{children}</div>
       </div>
     </div>
   );

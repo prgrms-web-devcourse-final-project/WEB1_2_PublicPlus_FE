@@ -31,16 +31,6 @@ export default function ProfileEditPage() {
             description="아직 작성되지 않았습니다."
             onClick={() => router.push('/profile/edit/description')}
           />
-          <EditCard
-            title="관심 운동"
-            description="아직 등록된 관심 운동이 없습니다."
-            onClick={() => router.push('/profile/edit/interests')}
-          />
-          <EditCard
-            title="즐겨찾는 체육 시설"
-            description="아직 즐겨찾기한 시설이 없습니다."
-            onClick={() => router.push('/profile/edit/favorites')}
-          />
         </div>
       </div>
     </div>

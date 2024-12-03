@@ -22,7 +22,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="space-y-16 text-center">
+    <div className="item-center flex min-h-[80vh] flex-col justify-center space-y-16 text-center">
       <section className="mx-auto w-[30%]">
         <Link href={'/'}>
           <Image
