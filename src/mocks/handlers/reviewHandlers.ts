@@ -6,41 +6,48 @@ export const reviewHandlers = [
   // 시설별 리뷰 조회
   http.get('/api/facility-details/:facilityId/reviews', ({ params }) => {
     const { facilityId } = params;
-    const reviews = reviewDb.getReviewsByFacilityId(String(facilityId));
+    const reviews = reviewDb.getReviewsByFacilityId(facilityId as string);
     return HttpResponse.json(reviews);
   }),
 
   // 리뷰 생성
   http.post(
     '/api/facility-details/:facilityId/reviews',
-    async ({ params, request }) => {
+    async ({ request, params }) => {
+      const review = (await request.json()) as ReviewDTO;
       const { facilityId } = params;
-      const reviewData = (await request.json()) as Omit<
-        ReviewDTO,
-        'id' | 'likes' | 'views'
-      >;
-      const newReview = reviewDb.createReview(String(facilityId), reviewData);
-      return HttpResponse.json(newReview, { status: 201 });
+
+      const newReview = reviewDb.createReview(facilityId as string, {
+        content: review.content || '',
+        rating: review.rating || 0,
+        tags: review.tags || []
+      });
+
+      return HttpResponse.json(newReview);
     }
   ),
 
   // 리뷰 수정
   http.put(
     '/api/facility-details/:facilityId/reviews/:reviewId',
-    async ({ params, request }) => {
+    async ({ request, params }) => {
+      const updatedReview = (await request.json()) as ReviewDTO;
       const { facilityId, reviewId } = params;
-      const data = (await request.json()) as Partial<ReviewDTO>;
-      const updatedReview = reviewDb.updateReview(
-        String(facilityId),
+
+      const result = reviewDb.updateReview(
+        facilityId as string,
         Number(reviewId),
-        data
+        updatedReview
       );
 
-      if (!updatedReview) {
-        return new HttpResponse(null, { status: 404 });
+      if (!result) {
+        return HttpResponse.json(
+          { message: 'Review not found' },
+          { status: 404 }
+        );
       }
 
-      return HttpResponse.json(updatedReview);
+      return HttpResponse.json(result);
     }
   ),
 
@@ -49,13 +56,17 @@ export const reviewHandlers = [
     '/api/facility-details/:facilityId/reviews/:reviewId',
     ({ params }) => {
       const { facilityId, reviewId } = params;
+
       const success = reviewDb.deleteReview(
-        String(facilityId),
+        facilityId as string,
         Number(reviewId)
       );
 
       if (!success) {
-        return new HttpResponse(null, { status: 404 });
+        return HttpResponse.json(
+          { message: 'Review not found' },
+          { status: 404 }
+        );
       }
 
       return HttpResponse.json({ message: 'Review deleted successfully' });
