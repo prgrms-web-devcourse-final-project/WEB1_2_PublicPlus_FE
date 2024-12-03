@@ -3,11 +3,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import styles from './Header.module.css';
 import { DETAIL_PAGE_PATTERNS } from '@/shared/config/constants';
 
 interface HeaderProps {
-  detailTitle?: string; // 디테일 페이지의 타이틀
+  detailTitle?: string;
 }
 
 const getDefaultTitle = (pathname: string) => {
@@ -33,7 +32,6 @@ export const Header = ({ detailTitle }: HeaderProps) => {
     checkNewNotifications();
   }, []);
 
-  // facility/[id] 패턴의 URL인지 확인
   const isDetailPage = DETAIL_PAGE_PATTERNS.some(pattern =>
     pathname?.includes(pattern)
   );
@@ -57,7 +55,7 @@ export const Header = ({ detailTitle }: HeaderProps) => {
               height={24}
             />
           </button>
-          <h1 className={styles.detailTitle}>
+          <h1 className="w-full text-center text-[1.2rem] font-semibold">
             {detailTitle || getDefaultTitle(pathname)}
           </h1>
         </div>
