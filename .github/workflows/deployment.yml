@@ -6,7 +6,6 @@ on:
       - develop
     paths-ignore:
       - 'docs/**'
-      - '.github/workflows/**'
       - 'README.md'
   workflow_dispatch:
 
