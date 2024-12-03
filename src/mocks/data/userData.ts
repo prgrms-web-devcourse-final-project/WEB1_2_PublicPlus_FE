@@ -12,7 +12,7 @@ export interface MockUser {
 }
 export const mockUsers: MockUser[] = [
   {
-    userId: faker.string.uuid(),
+    userId: '123e4567-e89b-12d3-a456-426614174000',
     email: 'test@example.com',
     password: 'password123',
     nickname: '운동하는개발자',

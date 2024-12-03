@@ -7,8 +7,7 @@ export const useUserQuery = () => {
   return useQuery({
     queryKey: ['user', userId],
     queryFn: () => userService.findMyInformation(userId || ''),
-    enabled: !!userId,
-    staleTime: 1000 * 60 * 5, // 5분간 캐시 유지
-    refetchOnWindowFocus: false
+    enabled: !!userId
+    // staleTime: 1000 * 60 * 5 // 5분간 캐시 유지
   });
 };
