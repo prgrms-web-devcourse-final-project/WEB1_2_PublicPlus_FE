@@ -1,9 +1,8 @@
 export interface UserType {
   userId: string;
   email: string;
-  password: string;
   nickname: string;
-  profilePath?: string;
-  description?: string;
+  profile_image?: string | null;
+  description?: string | null;
   role: 'USER' | 'ADMIN';
 }

@@ -18,58 +18,60 @@ export default function LoginPage() {
 
   // 인증되지 않은 경우에만 로그인 페이지 렌더링
   if (isAuthenticated) {
-    return null; // 또는 로딩 스피너
+    return null;
   }
 
   return (
-    <div className="text-center">
-      <Link href={'/login'}>
-        <Image
-          width={100}
-          height={50}
-          src={'/icons/logo.png'}
-          alt="공공플러스"
-          className="mx-auto my-24"
-        />
-      </Link>
-
-      <LoginContainer />
-
-      <div className="mb-8 mt-8 flex flex-col items-center">
-        <div className="flex gap-4">
-          {/* 소셜 로그인 버튼들 */}
-          <button className="rounded-full p-2 hover:bg-gray-50">
-            <Image
-              width={40}
-              height={40}
-              alt="카카오톡"
-              src={'/icons/kakaotalk.png'}
-              className="transition-transform hover:scale-105"
-            />
-          </button>
-          <button className="rounded-full p-2 hover:bg-gray-50">
-            <Image
-              width={40}
-              height={40}
-              alt="구글"
-              src={'/icons/google.png'}
-              className="transition-transform hover:scale-105"
-            />
-          </button>
-          <button className="rounded-full p-2 hover:bg-gray-50">
-            <Image
-              width={40}
-              height={40}
-              alt="네이버"
-              src={'/icons/naver.png'}
-              className="transition-transform hover:scale-105"
-            />
-          </button>
+    <div className="item-center flex min-h-[80vh] flex-col justify-center space-y-16 text-center">
+      <section className="mx-auto w-[30%]">
+        <Link href={'/'}>
+          <Image
+            width={60}
+            height={40}
+            src={'/icons/logo.png'}
+            alt="공공플러스"
+            className="my-28 w-full"
+          />
+        </Link>
+      </section>
+      <section>
+        <LoginContainer />
+        <div className="mb-8 mt-8 flex flex-col items-center">
+          <div className="flex gap-4">
+            {/* 소셜 로그인 버튼들 */}
+            <button className="rounded-full p-2 hover:bg-gray-50">
+              <Image
+                width={40}
+                height={40}
+                alt="카카오톡"
+                src={'/icons/kakaotalk.png'}
+                className="transition-transform hover:scale-105"
+              />
+            </button>
+            <button className="rounded-full p-2 hover:bg-gray-50">
+              <Image
+                width={40}
+                height={40}
+                alt="구글"
+                src={'/icons/google.png'}
+                className="transition-transform hover:scale-105"
+              />
+            </button>
+            <button className="rounded-full p-2 hover:bg-gray-50">
+              <Image
+                width={40}
+                height={40}
+                alt="네이버"
+                src={'/icons/naver.png'}
+                className="transition-transform hover:scale-105"
+              />
+            </button>
+          </div>
         </div>
-      </div>
-      <div className="text-sm text-primary-800">
-        <Link href={'/signup/email'}>회원가입</Link>
-      </div>
+        <div className="text-sm text-primary-800">
+          <Link href={'/signup'}>회원가입</Link>
+        </div>
+      </section>
     </div>
   );
 }

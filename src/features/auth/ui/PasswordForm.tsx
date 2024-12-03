@@ -17,9 +17,7 @@ export function PasswordForm() {
   );
 
   const handleSubmit = () => {
-    // if (!passwordError && !confirmError && password === passwordConfirm) {
     router.push('/signup/nickname');
-    // }
   };
 
   return (

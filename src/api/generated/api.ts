@@ -2146,7 +2146,6 @@ export interface FieldInfo {
  *
  * @export
  * @interface FieldInfoDeclaringExecutable
- * @interface FieldInfoDeclaringExecutable
  */
 export interface FieldInfoDeclaringExecutable {
   /**
@@ -2250,7 +2249,6 @@ export interface FieldInfoDeclaringExecutable {
 /**
  *
  * @export
- * @interface FieldInfoDeclaringExecutableTypeParameters
  * @interface FieldInfoDeclaringExecutableTypeParameters
  */
 export interface FieldInfoDeclaringExecutableTypeParameters {
@@ -2401,7 +2399,6 @@ export interface FieldInfoFieldGenericType {
  *
  * @export
  * @interface FieldInfoParameters
- * @interface FieldInfoParameters
  */
 export interface FieldInfoParameters {
   /**
@@ -2474,7 +2471,6 @@ export interface FieldInfoParameters {
 /**
  *
  * @export
- * @interface FieldInfoTersMethodForField
  * @interface FieldInfoTersMethodForField
  */
 export interface FieldInfoTersMethodForField {
@@ -2610,7 +2606,6 @@ export interface FieldInfoTersMethodForField {
  *
  * @export
  * @interface FieldInfoTypeParameters
- * @interface FieldInfoTypeParameters
  */
 export interface FieldInfoTypeParameters {
   /**
@@ -2649,6 +2644,37 @@ export interface FieldInfoTypeParameters {
    * @memberof FieldInfoTypeParameters
    */
   declaredAnnotations?: Array<object>;
+}
+/**
+ *
+ * @export
+ * @interface JwtToken
+ */
+export interface JwtToken {
+  /**
+   * 인증 통신을 위한 bearer 고정값
+   * @type {string}
+   * @memberof JwtToken
+   */
+  authentication?: string;
+  /**
+   * 사이트 권한을 위한 access token
+   * @type {string}
+   * @memberof JwtToken
+   */
+  access_token?: string;
+  /**
+   * access token 재발급을 위한 refresh token
+   * @type {string}
+   * @memberof JwtToken
+   */
+  refresh_token?: string;
+  /**
+   * 사용자 고유번호
+   * @type {string}
+   * @memberof JwtToken
+   */
+  userId?: string;
 }
 /**
  *
@@ -3064,6 +3090,19 @@ export interface PageableObject {
 /**
  *
  * @export
+ * @interface ProfileUserIdBody
+ */
+export interface ProfileUserIdBody {
+  /**
+   *
+   * @type {File}
+   * @memberof ProfileUserIdBody
+   */
+  multipartFile?: File;
+}
+/**
+ *
+ * @export
  * @interface ReviewDTO
  */
 export interface ReviewDTO {
@@ -3185,6 +3224,59 @@ export interface UserChangeInfoDTO {
    */
   description?: string;
 }
+/**
+ *
+ * @export
+ * @interface UserDTO
+ */
+export interface UserDTO {
+  /**
+   * 회원의 고유 ID
+   * @type {string}
+   * @memberof UserDTO
+   */
+  userId?: string;
+  /**
+   * 회원이 로그인할 ID 역할을 합니다
+   * @type {string}
+   * @memberof UserDTO
+   */
+  email?: string;
+  /**
+   * 이미지 주소가 입력됩니다
+   * @type {string}
+   * @memberof UserDTO
+   */
+  profile_image?: string;
+  /**
+   * 닉네임이 입력됩니다
+   * @type {string}
+   * @memberof UserDTO
+   */
+  nickname?: string;
+  /**
+   * 소개글 내용이 입력됩니다
+   * @type {string}
+   * @memberof UserDTO
+   */
+  description?: string;
+  /**
+   * 권한 정보가 들어갑니다
+   * @type {string}
+   * @memberof UserDTO
+   */
+  role?: UserDTORoleEnum;
+}
+
+export const UserDTORoleEnum = {
+  User: 'USER',
+  Admin: 'ADMIN',
+  SuperAdmin: 'SUPER_ADMIN'
+} as const;
+
+export type UserDTORoleEnum =
+  (typeof UserDTORoleEnum)[keyof typeof UserDTORoleEnum];
+
 /**
  * 회원가입 요청 데이터
  * @export
@@ -3976,7 +4068,6 @@ export class CalendarControllerApi extends BaseAPI {
 
 /**
  * EmailControllerApi - axios parameter creator
- * EmailControllerApi - axios parameter creator
  * @export
  */
 export const EmailControllerApiAxiosParamCreator = function (
@@ -4098,7 +4189,6 @@ export const EmailControllerApiAxiosParamCreator = function (
 
 /**
  * EmailControllerApi - functional programming interface
- * EmailControllerApi - functional programming interface
  * @export
  */
 export const EmailControllerApiFp = function (configuration?: Configuration) {
@@ -4173,7 +4263,6 @@ export const EmailControllerApiFp = function (configuration?: Configuration) {
 
 /**
  * EmailControllerApi - factory interface
- * EmailControllerApi - factory interface
  * @export
  */
 export const EmailControllerApiFactory = function (
@@ -4220,9 +4309,7 @@ export const EmailControllerApiFactory = function (
 
 /**
  * EmailControllerApi - object-oriented interface
- * EmailControllerApi - object-oriented interface
  * @export
- * @class EmailControllerApi
  * @class EmailControllerApi
  * @extends {BaseAPI}
  */
@@ -6791,7 +6878,6 @@ export class NotificationControllerApi extends BaseAPI {
 
 /**
  * OAuth2ControllerApi - axios parameter creator
- * OAuth2ControllerApi - axios parameter creator
  * @export
  */
 export const OAuth2ControllerApiAxiosParamCreator = function (
@@ -6853,7 +6939,6 @@ export const OAuth2ControllerApiAxiosParamCreator = function (
 
 /**
  * OAuth2ControllerApi - functional programming interface
- * OAuth2ControllerApi - functional programming interface
  * @export
  */
 export const OAuth2ControllerApiFp = function (configuration?: Configuration) {
@@ -6895,7 +6980,6 @@ export const OAuth2ControllerApiFp = function (configuration?: Configuration) {
 
 /**
  * OAuth2ControllerApi - factory interface
- * OAuth2ControllerApi - factory interface
  * @export
  */
 export const OAuth2ControllerApiFactory = function (
@@ -6925,9 +7009,7 @@ export const OAuth2ControllerApiFactory = function (
 
 /**
  * OAuth2ControllerApi - object-oriented interface
- * OAuth2ControllerApi - object-oriented interface
  * @export
- * @class OAuth2ControllerApi
  * @class OAuth2ControllerApi
  * @extends {BaseAPI}
  */
@@ -7125,16 +7207,12 @@ export const ReviewControllerApiAxiosParamCreator = function (
      * @throws {RequiredError}
      */
     createReview: async (
-      facilityId: string,
       reviewDTO: ReviewDTO,
       options: RawAxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       // verify required parameter 'reviewDTO' is not null or undefined
       assertParamExists('createReview', 'reviewDTO', reviewDTO);
-      const localVarPath = `/api/facility-details/{facilityId}/reviews`.replace(
-        `{${'facilityId'}}`,
-        encodeURIComponent(String(facilityId))
-      );
+      const localVarPath = `/api/facility-details/{id}/reviews`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -7182,16 +7260,16 @@ export const ReviewControllerApiAxiosParamCreator = function (
      * @throws {RequiredError}
      */
     deleteReview: async (
-      facilityId: string,
       reviewId: number,
       options: RawAxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       // verify required parameter 'reviewId' is not null or undefined
       assertParamExists('deleteReview', 'reviewId', reviewId);
       const localVarPath =
-        `/api/facility-details/{facilityId}/reviews/{reviewId}`
-          .replace(`{${'facilityId'}}`, encodeURIComponent(String(facilityId)))
-          .replace(`{${'reviewId'}}`, encodeURIComponent(String(reviewId)));
+        `/api/facility-details/{id}/reviews/{reviewId}`.replace(
+          `{${'reviewId'}}`,
+          encodeURIComponent(String(reviewId))
+        );
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -7231,13 +7309,9 @@ export const ReviewControllerApiAxiosParamCreator = function (
      * @throws {RequiredError}
      */
     getReviewsByFacility: async (
-      facilityId: string,
       options: RawAxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
-      const localVarPath = `/api/facility-details/{facilityId}/reviews`.replace(
-        `{${'facilityId'}}`,
-        encodeURIComponent(String(facilityId))
-      );
+      const localVarPath = `/api/facility-details/{id}/reviews`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -7279,7 +7353,6 @@ export const ReviewControllerApiAxiosParamCreator = function (
      * @throws {RequiredError}
      */
     updateReview: async (
-      facilityId: string,
       reviewId: number,
       reviewDTO: ReviewDTO,
       options: RawAxiosRequestConfig = {}
@@ -7289,9 +7362,10 @@ export const ReviewControllerApiAxiosParamCreator = function (
       // verify required parameter 'reviewDTO' is not null or undefined
       assertParamExists('updateReview', 'reviewDTO', reviewDTO);
       const localVarPath =
-        `/api/facility-details/{facilityId}/reviews/{reviewId}`
-          .replace(`{${'facilityId'}}`, encodeURIComponent(String(facilityId)))
-          .replace(`{${'reviewId'}}`, encodeURIComponent(String(reviewId)));
+        `/api/facility-details/{id}/reviews/{reviewId}`.replace(
+          `{${'reviewId'}}`,
+          encodeURIComponent(String(reviewId))
+        );
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -7379,14 +7453,12 @@ export const ReviewControllerApiFp = function (configuration?: Configuration) {
      * @throws {RequiredError}
      */
     async deleteReview(
-      facilityId: string,
       reviewId: number,
       options?: RawAxiosRequestConfig
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>
     > {
       const localVarAxiosArgs = await localVarAxiosParamCreator.deleteReview(
-        facilityId,
         reviewId,
         options
       );
@@ -7409,7 +7481,6 @@ export const ReviewControllerApiFp = function (configuration?: Configuration) {
      * @throws {RequiredError}
      */
     async getReviewsByFacility(
-      facilityId: string,
       options?: RawAxiosRequestConfig
     ): Promise<
       (
@@ -7418,10 +7489,7 @@ export const ReviewControllerApiFp = function (configuration?: Configuration) {
       ) => AxiosPromise<{ [key: string]: object }>
     > {
       const localVarAxiosArgs =
-        await localVarAxiosParamCreator.getReviewsByFacility(
-          facilityId,
-          options
-        );
+        await localVarAxiosParamCreator.getReviewsByFacility(options);
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
       const localVarOperationServerBasePath =
         operationServerMap['ReviewControllerApi.getReviewsByFacility']?.[
@@ -7502,12 +7570,11 @@ export const ReviewControllerApiFactory = function (
      * @throws {RequiredError}
      */
     deleteReview(
-      facilityId: string,
       reviewId: number,
       options?: RawAxiosRequestConfig
     ): AxiosPromise<object> {
       return localVarFp
-        .deleteReview(facilityId, reviewId, options)
+        .deleteReview(reviewId, options)
         .then(request => request(axios, basePath));
     },
     /**
@@ -7516,11 +7583,10 @@ export const ReviewControllerApiFactory = function (
      * @throws {RequiredError}
      */
     getReviewsByFacility(
-      facilityId: string,
       options?: RawAxiosRequestConfig
     ): AxiosPromise<{ [key: string]: object }> {
       return localVarFp
-        .getReviewsByFacility(facilityId, options)
+        .getReviewsByFacility(options)
         .then(request => request(axios, basePath));
     },
     /**
@@ -7556,13 +7622,9 @@ export class ReviewControllerApi extends BaseAPI {
    * @throws {RequiredError}
    * @memberof ReviewControllerApi
    */
-  public createReview(
-    facilityId: string,
-    reviewDTO: ReviewDTO,
-    options?: RawAxiosRequestConfig
-  ) {
+  public createReview(reviewDTO: ReviewDTO, options?: RawAxiosRequestConfig) {
     return ReviewControllerApiFp(this.configuration)
-      .createReview(facilityId, reviewDTO, options)
+      .createReview(reviewDTO, options)
       .then(request => request(this.axios, this.basePath));
   }
 
@@ -7573,13 +7635,9 @@ export class ReviewControllerApi extends BaseAPI {
    * @throws {RequiredError}
    * @memberof ReviewControllerApi
    */
-  public deleteReview(
-    facilityId: string,
-    reviewId: number,
-    options?: RawAxiosRequestConfig
-  ) {
+  public deleteReview(reviewId: number, options?: RawAxiosRequestConfig) {
     return ReviewControllerApiFp(this.configuration)
-      .deleteReview(facilityId, reviewId, options)
+      .deleteReview(reviewId, options)
       .then(request => request(this.axios, this.basePath));
   }
 
@@ -7589,12 +7647,9 @@ export class ReviewControllerApi extends BaseAPI {
    * @throws {RequiredError}
    * @memberof ReviewControllerApi
    */
-  public getReviewsByFacility(
-    facilityId: string,
-    options?: RawAxiosRequestConfig
-  ) {
+  public getReviewsByFacility(options?: RawAxiosRequestConfig) {
     return ReviewControllerApiFp(this.configuration)
-      .getReviewsByFacility(facilityId, options)
+      .getReviewsByFacility(options)
       .then(request => request(this.axios, this.basePath));
   }
 
@@ -7607,13 +7662,12 @@ export class ReviewControllerApi extends BaseAPI {
    * @memberof ReviewControllerApi
    */
   public updateReview(
-    facilityId: string,
     reviewId: number,
     reviewDTO: ReviewDTO,
     options?: RawAxiosRequestConfig
   ) {
     return ReviewControllerApiFp(this.configuration)
-      .updateReview(facilityId, reviewId, reviewDTO, options)
+      .updateReview(reviewId, reviewDTO, options)
       .then(request => request(this.axios, this.basePath));
   }
 }
@@ -8191,20 +8245,12 @@ export const UserControllerApiAxiosParamCreator = function (
     /**
      * HTTP헤더에 담긴 refresh_token을 이용해 access_token을 재발급합니다
      * @summary 토큰 재발급
-     * @param {string} authorization
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     resignAccessTokenByHeader: async (
-      authorization: string,
       options: RawAxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
-      // verify required parameter 'authorization' is not null or undefined
-      assertParamExists(
-        'resignAccessTokenByHeader',
-        'authorization',
-        authorization
-      );
       const localVarPath = `/api/user/refresh/header`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8225,9 +8271,6 @@ export const UserControllerApiAxiosParamCreator = function (
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
-      if (authorization != null) {
-        localVarHeaderParameter['Authorization'] = String(authorization);
-      }
       setSearchParams(localVarUrlObj, localVarQueryParameter);
       let headersFromBaseOptions =
         baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -8490,7 +8533,7 @@ export const UserControllerApiFp = function (configuration?: Configuration) {
       userId: string,
       options?: RawAxiosRequestConfig
     ): Promise<
-      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDTO>
     > {
       const localVarAxiosArgs =
         await localVarAxiosParamCreator.findMyInformation(userId, options);
@@ -8548,7 +8591,7 @@ export const UserControllerApiFp = function (configuration?: Configuration) {
       userLoginDTO: UserLoginDTO,
       options?: RawAxiosRequestConfig
     ): Promise<
-      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JwtToken>
     > {
       const localVarAxiosArgs = await localVarAxiosParamCreator.login(
         userLoginDTO,
@@ -8603,7 +8646,7 @@ export const UserControllerApiFp = function (configuration?: Configuration) {
       refreshToken: string,
       options?: RawAxiosRequestConfig
     ): Promise<
-      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JwtToken>
     > {
       const localVarAxiosArgs =
         await localVarAxiosParamCreator.resignAccessTokenByCookie(
@@ -8626,21 +8669,16 @@ export const UserControllerApiFp = function (configuration?: Configuration) {
     /**
      * HTTP헤더에 담긴 refresh_token을 이용해 access_token을 재발급합니다
      * @summary 토큰 재발급
-     * @param {string} authorization
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async resignAccessTokenByHeader(
-      authorization: string,
       options?: RawAxiosRequestConfig
     ): Promise<
-      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JwtToken>
     > {
       const localVarAxiosArgs =
-        await localVarAxiosParamCreator.resignAccessTokenByHeader(
-          authorization,
-          options
-        );
+        await localVarAxiosParamCreator.resignAccessTokenByHeader(options);
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
       const localVarOperationServerBasePath =
         operationServerMap['UserControllerApi.resignAccessTokenByHeader']?.[
@@ -8794,7 +8832,7 @@ export const UserControllerApiFactory = function (
     findMyInformation(
       userId: string,
       options?: RawAxiosRequestConfig
-    ): AxiosPromise<void> {
+    ): AxiosPromise<UserDTO> {
       return localVarFp
         .findMyInformation(userId, options)
         .then(request => request(axios, basePath));
@@ -8824,7 +8862,7 @@ export const UserControllerApiFactory = function (
     login(
       userLoginDTO: UserLoginDTO,
       options?: RawAxiosRequestConfig
-    ): AxiosPromise<void> {
+    ): AxiosPromise<JwtToken> {
       return localVarFp
         .login(userLoginDTO, options)
         .then(request => request(axios, basePath));
@@ -8850,7 +8888,7 @@ export const UserControllerApiFactory = function (
     resignAccessTokenByCookie(
       refreshToken: string,
       options?: RawAxiosRequestConfig
-    ): AxiosPromise<void> {
+    ): AxiosPromise<JwtToken> {
       return localVarFp
         .resignAccessTokenByCookie(refreshToken, options)
         .then(request => request(axios, basePath));
@@ -8858,16 +8896,14 @@ export const UserControllerApiFactory = function (
     /**
      * HTTP헤더에 담긴 refresh_token을 이용해 access_token을 재발급합니다
      * @summary 토큰 재발급
-     * @param {string} authorization
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     resignAccessTokenByHeader(
-      authorization: string,
       options?: RawAxiosRequestConfig
-    ): AxiosPromise<void> {
+    ): AxiosPromise<JwtToken> {
       return localVarFp
-        .resignAccessTokenByHeader(authorization, options)
+        .resignAccessTokenByHeader(options)
         .then(request => request(axios, basePath));
     },
     /**
@@ -9041,17 +9077,13 @@ export class UserControllerApi extends BaseAPI {
   /**
    * HTTP헤더에 담긴 refresh_token을 이용해 access_token을 재발급합니다
    * @summary 토큰 재발급
-   * @param {string} authorization
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof UserControllerApi
    */
-  public resignAccessTokenByHeader(
-    authorization: string,
-    options?: RawAxiosRequestConfig
-  ) {
+  public resignAccessTokenByHeader(options?: RawAxiosRequestConfig) {
     return UserControllerApiFp(this.configuration)
-      .resignAccessTokenByHeader(authorization, options)
+      .resignAccessTokenByHeader(options)
       .then(request => request(this.axios, this.basePath));
   }
 
