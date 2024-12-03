@@ -3,16 +3,13 @@ import { faker } from '@faker-js/faker';
 import { mockUsers } from '../data/userData';
 import { UserLoginDTO, UserJoinDTO, ErrorResponseDTO } from '@/api/generated';
 
-// 이메일 인증 코드 저장소
 const emailVerificationCodes: Record<string, string> = {};
 
 export const authHandlers = [
-  // 로그인 핸들러
   http.post('/api/user/login', async ({ request }) => {
     const body = (await request.json()) as UserLoginDTO;
     const { email, password } = body;
 
-    // 필수 필드 검증
     if (!email || !password) {
       const errorResponse: ErrorResponseDTO = {
         errorCode: 'LOGIN_INVALID',
@@ -47,7 +44,6 @@ export const authHandlers = [
     return HttpResponse.json(errorResponse, { status: 400 });
   }),
 
-  // 이메일 인증 코드 발송 핸들러
   http.post('/api/email', ({ request }) => {
     const url = new URL(request.url);
     const email = url.searchParams.get('email');
@@ -61,17 +57,14 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 400 });
     }
 
-    // 6자리 인증 코드 생성
     const verificationCode = faker.string.numeric(6);
 
-    // 이메일별 인증 코드 저장
     emailVerificationCodes[email] = verificationCode;
     console.log(`Verification code for ${email}: ${verificationCode}`);
 
     return HttpResponse.json(null, { status: 200 });
   }),
 
-  // 이메일 인증 코드 검증 핸들러
   http.get('/api/email', ({ request }) => {
     const url = new URL(request.url);
     const email = url.searchParams.get('email');
@@ -86,7 +79,6 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 400 });
     }
 
-    // 저장된 인증 코드와 일치 여부 확인
     if (emailVerificationCodes[email] !== code) {
       const errorResponse: ErrorResponseDTO = {
         errorCode: 'VERIFICATION_FAILED',
@@ -96,20 +88,17 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 400 });
     }
 
-    // 인증 성공 후 코드 삭제
     delete emailVerificationCodes[email];
 
     return HttpResponse.json(null, { status: 200 });
   }),
 
-  // 회원가입 핸들러 수정 (이메일 인증 추가)
   http.post('/api/user/join', async ({ request }) => {
     const body = (await request.json()) as UserJoinDTO & {
       verificationCode: string;
     };
     const { email, password, nickname, checkPassword } = body;
 
-    // 필수 필드
     if (!email || !password || !nickname || !checkPassword) {
       const errorResponse: ErrorResponseDTO = {
         errorCode: 'JOIN_INVALID',
@@ -128,7 +117,6 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 400 });
     }
 
-    // 기존 이메일 중복 검사
     const existingUser = mockUsers.find(u => u.email === email);
     if (existingUser) {
       const errorResponse: ErrorResponseDTO = {
@@ -139,7 +127,6 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 400 });
     }
 
-    // 회원가입 성공 로직
     const newUser = {
       userId: faker.string.uuid(),
       email,
@@ -151,13 +138,11 @@ export const authHandlers = [
     };
     mockUsers.push(newUser);
 
-    // 인증 코드 삭제
     delete emailVerificationCodes[email];
 
     return HttpResponse.json(newUser, { status: 201 });
   }),
 
-  // 토큰 재발급 핸들러
   http.post('/api/user/refresh/header', ({ request }) => {
     const authHeader = request.headers.get('Authorization');
 
@@ -178,11 +163,11 @@ export const authHandlers = [
       },
       { status: 200 }
     );
-  }), // 회원정보 조회 핸들러 추가
+  }),
+
   http.get('/api/user/:userId', ({ params }) => {
     const { userId } = params;
 
-    // userId가 제공되지 않은 경우 에러 응답
     if (!userId) {
       const errorResponse: ErrorResponseDTO = {
         errorCode: 'USER_INVALID',
@@ -192,10 +177,8 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 400 });
     }
 
-    // mockUsers에서 해당 userId를 가진 사용자 찾기
     const user = mockUsers.find(u => u.userId === userId);
 
-    // 사용자를 찾지 못한 경우 에러 응답
     if (!user) {
       const errorResponse: ErrorResponseDTO = {
         errorCode: 'USER_NOT_FOUND',
@@ -205,7 +188,6 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 404 });
     }
 
-    // 사용자 정보 반환 (비밀번호 제외)
     return HttpResponse.json(
       {
         userId: user.userId,
