@@ -1,3 +1,4 @@
+import { useAuthStore } from '@/entities/User';
 import axios from 'axios';
 
 export const axiosInstance = axios.create({
@@ -14,13 +15,10 @@ export const axiosInstance = axios.create({
 // Request interceptor
 axiosInstance.interceptors.request.use(
   config => {
-    const token =
-      typeof window !== 'undefined'
-        ? localStorage.getItem('accessToken')
-        : null;
+    const { tokens } = useAuthStore.getState();
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    if (tokens.access_token) {
+      config.headers.Authorization = `Bearer ${tokens.access_token}`;
     }
 
     return config;
@@ -43,32 +41,25 @@ axiosInstance.interceptors.response.use(
       !originalRequest._retry
     ) {
       originalRequest._retry = true;
+
       try {
-        const refreshToken = localStorage.getItem('refreshToken');
-        if (!refreshToken) {
-          throw new Error('No refresh token');
+        // Zustand 스토어의 refreshToken 메서드
+        const refreshResult = await useAuthStore.getState().refreshToken();
+
+        if (refreshResult) {
+          const { tokens } = useAuthStore.getState();
+          originalRequest.headers.Authorization = `Bearer ${tokens.access_token}`;
+          return axiosInstance(originalRequest);
         }
-
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/user/refresh/header`,
-          null,
-          {
-            headers: {
-              Authorization: `Bearer ${refreshToken}`
-            }
-          }
-        );
-
-        const newAccessToken = response.data.accessToken;
-        localStorage.setItem('accessToken', newAccessToken);
-
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-        return axiosInstance(originalRequest);
       } catch (error) {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        window.location.href = '/login';
-        return Promise.reject(error);
+        // 토큰 재발급 실패 시 로그아웃
+        console.error('토큰 재발급 중 오류 발생:', error);
+        useAuthStore.getState().logout();
+
+        // 클라이언트 사이드에서만 리다이렉트
+        if (typeof window !== 'undefined') {
+          window.location.href = '/login';
+        }
       }
     }
 

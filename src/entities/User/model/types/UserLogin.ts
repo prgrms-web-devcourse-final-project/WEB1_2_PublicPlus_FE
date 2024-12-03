@@ -4,7 +4,7 @@ export interface UserLoginDTO {
 }
 
 export interface LoginResponse {
-  bearer: string;
+  authentication: string;
   access_token: string;
   refresh_token: string;
   userId: string;

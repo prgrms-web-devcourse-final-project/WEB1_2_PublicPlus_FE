@@ -1,21 +1,18 @@
 'use client';
 import Image from 'next/image';
 import { LogOut, Pencil } from 'lucide-react';
-import { UserProfileProps } from '../types';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/entities/User';
+import { useUserQuery } from '@/entities/User/model/userQueries';
 
-export const UserProfile = ({
-  profileImage = '/jjang.jpeg',
-  email,
-  nickname
-}: UserProfileProps) => {
+export const UserProfile = () => {
   const router = useRouter();
   const { logout } = useAuthStore();
+  const { data: userInfo } = useUserQuery();
 
   const handleLogout = () => {
-    logout(); // Zustand 스토어의 로그아웃 메서드 호출
-    router.push('/login'); // 로그인 페이지로 리다이렉트
+    logout();
+    router.push('/login');
   };
 
   return (
@@ -26,7 +23,7 @@ export const UserProfile = ({
             <Image
               width={120}
               height={120}
-              src={profileImage}
+              src={userInfo?.profile_image || '/jjang.jpeg'}
               alt="프로필이미지"
               className="overflow-hidden rounded-full object-cover"
             />
@@ -42,8 +39,8 @@ export const UserProfile = ({
           </button>
         </div>
         <div className="space-y-4 text-center">
-          <p className="text-lg font-semibold">{nickname}</p>
-          <p className="text-sm text-gray-500">{email}</p>
+          <p className="text-lg font-semibold">{userInfo?.nickname}</p>
+          <p className="text-sm text-gray-500">{userInfo?.email}</p>
         </div>
       </div>
       <button
