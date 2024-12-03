@@ -1,40 +1,42 @@
-// components/common/cards/MeetingCard.tsx
-import { Card } from './Card';
 import { Tag } from '../Tag';
+import { MeetingBoardRequestDTO } from '@/api/generated';
+import { LinkCard } from './LinkCard';
 
-interface MeetingCardProps {
-  title: string;
-  date: string;
-  time: string;
-  location: string;
-  currentMembers: number;
+interface MeetingCardProps extends Omit<MeetingBoardRequestDTO, 'id'> {
+  image?: string;
   maxMembers: number;
   tags: string[];
-  image?: string;
+  id: string;
+  domain: string;
 }
 
 export const MeetingCard = ({
-  title,
-  date,
-  time,
-  location,
-  currentMembers,
+  id,
+  mbTitle,
+  mbContent,
+  mbDate,
+  mbTime,
+  mbLocation,
+  maxParticipants,
+  image,
   maxMembers,
-  tags,
-  image
+  tags = [],
+  domain
 }: MeetingCardProps) => (
-  <Card
+  <LinkCard
+    key={id}
     imageSrc={image || '/jjang.jpeg'}
-    imageAlt={title}
-    title={title}
+    imageAlt={mbTitle}
+    title={mbTitle}
     content={
       <div className="space-y-2 text-sm text-gray-600">
+        <p className="flex items-center">{mbContent}</p>
+        <p className="flex items-center">{mbLocation}</p>
         <p className="flex items-center">
-          {date} {time}
+          {mbDate} / {mbTime},
         </p>
-        <p className="flex items-center">{location}</p>
         <p className="flex items-center">
-          {currentMembers}/{maxMembers}명
+          {maxParticipants}/{maxMembers || 0}명
         </p>
       </div>
     }
@@ -48,5 +50,7 @@ export const MeetingCard = ({
         ))}
       </div>
     }
+    domain={domain}
+    id={id}
   />
 );

@@ -3,10 +3,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { DETAIL_PAGE_PATTERNS } from '@/shared/config/constants';
 
 interface HeaderProps {
   detailTitle?: string;
 }
+
+const getDefaultTitle = (pathname: string) => {
+  if (pathname?.includes('/facility/')) return '시설 상세';
+  if (pathname?.includes('/meeting/create')) return '모임 상세';
+  return '상세 정보';
+};
 
 export const Header = ({ detailTitle }: HeaderProps) => {
   const [hasNotifications, setHasNotifications] = useState(false);
@@ -25,7 +32,9 @@ export const Header = ({ detailTitle }: HeaderProps) => {
     checkNewNotifications();
   }, []);
 
-  const isDetailPage = pathname?.includes('/facility/');
+  const isDetailPage = DETAIL_PAGE_PATTERNS.some(pattern =>
+    pathname?.includes(pattern)
+  );
 
   const notificationIcon = hasNotifications
     ? '/icons/notification-new.png'
@@ -47,7 +56,7 @@ export const Header = ({ detailTitle }: HeaderProps) => {
             />
           </button>
           <h1 className="w-full text-center text-[1.2rem] font-semibold">
-            {detailTitle || '시설 상세'}
+            {detailTitle || getDefaultTitle(pathname)}
           </h1>
         </div>
       </header>
