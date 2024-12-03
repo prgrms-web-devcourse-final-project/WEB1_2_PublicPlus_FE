@@ -1,6 +1,6 @@
 import { FacilityDetailsResponseDTO } from '@/api/generated';
 import { LinkCard } from '@/components/common/Cards/LinkCard';
-// import KakaoMap from '@/shared/ui/Map/KakaoMap';
+import { MapContainer } from '@/shared/ui/Map/Map';
 import { LinkIcon } from 'lucide-react';
 import Link from 'next/link';
 
@@ -79,12 +79,12 @@ export const FacilityInfo = ({
       {/* 지도 섹션 */}
       <div className="rounded-lg bg-white p-4">
         <h3 className="mb-3 text-lg font-bold">주변 정보 시설</h3>
-        <div className="relative h-[240px] w-full overflow-hidden rounded-lg">
-          {/* <KakaoMap
-            latitude={facility.location.latitude}
-            longitude={facility.location.longitude}
+        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
+          <MapContainer
+            latitude={facility.latitude}
+            longitude={facility.longitude}
             name={facility.facilityName}
-          /> */}
+          />
         </div>
       </div>
     </div>

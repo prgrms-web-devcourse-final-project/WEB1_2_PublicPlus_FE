@@ -5,11 +5,20 @@ import { FacilityDetailsResponseDTO } from '@/api/generated';
 import { useState } from 'react';
 import { useFacilities } from '@/features/facility/model/queries';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export const FacilityList = () => {
   const filters = useFilterStore(state => state.filters) || {};
   const [page, setPage] = useState(0);
+  const size = 5; // 페이지당 항목 수 정의
 
-  const { data, isLoading } = useFacilities(page, 5, filters);
+  const { data, isLoading } = useFacilities(page, size, filters, {
+    enabled: Boolean(page >= 0 && size > 0),
+    onError: () => {
+      toast.error('시설 정보를 불러오는 데 실패했습니다.');
+    }
+  });
 
   if (isLoading) return <p>시설 목록을 불러오는 중입니다...</p>;
   if (!data || !data.content?.length) return <p>검색 결과가 없습니다.</p>;
