@@ -113,9 +113,10 @@ export const userService = {
     }
   },
 
-  // 회원 정보 조회 메서드 추가
+  // 회원 정보 조회
   findMyInformation: async (userId: string) => {
     try {
+      console.log('Fetching user info for userId:', userId); // 디버깅용 로그 추가
       // userId가 없는 경우 에러 처리
       if (!userId) {
         throw new Error('사용자 ID가 없습니다.');
@@ -124,6 +125,7 @@ export const userService = {
       const response = await api.user.findMyInformation(userId);
       return response.data;
     } catch (error) {
+      console.error('Error fetching user info:', error); // 에러 상세 로깅
       if (axios.isAxiosError(error)) {
         const errorResponse = error.response?.data as ErrorResponseDTO;
         throw new Error(

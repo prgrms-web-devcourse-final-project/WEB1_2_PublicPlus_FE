@@ -1502,8 +1502,6 @@
             "name": "userId",
             "in": "path",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -1514,10 +1512,13 @@
             "description": "정상 반환",
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDTO"
+                },
                 "example": {
                   "userId": "adf2ds3-das4fs2daf-ds4a3fn23",
                   "email": "example@example.com",
-                  "profile_image": "BAD_REQUEST",
+                  "profile_image": "이미지 주소가 들어갈 예정입니다",
                   "nickname": "만득이",
                   "description": "안녕하세요. 반갑습니다",
                   "role": "USER"
@@ -1537,8 +1538,6 @@
             "name": "userId",
             "in": "path",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -2680,6 +2679,42 @@
           },
           "empty": {
             "type": "boolean"
+          }
+        }
+      },
+      "UserDTO": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "회원의 고유 ID",
+            "example": "adf2ds3-das4fs2daf-ds4a3fn23"
+          },
+          "email": {
+            "type": "string",
+            "description": "회원이 로그인할 ID 역할을 합니다",
+            "example": "example@example.com"
+          },
+          "profile_image": {
+            "type": "string",
+            "description": "이미지 주소가 입력됩니다",
+            "example": "c:/user/~~~"
+          },
+          "nickname": {
+            "type": "string",
+            "description": "닉네임이 입력됩니다",
+            "example": "만득이"
+          },
+          "description": {
+            "type": "string",
+            "description": "소개글 내용이 입력됩니다",
+            "example": "안녕하세요. 반갑습니다"
+          },
+          "role": {
+            "type": "string",
+            "description": "권한 정보가 들어갑니다",
+            "example": "USER",
+            "enum": ["USER", "ADMIN", "SUPER_ADMIN"]
           }
         }
       },

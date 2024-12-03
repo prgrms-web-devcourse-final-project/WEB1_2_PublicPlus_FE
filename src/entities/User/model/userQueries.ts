@@ -1,11 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { userService } from '@/entities/User/api/userService';
 import { useAuthStore } from './store/authStore';
-import { UserInformation } from '@/features/mypage/types';
 
 export const useUserQuery = () => {
   const { userId } = useAuthStore();
-  return useQuery<UserInformation>({
+  return useQuery({
     queryKey: ['user', userId],
     queryFn: () => userService.findMyInformation(userId || ''),
     enabled: !!userId,

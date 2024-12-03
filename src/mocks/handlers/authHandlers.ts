@@ -178,5 +178,44 @@ export const authHandlers = [
       },
       { status: 200 }
     );
+  }), // 회원정보 조회 핸들러 추가
+  http.get('/api/user/:userId', ({ params }) => {
+    const { userId } = params;
+
+    // userId가 제공되지 않은 경우 에러 응답
+    if (!userId) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'USER_INVALID',
+        message: '유효한 사용자 ID를 입력해주세요',
+        details: '회원 정보 조회 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    // mockUsers에서 해당 userId를 가진 사용자 찾기
+    const user = mockUsers.find(u => u.userId === userId);
+
+    // 사용자를 찾지 못한 경우 에러 응답
+    if (!user) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'USER_NOT_FOUND',
+        message: '해당 사용자를 찾을 수 없습니다',
+        details: '회원 정보 조회 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 404 });
+    }
+
+    // 사용자 정보 반환 (비밀번호 제외)
+    return HttpResponse.json(
+      {
+        userId: user.userId,
+        email: user.email,
+        nickname: user.nickname,
+        profile_image: user.profile_image,
+        description: user.description,
+        role: user.role
+      },
+      { status: 200 }
+    );
   })
 ];
