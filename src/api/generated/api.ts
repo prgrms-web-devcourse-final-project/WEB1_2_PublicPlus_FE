@@ -3280,6 +3280,58 @@ export interface UserChangeInfoDTO {
     'description'?: string;
 }
 /**
+ * 
+ * @export
+ * @interface UserDTO
+ */
+export interface UserDTO {
+    /**
+     * 회원의 고유 ID
+     * @type {string}
+     * @memberof UserDTO
+     */
+    'userId'?: string;
+    /**
+     * 회원이 로그인할 ID 역할을 합니다
+     * @type {string}
+     * @memberof UserDTO
+     */
+    'email'?: string;
+    /**
+     * 이미지 주소가 입력됩니다
+     * @type {string}
+     * @memberof UserDTO
+     */
+    'profile_image'?: string;
+    /**
+     * 닉네임이 입력됩니다
+     * @type {string}
+     * @memberof UserDTO
+     */
+    'nickname'?: string;
+    /**
+     * 소개글 내용이 입력됩니다
+     * @type {string}
+     * @memberof UserDTO
+     */
+    'description'?: string;
+    /**
+     * 권한 정보가 들어갑니다
+     * @type {string}
+     * @memberof UserDTO
+     */
+    'role'?: UserDTORoleEnum;
+}
+
+export const UserDTORoleEnum = {
+    User: 'USER',
+    Admin: 'ADMIN',
+    SuperAdmin: 'SUPER_ADMIN'
+} as const;
+
+export type UserDTORoleEnum = typeof UserDTORoleEnum[keyof typeof UserDTORoleEnum];
+
+/**
  * 회원가입 요청 데이터
  * @export
  * @interface UserJoinDTO
@@ -6885,7 +6937,7 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async findMyInformation(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async findMyInformation(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDTO>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.findMyInformation(userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserControllerApi.findMyInformation']?.[localVarOperationServerIndex]?.url;
@@ -7031,7 +7083,7 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findMyInformation(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        findMyInformation(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<UserDTO> {
             return localVarFp.findMyInformation(userId, options).then((request) => request(axios, basePath));
         },
         /**
