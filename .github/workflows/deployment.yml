@@ -46,7 +46,9 @@ jobs:
 
       - name: Upload ZIP to S3
         run: |
+          echo "Uploading function.zip to S3..."
           aws s3 cp .next/function.zip s3://${{ secrets.S3_BUCKET_NAME }}/function.zip
+          echo "Upload completed"
 
       - name: Debug Lambda function name and S3 bucket
         run: |
@@ -55,10 +57,26 @@ jobs:
 
       - name: Deploy to Lambda@Edge
         run: |
+          echo "Starting Lambda deployment..."
+          echo "Current AWS region: $(aws configure get region)"
+          echo "S3 bucket region: $(aws s3api get-bucket-location --bucket ${{ secrets.S3_BUCKET_NAME }})"
+
+          # Try to get S3 object details before updating Lambda
+          aws s3api head-object \
+            --bucket ${{ secrets.S3_BUCKET_NAME }} \
+            --key function.zip || echo "Failed to access S3 object"
+
+          # Update Lambda function with debug output
           aws lambda update-function-code \
             --function-name ${{ secrets.LAMBDA_FUNCTION_NAME }} \
             --s3-bucket ${{ secrets.S3_BUCKET_NAME }} \
-            --s3-key function.zip
+            --s3-key function.zip \
+            --debug 2>&1 | tee lambda_update.log
+
+          # Print Lambda function configuration after update
+          aws lambda get-function \
+            --function-name ${{ secrets.LAMBDA_FUNCTION_NAME }} \
+            --query 'Configuration.[FunctionName,Runtime,Role,Handler]'
 
       - name: Deploy static files to S3
         run: |
