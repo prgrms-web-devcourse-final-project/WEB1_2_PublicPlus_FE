@@ -49,6 +49,11 @@ jobs:
         run: |
           aws s3 cp .next/function.zip s3://${{ secrets.S3_BUCKET_NAME }}/function.zip
 
+      - name: Debug Lambda function name and S3 bucket
+        run: |
+          echo "Lambda Function Name: ${{ secrets.LAMBDA_FUNCTION_NAME }}"
+          echo "S3 Bucket Name: ${{ secrets.S3_BUCKET_NAME }}"
+
       - name: Deploy to Lambda@Edge
         run: |
           aws lambda update-function-code \
