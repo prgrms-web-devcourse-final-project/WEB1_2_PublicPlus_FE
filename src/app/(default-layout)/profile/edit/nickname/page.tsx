@@ -1,9 +1,11 @@
 'use client';
+import { useUserQuery } from '@/entities/User/model/userQueries';
 import EditLayout from '@/features/mypage/ui/EditLayout';
 import { useState } from 'react';
 
 export default function NicknameEditPage() {
-  const [nickname, setNickname] = useState('');
+  const { data: userInfo } = useUserQuery();
+  const [nickname, setNickname] = useState(userInfo?.nickname || '');
 
   const handleSubmit = () => {
     // 닉네임 저장 로직

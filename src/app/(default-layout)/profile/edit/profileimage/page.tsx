@@ -3,9 +3,11 @@ import EditLayout from '@/features/mypage/ui/EditLayout';
 import { useState } from 'react';
 import Image from 'next/image';
 import { Plus } from 'lucide-react';
+import { useUserQuery } from '@/entities/User/model/userQueries';
 
 export default function ProfileImageEditPage() {
-  const [imageUrl, setImageUrl] = useState('/jjang.jpeg');
+  const { data: userInfo } = useUserQuery();
+  const [imageUrl, setImageUrl] = useState(userInfo?.profile_image);
 
   const handleSubmit = () => {
     // 프로필 이미지 저장 로직
@@ -32,7 +34,9 @@ export default function ProfileImageEditPage() {
         <div className="flex items-center space-x-6">
           <div className="relative h-40 w-40 overflow-hidden rounded-xl">
             <Image
-              src={imageUrl}
+              src={
+                imageUrl || userInfo?.profile_image || '/icons/default_user.svg'
+              }
               alt="프로필 이미지"
               layout="fill"
               objectFit="cover"

@@ -132,5 +132,56 @@ export const userService = {
       }
       throw error;
     }
+  },
+
+  // 닉네임 변경 메서드 추가
+  updateNickname: async (userId: string, nickname: string) => {
+    try {
+      // 닉네임 유효성 검사 (2~10자, 한글, 영어 소문자, 숫자만 허용)
+      const nicknameRegex = /^[가-힣a-z0-9]{2,10}$/;
+      if (!nickname) {
+        throw new Error('닉네임을 입력해주세요.');
+      }
+
+      if (!nicknameRegex.test(nickname)) {
+        throw new Error(
+          '닉네임은 2~10자 사이의 한글, 영어 소문자, 숫자만 가능합니다.'
+        );
+      }
+
+      const response = await api.user.updateNickname(userId, { nickname });
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorResponse = error.response?.data as ErrorResponseDTO;
+        throw new Error(
+          errorResponse?.message || '닉네임 변경에 실패했습니다.'
+        );
+      }
+      throw error;
+    }
+  },
+
+  // 소개글 변경 메서드 추가
+  updateDescription: async (userId: string, description: string) => {
+    try {
+      // 소개글 길이 제한 (예: 최대 200자)
+      if (description && description.length > 200) {
+        throw new Error('소개글은 200자 이내로 작성해주세요.');
+      }
+
+      const response = await api.user.updateDescription(userId, {
+        description
+      });
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorResponse = error.response?.data as ErrorResponseDTO;
+        throw new Error(
+          errorResponse?.message || '소개글 변경에 실패했습니다.'
+        );
+      }
+      throw error;
+    }
   }
 };

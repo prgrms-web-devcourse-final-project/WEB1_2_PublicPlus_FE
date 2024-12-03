@@ -1,5 +1,3 @@
-import { faker } from '@faker-js/faker';
-
 // 모의 사용자 데이터
 export interface MockUser {
   userId: string;
@@ -16,8 +14,17 @@ export const mockUsers: MockUser[] = [
     email: 'test@example.com',
     password: 'password123',
     nickname: '운동하는개발자',
-    profile_image: faker.image.avatarGitHub(),
+    profile_image: '/jjang.jpeg',
     description: '건강한 삶을 추구하는 개발자입니다.',
+    role: 'USER'
+  },
+  {
+    userId: '456e1234-e89b-34c5-a456-243525436547',
+    email: 'seon022@icloud.com',
+    password: 'aaaa1234',
+    nickname: '서넝',
+    profile_image: null,
+    description: null,
     role: 'USER'
   }
 ];

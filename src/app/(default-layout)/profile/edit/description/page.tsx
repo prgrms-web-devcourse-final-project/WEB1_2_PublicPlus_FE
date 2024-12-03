@@ -1,11 +1,13 @@
 'use client';
+import { useUserQuery } from '@/entities/User/model/userQueries';
 import EditLayout from '@/features/mypage/ui/EditLayout';
 import { useState } from 'react';
 
 const MAX_LENGTH = 50;
 
 export default function DescriptionEditPage() {
-  const [description, setDescription] = useState('');
+  const { data: userInfo } = useUserQuery();
+  const [description, setDescription] = useState(userInfo?.description ?? '');
 
   const handleSubmit = () => {
     // 소개글 저장 로직
