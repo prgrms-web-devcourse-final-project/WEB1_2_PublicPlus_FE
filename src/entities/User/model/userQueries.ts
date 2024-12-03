@@ -8,6 +8,5 @@ export const useUserQuery = () => {
     queryKey: ['user', userId],
     queryFn: () => userService.findMyInformation(userId || ''),
     enabled: !!userId
-    // staleTime: 1000 * 60 * 5 // 5분간 캐시 유지
   });
 };

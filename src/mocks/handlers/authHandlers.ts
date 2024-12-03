@@ -1,7 +1,12 @@
 import { http, HttpResponse } from 'msw';
 import { faker } from '@faker-js/faker';
 import { mockUsers } from '../data/userData';
-import { UserLoginDTO, UserJoinDTO, ErrorResponseDTO } from '@/api/generated';
+import {
+  UserLoginDTO,
+  UserJoinDTO,
+  ErrorResponseDTO,
+  UserChangeInfoDTO
+} from '@/api/generated';
 
 const emailVerificationCodes: Record<string, string> = {};
 
@@ -196,6 +201,84 @@ export const authHandlers = [
         profile_image: user.profile_image,
         description: user.description,
         role: user.role
+      },
+      { status: 200 }
+    );
+  }),
+  // 닉네임 변경 핸들러
+  http.patch('/api/user/nickname/:userId', async ({ request, params }) => {
+    const { userId } = params;
+    const body = (await request.json()) as UserChangeInfoDTO;
+    const { nickname } = body;
+
+    // 닉네임 유효성 검사 (2~10자, 한글, 영어 소문자, 숫자만 허용)
+    const nicknameRegex = /^[가-힣a-z0-9]{2,10}$/;
+    if (!nickname || !nicknameRegex.test(nickname)) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'NICKNAME_INVALID',
+        message: '닉네임은 2~10자 사이의 한글, 영어 소문자, 숫자만 가능합니다.',
+        details: '닉네임 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    // 사용자 찾기
+    const userIndex = mockUsers.findIndex(u => u.userId === userId);
+    if (userIndex === -1) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'USER_NOT_FOUND',
+        message: '해당 사용자를 찾을 수 없습니다',
+        details: '닉네임 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 404 });
+    }
+
+    // 닉네임 업데이트
+    mockUsers[userIndex].nickname = nickname;
+
+    return HttpResponse.json(
+      {
+        userId: userId,
+        nickname: nickname
+      },
+      { status: 200 }
+    );
+  }),
+
+  // 소개글 변경 핸들러
+  http.patch('/api/user/description/:userId', async ({ request, params }) => {
+    const { userId } = params;
+    const body = (await request.json()) as UserChangeInfoDTO;
+    const { description } = body;
+
+    // 소개글 길이 제한
+    if (description && description.length > 200) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'DESCRIPTION_INVALID',
+        message: '소개글은 200자 이내로 작성해주세요.',
+        details: '소개글 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    // 사용자 찾기
+    const userIndex = mockUsers.findIndex(u => u.userId === userId);
+    if (userIndex === -1) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'USER_NOT_FOUND',
+        message: '해당 사용자를 찾을 수 없습니다',
+        details: '소개글 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 404 });
+    }
+
+    // 소개글 업데이트
+    mockUsers[userIndex].description = description || null;
+
+    return HttpResponse.json(
+      {
+        userId: userId,
+        description: description
       },
       { status: 200 }
     );
