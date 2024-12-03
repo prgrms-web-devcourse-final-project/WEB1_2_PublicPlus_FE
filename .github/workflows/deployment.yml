@@ -45,11 +45,16 @@ jobs:
           zip -r ../function.zip ./*
           cd ../..
 
+      - name: Upload ZIP to S3
+        run: |
+          aws s3 cp .next/function.zip s3://${{ secrets.S3_BUCKET_NAME }}/function.zip
+
       - name: Deploy to Lambda@Edge
         run: |
           aws lambda update-function-code \
             --function-name ${{ secrets.LAMBDA_FUNCTION_NAME }} \
-            --zip-file fileb://.next/function.zip
+            --s3-bucket ${{ secrets.S3_BUCKET_NAME }} \
+            --s3-key function.zip
 
       - name: Deploy static files to S3
         run: |
@@ -57,4 +62,6 @@ jobs:
 
       - name: Invalidate CloudFront cache
         run: |
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
