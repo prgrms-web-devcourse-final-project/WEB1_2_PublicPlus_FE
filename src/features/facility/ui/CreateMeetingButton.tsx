@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 interface CreateMeetingButtonProps {
   className?: string;
 }
@@ -7,10 +9,14 @@ export const CreateMeetingButton = ({
 }: CreateMeetingButtonProps) => {
   return (
     <div
-      className={`sticky bottom-[80px] mx-auto w-full max-w-[600px] bg-white pl-[1.5rem] pr-[1.5rem] ${className}`}>
-      <button className="w-full rounded-lg bg-blue-500 py-3 font-bold text-white">
-        모임 생성하기
-      </button>
+      className={`sticky bottom-[80px] z-[90] mx-auto w-full max-w-[600px] bg-white px-6 ${className}`}>
+      <Link
+        href="/meeting/create"
+        className="block">
+        <button className="w-full rounded-lg bg-blue-500 py-3 font-bold text-white transition-colors hover:bg-blue-600">
+          모임 생성하기
+        </button>
+      </Link>
     </div>
   );
 };

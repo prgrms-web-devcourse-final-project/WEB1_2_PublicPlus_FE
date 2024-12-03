@@ -3,7 +3,9 @@ import { useFacilityStore } from '../model/store';
 import { FacilityDetailsResponseDTO } from '@/api/generated';
 
 interface FacilityHeaderProps {
-  facility: FacilityDetailsResponseDTO;
+  facility: FacilityDetailsResponseDTO & {
+    tags: [];
+  };
 }
 
 export const FacilityHeader = ({ facility }: FacilityHeaderProps) => {
@@ -30,9 +32,13 @@ export const FacilityHeader = ({ facility }: FacilityHeaderProps) => {
           />
         </button>
       </div>
-
       <div className="bg-white p-4">
-        <h1 className="text-xl font-bold">{facility.facilityName}</h1>
+        <div className="mb-4">
+          <span className="inline-block rounded bg-blue-100 px-2 py-1 text-sm text-blue-600">
+            {facility.tags}
+          </span>
+        </div>
+        <h1 className="mb-2 text-xl font-bold">{facility.facilityName}</h1>
         <p className="mt-1 text-blue-500">
           {facility.priceType === false ? '무료' : '유료'}/기본요금
         </p>

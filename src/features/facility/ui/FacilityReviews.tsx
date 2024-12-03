@@ -104,10 +104,7 @@ export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
           ) : (
             <Card
               key={review.id}
-              className="p-4"
-              onclickHandler={() => {
-                /* 조회수 증가 로직 */
-              }}>
+              className="p-4">
               <div className="space-y-2">
                 <div className="flex items-start justify-between">
                   <div className="space-y-1">
@@ -151,10 +148,6 @@ export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
                     ))}
                   </div>
                 )}
-                <div className="flex gap-2 text-sm text-gray-500">
-                  <span>좋아요 {review.likes}</span>
-                  <span>조회 {review.views}</span>
-                </div>
               </div>
             </Card>
           )}

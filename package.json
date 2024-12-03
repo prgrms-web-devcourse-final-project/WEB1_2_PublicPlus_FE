@@ -24,6 +24,7 @@
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
+    "react-router-dom": "^7.0.1",
     "react-toastify": "^10.0.6",
     "swiper": "^11.1.15",
     "tailwind-merge": "^2.5.5",

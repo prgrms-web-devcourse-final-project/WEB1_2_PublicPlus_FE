@@ -27,7 +27,9 @@ export const useFacilityDetail = (
       ReturnType<typeof QUERY_KEYS.facility.detail>
     >,
     'queryKey' | 'queryFn'
-  >
+  > & {
+    onError?: (error: Error) => void;
+  }
 ) => {
   return useQuery<
     FacilityDetailsResponseDTO,
@@ -54,7 +56,9 @@ export const useFacilities = (
       ReturnType<typeof QUERY_KEYS.facility.list>
     >,
     'queryKey' | 'queryFn'
-  >
+  > & {
+    onError?: (error: Error) => void;
+  }
 ) => {
   const queryFn = filters
     ? () => facilityService.getFacilitiesWithFilter(page, size, filters)
