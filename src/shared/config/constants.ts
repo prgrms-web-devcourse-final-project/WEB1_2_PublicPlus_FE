@@ -46,3 +46,5 @@ export const PRICE_TYPES = [
   { value: 1, label: '무료' },
   { value: 0, label: '유료' }
 ] as const;
+
+export const DETAIL_PAGE_PATTERNS = ['/facility/', '/meeting/create'] as const;

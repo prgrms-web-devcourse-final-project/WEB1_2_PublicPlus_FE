@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <div className="relative mx-auto min-h-screen w-full max-w-[768px]">
       <div className="flex min-h-screen flex-col">
-        <Header detailTitle="시설명" />
+        <Header />
         <main className="container flex-grow px-4">{children}</main>
         <Navigation activeTab={getActiveTab()} />
       </div>

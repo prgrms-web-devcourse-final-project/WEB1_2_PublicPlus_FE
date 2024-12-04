@@ -184,6 +184,7 @@ export const authHandlers = [
 
     const user = mockUsers.find(u => u.userId === userId);
 
+    // 사용자를 찾지 못한 경우 에러 응답
     if (!user) {
       const errorResponse: ErrorResponseDTO = {
         errorCode: 'USER_NOT_FOUND',
@@ -193,6 +194,7 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 404 });
     }
 
+    // 사용자 정보 반환 (비밀번호 제외)
     return HttpResponse.json(
       {
         userId: user.userId,

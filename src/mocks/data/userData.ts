@@ -1,4 +1,3 @@
-// 모의 사용자 데이터
 export interface MockUser {
   userId: string;
   email: string;
