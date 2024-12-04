@@ -15,14 +15,14 @@ export const FacilityFilters = () => {
       <div className="flex gap-2">
         <Button
           variant="line"
-          onclickHandler={() => toggleFilterMenu('area')}
+          onclick={() => toggleFilterMenu('area')}
           className="flex gap-2">
           <Filter className="h-6 w-6" />
           지역
         </Button>
         <Button
           variant="line"
-          onclickHandler={() => toggleFilterMenu('price')}
+          onclick={() => toggleFilterMenu('price')}
           className="flex gap-2">
           <Filter className="h-6 w-6" />
           요금

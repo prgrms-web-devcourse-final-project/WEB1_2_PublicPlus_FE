@@ -4,7 +4,7 @@ interface ButtonProps {
   children: React.ReactNode;
   fullWidth?: boolean;
   disabled?: boolean;
-  onclickHandler?: () => void;
+  onclick?: () => void;
   className?: string;
   type?: 'button' | 'submit' | 'reset' | undefined;
 }
@@ -15,7 +15,7 @@ export const Button = ({
   children,
   fullWidth = false,
   disabled = false,
-  onclickHandler = () => {},
+  onclick = () => {},
   className = '',
   type = 'button'
 }: ButtonProps) => {
@@ -65,7 +65,7 @@ export const Button = ({
       type={type}
       className={` ${baseStyle} ${variants[variant]} ${sizes[size]} ${fullWidthClass} ${className}`}
       disabled={disabled}
-      onClick={onclickHandler}>
+      onClick={onclick}>
       {children}
     </button>
   );

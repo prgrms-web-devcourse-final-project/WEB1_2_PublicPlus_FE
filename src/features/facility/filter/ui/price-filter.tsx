@@ -20,14 +20,14 @@ export const PriceFilter = () => {
         <div className="grid grid-cols-3 gap-2">
           <Button
             variant={filters.priceType === null ? 'primary' : 'gray'}
-            onclickHandler={() => handlePriceChange(null)}>
+            onclick={() => handlePriceChange(null)}>
             전체
           </Button>
           {PRICE_TYPES.map(price => (
             <Button
               key={price.value}
               variant={filters.priceType === price.value ? 'primary' : 'gray'}
-              onclickHandler={() => handlePriceChange(price.value)}>
+              onclick={() => handlePriceChange(price.value)}>
               {price.label}
             </Button>
           ))}
