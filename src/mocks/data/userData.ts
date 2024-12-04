@@ -25,5 +25,14 @@ export const mockUsers: MockUser[] = [
     profile_image: null,
     description: null,
     role: 'USER'
+  },
+  {
+    userId: '999e1234-e12b-34c5-a456-567801236547',
+    email: 'seon022@naver.com',
+    password: 'qwer1234',
+    nickname: '소셜로그인할거야',
+    profile_image: null,
+    description: null,
+    role: 'USER'
   }
 ];

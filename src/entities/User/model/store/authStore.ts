@@ -5,6 +5,8 @@ import { UserJoinDTO, UserLoginDTO } from '@/api/generated';
 import { userService } from '@/entities/User/api/userService';
 import { AuthState } from '../types/AuthState';
 
+export type SocialProvider = 'kakao' | 'google' | 'naver';
+
 export const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
@@ -49,6 +51,48 @@ export const useAuthStore = create<AuthState>()(
         } catch (error) {
           const errorMessage =
             error instanceof Error ? error.message : '로그인 실패';
+
+          set({
+            isAuthenticated: false,
+            isLoading: false,
+            error: errorMessage
+          });
+          return false;
+        }
+      },
+      // 소셜 로그인
+      socialLogin: async (provider: SocialProvider) => {
+        set({ isLoading: true, error: null });
+
+        try {
+          const response = await userService.socialLogin(provider);
+
+          document.cookie = `auth-storage=${JSON.stringify({
+            state: {
+              userId: response.userId,
+              tokens: {
+                access_token: response.access_token,
+                refresh_token: response.refresh_token
+              },
+              isAuthenticated: true
+            }
+          })}; path=/; secure; samesite=strict; max-age=86400`;
+
+          set({
+            userId: response.userId,
+            tokens: {
+              access_token: response.access_token ?? null,
+              refresh_token: response.refresh_token ?? null
+            },
+            isAuthenticated: true,
+            isLoading: false,
+            error: null
+          });
+
+          return true;
+        } catch (error) {
+          const errorMessage =
+            error instanceof Error ? error.message : '소셜 로그인 실패';
 
           set({
             isAuthenticated: false,
