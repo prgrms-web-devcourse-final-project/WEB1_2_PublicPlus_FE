@@ -8,7 +8,12 @@ export function MeetingInfo({ meeting }: MeetingInfoProps) {
       <section>
         <h2 className="mb-2 text-lg font-semibold">모임 일정</h2>
         <div className="rounded-lg bg-gray-50 p-4">
-          <p>{meeting.mbDate}</p>
+          <p>
+            {meeting.mbDate}
+            {meeting.recurringSchedule
+              ? ` ~ ${meeting.recurringSchedule.endDate}`
+              : ''}
+          </p>
           {!meeting.isTimeFlexible && (
             <p>{`${meeting.mbTime.hour}:${meeting.mbTime.minute}`}</p>
           )}

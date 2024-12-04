@@ -11,14 +11,14 @@ interface CreateMeetingFormProps {
 }
 
 interface RecurringSchedule {
-  type: 'weekly' | 'biweekly' | 'monthly';
+  type: 'daily' | 'weekly' | 'biweekly' | 'monthly';
   endType: 'date' | 'count' | 'never';
   endDate?: string;
   repeatCount?: number;
 }
 
 interface RecurringSchedule {
-  type: 'weekly' | 'biweekly' | 'monthly';
+  type: 'daily' | 'weekly' | 'biweekly' | 'monthly';
   endType: 'date' | 'count' | 'never';
   endDate?: string;
   repeatCount?: number;
@@ -193,6 +193,12 @@ export function CreateMeetingForm({
           <option value={MeetingBoardRequestDTOSportTypeEnum.Basketball}>
             농구
           </option>
+          <option value={MeetingBoardRequestDTOSportTypeEnum.Badminton}>
+            배드민턴
+          </option>
+          <option value={MeetingBoardRequestDTOSportTypeEnum.Swimming}>
+            수영
+          </option>
         </select>
       </div>
 
@@ -217,7 +223,7 @@ export function CreateMeetingForm({
     setFormData(prev => ({
       ...prev,
       isTimeFlexible: checked,
-      mbTime: checked ? { hour: 0, minute: 0, second: 0, nano: 0 } : prev.mbTime
+      mbTime: checked ? '시간 무관' : prev.mbTime
     }));
   };
 
@@ -245,6 +251,7 @@ export function CreateMeetingForm({
                     e.target.value as RecurringSchedule['type']
                   )
                 }>
+                <option value="daily">매일</option>
                 <option value="weekly">매주</option>
                 <option value="biweekly">격주</option>
                 <option value="monthly">매월</option>
