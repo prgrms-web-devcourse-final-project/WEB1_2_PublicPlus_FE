@@ -16,7 +16,11 @@ interface Meeting {
   };
   isRecurring: boolean;
   recurringSchedule?: RecurringSchedule;
-  [key: string]: any;
+  mbTitle: string;
+  mbLocation: string;
+  sportType: string;
+  maxParticipants: number;
+  tags: string[];
 }
 
 export function generateRecurringDates(meeting: Meeting) {

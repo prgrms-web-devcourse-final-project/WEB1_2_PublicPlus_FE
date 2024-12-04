@@ -11,7 +11,23 @@ import { useToast } from '@/components/common/Toast/Toast';
 import { useMeetingBoards } from '@/features/meeting/model/queries';
 import { generateRecurringDates } from '@/shared/lib/utils/dateUtils';
 import './calendar-styles.css';
-
+interface MeetingEvent {
+  mbId: number;
+  mbTitle: string;
+  mbDate: string;
+  mbTime: {
+    hour: number;
+    minute: number;
+  };
+  mbLocation: string;
+  sportType: string;
+  maxParticipants: number;
+  tags: string[];
+  isRecurring: boolean;
+  isRecurringInstance?: boolean;
+  instanceCount?: number;
+  recurringParentId?: number;
+}
 const formatTime = (time?: { hour: number; minute: number }) => {
   if (!time) return '';
   return `${time.hour.toString().padStart(2, '0')}:${time.minute.toString().padStart(2, '0')}`;
@@ -20,8 +36,8 @@ const formatTime = (time?: { hour: number; minute: number }) => {
 export const Calendar: FC = () => {
   const { data: meetings, isLoading } = useMeetingBoards();
   const router = useRouter();
-  const { showToast, ToastComponent } = useToast();
-  const [selectedEvents, setSelectedEvents] = useState<any[]>([]);
+  const { ToastComponent } = useToast();
+  const [selectedEvents, setSelectedEvents] = useState<MeetingEvent[]>([]);
 
   const handleDateClick = (arg: DateClickArg) => {
     const clickedDate = arg.dateStr;

@@ -1,13 +1,18 @@
 import { create } from 'zustand';
+interface Meeting {
+  id: string;
+  title: string;
+  date: Date;
+}
 
 interface MeetingBoardState {
-  selectedMeeting: any | null;
+  selectedMeeting: Meeting | null;
   isModalOpen: boolean;
   modalMode: 'create' | 'edit';
 
-  setSelectedMeeting: (meeting: any | null) => void;
+  setSelectedMeeting: (meeting: Meeting | null) => void;
   openCreateModal: () => void;
-  openEditModal: (meeting: any) => void;
+  openEditModal: (meeting: Meeting) => void;
   closeModal: () => void;
 }
 
