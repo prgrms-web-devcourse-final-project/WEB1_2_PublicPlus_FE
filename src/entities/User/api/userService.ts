@@ -6,6 +6,7 @@ import type {
   ChangePasswordDTO,
   ErrorResponseDTO
 } from '@/api/generated';
+import { SocialProvider } from '../model/store/authStore';
 
 export const userService = {
   login: async (loginData: UserLoginDTO) => {
@@ -29,6 +30,30 @@ export const userService = {
       if (axios.isAxiosError(error)) {
         const errorResponse = error.response?.data as ErrorResponseDTO;
         throw new Error(errorResponse?.message || '로그인에 실패했습니다.');
+      }
+      throw error;
+    }
+  },
+  socialLogin: async (provider: SocialProvider) => {
+    try {
+      const response = await axios.get(`/api/oauth2/${provider}`);
+
+      if (!response.data || !response.data.userId) {
+        throw new Error('소셜 로그인 정보를 받아올 수 없습니다.');
+      }
+
+      return {
+        userId: response.data.userId,
+        authentication: response.data.authentication,
+        access_token: response.data.access_token,
+        refresh_token: response.data.refresh_token
+      };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorResponse = error.response?.data as ErrorResponseDTO;
+        throw new Error(
+          errorResponse?.message || '소셜 로그인에 실패했습니다.'
+        );
       }
       throw error;
     }
@@ -171,34 +196,6 @@ export const userService = {
       throw error;
     }
   },
-  // updateProfileImage: async (userId: string, file: File) => {
-  //   try {
-  //     if (!file) {
-  //       throw new Error('프로필 사진 파일을 선택해주세요.');
-  //     }
-
-  //     if (file.size > 5 * 1024 * 1024) {
-  //       throw new Error('파일 크기는 5MB를 초과할 수 없습니다.');
-  //     }
-
-  //     const allowedTypes = ['image/jpeg', 'image/png'];
-  //     if (!allowedTypes.includes(file.type)) {
-  //       throw new Error('JPG, PNG 형식의 이미지만 업로드 가능합니다.');
-  //     }
-
-  //     const formData = new FormData();
-  //     formData.append('multipartFile', file);
-
-  //   } catch (error) {
-  //     if (axios.isAxiosError(error)) {
-  //       const errorResponse = error.response?.data as ErrorResponseDTO;
-  //       throw new Error(
-  //         errorResponse?.message || '프로필 사진 변경에 실패했습니다.'
-  //       );
-  //     }
-  //     throw error;
-  //   }
-  // },
   updateProfileImage: async (userId: string, file: File) => {
     try {
       if (!file) {

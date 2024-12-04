@@ -48,7 +48,6 @@ export const authHandlers = [
 
     return HttpResponse.json(errorResponse, { status: 400 });
   }),
-
   http.post('/api/email', ({ request }) => {
     const url = new URL(request.url);
     const email = url.searchParams.get('email');
@@ -97,7 +96,32 @@ export const authHandlers = [
 
     return HttpResponse.json(null, { status: 200 });
   }),
+  // 소셜로그인
+  http.get('/api/oauth2/:provider', ({ params }) => {
+    const { provider } = params;
+    const allowedProviders = ['kakao', 'google', 'naver'];
 
+    if (!allowedProviders.includes(provider as string)) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'OAUTH_INVALID_PROVIDER',
+        message: '유효하지 않은 소셜 로그인 제공자입니다.',
+        details: '소셜 로그인 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    return HttpResponse.json(
+      {
+        userId: '999e1234-e12b-34c5-a456-567801236547',
+        authentication: 'Bearer',
+        access_token: faker.string.uuid(),
+        refresh_token: faker.string.uuid()
+      },
+      { status: 200 }
+    );
+  }),
+
+  // 회원가입
   http.post('/api/user/join', async ({ request }) => {
     const body = (await request.json()) as UserJoinDTO & {
       verificationCode: string;
@@ -147,7 +171,7 @@ export const authHandlers = [
 
     return HttpResponse.json(newUser, { status: 201 });
   }),
-
+  // 토큰 재발급
   http.post('/api/user/refresh/header', ({ request }) => {
     const authHeader = request.headers.get('Authorization');
 
@@ -169,7 +193,7 @@ export const authHandlers = [
       { status: 200 }
     );
   }),
-
+  // 회원정보 조회
   http.get('/api/user/:userId', ({ params }) => {
     const { userId } = params;
 
@@ -184,7 +208,6 @@ export const authHandlers = [
 
     const user = mockUsers.find(u => u.userId === userId);
 
-    // 사용자를 찾지 못한 경우 에러 응답
     if (!user) {
       const errorResponse: ErrorResponseDTO = {
         errorCode: 'USER_NOT_FOUND',
@@ -194,7 +217,7 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 404 });
     }
 
-    // 사용자 정보 반환 (비밀번호 제외)
+    // 사용자 정보 반환
     return HttpResponse.json(
       {
         userId: user.userId,
@@ -207,13 +230,12 @@ export const authHandlers = [
       { status: 200 }
     );
   }),
-  // 닉네임 변경 핸들러
+  // 닉네임 변경
   http.patch('/api/user/nickname/:userId', async ({ request, params }) => {
     const { userId } = params;
     const body = (await request.json()) as UserChangeInfoDTO;
     const { nickname } = body;
 
-    // 닉네임 유효성 검사 (2~10자, 한글, 영어 소문자, 숫자만 허용)
     const nicknameRegex = /^[가-힣a-z0-9]{2,10}$/;
     if (!nickname || !nicknameRegex.test(nickname)) {
       const errorResponse: ErrorResponseDTO = {
@@ -224,7 +246,6 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 400 });
     }
 
-    // 사용자 찾기
     const userIndex = mockUsers.findIndex(u => u.userId === userId);
     if (userIndex === -1) {
       const errorResponse: ErrorResponseDTO = {
@@ -235,7 +256,6 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 404 });
     }
 
-    // 닉네임 업데이트
     mockUsers[userIndex].nickname = nickname;
 
     return HttpResponse.json(
@@ -247,7 +267,7 @@ export const authHandlers = [
     );
   }),
 
-  // 소개글 변경 핸들러
+  // 소개글 변경
   http.patch('/api/user/description/:userId', async ({ request, params }) => {
     const { userId } = params;
     const body = (await request.json()) as UserChangeInfoDTO;
