@@ -1,12 +1,14 @@
 'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+import { useUserQuery } from '@/entities/User/model/userQueries';
+import { useAuthStore } from '@/entities/User';
+
+import { toast } from 'react-toastify';
 import { Modal } from '@/components/common/Modal';
 import { CustomHeader } from '@/components/common/Header/CustomHeader';
 import { EditCard } from '@/components/common/Cards/EditCard';
-import { useRouter } from 'next/navigation';
-import { useUserQuery } from '@/entities/User/model/userQueries';
-import { toast } from 'react-toastify';
-import { useAuthStore } from '@/entities/User';
 
 export default function ProfileEditPage() {
   const router = useRouter();
@@ -47,9 +49,14 @@ export default function ProfileEditPage() {
               description={userInfo?.description || '아직 작성되지 않았습니다.'}
               onClick={() => router.push('/profile/edit/description')}
             />
+            <EditCard
+              title="비밀번호 변경"
+              description={''}
+              onClick={() => router.push('/profile/edit/password')}
+            />
             <button
               onClick={() => setIsModalOpen(true)}
-              className="rounded bg-red-500 p-2 text-white hover:bg-red-600">
+              className="absolute bottom-40 left-0 right-0 text-gray-400 hover:text-gray-600">
               회원탈퇴
             </button>
           </div>

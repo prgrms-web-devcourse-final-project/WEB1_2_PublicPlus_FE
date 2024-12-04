@@ -5,7 +5,8 @@ import {
   UserLoginDTO,
   UserJoinDTO,
   ErrorResponseDTO,
-  UserChangeInfoDTO
+  UserChangeInfoDTO,
+  ChangePasswordDTO
 } from '@/api/generated';
 
 const emailVerificationCodes: Record<string, string> = {};
@@ -394,5 +395,66 @@ export const authHandlers = [
     mockUsers.splice(userIndex, 1);
 
     return HttpResponse.json({ message: '회원 탈퇴 완료' }, { status: 200 });
+  }),
+  // 비밀번호 변경
+  http.patch(`/api/user/password/:userId`, async ({ request, params }) => {
+    const { userId } = params;
+    const body = (await request.json()) as ChangePasswordDTO;
+    const { email, changePassword, checkChangePassword } = body;
+
+    // 필수 정보 누락 검증
+    if (!email || !changePassword || !checkChangePassword || !userId) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'PASSWORD_CHANGE_INVALID',
+        message: '필수 정보가 누락되었습니다',
+        details: '비밀번호 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    // 비밀번호 일치 검증
+    if (changePassword !== checkChangePassword) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'PASSWORD_MISMATCH',
+        message: '새 비밀번호와 확인 비밀번호가 일치하지 않습니다',
+        details: '비밀번호 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    // 비밀번호 길이 검증
+    if (changePassword.length < 6) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'PASSWORD_TOO_SHORT',
+        message: '비밀번호는 최소 6자 이상이어야 합니다',
+        details: '비밀번호 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    // 사용자 존재 여부 확인
+    const userIndex = mockUsers.findIndex(
+      u => u.email === email && u.userId === userId
+    );
+
+    if (userIndex === -1) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'USER_NOT_FOUND',
+        message: '해당 사용자를 찾을 수 없습니다',
+        details: '비밀번호 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 404 });
+    }
+
+    // 비밀번호 업데이트
+    mockUsers[userIndex].password = changePassword;
+
+    return HttpResponse.json(
+      {
+        userId: mockUsers[userIndex].userId,
+        message: '비밀번호가 성공적으로 변경되었습니다'
+      },
+      { status: 200 }
+    );
   })
 ];

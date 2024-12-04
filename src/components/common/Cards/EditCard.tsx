@@ -25,7 +25,7 @@ export const EditCard = ({
     <div>
       <div className="flex justify-between">
         <div className="flex flex-col items-start justify-between space-y-4">
-          <h3 className="font-medium text-gray-900">{title}</h3>
+          <h3 className="font-semibold text-gray-900">{title}</h3>
           {description && (
             <p className="text-sm text-gray-500">{description}</p>
           )}
