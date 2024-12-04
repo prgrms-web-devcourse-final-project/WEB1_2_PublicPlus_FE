@@ -1,25 +1,45 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+
+import { toast } from 'react-toastify';
+import { SocialProvider, useAuthStore } from '@/entities/User';
+import useRedirect from '@/features/auth/hooks/useRedirect';
+
+import { SOCIAL_PROVIDERS } from '@/features/auth/model/constants';
+import { SocialLoginButton } from '@/features/auth/ui/SocialLoginButton';
 import LoginContainer from '@/features/auth/ui/LoginContainer';
-import { useAuthStore } from '@/entities/User';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { isAuthenticated, userId, tokens } = useAuthStore();
+  const { isAuthenticated, userId, tokens, socialLogin } = useAuthStore();
 
-  useEffect(() => {
-    if (isAuthenticated && userId && tokens.access_token) {
-      router.push('/');
+  useRedirect(isAuthenticated, userId, tokens);
+  const handleSocialLogin = async (provider: SocialProvider) => {
+    try {
+      const success = await socialLogin(provider);
+
+      if (success) {
+        toast.success('로그인 되었습니다.');
+        // alert('로그인 되었습니다.');
+        router.push('/');
+      }
+    } catch (error) {
+      console.error('소셜 로그인 실패', error);
     }
-  }, [isAuthenticated, userId, tokens.access_token, router]);
-
-  // 인증되지 않은 경우에만 로그인 페이지 렌더링
-  if (isAuthenticated) {
-    return null;
-  }
+  };
+  const SocialLoginButtons = () => (
+    <div className="mb-8 mt-8 flex justify-center gap-4">
+      {SOCIAL_PROVIDERS.map(provider => (
+        <SocialLoginButton
+          key={provider.name}
+          provider={provider}
+          onLogin={handleSocialLogin}
+        />
+      ))}
+    </div>
+  );
 
   return (
     <div className="item-center flex min-h-[80vh] flex-col justify-center space-y-16 text-center">
@@ -34,44 +54,11 @@ export default function LoginPage() {
           />
         </Link>
       </section>
-      <section>
-        <LoginContainer />
-        <div className="mb-8 mt-8 flex flex-col items-center">
-          <div className="flex gap-4">
-            {/* 소셜 로그인 버튼들 */}
-            <button className="rounded-full p-2 hover:bg-gray-50">
-              <Image
-                width={40}
-                height={40}
-                alt="카카오톡"
-                src={'/icons/kakaotalk.png'}
-                className="transition-transform hover:scale-105"
-              />
-            </button>
-            <button className="rounded-full p-2 hover:bg-gray-50">
-              <Image
-                width={40}
-                height={40}
-                alt="구글"
-                src={'/icons/google.png'}
-                className="transition-transform hover:scale-105"
-              />
-            </button>
-            <button className="rounded-full p-2 hover:bg-gray-50">
-              <Image
-                width={40}
-                height={40}
-                alt="네이버"
-                src={'/icons/naver.png'}
-                className="transition-transform hover:scale-105"
-              />
-            </button>
-          </div>
-        </div>
-        <div className="text-sm text-primary-800">
-          <Link href={'/signup'}>회원가입</Link>
-        </div>
-      </section>
+      <LoginContainer />
+      <SocialLoginButtons />
+      <div className="text-sm text-primary-800">
+        <Link href={'/signup'}>회원가입</Link>
+      </div>
     </div>
   );
 }
