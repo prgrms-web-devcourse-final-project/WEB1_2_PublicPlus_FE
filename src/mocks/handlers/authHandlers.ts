@@ -324,18 +324,24 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 400 });
     }
 
-    const fileExtension = multipartFile.type.split('/')[1];
-    const newFileName = `${userId}_${Date.now()}.${fileExtension}`;
+    // 대체 이미지 URL 목록
+    const fallbackImages = [
+      'https://via.placeholder.com/150',
+      'https://picsum.photos/200/300',
+      '/default-profile.png'
+    ];
 
-    // 실제 S3/CloudFront 환경과 유사한 경로 생성
-    const profileImagePath = `/profile/${newFileName}`;
+    // 랜덤 대체 이미지 선택
+    const randomImageUrl =
+      fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
 
-    mockUsers[userIndex].profile_image = profileImagePath;
+    // 사용자 프로필 이미지를 랜덤 대체 이미지로 업데이트
+    mockUsers[userIndex].profile_image = randomImageUrl;
 
     return HttpResponse.json(
       {
         userId: userId,
-        profile_image: profileImagePath
+        profile_image: randomImageUrl
       },
       { status: 200 }
     );

@@ -171,6 +171,34 @@ export const userService = {
       throw error;
     }
   },
+  // updateProfileImage: async (userId: string, file: File) => {
+  //   try {
+  //     if (!file) {
+  //       throw new Error('프로필 사진 파일을 선택해주세요.');
+  //     }
+
+  //     if (file.size > 5 * 1024 * 1024) {
+  //       throw new Error('파일 크기는 5MB를 초과할 수 없습니다.');
+  //     }
+
+  //     const allowedTypes = ['image/jpeg', 'image/png'];
+  //     if (!allowedTypes.includes(file.type)) {
+  //       throw new Error('JPG, PNG 형식의 이미지만 업로드 가능합니다.');
+  //     }
+
+  //     const formData = new FormData();
+  //     formData.append('multipartFile', file);
+
+  //   } catch (error) {
+  //     if (axios.isAxiosError(error)) {
+  //       const errorResponse = error.response?.data as ErrorResponseDTO;
+  //       throw new Error(
+  //         errorResponse?.message || '프로필 사진 변경에 실패했습니다.'
+  //       );
+  //     }
+  //     throw error;
+  //   }
+  // },
   updateProfileImage: async (userId: string, file: File) => {
     try {
       if (!file) {
@@ -186,11 +214,28 @@ export const userService = {
         throw new Error('JPG, PNG 형식의 이미지만 업로드 가능합니다.');
       }
 
+      // 이미지 등록 테스트 랜덤 이미지 출력
+      const fallbackImages = [
+        'https://via.placeholder.com/150',
+        'https://picsum.photos/200/300',
+        '/default-profile.png'
+      ];
+
+      const randomImageUrl =
+        fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
+
       const formData = new FormData();
       formData.append('multipartFile', file);
 
-      const response = await api.user.changeProfile(userId, file);
-      return response.data;
+      await api.user.changeProfile(userId, file);
+
+      // 실제 이미지 파일 등록 시 반환
+      //     const response = await api.user.changeProfile(userId, file);
+      //     return response.data;
+      return {
+        userId,
+        profile_image: randomImageUrl
+      };
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorResponse = error.response?.data as ErrorResponseDTO;
