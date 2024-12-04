@@ -1,18 +1,20 @@
 import { http, HttpResponse } from 'msw';
 import { faker } from '@faker-js/faker';
 import { mockUsers } from '../data/userData';
-import { UserLoginDTO, UserJoinDTO, ErrorResponseDTO } from '@/api/generated';
+import {
+  UserLoginDTO,
+  UserJoinDTO,
+  ErrorResponseDTO,
+  UserChangeInfoDTO
+} from '@/api/generated';
 
-// 이메일 인증 코드 저장소
 const emailVerificationCodes: Record<string, string> = {};
 
 export const authHandlers = [
-  // 로그인 핸들러
   http.post('/api/user/login', async ({ request }) => {
     const body = (await request.json()) as UserLoginDTO;
     const { email, password } = body;
 
-    // 필수 필드 검증
     if (!email || !password) {
       const errorResponse: ErrorResponseDTO = {
         errorCode: 'LOGIN_INVALID',
@@ -47,7 +49,6 @@ export const authHandlers = [
     return HttpResponse.json(errorResponse, { status: 400 });
   }),
 
-  // 이메일 인증 코드 발송 핸들러
   http.post('/api/email', ({ request }) => {
     const url = new URL(request.url);
     const email = url.searchParams.get('email');
@@ -61,17 +62,14 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 400 });
     }
 
-    // 6자리 인증 코드 생성
     const verificationCode = faker.string.numeric(6);
 
-    // 이메일별 인증 코드 저장
     emailVerificationCodes[email] = verificationCode;
     console.log(`Verification code for ${email}: ${verificationCode}`);
 
     return HttpResponse.json(null, { status: 200 });
   }),
 
-  // 이메일 인증 코드 검증 핸들러
   http.get('/api/email', ({ request }) => {
     const url = new URL(request.url);
     const email = url.searchParams.get('email');
@@ -86,7 +84,6 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 400 });
     }
 
-    // 저장된 인증 코드와 일치 여부 확인
     if (emailVerificationCodes[email] !== code) {
       const errorResponse: ErrorResponseDTO = {
         errorCode: 'VERIFICATION_FAILED',
@@ -96,20 +93,17 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 400 });
     }
 
-    // 인증 성공 후 코드 삭제
     delete emailVerificationCodes[email];
 
     return HttpResponse.json(null, { status: 200 });
   }),
 
-  // 회원가입 핸들러 수정 (이메일 인증 추가)
   http.post('/api/user/join', async ({ request }) => {
     const body = (await request.json()) as UserJoinDTO & {
       verificationCode: string;
     };
     const { email, password, nickname, checkPassword } = body;
 
-    // 필수 필드
     if (!email || !password || !nickname || !checkPassword) {
       const errorResponse: ErrorResponseDTO = {
         errorCode: 'JOIN_INVALID',
@@ -128,7 +122,6 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 400 });
     }
 
-    // 기존 이메일 중복 검사
     const existingUser = mockUsers.find(u => u.email === email);
     if (existingUser) {
       const errorResponse: ErrorResponseDTO = {
@@ -139,7 +132,6 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 400 });
     }
 
-    // 회원가입 성공 로직
     const newUser = {
       userId: faker.string.uuid(),
       email,
@@ -151,13 +143,11 @@ export const authHandlers = [
     };
     mockUsers.push(newUser);
 
-    // 인증 코드 삭제
     delete emailVerificationCodes[email];
 
     return HttpResponse.json(newUser, { status: 201 });
   }),
 
-  // 토큰 재발급 핸들러
   http.post('/api/user/refresh/header', ({ request }) => {
     const authHeader = request.headers.get('Authorization');
 
@@ -178,11 +168,11 @@ export const authHandlers = [
       },
       { status: 200 }
     );
-  }), // 회원정보 조회 핸들러 추가
+  }),
+
   http.get('/api/user/:userId', ({ params }) => {
     const { userId } = params;
 
-    // userId가 제공되지 않은 경우 에러 응답
     if (!userId) {
       const errorResponse: ErrorResponseDTO = {
         errorCode: 'USER_INVALID',
@@ -192,7 +182,6 @@ export const authHandlers = [
       return HttpResponse.json(errorResponse, { status: 400 });
     }
 
-    // mockUsers에서 해당 userId를 가진 사용자 찾기
     const user = mockUsers.find(u => u.userId === userId);
 
     // 사용자를 찾지 못한 경우 에러 응답
@@ -214,6 +203,147 @@ export const authHandlers = [
         profile_image: user.profile_image,
         description: user.description,
         role: user.role
+      },
+      { status: 200 }
+    );
+  }),
+  // 닉네임 변경 핸들러
+  http.patch('/api/user/nickname/:userId', async ({ request, params }) => {
+    const { userId } = params;
+    const body = (await request.json()) as UserChangeInfoDTO;
+    const { nickname } = body;
+
+    // 닉네임 유효성 검사 (2~10자, 한글, 영어 소문자, 숫자만 허용)
+    const nicknameRegex = /^[가-힣a-z0-9]{2,10}$/;
+    if (!nickname || !nicknameRegex.test(nickname)) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'NICKNAME_INVALID',
+        message: '닉네임은 2~10자 사이의 한글, 영어 소문자, 숫자만 가능합니다.',
+        details: '닉네임 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    // 사용자 찾기
+    const userIndex = mockUsers.findIndex(u => u.userId === userId);
+    if (userIndex === -1) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'USER_NOT_FOUND',
+        message: '해당 사용자를 찾을 수 없습니다',
+        details: '닉네임 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 404 });
+    }
+
+    // 닉네임 업데이트
+    mockUsers[userIndex].nickname = nickname;
+
+    return HttpResponse.json(
+      {
+        userId: userId,
+        nickname: nickname
+      },
+      { status: 200 }
+    );
+  }),
+
+  // 소개글 변경 핸들러
+  http.patch('/api/user/description/:userId', async ({ request, params }) => {
+    const { userId } = params;
+    const body = (await request.json()) as UserChangeInfoDTO;
+    const { description } = body;
+
+    if (description && description.length > 200) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'DESCRIPTION_INVALID',
+        message: '소개글은 200자 이내로 작성해주세요.',
+        details: '소개글 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    const userIndex = mockUsers.findIndex(u => u.userId === userId);
+    if (userIndex === -1) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'USER_NOT_FOUND',
+        message: '해당 사용자를 찾을 수 없습니다',
+        details: '소개글 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 404 });
+    }
+
+    mockUsers[userIndex].description = description || null;
+
+    return HttpResponse.json(
+      {
+        userId: userId,
+        description: description
+      },
+      { status: 200 }
+    );
+  }),
+  // 프로필 사진 변경
+  http.post('/api/user/profile/:userId', async ({ request, params }) => {
+    const { userId } = params;
+    const body = await request.formData();
+    const multipartFile = body.get('multipartFile') as File | null;
+
+    const userIndex = mockUsers.findIndex(u => u.userId === userId);
+    if (userIndex === -1) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'USER_NOT_FOUND',
+        message: '해당 사용자를 찾을 수 없습니다',
+        details: '프로필 사진 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 404 });
+    }
+
+    if (!multipartFile || !(multipartFile instanceof File)) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'FILE_INVALID',
+        message: '유효한 파일을 업로드해주세요',
+        details: '프로필 사진 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    if (multipartFile.size > 5 * 1024 * 1024) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'FILE_SIZE_EXCEEDED',
+        message: '파일 크기는 5MB를 초과할 수 없습니다',
+        details: '프로필 사진 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    if (!allowedTypes.includes(multipartFile.type)) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'FILE_TYPE_INVALID',
+        message: 'JPG, PNG 형식의 이미지만 업로드 가능합니다',
+        details: '프로필 사진 변경 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    // 대체 이미지 URL 목록
+    const fallbackImages = [
+      'https://via.placeholder.com/150',
+      'https://picsum.photos/200/300',
+      '/default-profile.png'
+    ];
+
+    // 랜덤 대체 이미지 선택
+    const randomImageUrl =
+      fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
+
+    // 사용자 프로필 이미지를 랜덤 대체 이미지로 업데이트
+    mockUsers[userIndex].profile_image = randomImageUrl;
+
+    return HttpResponse.json(
+      {
+        userId: userId,
+        profile_image: randomImageUrl
       },
       { status: 200 }
     );

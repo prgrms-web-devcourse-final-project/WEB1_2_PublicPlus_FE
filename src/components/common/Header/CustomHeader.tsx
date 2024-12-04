@@ -1,5 +1,6 @@
 'use client';
 import Image from 'next/image';
+import { useRouter, usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 interface CustomHeaderProps {
@@ -13,9 +14,17 @@ interface CustomHeaderProps {
 
 export const CustomHeader = ({ title, rightButton }: CustomHeaderProps) => {
   const router = useRouter();
+  const pathname = usePathname() ?? '/'; // null일 경우 기본값 '/' 사용
 
   const handleGoBack = () => {
-    router.back();
+    const pathSegments = pathname.split('/').filter(Boolean);
+
+    if (pathSegments.length > 1) {
+      const newPath = '/' + pathSegments.slice(0, -1).join('/');
+      router.push(newPath);
+    } else {
+      router.push('/');
+    }
   };
 
   return (

@@ -1,14 +1,13 @@
-// components/common/Modal.tsx
 import { useEffect, useRef } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title?: string;
-  message: string; // 메시지 props 추가
-  confirmText?: string; // 확인 버튼 텍스트
-  cancelText?: string; // 취소 버튼 텍스트
-  onConfirm?: () => void; // 확인 버튼 클릭 핸들러
+  message: string;
+  confirmText?: string;
+  cancelText?: string;
+  onConfirm?: () => void;
 }
 
 export const Modal = ({
@@ -61,14 +60,14 @@ export const Modal = ({
           <p className="text-center text-gray-700">{message}</p>
           <div className="flex justify-center gap-3">
             <button
-              onClick={handleConfirm}
-              className="rounded-lg px-16 py-2 text-sm text-gray-600 hover:bg-gray-200">
-              {confirmText}
-            </button>
-            <button
               onClick={onClose}
               className="rounded-lg px-16 py-2 text-sm text-gray-500 hover:bg-gray-200">
               {cancelText}
+              <button
+                onClick={handleConfirm}
+                className="rounded-lg px-16 py-2 text-sm text-gray-600 hover:bg-gray-200">
+                {confirmText}
+              </button>
             </button>
           </div>
         </div>

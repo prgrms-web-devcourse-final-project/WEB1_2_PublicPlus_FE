@@ -13,6 +13,8 @@ export const UserProfile = () => {
   const handleLogout = () => {
     logout();
     router.push('/login');
+    logout();
+    router.push('/login');
   };
 
   return (
@@ -21,9 +23,9 @@ export const UserProfile = () => {
         <div className="relative">
           <div className="overflow-hidden rounded-full">
             <Image
-              width={120}
-              height={120}
-              src={userInfo?.profile_image || '/jjang.jpeg'}
+              width={100}
+              height={100}
+              src={userInfo?.profile_image ?? '/icons/default_user.svg'}
               alt="프로필이미지"
               className="overflow-hidden rounded-full object-cover"
             />
