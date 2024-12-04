@@ -12,7 +12,7 @@ const meta = {
       description: '현재 참여 인원',
       control: { type: 'number', min: 0 }
     },
-    maxMembers: {
+    maxParticipants: {
       description: '최대 참여 가능 인원',
       control: { type: 'number', min: 1 }
     },
@@ -37,14 +37,17 @@ type Story = StoryObj<typeof meta>;
 // 기본 모임 카드
 export const Default: Story = {
   args: {
-    title: '아침 요가 모임',
-    date: '2024.03.20',
-    time: '07:00-08:00',
-    location: '강남구민체육센터',
+    id: '1',
+    mbTitle: '아침 요가 모임',
+    mbDate: '2024.03.20',
+    endDate: '2024.03.21',
+    mbTime: '07:00-08:00',
+    mbLocation: '강남구민체육센터',
     currentMembers: 3,
-    maxMembers: 10,
+    maxParticipants: 10,
     tags: ['초보환영', '아침운동', '요가'],
-    image: '/jjang.jpeg'
+    image: '/jjang.jpeg',
+    domain: 'meeting'
   }
 };
 
@@ -53,22 +56,28 @@ export const MeetingStatus: Story = {
   render: () => (
     <div className="space-y-4">
       <MeetingCard
-        title="저녁 축구 모임"
-        date="2024.03.21"
-        time="19:00-21:00"
-        location="서초풋살장"
+        id="2"
+        mbTitle="저녁 축구 모임"
+        mbDate="2024.03.21"
+        endDate="2024.03.22"
+        mbTime="19:00-21:00"
+        mbLocation="서초풋살장"
         currentMembers={5}
-        maxMembers={10}
+        maxParticipants={10}
         tags={['축구', '저녁운동', '실력무관']}
+        domain="meeting"
       />
       <MeetingCard
-        title="주말 테니스"
-        date="2024.03.22"
-        time="14:00-16:00"
-        location="역삼테니스장"
+        id="3"
+        mbTitle="주말 테니스"
+        mbDate="2024.03.22"
+        endDate="2024.03.23"
+        mbTime="14:00-16:00"
+        mbLocation="역삼테니스장"
         currentMembers={10}
-        maxMembers={10}
+        maxParticipants={10}
         tags={['테니스', '주말운동', '마감임박']}
+        domain="meeting"
       />
     </div>
   )
@@ -77,13 +86,16 @@ export const MeetingStatus: Story = {
 // 여러 태그를 가진 모임 카드
 export const WithMultipleTags: Story = {
   args: {
-    title: '복합 운동 모임',
-    date: '2024.03.23',
-    time: '10:00-12:00',
-    location: '종합스포츠센터',
+    id: '4',
+    mbTitle: '복합 운동 모임',
+    mbDate: '2024.03.23',
+    endDate: '2024.03.24',
+    mbTime: '10:00-12:00',
+    mbLocation: '종합스포츠센터',
     currentMembers: 8,
-    maxMembers: 15,
+    maxParticipants: 15,
     tags: ['헬스', '요가', '초보환영', '전문강사', '주말운동', '정기모임'],
-    image: '/jjang.jpeg'
+    image: '/jjang.jpeg',
+    domain: 'meeting'
   }
 };

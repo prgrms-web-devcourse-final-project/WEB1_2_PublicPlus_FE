@@ -12,6 +12,7 @@ interface HeaderProps {
 const getDefaultTitle = (pathname: string) => {
   if (pathname?.includes('/facility/')) return '시설 상세';
   if (pathname?.includes('/meeting/create')) return '모임 상세';
+  if (pathname?.includes('/calendar')) return '일정 상세';
   return '상세 정보';
 };
 
@@ -55,7 +56,7 @@ export const Header = ({ detailTitle }: HeaderProps) => {
               height={24}
             />
           </button>
-          <h1 className="w-full text-center text-[1.2rem] font-semibold">
+          <h1 className="w-full text-center text-[1.7rem] font-semibold">
             {detailTitle || getDefaultTitle(pathname)}
           </h1>
         </div>
@@ -89,7 +90,9 @@ export const Header = ({ detailTitle }: HeaderProps) => {
               height={26}
             />
           </button>
-          <button className="flex h-16 w-16 items-center justify-center rounded-lg border border-gray-200">
+          <button
+            className="flex h-16 w-16 items-center justify-center rounded-lg border border-gray-200"
+            onClick={() => router.push('/calendar')}>
             <Image
               src="/icons/calendar.png"
               alt="내 일정"

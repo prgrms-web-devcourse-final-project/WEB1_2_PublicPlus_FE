@@ -37,7 +37,7 @@ export const ChatRoomInfoModal = ({ roomInfo, onClose }: SideModalProps) => {
             <Button
               size="md"
               variant="line"
-              onclickHandler={handleCloseChat}
+              onclick={handleCloseChat}
               className="absolute bottom-[3rem] left-8 right-8 min-w-[100px] text-center">
               모임 나가기
             </Button>

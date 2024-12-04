@@ -6,7 +6,9 @@ import React from 'react';
 import { useMeetingBoards } from '@/features/meeting/model/queries';
 
 // 시간을 `hh:mm` 형식으로 변환하는 함수
-const formatTime = (time: { hour: number; minute: number }) => {
+const formatTime = (time?: { hour: number; minute: number }) => {
+  if (!time) return '';
+
   const hours = time.hour.toString().padStart(2, '0');
   const minutes = time.minute.toString().padStart(2, '0');
   return `${hours}:${minutes}`;
@@ -15,12 +17,19 @@ const formatTime = (time: { hour: number; minute: number }) => {
 const MeetingBoardList = () => {
   const { data, isLoading } = useMeetingBoards();
 
-  console.log('모임 목록 data', data);
-
-  if (isLoading) return <p>모임 목록을 불러오는 중입니다...</p>;
+  if (isLoading)
+    return (
+      <div className="p-4">
+        <p className="text-gray-500">모임 목록을 불러오는 중입니다...</p>
+      </div>
+    );
 
   if (!data || !Array.isArray(data) || data.length === 0)
-    return <p>검색 결과가 없습니다.</p>;
+    return (
+      <div className="p-4">
+        <p className="text-gray-500">검색 결과가 없습니다.</p>
+      </div>
+    );
 
   return (
     <div className="space-y-4">
@@ -32,10 +41,12 @@ const MeetingBoardList = () => {
           mbContent={meeting.mbContent}
           mbDate={meeting.mbDate}
           mbTime={meeting.mbTime ? formatTime(meeting.mbTime) : ''}
+          endDate={meeting.recurringSchedule?.endDate}
           mbLocation={meeting.mbLocation}
           mbHost={meeting.mbHost}
+          currentMembers={meeting.currentMembers}
           maxParticipants={meeting.maxParticipants}
-          tags={meeting.tags || []} // tags가 없을 경우 빈 배열 처리
+          tags={meeting.tags || []}
           domain="meeting"
           id={meeting.mbId}
         />
