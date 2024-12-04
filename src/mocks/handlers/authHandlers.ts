@@ -367,5 +367,32 @@ export const authHandlers = [
       },
       { status: 200 }
     );
+  }),
+  // 회원 탈퇴
+  http.delete('/api/user/:userId', ({ params }) => {
+    const { userId } = params;
+
+    if (!userId) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'USER_INVALID',
+        message: '유효한 사용자 ID를 입력해주세요',
+        details: '회원 탈퇴 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 400 });
+    }
+
+    const userIndex = mockUsers.findIndex(u => u.userId === userId);
+    if (userIndex === -1) {
+      const errorResponse: ErrorResponseDTO = {
+        errorCode: 'USER_NOT_FOUND',
+        message: '해당 사용자를 찾을 수 없습니다',
+        details: '회원 탈퇴 실패'
+      };
+      return HttpResponse.json(errorResponse, { status: 404 });
+    }
+
+    mockUsers.splice(userIndex, 1);
+
+    return HttpResponse.json({ message: '회원 탈퇴 완료' }, { status: 200 });
   })
 ];

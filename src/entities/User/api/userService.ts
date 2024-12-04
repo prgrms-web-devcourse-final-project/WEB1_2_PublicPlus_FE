@@ -242,5 +242,21 @@ export const userService = {
       }
       throw error;
     }
+  },
+  deleteUser: async (userId: string) => {
+    try {
+      if (!userId) {
+        throw new Error('사용자 ID가 없습니다.');
+      }
+
+      const response = await api.user.deleteUser(userId);
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorResponse = error.response?.data as ErrorResponseDTO;
+        throw new Error(errorResponse?.message || '회원 탈퇴에 실패했습니다.');
+      }
+      throw error;
+    }
   }
 };

@@ -174,8 +174,60 @@ export const useAuthStore = create<AuthState>()(
           get().logout();
           return false;
         }
+      },
+      deleteUser: async () => {
+        const { userId } = get(); // 현재 로그인된 사용자의 ID 가져오기
+
+        if (!userId) {
+          set({ error: '로그인된 사용자 정보가 없습니다.' });
+          return false;
+        }
+
+        set({ isLoading: true, error: null });
+
+        try {
+          await userService.deleteUser(userId);
+
+          set({
+            userId: null,
+            tokens: {
+              access_token: null,
+              refresh_token: null
+            },
+            isAuthenticated: false,
+            error: null
+          });
+
+          document.cookie.split(';').forEach(c => {
+            document.cookie = c
+              .replace(/^ +/, '')
+              .replace(
+                /=.*/,
+                '=;expires=' + new Date().toUTCString() + ';path=/'
+              );
+          });
+
+          localStorage.removeItem('auth-storage');
+
+          set({ isLoading: false });
+          return true;
+        } catch (error) {
+          const errorMessage =
+            error instanceof Error
+              ? error.message
+              : '회원 탈퇴에 실패했습니다.';
+
+          set({
+            isLoading: false,
+            error: errorMessage,
+            isAuthenticated: false
+          });
+
+          return false;
+        }
       }
     }),
+
     {
       name: 'auth-storage',
       storage: createJSONStorage(() => localStorage),
