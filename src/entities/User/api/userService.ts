@@ -36,18 +36,10 @@ export const userService = {
   },
   socialLogin: async (provider: SocialProvider) => {
     try {
-      const response = await axios.get(`/api/oauth2/${provider}`);
+      const redirectUrl = `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/${provider}`;
+      window.location.href = redirectUrl;
 
-      if (!response.data || !response.data.userId) {
-        throw new Error('소셜 로그인 정보를 받아올 수 없습니다.');
-      }
-
-      return {
-        userId: response.data.userId,
-        authentication: response.data.authentication,
-        access_token: response.data.access_token,
-        refresh_token: response.data.refresh_token
-      };
+      return null;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorResponse = error.response?.data as ErrorResponseDTO;
