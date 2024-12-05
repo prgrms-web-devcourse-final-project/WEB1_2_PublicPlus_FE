@@ -1,15 +1,22 @@
 'use client';
 
 import { useState } from 'react';
-import { SearchBar } from '@/components/common/SearchBar';
 import { CustomHeader } from '@/components/common/Header/CustomHeader';
+import { SearchBar } from '@/components/common/SearchBar';
+import SearchResult from '@/features/search/ui/SearchResult';
 
 export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearch = async () => {
-    // 검색 로직 구현
-    setSearchQuery(searchQuery);
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+  };
+
+  const handleSearch = () => {
+    // 검색어가 있을 경우 검색 실행
+    if (searchQuery.trim()) {
+      console.log('검색어:', searchQuery);
+    }
   };
 
   return (
@@ -18,12 +25,12 @@ export default function SearchPage() {
       <div className="mb-4">
         <SearchBar
           value={searchQuery}
-          onChange={handleSearch}
+          onChange={handleSearchChange}
+          onSearch={handleSearch}
           placeholder="운동시설 또는 모임 이름을 입력하세요"
         />
       </div>
-
-      {/* 검색 결과 컴포넌트 추가 예정 */}
+      <SearchResult searchQuery={searchQuery} />
     </div>
   );
 }

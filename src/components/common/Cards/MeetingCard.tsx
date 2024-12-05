@@ -2,7 +2,7 @@ import { Tag } from '../Tag';
 import { MeetingBoardRequestDTO } from '@/api/generated';
 import { LinkCard } from './LinkCard';
 
-interface MeetingCardProps extends Omit<MeetingBoardRequestDTO, 'id'> {
+export interface MeetingCardProps extends Omit<MeetingBoardRequestDTO, 'id'> {
   image?: string;
   currentMembers: number;
   tags: string[];
