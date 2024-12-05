@@ -100,7 +100,9 @@ export const Header = ({ detailTitle }: HeaderProps) => {
               height={22}
             />
           </button>
-          <button className="flex h-16 w-16 items-center justify-center rounded-lg border border-gray-200">
+          <button
+            className="flex h-16 w-16 items-center justify-center rounded-lg border border-gray-200"
+            onClick={() => router.push('/search')}>
             <Image
               src="/icons/search.png"
               alt="검색"
