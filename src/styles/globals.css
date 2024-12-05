@@ -67,12 +67,6 @@ html[lang='ko'] *:not([lang='ko']) {
   font-family: var(--font-roboto);
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-size: 1.6rem; /* 1.6 * 10px = 16px */
-}
-
 .container {
   padding: 0 16px;
   padding-top: 7rem;
@@ -94,11 +88,15 @@ body {
 }
 
 body {
+  color: var(--foreground);
+  background: var(--background);
+  font-size: 1.6rem; /* 1.6 * 10px = 16px */
   max-width: var(--max-width);
   width: 100%;
   margin: 0 auto;
   min-width: 340px;
   background-color: var(--layout-bg-color);
+  overflow-y: auto;
 }
 
 @media (min-width: 768px) {
@@ -124,20 +122,23 @@ body {
 
 /* 스크롤바 커스텀 */
 @supports selector(::-webkit-scrollbar) {
-  .scrollbar-custom::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     width: 1px;
   }
-  .scrollbar-custom::-webkit-scrollbar-track {
+  ::-webkit-scrollbar-track {
     background: rgba(241, 241, 241, 0.3);
   }
-  .scrollbar-custom::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb {
     background: rgba(193, 193, 193, 0.6);
     border-radius: 4px;
+  }
+  ::-webkit-scrollbar:horizontal {
+    height: 1px;
   }
 }
 
 /* Firefox */
-.scrollbar-custom {
+* {
   scrollbar-width: thin;
   scrollbar-color: rgba(193, 193, 193, 0.3) rgba(241, 241, 241, 0.6);
 }

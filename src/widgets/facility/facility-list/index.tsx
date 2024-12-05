@@ -7,11 +7,16 @@ import { useFacilities } from '@/features/facility/model/queries';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-export const FacilityList = () => {
+export const FacilityList = ({
+  maxItems,
+  showPagination = true
+}: {
+  maxItems?: number;
+  showPagination?: boolean;
+}) => {
   const filters = useFilterStore(state => state.filters) || {};
   const [page, setPage] = useState(0);
-  const size = 5;
+  const size = maxItems ?? 5; // maxItems가 없으면 기본값 5
 
   const { data, isLoading, error } = useFacilities(page, size, filters, {
     onError: error => {
@@ -41,11 +46,13 @@ export const FacilityList = () => {
           image={facility.facilityImage ?? '/default-image.jpg'}
         />
       ))}
-      <Pagination
-        currentPage={page}
-        totalPages={data.page?.totalPages ?? 0}
-        onPageChange={setPage}
-      />
+      {showPagination && (
+        <Pagination
+          currentPage={page}
+          totalPages={data.page?.totalPages ?? 0}
+          onPageChange={setPage}
+        />
+      )}
     </div>
   );
 };
