@@ -10,9 +10,9 @@ interface FilterStore {
 
 export const useFilterStore = create<FilterStore>(set => ({
   filters: {
-    facilityCategory: null,
-    area: null,
-    priceType: null
+    facilityCategory: undefined,
+    area: undefined,
+    priceType: undefined
   },
   isFilterMenuOpen: null,
   setFilters: filters => set({ filters }),

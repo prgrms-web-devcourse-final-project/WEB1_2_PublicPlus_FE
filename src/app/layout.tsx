@@ -1,6 +1,6 @@
 import '@/styles/globals.css';
 import { defaultMetadata } from '@/shared/config/metadata/default-metadata';
-import { MSWComponent } from '@/components/MSWComponent';
+// import { MSWComponent } from '@/components/MSWComponent';
 import { Providers } from './providers';
 import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary';
 import { Suspense } from 'react';
@@ -26,9 +26,9 @@ export default function RootLayout({
       <body>
         <ErrorBoundary>
           <Suspense fallback={<Loading />}>
-            <MSWComponent>
-              <Providers>{children}</Providers>
-            </MSWComponent>
+            {/* <MSWComponent> */}
+            <Providers>{children}</Providers>
+            {/* </MSWComponent> */}
           </Suspense>
         </ErrorBoundary>
       </body>

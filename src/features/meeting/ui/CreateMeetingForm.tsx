@@ -17,13 +17,6 @@ interface RecurringSchedule {
   repeatCount?: number;
 }
 
-interface RecurringSchedule {
-  type: 'daily' | 'weekly' | 'biweekly' | 'monthly';
-  endType: 'date' | 'count' | 'never';
-  endDate?: string;
-  repeatCount?: number;
-}
-
 interface FormDataWithTags extends MeetingBoardRequestDTO {
   tags: string[];
   isTimeFlexible: boolean;
@@ -409,6 +402,7 @@ export function CreateMeetingForm({
       isRecurring: formData.isRecurring,
       recurringSchedule: formData.recurringSchedule
     });
+    console.log('모임 일정 생성 데이터 조회: ', formData);
 
     return (
       <div className="space-y-6">

@@ -46,7 +46,7 @@ export function PasswordForm() {
         variant="line"
         fullWidth
         size="lg"
-        onclick={handleSubmit}
+        onClick={handleSubmit}
         // disabled={!!passwordError || !!confirmError}
       >
         다음 단계

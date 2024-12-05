@@ -7,7 +7,7 @@ import 'swiper/css';
 export const CategoryFilter = () => {
   const { filters, setFilters } = useFilterStore();
 
-  const handleCategoryChange = (category: string | null) => {
+  const handleCategoryChange = (category: string | undefined) => {
     setFilters({ ...filters, facilityCategory: category });
   };
 
@@ -19,7 +19,7 @@ export const CategoryFilter = () => {
       <SwiperSlide>
         <Button
           variant={filters.facilityCategory === null ? 'primary' : 'gray'}
-          onclick={() => handleCategoryChange(null)}>
+          onClick={() => handleCategoryChange(undefined)}>
           전체
         </Button>
       </SwiperSlide>
@@ -29,7 +29,7 @@ export const CategoryFilter = () => {
             variant={
               filters.facilityCategory === category.value ? 'primary' : 'gray'
             }
-            onclick={() => handleCategoryChange(category.value)}>
+            onClick={() => handleCategoryChange(category.label)}>
             {category.label}
           </Button>
         </SwiperSlide>

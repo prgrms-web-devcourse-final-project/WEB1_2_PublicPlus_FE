@@ -70,7 +70,7 @@ export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
     <div className="space-y-4 p-4 pb-20">
       {!isWriting && (
         <Button
-          onclick={handleWriteClick}
+          onClick={handleWriteClick}
           className="w-full">
           리뷰 작성하기
         </Button>
@@ -119,7 +119,7 @@ export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
                       <Button
                         variant="line"
                         size="sm"
-                        onclick={e => {
+                        onClick={e => {
                           e.stopPropagation();
                           setEditingId(review.id!);
                         }}>
@@ -128,7 +128,7 @@ export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
                       <Button
                         variant="gray"
                         size="sm"
-                        onclick={e => {
+                        onClick={e => {
                           e.stopPropagation();
                           handleDelete(review.id!);
                         }}>

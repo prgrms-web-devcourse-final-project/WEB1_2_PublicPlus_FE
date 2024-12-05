@@ -20,14 +20,14 @@ export const AreaFilter = () => {
         <div className="grid grid-cols-3 gap-2">
           <Button
             variant={filters.area === null ? 'primary' : 'gray'}
-            onclick={() => handleAreaChange(null)}>
+            onClick={() => handleAreaChange(null)}>
             전체
           </Button>
           {AREAS.map(area => (
             <Button
               key={area.value}
               variant={filters.area === area.value ? 'primary' : 'gray'}
-              onclick={() => handleAreaChange(area.value)}>
+              onClick={() => handleAreaChange(area.value)}>
               {area.value}
             </Button>
           ))}
