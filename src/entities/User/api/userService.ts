@@ -96,12 +96,40 @@ export const userService = {
       throw error;
     }
   },
+  changePassword: async (
+    userId: string,
+    changePasswordData: ChangePasswordDTO
+  ) => {
+    // 이메일 유효성 검사
+    if (!changePasswordData.email) {
+      throw new Error('이메일을 입력해주세요.');
+    }
 
-  changePassword: async (passwordData: ChangePasswordDTO) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(changePasswordData.email)) {
+      throw new Error('유효하지 않은 이메일 형식입니다.');
+    }
+
+    // 비밀번호 유효성 검사
+    if (
+      !changePasswordData.changePassword ||
+      changePasswordData.changePassword.length < 6
+    ) {
+      throw new Error('비밀번호는 최소 6자 이상이어야 합니다.');
+    }
+
+    // 비밀번호 확인 검사
+    if (
+      changePasswordData.changePassword !==
+      changePasswordData.checkChangePassword
+    ) {
+      throw new Error('새 비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+    }
+
     try {
       const response = await api.user.changePassword(
-        passwordData.email || '',
-        passwordData
+        userId,
+        changePasswordData
       );
       return response.data;
     } catch (error) {
@@ -239,6 +267,22 @@ export const userService = {
         throw new Error(
           errorResponse?.message || '프로필 사진 변경에 실패했습니다.'
         );
+      }
+      throw error;
+    }
+  },
+  deleteUser: async (userId: string) => {
+    try {
+      if (!userId) {
+        throw new Error('사용자 ID가 없습니다.');
+      }
+
+      const response = await api.user.deleteUser(userId);
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorResponse = error.response?.data as ErrorResponseDTO;
+        throw new Error(errorResponse?.message || '회원 탈퇴에 실패했습니다.');
       }
       throw error;
     }

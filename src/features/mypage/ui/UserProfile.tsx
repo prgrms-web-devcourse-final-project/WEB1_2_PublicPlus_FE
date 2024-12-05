@@ -13,8 +13,6 @@ export const UserProfile = () => {
   const handleLogout = () => {
     logout();
     router.push('/login');
-    logout();
-    router.push('/login');
   };
 
   return (

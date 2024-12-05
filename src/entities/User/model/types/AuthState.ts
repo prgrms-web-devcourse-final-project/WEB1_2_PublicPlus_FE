@@ -17,4 +17,5 @@ export interface AuthState {
   join: (joinData: UserJoinDTO) => Promise<boolean>;
   logout: () => void;
   refreshToken: () => Promise<boolean>;
+  deleteUser: () => Promise<boolean>;
 }

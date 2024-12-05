@@ -5,9 +5,6 @@ import Link from 'next/link';
 import ColorPalette from '@/components/ColorPalette';
 import { Button } from '@/components/common/Button/Button';
 import { Card } from '@/components/common/Cards/Card';
-import { facilities, meetings } from '@/components/common/Cards/constants';
-import { FacilityCard } from '@/components/common/Cards/FacilityCard';
-import { MeetingCard } from '@/components/common/Cards/MeetingCard';
 import { Header } from '@/components/common/Header';
 import { SearchBar } from '@/components/common/SearchBar';
 import { Modal } from '@/components/common/Modal';
@@ -137,7 +134,7 @@ export default function StyleGuidePage() {
       {/* 반응형 중단점 데모----------------------------------------------------  */}
       <section>
         <h2 className="mb-4 text-xl font-semibold">반응형 중단점</h2>
-        <div className="w-full bg-gray-200 p-4 text-center text-gray-50 xs:bg-gray-300 sm:bg-gray-400 md:bg-gray-500 lg:bg-gray-600 xl:bg-gray-700 2xl:bg-gray-800">
+        <div className="xl:bg-gray-700 2xl:bg-gray-800 w-full bg-gray-200 p-4 text-center text-gray-50 xs:bg-gray-300 sm:bg-gray-400 md:bg-gray-500 lg:bg-gray-600">
           반응형 중단점 테스트 (화면 크기에 따라 배경색 변경)
         </div>
       </section>
@@ -319,25 +316,6 @@ export default function StyleGuidePage() {
         />
 
         <h2 className="mb-4 text-xl font-semibold">시설 카드</h2>
-        <div className="space-y-4">
-          {facilities.map((facility, index) => (
-            <FacilityCard
-              key={index}
-              {...facility}
-            />
-          ))}
-        </div>
-      </section>
-      <section>
-        <h2 className="mb-4 text-xl font-semibold">모임 카드</h2>
-        <div className="space-y-4">
-          {meetings.map((meeting, index) => (
-            <MeetingCard
-              key={index}
-              {...meeting}
-            />
-          ))}
-        </div>
       </section>
       {/* 색상 팔레트 섹션 -----------------------------------------------------------------------------------*/}
       <section>
