@@ -4,7 +4,6 @@ import Cookies from 'js-cookie';
 
 export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
-  // withCredentials: true,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json'
@@ -48,7 +47,6 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        // Zustand 스토어의 refreshToken 메서드
         const refreshResult = await useAuthStore.getState().refreshToken();
 
         if (refreshResult) {
