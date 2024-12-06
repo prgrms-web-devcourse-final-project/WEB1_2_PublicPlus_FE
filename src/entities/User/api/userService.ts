@@ -7,6 +7,7 @@ import type {
   ErrorResponseDTO
 } from '@/api/generated';
 import { SocialProvider } from '../model/store/authStore';
+import axiosInstance from '../../../shared/api/axiosInstance';
 
 export const userService = {
   login: async (loginData: UserLoginDTO) => {
@@ -36,7 +37,7 @@ export const userService = {
   },
   socialLogin: async (provider: SocialProvider) => {
     try {
-      const response = await axios.get(`/api/oauth2/${provider}`);
+      const response = await axiosInstance.get(`/api/oauth2/${provider}`);
 
       if (!response.data || !response.data.userId) {
         throw new Error('소셜 로그인 정보를 받아올 수 없습니다.');
@@ -131,7 +132,7 @@ export const userService = {
         userId,
         changePasswordData
       );
-      return response.data;
+      return response;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorResponse = error.response?.data as ErrorResponseDTO;
@@ -165,8 +166,9 @@ export const userService = {
         throw new Error('사용자 ID가 없습니다.');
       }
 
-      const response = await api.user.findMyInformation(userId);
-      return response.data;
+      return axiosInstance
+        .get(`/api/user/${userId}`)
+        .then(response => response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorResponse = error.response?.data as ErrorResponseDTO;
@@ -239,28 +241,17 @@ export const userService = {
         throw new Error('JPG, PNG 형식의 이미지만 업로드 가능합니다.');
       }
 
-      // 이미지 등록 테스트 랜덤 이미지 출력
-      const fallbackImages = [
-        'https://via.placeholder.com/150',
-        'https://picsum.photos/200/300',
-        '/default-profile.png'
-      ];
-
-      const randomImageUrl =
-        fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
-
       const formData = new FormData();
       formData.append('multipartFile', file);
 
-      await api.user.changeProfile(userId, file);
-
-      // 실제 이미지 파일 등록 시 반환
-      //     const response = await api.user.changeProfile(userId, file);
-      //     return response.data;
-      return {
-        userId,
-        profile_image: randomImageUrl
-      };
+      const response = await axiosInstance.post(
+        `/api/user/profile/${userId}`,
+        formData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        }
+      );
+      return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorResponse = error.response?.data as ErrorResponseDTO;

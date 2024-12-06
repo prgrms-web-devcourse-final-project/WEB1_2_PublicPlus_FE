@@ -20,7 +20,10 @@ export default function SignupForm() {
     error,
     handleEmailSubmit,
     handleVerificationSubmit,
-    handleSignup
+    handleSignup,
+    remainingTime,
+    timerActive,
+    formatTime
   } = useSignup(router);
 
   return (
@@ -58,14 +61,21 @@ export default function SignupForm() {
             handleVerificationSubmit();
           }}
           className="space-y-8">
-          <input
-            type="text"
-            placeholder="인증코드를 입력해주세요"
-            value={verificationCode}
-            onChange={e => setVerificationCode(e.target.value)}
-            className="w-full rounded border p-3 text-sm"
-            required
-          />
+          <div className="flex items-center justify-between">
+            <input
+              type="text"
+              placeholder="인증코드를 입력해주세요"
+              value={verificationCode}
+              onChange={e => setVerificationCode(e.target.value)}
+              className="w-full rounded border p-3 text-sm"
+              required
+            />
+            {timerActive && (
+              <div className="ml-4 w-[60px] rounded-lg border border-primary-600 p-2 px-4 text-center text-primary-600">
+                {timerActive ? formatTime(remainingTime) : '만료'}
+              </div>
+            )}
+          </div>
           <Button
             type="submit"
             size="lg"

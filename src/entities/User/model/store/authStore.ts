@@ -29,8 +29,8 @@ export const useAuthStore = create<AuthState>()(
             state: {
               userId: response.userId,
               tokens: {
-                access_token: response.access_token,
-                refresh_token: response.refresh_token
+                access_token: response.accessToken,
+                refresh_token: response.refreshToken
               },
               isAuthenticated: true
             }
@@ -39,8 +39,8 @@ export const useAuthStore = create<AuthState>()(
           set({
             userId: response.userId,
             tokens: {
-              access_token: response.access_token ?? null,
-              refresh_token: response.refresh_token ?? null
+              access_token: response.accessToken ?? null,
+              refresh_token: response.refreshToken ?? null
             },
             isAuthenticated: true,
             isLoading: false,
@@ -158,7 +158,7 @@ export const useAuthStore = create<AuthState>()(
           set(state => ({
             tokens: {
               ...state.tokens,
-              access_token: response.access_token ?? state.tokens.access_token
+              access_token: response.accessToken ?? state.tokens.access_token
             }
           }));
 

@@ -24,8 +24,8 @@ export default function NicknameEditPage() {
         return;
       }
 
-      if (userInfo?.userId) {
-        await userService.updateNickname(userInfo.userId, nickname);
+      if (userInfo?.userid) {
+        await userService.updateNickname(userInfo.userid, nickname);
         router.push('/profile/edit');
       }
     } catch (err) {

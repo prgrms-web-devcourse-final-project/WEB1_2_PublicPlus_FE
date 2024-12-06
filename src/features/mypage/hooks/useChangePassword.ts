@@ -1,12 +1,17 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
+
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import { validatePassword } from '@/features/auth/utils/validation';
 import { useUserQuery } from '@/entities/User/model/userQueries';
+import { emailService } from '@/entities/User/api/emailService';
+import { userService } from '@/entities/User/api/userService';
+
+import { validatePassword } from '@/features/auth/utils/validation';
+import { useCountdown } from '@/features/auth/hooks/useCountdown';
 
 export const useChangePassword = (router: AppRouterInstance) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-
   const [checkPassword, setCheckPassword] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
   const [step, setStep] = useState<'email' | 'verification' | 'newPassword'>(
@@ -15,6 +20,20 @@ export const useChangePassword = (router: AppRouterInstance) => {
   const [error, setError] = useState('');
 
   const { data: userInfo } = useUserQuery();
+
+  const {
+    remainingTime,
+    isActive: timerActive,
+    start: startTimer,
+    stop: stopTimer,
+    formatTime
+  } = useCountdown({
+    initialTime: 180,
+    onComplete: () => {
+      setError('인증 시간이 만료되었습니다. 다시 인증코드를 요청해주세요.');
+      setStep('email');
+    }
+  });
 
   useEffect(() => {
     if (userInfo?.email) {
@@ -30,10 +49,10 @@ export const useChangePassword = (router: AppRouterInstance) => {
     }
 
     setStep('verification');
+    startTimer();
+
     try {
-      await fetch(`/api/email?email=${encodeURIComponent(email)}`, {
-        method: 'POST'
-      });
+      await emailService.sendCode(email);
       setError('');
       return true;
     } catch (error) {
@@ -42,23 +61,21 @@ export const useChangePassword = (router: AppRouterInstance) => {
           ? error.message
           : '이메일 인증 코드 발송에 실패했습니다'
       );
+      stopTimer();
       return false;
     }
   };
 
-  // 인증 코드 검증
   const handleVerificationSubmit = async () => {
+    if (remainingTime <= 0) {
+      setError('인증 시간이 만료되었습니다. 다시 인증코드를 요청해주세요.');
+      return false;
+    }
+
     try {
-      const response = await fetch(
-        `/api/email?email=${email}&code=${verificationCode}`,
-        { method: 'GET' }
-      );
-
-      if (!response.ok) {
-        throw new Error('인증 실패');
-      }
-
+      await emailService.verifyCode(email, verificationCode);
       setStep('newPassword');
+      stopTimer();
       setError('');
       return true;
     } catch (error) {
@@ -81,30 +98,25 @@ export const useChangePassword = (router: AppRouterInstance) => {
       setError('비밀번호는 최소 6자, 영문, 숫자를 포함해야 합니다');
       return false;
     }
+    if (!userInfo?.userid) {
+      setError('사용자 정보를 찾을 수 없습니다');
+      return false;
+    }
 
     try {
-      const response = await fetch(`/api/user/password/${userInfo?.userId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: email,
-          changePassword: password,
-          checkChangePassword: checkPassword
-        })
+      await userService.changePassword(userInfo.userid, {
+        email: email,
+        changePassword: password,
+        checkChangePassword: checkPassword
       });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || '변경 실패');
-      }
 
       router.push('/login');
       return true;
     } catch (error) {
       setError(
-        error instanceof Error ? error.message : '비밀번호 변경에 실패했습니다'
+        axios.isAxiosError(error)
+          ? error.response?.data.message || '비밀번호 변경에 실패했습니다'
+          : '비밀번호 변경에 실패했습니다'
       );
       return false;
     }
@@ -123,6 +135,9 @@ export const useChangePassword = (router: AppRouterInstance) => {
     error,
     handleEmailSubmit,
     handleVerificationSubmit,
-    handlePasswordChange
+    handlePasswordChange,
+    remainingTime,
+    timerActive,
+    formatTime
   };
 };

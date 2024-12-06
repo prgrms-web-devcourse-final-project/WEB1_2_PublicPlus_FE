@@ -1,7 +1,9 @@
+import { emailService } from './../../../entities/User/api/emailService';
+import axios from 'axios';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-
 import { useState } from 'react';
 import { userService } from '@/entities/User/api/userService';
+import { useCountdown } from '@/features/auth/hooks/useCountdown';
 import {
   validateEmail,
   validateNickname,
@@ -19,6 +21,20 @@ export const useSignup = (router: AppRouterInstance) => {
   );
   const [error, setError] = useState('');
 
+  const {
+    remainingTime,
+    isActive: timerActive,
+    start: startTimer,
+    stop: stopTimer,
+    formatTime
+  } = useCountdown({
+    initialTime: 180,
+    onComplete: () => {
+      setError('인증 시간이 만료되었습니다. 다시 인증코드를 요청해주세요.');
+      setStep('email');
+    }
+  });
+
   const handleEmailSubmit = async () => {
     if (!email || !validateEmail(email)) {
       setError('유효한 이메일 주소를 입력해주세요');
@@ -26,60 +42,56 @@ export const useSignup = (router: AppRouterInstance) => {
     }
 
     try {
-      await fetch(`/api/email?email=${encodeURIComponent(email)}`, {
-        method: 'POST'
-      });
+      await emailService.sendCode(email);
       setStep('verification');
+      startTimer();
       setError('');
       return true;
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('이메일 인증 코드 발송에 실패했습니다');
-      }
+      setError(
+        axios.isAxiosError(error)
+          ? error.response?.data?.message ||
+              '이메일 인증 코드 발송에 실패했습니다'
+          : '이메일 인증 코드 발송에 실패했습니다'
+      );
+      stopTimer();
       return false;
     }
   };
 
   const handleVerificationSubmit = async () => {
+    if (remainingTime <= 0) {
+      setError('인증 시간이 만료되었습니다. 다시 인증코드를 요청해주세요.');
+      return false;
+    }
+
     try {
-      const response = await fetch(
-        `/api/email?email=${email}&code=${verificationCode}`,
-        { method: 'GET' }
-      );
-
-      if (!response.ok) {
-        throw new Error('인증 실패');
-      }
-
+      await emailService.verifyCode(email, verificationCode);
       setStep('details');
+      stopTimer();
       setError('');
       return true;
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('알 수 없는 오류가 발생했습니다');
-      }
+      setError(
+        axios.isAxiosError(error)
+          ? error.response?.data?.message || '인증 실패'
+          : '알 수 없는 오류가 발생했습니다'
+      );
       return false;
     }
   };
 
   const handleSignup = async () => {
-    // 비밀번호 일치 검사
     if (password !== checkPassword) {
       setError('비밀번호가 일치하지 않습니다');
       return false;
     }
 
-    // 비밀번호 강도 검사
     if (!validatePassword(password)) {
       setError('비밀번호는 최소 6자, 영문, 숫자를 포함해야 합니다');
       return false;
     }
 
-    // 닉네임 길이 검사
     if (!validateNickname(nickname)) {
       setError('닉네임은 2-10자 사이여야 합니다');
       return false;
@@ -94,12 +106,14 @@ export const useSignup = (router: AppRouterInstance) => {
       };
 
       await userService.join(joinData);
-      await userService.login({ email, password });
-      router.push('/');
+      alert('회원가입 되었습니다.');
+      router.push('/login');
       return true;
     } catch (error) {
       setError(
-        error instanceof Error ? error.message : '회원가입에 실패했습니다'
+        axios.isAxiosError(error)
+          ? error.response?.data?.message || '회원가입에 실패했습니다'
+          : '회원가입에 실패했습니다'
       );
       return false;
     }
@@ -121,6 +135,9 @@ export const useSignup = (router: AppRouterInstance) => {
     error,
     handleEmailSubmit,
     handleVerificationSubmit,
-    handleSignup
+    handleSignup,
+    remainingTime,
+    timerActive,
+    formatTime
   };
 };

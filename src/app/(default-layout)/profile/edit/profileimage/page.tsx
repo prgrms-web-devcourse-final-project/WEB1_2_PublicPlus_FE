@@ -13,7 +13,6 @@ export default function ProfileImageEditPage() {
   const { data: userInfo } = useUserQuery();
   const [imageUrl, setImageUrl] = useState(userInfo?.profile_image);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
   const handleSubmit = async () => {
     if (!selectedFile) {
       alert('선택된 이미지가 없습니다.');
@@ -22,7 +21,7 @@ export default function ProfileImageEditPage() {
 
     try {
       await userService.updateProfileImage(
-        userInfo?.userId || '',
+        userInfo?.userid || '',
         selectedFile
       );
 
