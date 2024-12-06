@@ -31,10 +31,8 @@ export const facilityService = {
     size: number = 5,
     filter: FacilityFilterDTO
   ): Promise<PageFacilityResponseDTO> => {
-    const params = { page, size };
-    const { data } = await api.facility.facilityFilter({
-      ...filter,
-      ...params
+    const { data } = await api.facility.facilityFilter(filter, {
+      params: { page, size }
     });
     return data;
   }

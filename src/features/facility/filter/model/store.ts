@@ -3,18 +3,30 @@ import { create } from 'zustand';
 
 interface FilterStore {
   filters: FacilityFilterDTO;
-  isFilterMenuOpen: 'area' | 'price' | null;
+  sort: 'latest' | 'likes' | undefined;
+  isFilterMenuOpen: 'category' | 'area' | 'price' | null;
   setFilters: (filters: FacilityFilterDTO) => void;
-  toggleFilterMenu: (menuType: 'area' | 'price' | null) => void;
+  setSort: (sort: 'latest' | 'likes' | undefined) => void;
+  toggleFilterMenu: (menuType: 'category' | 'area' | 'price' | null) => void;
+  clearFilter: (key: string) => void;
 }
 
 export const useFilterStore = create<FilterStore>(set => ({
   filters: {
-    facilityCategory: null,
-    area: null,
-    priceType: null
+    facilityCategory: undefined,
+    area: undefined,
+    priceType: undefined
   },
+  sort: 'latest',
   isFilterMenuOpen: null,
   setFilters: filters => set({ filters }),
-  toggleFilterMenu: menuType => set({ isFilterMenuOpen: menuType })
+  setSort: sort => set({ sort }),
+  toggleFilterMenu: menuType => set({ isFilterMenuOpen: menuType }),
+  clearFilter: (key: string) =>
+    set(state => ({
+      filters: {
+        ...state.filters,
+        [key]: undefined
+      }
+    }))
 }));
