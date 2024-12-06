@@ -1,5 +1,6 @@
 import { useAuthStore } from '@/entities/User';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || '/api',
@@ -15,10 +16,13 @@ export const axiosInstance = axios.create({
 // Request interceptor
 axiosInstance.interceptors.request.use(
   config => {
-    const { tokens } = useAuthStore.getState();
+    const authStorageCookie = Cookies.get('auth-storage');
 
-    if (tokens.access_token) {
-      config.headers.Authorization = `Bearer ${tokens.access_token}`;
+    const parsedCookie = authStorageCookie ? JSON.parse(authStorageCookie) : '';
+    const token = parsedCookie.state.tokens.access_token;
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
 
     return config;
