@@ -22,13 +22,15 @@ export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
   const { reviews, createReview, updateReview, deleteReview } = useReviews(
     facility.facilityId
   );
-  console.log('리뷰 데이터:', reviews);
+  console.log('리뷰 데이터:', reviews?.internalReviews);
 
   // 데이터가 없을 때 처리
-  if (!reviews) return <div>로딩 중...</div>;
+  if (!reviews?.internalReviews) return <div>로딩 중...</div>;
 
   // reviews가 배열이 아닐 경우 처리
-  const reviewsArray = Array.isArray(reviews) ? reviews : reviews.reviews || [];
+  const reviewsArray = Array.isArray(reviews.internalReviews)
+    ? reviews.internalReviews
+    : [];
 
   const handleWriteClick = () => {
     if (!isAuthenticated) {
@@ -44,21 +46,22 @@ export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
 
   const handleCreate = (reviewData: ReviewDTO) => {
     createReview({
-      ...reviewData,
-      id: undefined, // 새로운 리뷰이므로 id는 서버에서 생성
-      views: 0,
-      likes: 0
+      ...reviewData
     });
     setIsWriting(false);
   };
 
-  const handleUpdate = (reviewId: number, reviewData: ReviewDTO) => {
+  const handleUpdate = (
+    facilityId: string,
+    reviewData: ReviewDTO,
+    reviewId: number
+  ) => {
+    console.log('handleUpdate params:', { facilityId, reviewId, reviewData });
+
     updateReview({
-      reviewId,
-      review: {
-        ...reviewData,
-        id: reviewId
-      }
+      facilityId,
+      ReviewDTO: reviewData,
+      reviewId
     });
     setEditingId(null);
   };
@@ -82,7 +85,6 @@ export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
       {isWriting && (
         <Card className="p-4">
           <ReviewForm
-            facilityId={facility.facilityId!}
             onSubmit={handleCreate}
             onCancel={() => setIsWriting(false)}
           />
@@ -91,22 +93,25 @@ export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
 
       {reviewsArray?.map(review => (
         <div
-          key={review.id}
+          key={review.reviewId}
           className="space-y-2">
-          {editingId === review.id ? (
+          {editingId === review.reviewId ? (
             <Card className="p-4">
               <ReviewForm
-                facilityId={facility.facilityId!}
                 initialData={review}
                 onSubmit={updatedReview =>
-                  handleUpdate(review.id!, updatedReview)
+                  handleUpdate(
+                    facility.facilityId!,
+                    updatedReview,
+                    review.reviewId
+                  )
                 }
                 onCancel={() => setEditingId(null)}
               />
             </Card>
           ) : (
             <Card
-              key={review.id}
+              key={review.reviewId}
               className="p-4">
               <div className="space-y-2">
                 <div className="flex items-start justify-between">
@@ -122,18 +127,16 @@ export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
                       <Button
                         variant="line"
                         size="sm"
-                        onClick={e => {
-                          e.stopPropagation();
-                          setEditingId(review.id!);
+                        onClick={() => {
+                          setEditingId(review.reviewId!);
                         }}>
                         수정
                       </Button>
                       <Button
                         variant="gray"
                         size="sm"
-                        onClick={e => {
-                          e.stopPropagation();
-                          handleDelete(review.id!);
+                        onClick={() => {
+                          handleDelete(review.reviewId!);
                         }}>
                         삭제
                       </Button>

@@ -21,27 +21,48 @@ export const reviewService = {
 
   // 리뷰 생성
   createReview: async (facilityId: string, review: ReviewDTO) => {
-    const response =
-      await api.reviewClient.apiFacilityDetailFacilityIdReviewsPost(
-        facilityId,
-        review
-      );
-    return response.data;
+    console.log('리뷰 생성 API 요청 데이터: ', facilityId, review);
+    try {
+      const response =
+        await api.reviewClient.apiFacilityDetailFacilityIdReviewsPost(
+          facilityId,
+          review
+        );
+      console.log('리뷰 생성 API 응답 데이터:', response.data); // 응답 데이터 구조 확인
+      return response.data;
+    } catch (error) {
+      console.error('API 에러:', error);
+      // console.log('요청 URL:', error?.config?.url); // 실제 요청된 URL 확인
+      throw error;
+    }
   },
 
   // 리뷰 수정
   updateReview: async (
     facilityId: string,
     reviewId: number,
-    review: ReviewDTO
+    reviewDTO: ReviewDTO
   ) => {
-    const response =
-      await api.reviewClient.apiFacilityDetailFacilityIdReviewsReviewIdPut(
-        facilityId,
-        reviewId,
-        review
-      );
-    return response.data;
+    console.log(
+      '요청하는 facilityId, reviewId, 수정 데이터 review:',
+      facilityId,
+      typeof reviewId,
+      reviewId,
+      reviewDTO
+    );
+    try {
+      const response =
+        await api.reviewClient.apiFacilityDetailFacilityIdReviewsReviewIdPut(
+          facilityId,
+          reviewId,
+          reviewDTO
+        );
+      return response.data;
+    } catch (error) {
+      console.error('API 에러:', error);
+      // console.log('요청 URL:', error?.config?.url); // 실제 요청된 URL 확인
+      throw error;
+    }
   },
 
   // 리뷰 삭제

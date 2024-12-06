@@ -37,15 +37,18 @@ export const useReviews = (facilityId: string | undefined) => {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({
-      reviewId,
-      review
-    }: {
+    mutationFn: (params: {
+      facilityId: string;
       reviewId: number;
-      review: ReviewDTO;
+      ReviewDTO: ReviewDTO;
     }) => {
+      console.log('mutationFn params:', params);
       if (!facilityId) throw new Error('Facility ID is required');
-      return reviewService.updateReview(facilityId, reviewId, review);
+      return reviewService.updateReview(
+        params.facilityId,
+        params.reviewId,
+        params.ReviewDTO
+      );
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey })
   });
