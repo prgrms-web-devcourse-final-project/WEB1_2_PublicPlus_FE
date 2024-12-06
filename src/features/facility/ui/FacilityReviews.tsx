@@ -22,10 +22,13 @@ export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
   const { reviews, createReview, updateReview, deleteReview } = useReviews(
     facility.facilityId
   );
+  console.log('리뷰 데이터:', reviews);
 
-  if (!facility.facilityId) {
-    return <div>시설 정보를 찾을 수 없습니다.</div>;
-  }
+  // 데이터가 없을 때 처리
+  if (!reviews) return <div>로딩 중...</div>;
+
+  // reviews가 배열이 아닐 경우 처리
+  const reviewsArray = Array.isArray(reviews) ? reviews : reviews.reviews || [];
 
   const handleWriteClick = () => {
     if (!isAuthenticated) {
@@ -70,7 +73,7 @@ export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
     <div className="space-y-4 p-4 pb-20">
       {!isWriting && (
         <Button
-          onclick={handleWriteClick}
+          onClick={handleWriteClick}
           className="w-full">
           리뷰 작성하기
         </Button>
@@ -86,7 +89,7 @@ export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
         </Card>
       )}
 
-      {reviews?.map(review => (
+      {reviewsArray?.map(review => (
         <div
           key={review.id}
           className="space-y-2">
@@ -119,7 +122,7 @@ export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
                       <Button
                         variant="line"
                         size="sm"
-                        onclick={e => {
+                        onClick={e => {
                           e.stopPropagation();
                           setEditingId(review.id!);
                         }}>
@@ -128,7 +131,7 @@ export const FacilityReviews = ({ facility }: FacilityReviewsProps) => {
                       <Button
                         variant="gray"
                         size="sm"
-                        onclick={e => {
+                        onClick={e => {
                           e.stopPropagation();
                           handleDelete(review.id!);
                         }}>

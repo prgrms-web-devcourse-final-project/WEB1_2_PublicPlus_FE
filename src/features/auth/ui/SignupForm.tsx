@@ -27,7 +27,7 @@ export function SignupForm() {
       <Button
         variant="line"
         size="lg"
-        onclick={handleEmailSubmit}
+        onClick={handleEmailSubmit}
         fullWidth>
         다음 단계
       </Button>

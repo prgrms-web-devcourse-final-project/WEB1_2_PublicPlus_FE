@@ -1,39 +1,42 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { FACILITY_CATEGORIES } from '@/shared/config/constants';
 import { useFilterStore } from '../model/store';
 import { Button } from '@/components/common/Button/Button';
-import 'swiper/css';
 
 export const CategoryFilter = () => {
-  const { filters, setFilters } = useFilterStore();
+  const { filters, setFilters, isFilterMenuOpen, toggleFilterMenu } =
+    useFilterStore();
 
-  const handleCategoryChange = (category: string | null) => {
+  const handleCategoryChange = (category: string | undefined) => {
     setFilters({ ...filters, facilityCategory: category });
+    toggleFilterMenu(null);
   };
 
+  if (isFilterMenuOpen !== 'category') return null;
+
   return (
-    <Swiper
-      spaceBetween={10}
-      slidesPerView="auto"
-      className="category-swiper">
-      <SwiperSlide>
-        <Button
-          variant={filters.facilityCategory === null ? 'primary' : 'gray'}
-          onclick={() => handleCategoryChange(null)}>
-          전체
-        </Button>
-      </SwiperSlide>
-      {FACILITY_CATEGORIES.map(category => (
-        <SwiperSlide key={category.value}>
+    <div className="fixed bottom-[60px] left-0 right-0 z-[1000] m-auto max-w-[600px] rounded-t-2xl bg-white p-4 shadow-lg transition-transform">
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold">지역/구 선택</h3>
+        <div className="grid grid-cols-3 gap-2">
           <Button
             variant={
-              filters.facilityCategory === category.value ? 'primary' : 'gray'
+              filters.facilityCategory === undefined ? 'primary' : 'gray'
             }
-            onclick={() => handleCategoryChange(category.value)}>
-            {category.label}
+            onClick={() => handleCategoryChange(undefined)}>
+            전체
           </Button>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+          {FACILITY_CATEGORIES.map(category => (
+            <Button
+              key={category.value}
+              variant={
+                filters.facilityCategory === category.label ? 'primary' : 'gray'
+              }
+              onClick={() => handleCategoryChange(category.label)}>
+              {category.label}
+            </Button>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };

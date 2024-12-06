@@ -7,6 +7,9 @@ import type {
   ErrorResponseDTO
 } from '@/api/generated';
 import { SocialProvider } from '../model/store/authStore';
+//src\shared\api\axiosInstance.ts
+//src\entities\User\api\userService.ts
+import axiosInstance from '../../../shared/api/axiosInstance';
 
 export const userService = {
   login: async (loginData: UserLoginDTO) => {
@@ -157,8 +160,9 @@ export const userService = {
         throw new Error('사용자 ID가 없습니다.');
       }
 
-      const response = await api.user.findMyInformation(userId);
-      return response.data;
+      return axiosInstance
+        .get(`/api/user/${userId}`)
+        .then(response => response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorResponse = error.response?.data as ErrorResponseDTO;

@@ -18,6 +18,7 @@ interface Meeting {
   recurringSchedule?: RecurringSchedule;
   mbTitle: string;
   mbLocation: string;
+  mbHost: string;
   sportType: string;
   maxParticipants: number;
   tags: string[];

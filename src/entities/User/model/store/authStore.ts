@@ -158,7 +158,7 @@ export const useAuthStore = create<AuthState>()(
           set(state => ({
             tokens: {
               ...state.tokens,
-              access_token: response.access_token ?? state.tokens.access_token
+              access_token: response.accessToken ?? state.tokens.access_token
             }
           }));
 

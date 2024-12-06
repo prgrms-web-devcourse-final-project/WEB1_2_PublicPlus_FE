@@ -6,7 +6,7 @@ export const AreaFilter = () => {
   const { filters, setFilters, isFilterMenuOpen, toggleFilterMenu } =
     useFilterStore();
 
-  const handleAreaChange = (area: string | null) => {
+  const handleAreaChange = (area: string | undefined) => {
     setFilters({ ...filters, area });
     toggleFilterMenu(null);
   };
@@ -14,20 +14,20 @@ export const AreaFilter = () => {
   if (isFilterMenuOpen !== 'area') return null;
 
   return (
-    <div className="fixed bottom-[60px] left-0 right-0 z-[1000] rounded-t-2xl bg-white p-4 shadow-lg transition-transform">
+    <div className="fixed bottom-[60px] left-0 right-0 z-[1000] m-auto max-w-[600px] rounded-t-2xl bg-white p-4 shadow-lg transition-transform">
       <div className="space-y-4">
         <h3 className="text-lg font-semibold">지역/구 선택</h3>
         <div className="grid grid-cols-3 gap-2">
           <Button
-            variant={filters.area === null ? 'primary' : 'gray'}
-            onclick={() => handleAreaChange(null)}>
+            variant={filters.area === undefined ? 'primary' : 'gray'}
+            onClick={() => handleAreaChange(undefined)}>
             전체
           </Button>
           {AREAS.map(area => (
             <Button
               key={area.value}
               variant={filters.area === area.value ? 'primary' : 'gray'}
-              onclick={() => handleAreaChange(area.value)}>
+              onClick={() => handleAreaChange(area.value)}>
               {area.value}
             </Button>
           ))}

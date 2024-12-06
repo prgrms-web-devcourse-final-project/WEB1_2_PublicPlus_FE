@@ -1,21 +1,71 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ChatRoomCard } from '@/components/common/Cards/ChatRoomCard';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import { Toggle } from '@/components/common/Toggle';
-import { ChatData } from './constants';
 import { ChatRoom } from '../../types';
+
+interface BackendChatRoom {
+  chatRoomId: number;
+  chatRoomName: string;
+  chatRoomType: string;
+  createdAt: string;
+}
 
 export default function ChatRoomList() {
   const [activeTab, setActiveTab] = useState<'group' | 'personal'>('group');
   const [isActiveChat, setIsActiveChat] = useState<boolean>(true);
-  const [chatRooms] = useState<ChatRoom[]>(ChatData);
+  const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const filteredChatRooms = chatRooms.filter(
-    room =>
-      room.type === activeTab &&
-      room.status === (isActiveChat ? 'active' : 'completed')
-  );
+  const fetchChatRooms = async () => {
+    try {
+      setIsLoading(true);
+      const accessToken = Cookies.get('accessToken');
+
+      const response = await axios.get<BackendChatRoom[]>(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/chatroom`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      const formattedChatRooms: ChatRoom[] = response.data.map(
+        (room: BackendChatRoom) => ({
+          id: room.chatRoomId.toString(),
+          name: room.chatRoomName,
+          type: room.chatRoomType.toLowerCase() as 'group' | 'personal',
+          latestTimestamp: room.createdAt
+        })
+      );
+
+      setChatRooms(formattedChatRooms);
+      setIsLoading(false);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.'
+      );
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchChatRooms();
+  }, []);
+
+  const filteredChatRooms = chatRooms.filter(room => room.type === activeTab);
+
+  if (isLoading) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (error) {
+    return <div>오류: {error}</div>;
+  }
 
   return (
     <div className="flex h-screen flex-col">
@@ -65,12 +115,10 @@ export default function ChatRoomList() {
               href={`/chat/${room.id}`}
               key={room.id}
               className="mb-4 block">
-              <ChatRoomCard
+              {/* <ChatRoomCard
                 name={room.name}
-                latestMessage={room.latestMessage}
                 latestTimestamp={room.latestTimestamp}
-                sports={room.sports}
-              />
+              /> */}
             </Link>
           ))
         )}

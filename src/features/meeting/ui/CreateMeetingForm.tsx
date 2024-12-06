@@ -4,17 +4,11 @@ import {
   MeetingBoardRequestDTOSportTypeEnum
 } from '@/api/generated';
 import { TagInput } from '@/widgets/tag-input/TagInput';
+import { useAuthStore } from '@/entities/User/model/store/authStore';
 
 interface CreateMeetingFormProps {
   onSubmit: (data: MeetingBoardRequestDTO) => void;
   isLoading: boolean;
-}
-
-interface RecurringSchedule {
-  type: 'daily' | 'weekly' | 'biweekly' | 'monthly';
-  endType: 'date' | 'count' | 'never';
-  endDate?: string;
-  repeatCount?: number;
 }
 
 interface RecurringSchedule {
@@ -50,6 +44,7 @@ export function CreateMeetingForm({
     isRecurring: false,
     recurringSchedule: null
   });
+  const { userId } = useAuthStore();
 
   // 반복 일정 업데이트 함수 추가
   const updateRecurringSchedule = <K extends keyof RecurringSchedule>(
@@ -125,13 +120,24 @@ export function CreateMeetingForm({
   // 폼 제출 핸들러
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (step === 3) {
+      const submitData = {
+        ...formData,
+        mbHost: userId
+      };
+      onSubmit(submitData);
+    }
   };
 
   const handleNextOrSubmit = () => {
     if (step < 3) {
       setStep(prev => prev + 1);
     } else {
-      onSubmit(formData);
+      const submitData = {
+        ...formData,
+        mbHost: userId
+      };
+      onSubmit(submitData);
     }
   };
 
@@ -159,6 +165,17 @@ export function CreateMeetingForm({
 
   const renderStep1 = () => (
     <div className="space-y-6">
+      <div>
+        <label className="mb-1 block text-sm font-medium text-gray-700">
+          관리자
+        </label>
+        <input
+          type="text"
+          className="w-full rounded-lg border border-gray-300 p-2 focus:border-blue-500 focus:ring-blue-500"
+          value={userId}
+          readOnly
+        />
+      </div>
       <div>
         <label className="mb-1 block text-sm font-medium text-gray-700">
           제목
@@ -409,11 +426,13 @@ export function CreateMeetingForm({
       isRecurring: formData.isRecurring,
       recurringSchedule: formData.recurringSchedule
     });
+    console.log('모임 일정 생성 데이터 조회: ', formData);
 
     return (
       <div className="space-y-6">
         <h3 className="text-lg font-medium">모임 생성을 확인해주세요.</h3>
         <ul className="space-y-2 text-gray-700">
+          <li>• 관리자: {userId}</li>
           <li>
             • 일정: {formData.mbDate}{' '}
             {formData.isTimeFlexible
@@ -456,7 +475,6 @@ export function CreateMeetingForm({
 
   return (
     <div className="mx-auto max-w-2xl">
-      <h1 className="mb-6 text-center text-2xl font-bold">모임 등록</h1>
       {renderStepIndicator()}
       <form
         onSubmit={handleSubmit}

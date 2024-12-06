@@ -17,7 +17,7 @@
   ],
   "security": [
     {
-      "Bearer Authentication": []
+      "BearerAuth": []
     }
   ],
   "tags": [
@@ -192,24 +192,37 @@
         }
       }
     },
-    "/api/facility-details/{id}/reviews/{reviewId}": {
+    "/api/facility-detail/{facilityId}/reviews/{reviewId}": {
       "put": {
-        "tags": ["review-controller"],
-        "operationId": "updateReview",
+        "tags": ["ReviewController"],
+        "summary": "시설 리뷰 수정",
+        "description": "특정 리뷰의 내용을 수정합니다.",
         "parameters": [
           {
-            "name": "reviewId",
+            "name": "facilityId",
             "in": "path",
+            "description": "시설 ID",
             "required": true,
             "style": "simple",
             "explode": false,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "description": "리뷰 ID",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer"
             }
           }
         ],
         "requestBody": {
+          "description": "수정할 리뷰 정보",
           "content": {
             "application/json": {
               "schema": {
@@ -221,45 +234,63 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "성공",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ReviewDTO"
                 }
               }
             }
           }
-        }
+        },
+        "x-content-type": "application/json",
+        "x-accepts": ["application/json"]
       },
       "delete": {
-        "tags": ["review-controller"],
-        "operationId": "deleteReview",
+        "tags": ["ReviewController"],
+        "summary": "시설 리뷰 삭제",
+        "description": "특정 리뷰를 삭제합니다.",
         "parameters": [
           {
-            "name": "reviewId",
+            "name": "facilityId",
             "in": "path",
+            "description": "시설 ID",
             "required": true,
             "style": "simple",
             "explode": false,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "description": "리뷰 ID",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "성공",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
                 }
               }
             }
           }
-        }
+        },
+        "x-accepts": ["application/json"]
       }
     },
     "/api/facility-detail/{facilityId}": {
@@ -617,6 +648,8 @@
             "name": "refresh_token",
             "in": "cookie",
             "required": true,
+            "style": "form",
+            "explode": true,
             "schema": {
               "type": "string"
             }
@@ -667,6 +700,8 @@
             "name": "userId",
             "in": "path",
             "required": true,
+            "style": "simple",
+            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -676,13 +711,7 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "multipartFile": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
+                "$ref": "#/components/schemas/profile_userId_body"
               }
             }
           }
@@ -740,6 +769,8 @@
             "name": "userId",
             "in": "path",
             "required": true,
+            "style": "simple",
+            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -991,32 +1022,57 @@
         }
       }
     },
-    "/api/facility-details/{id}/reviews": {
+    "/api/facility-detail/{facilityId}/reviews": {
       "get": {
-        "tags": ["review-controller"],
-        "operationId": "getReviewsByFacility",
-        "parameters": [],
+        "tags": ["ReviewController"],
+        "summary": "시설 리뷰 조회",
+        "description": "특정 시설에 대한 내부 및 외부 리뷰를 조회합니다.",
+        "parameters": [
+          {
+            "name": "facilityId",
+            "in": "path",
+            "description": "시설 ID",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "성공",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "object"
-                  }
+                  "$ref": "#/components/schemas/FacilityReviewsResponse"
                 }
               }
             }
           }
-        }
+        },
+        "x-accepts": ["application/json"]
       },
       "post": {
-        "tags": ["review-controller"],
-        "operationId": "createReview",
-        "parameters": [],
+        "tags": ["ReviewController"],
+        "summary": "시설 리뷰 생성",
+        "description": "특정 시설에 대한 리뷰를 생성합니다.",
+        "parameters": [
+          {
+            "name": "facilityId",
+            "in": "path",
+            "description": "시설 ID",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
+          "description": "생성할 리뷰 정보",
           "content": {
             "application/json": {
               "schema": {
@@ -1027,17 +1083,19 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "OK",
+          "201": {
+            "description": "리뷰 생성 성공",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ReviewDTO"
                 }
               }
             }
           }
-        }
+        },
+        "x-content-type": "application/json",
+        "x-accepts": ["application/json"]
       }
     },
     "/api/facility-detail/location": {
@@ -1253,6 +1311,9 @@
             "description": "인증 실패 : 인증번호 불일치",
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
                 "example": {
                   "httpStatus": "BAD_REQUEST",
                   "message": "인증번호가 일치하지 않습니다"
@@ -1502,6 +1563,8 @@
             "name": "userId",
             "in": "path",
             "required": true,
+            "style": "simple",
+            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -1538,6 +1601,8 @@
             "name": "userId",
             "in": "path",
             "required": true,
+            "style": "simple",
+            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -1908,8 +1973,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer",
-            "format": "int64"
+            "type": "integer"
           },
           "facilityId": {
             "type": "string"
@@ -1918,8 +1982,10 @@
             "type": "string"
           },
           "rating": {
-            "type": "number",
-            "format": "double"
+            "type": "number"
+          },
+          "likes": {
+            "type": "integer"
           },
           "tags": {
             "type": "array",
@@ -1927,14 +1993,24 @@
               "type": "string"
             }
           },
-          "likes": {
-            "type": "integer",
-            "format": "int32"
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           },
-          "views": {
-            "type": "integer",
-            "format": "int32"
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
+        },
+        "example": {
+          "createdAt": "2000-01-23T04:56:07.000+00:00",
+          "facilityId": "facilityId",
+          "rating": 6.027456183070403,
+          "id": 0,
+          "content": "content",
+          "likes": 1,
+          "tags": ["tags", "tags"],
+          "updatedAt": "2000-01-23T04:56:07.000+00:00"
         }
       },
       "FacilityDetailsUpdateDTO": {
@@ -2188,12 +2264,14 @@
             "type": "string",
             "description": "인증 통신을 위한 bearer 고정값"
           },
-          "access_token": {
+
+          "accessToken": {
             "type": "string",
             "description": "사이트 권한을 위한 access token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
           },
-          "refresh_token": {
+
+          "refreshToken": {
             "type": "string",
             "description": "access token 재발급을 위한 refresh token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
@@ -3255,6 +3333,106 @@
           }
         }
       },
+      "Schema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "Schema1": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "Schema2": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "ExReviewDTO": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "sourceUrl": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "example": {
+          "sourceUrl": "sourceUrl",
+          "createdAt": "2000-01-23T04:56:07.000+00:00",
+          "title": "title"
+        }
+      },
+      "FacilityReviewsResponse": {
+        "type": "object",
+        "properties": {
+          "internalReviews": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReviewDTO"
+            }
+          },
+          "externalReviews": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExReviewDTO"
+            }
+          }
+        },
+        "example": {
+          "internalReviews": [
+            {
+              "createdAt": "2000-01-23T04:56:07.000+00:00",
+              "facilityId": "facilityId",
+              "rating": 6.027456183070403,
+              "id": 0,
+              "content": "content",
+              "likes": 1,
+              "tags": ["tags", "tags"],
+              "updatedAt": "2000-01-23T04:56:07.000+00:00"
+            },
+            {
+              "createdAt": "2000-01-23T04:56:07.000+00:00",
+              "facilityId": "facilityId",
+              "rating": 6.027456183070403,
+              "id": 0,
+              "content": "content",
+              "likes": 1,
+              "tags": ["tags", "tags"],
+              "updatedAt": "2000-01-23T04:56:07.000+00:00"
+            }
+          ],
+          "externalReviews": [
+            {
+              "sourceUrl": "sourceUrl",
+              "createdAt": "2000-01-23T04:56:07.000+00:00",
+              "title": "title"
+            },
+            {
+              "sourceUrl": "sourceUrl",
+              "createdAt": "2000-01-23T04:56:07.000+00:00",
+              "title": "title"
+            }
+          ]
+        }
+      },
       "profile_userId_body": {
         "type": "object",
         "properties": {
@@ -4069,9 +4247,9 @@
       }
     },
     "securitySchemes": {
-      "Bearer Authentication": {
+      "BearerAuth": {
         "type": "http",
-        "scheme": "Bearer",
+        "scheme": "bearer",
         "bearerFormat": "JWT"
       }
     }

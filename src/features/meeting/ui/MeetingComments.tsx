@@ -53,7 +53,7 @@ export function MeetingComments() {
                         <Button
                           variant="line"
                           size="sm"
-                          onclick={e => {
+                          onClick={e => {
                             e.stopPropagation();
                           }}>
                           수정
@@ -61,7 +61,7 @@ export function MeetingComments() {
                         <Button
                           variant="gray"
                           size="sm"
-                          onclick={e => {
+                          onClick={e => {
                             e.stopPropagation();
                           }}>
                           삭제
