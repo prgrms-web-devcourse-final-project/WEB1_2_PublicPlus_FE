@@ -5982,10 +5982,10 @@ export const ReviewControllerApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiFacilityDetailsFacilityIdReviewsGet: async (facilityId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiFacilityDetailFacilityIdReviewsGet: async (facilityId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'facilityId' is not null or undefined
-            assertParamExists('apiFacilityDetailsFacilityIdReviewsGet', 'facilityId', facilityId)
-            const localVarPath = `/api/facility-details/{facilityId}/reviews`
+            assertParamExists('apiFacilityDetailFacilityIdReviewsGet', 'facilityId', facilityId)
+            const localVarPath = `/api/facility-detail/{facilityId}/reviews`
                 .replace(`{${"facilityId"}}`, encodeURIComponent(String(facilityId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6021,12 +6021,12 @@ export const ReviewControllerApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiFacilityDetailsFacilityIdReviewsPost: async (facilityId: string, reviewDTO: ReviewDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiFacilityDetailFacilityIdReviewsPost: async (facilityId: string, reviewDTO: ReviewDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'facilityId' is not null or undefined
-            assertParamExists('apiFacilityDetailsFacilityIdReviewsPost', 'facilityId', facilityId)
+            assertParamExists('apiFacilityDetailFacilityIdReviewsPost', 'facilityId', facilityId)
             // verify required parameter 'reviewDTO' is not null or undefined
-            assertParamExists('apiFacilityDetailsFacilityIdReviewsPost', 'reviewDTO', reviewDTO)
-            const localVarPath = `/api/facility-details/{facilityId}/reviews`
+            assertParamExists('apiFacilityDetailFacilityIdReviewsPost', 'reviewDTO', reviewDTO)
+            const localVarPath = `/api/facility-detail/{facilityId}/reviews`
                 .replace(`{${"facilityId"}}`, encodeURIComponent(String(facilityId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6065,12 +6065,12 @@ export const ReviewControllerApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiFacilityDetailsFacilityIdReviewsReviewIdDelete: async (facilityId: string, reviewId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiFacilityDetailFacilityIdReviewsReviewIdDelete: async (facilityId: string, reviewId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'facilityId' is not null or undefined
-            assertParamExists('apiFacilityDetailsFacilityIdReviewsReviewIdDelete', 'facilityId', facilityId)
+            assertParamExists('apiFacilityDetailFacilityIdReviewsReviewIdDelete', 'facilityId', facilityId)
             // verify required parameter 'reviewId' is not null or undefined
-            assertParamExists('apiFacilityDetailsFacilityIdReviewsReviewIdDelete', 'reviewId', reviewId)
-            const localVarPath = `/api/facility-details/{facilityId}/reviews/{reviewId}`
+            assertParamExists('apiFacilityDetailFacilityIdReviewsReviewIdDelete', 'reviewId', reviewId)
+            const localVarPath = `/api/facility-detail/{facilityId}/reviews/{reviewId}`
                 .replace(`{${"facilityId"}}`, encodeURIComponent(String(facilityId)))
                 .replace(`{${"reviewId"}}`, encodeURIComponent(String(reviewId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -6108,14 +6108,14 @@ export const ReviewControllerApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiFacilityDetailsFacilityIdReviewsReviewIdPut: async (facilityId: string, reviewId: number, reviewDTO: ReviewDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiFacilityDetailFacilityIdReviewsReviewIdPut: async (facilityId: string, reviewId: number, reviewDTO: ReviewDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'facilityId' is not null or undefined
-            assertParamExists('apiFacilityDetailsFacilityIdReviewsReviewIdPut', 'facilityId', facilityId)
+            assertParamExists('apiFacilityDetailFacilityIdReviewsReviewIdPut', 'facilityId', facilityId)
             // verify required parameter 'reviewId' is not null or undefined
-            assertParamExists('apiFacilityDetailsFacilityIdReviewsReviewIdPut', 'reviewId', reviewId)
+            assertParamExists('apiFacilityDetailFacilityIdReviewsReviewIdPut', 'reviewId', reviewId)
             // verify required parameter 'reviewDTO' is not null or undefined
-            assertParamExists('apiFacilityDetailsFacilityIdReviewsReviewIdPut', 'reviewDTO', reviewDTO)
-            const localVarPath = `/api/facility-details/{facilityId}/reviews/{reviewId}`
+            assertParamExists('apiFacilityDetailFacilityIdReviewsReviewIdPut', 'reviewDTO', reviewDTO)
+            const localVarPath = `/api/facility-detail/{facilityId}/reviews/{reviewId}`
                 .replace(`{${"facilityId"}}`, encodeURIComponent(String(facilityId)))
                 .replace(`{${"reviewId"}}`, encodeURIComponent(String(reviewId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -6164,10 +6164,10 @@ export const ReviewControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiFacilityDetailsFacilityIdReviewsGet(facilityId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FacilityReviewsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiFacilityDetailsFacilityIdReviewsGet(facilityId, options);
+        async apiFacilityDetailFacilityIdReviewsGet(facilityId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FacilityReviewsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiFacilityDetailFacilityIdReviewsGet(facilityId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ReviewControllerApi.apiFacilityDetailsFacilityIdReviewsGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ReviewControllerApi.apiFacilityDetailFacilityIdReviewsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -6178,10 +6178,10 @@ export const ReviewControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiFacilityDetailsFacilityIdReviewsPost(facilityId: string, reviewDTO: ReviewDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewDTO>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiFacilityDetailsFacilityIdReviewsPost(facilityId, reviewDTO, options);
+        async apiFacilityDetailFacilityIdReviewsPost(facilityId: string, reviewDTO: ReviewDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewDTO>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiFacilityDetailFacilityIdReviewsPost(facilityId, reviewDTO, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ReviewControllerApi.apiFacilityDetailsFacilityIdReviewsPost']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ReviewControllerApi.apiFacilityDetailFacilityIdReviewsPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -6192,10 +6192,10 @@ export const ReviewControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiFacilityDetailsFacilityIdReviewsReviewIdDelete(facilityId: string, reviewId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: string; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiFacilityDetailsFacilityIdReviewsReviewIdDelete(facilityId, reviewId, options);
+        async apiFacilityDetailFacilityIdReviewsReviewIdDelete(facilityId: string, reviewId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: string; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiFacilityDetailFacilityIdReviewsReviewIdDelete(facilityId, reviewId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ReviewControllerApi.apiFacilityDetailsFacilityIdReviewsReviewIdDelete']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ReviewControllerApi.apiFacilityDetailFacilityIdReviewsReviewIdDelete']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -6207,10 +6207,10 @@ export const ReviewControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiFacilityDetailsFacilityIdReviewsReviewIdPut(facilityId: string, reviewId: number, reviewDTO: ReviewDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewDTO>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiFacilityDetailsFacilityIdReviewsReviewIdPut(facilityId, reviewId, reviewDTO, options);
+        async apiFacilityDetailFacilityIdReviewsReviewIdPut(facilityId: string, reviewId: number, reviewDTO: ReviewDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewDTO>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiFacilityDetailFacilityIdReviewsReviewIdPut(facilityId, reviewId, reviewDTO, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ReviewControllerApi.apiFacilityDetailsFacilityIdReviewsReviewIdPut']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ReviewControllerApi.apiFacilityDetailFacilityIdReviewsReviewIdPut']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -6230,8 +6230,8 @@ export const ReviewControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiFacilityDetailsFacilityIdReviewsGet(facilityId: string, options?: RawAxiosRequestConfig): AxiosPromise<FacilityReviewsResponse> {
-            return localVarFp.apiFacilityDetailsFacilityIdReviewsGet(facilityId, options).then((request) => request(axios, basePath));
+        apiFacilityDetailFacilityIdReviewsGet(facilityId: string, options?: RawAxiosRequestConfig): AxiosPromise<FacilityReviewsResponse> {
+            return localVarFp.apiFacilityDetailFacilityIdReviewsGet(facilityId, options).then((request) => request(axios, basePath));
         },
         /**
          * 특정 시설에 대한 리뷰를 생성합니다.
@@ -6241,8 +6241,8 @@ export const ReviewControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiFacilityDetailsFacilityIdReviewsPost(facilityId: string, reviewDTO: ReviewDTO, options?: RawAxiosRequestConfig): AxiosPromise<ReviewDTO> {
-            return localVarFp.apiFacilityDetailsFacilityIdReviewsPost(facilityId, reviewDTO, options).then((request) => request(axios, basePath));
+        apiFacilityDetailFacilityIdReviewsPost(facilityId: string, reviewDTO: ReviewDTO, options?: RawAxiosRequestConfig): AxiosPromise<ReviewDTO> {
+            return localVarFp.apiFacilityDetailFacilityIdReviewsPost(facilityId, reviewDTO, options).then((request) => request(axios, basePath));
         },
         /**
          * 특정 리뷰를 삭제합니다.
@@ -6252,8 +6252,8 @@ export const ReviewControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiFacilityDetailsFacilityIdReviewsReviewIdDelete(facilityId: string, reviewId: number, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: string; }> {
-            return localVarFp.apiFacilityDetailsFacilityIdReviewsReviewIdDelete(facilityId, reviewId, options).then((request) => request(axios, basePath));
+        apiFacilityDetailFacilityIdReviewsReviewIdDelete(facilityId: string, reviewId: number, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: string; }> {
+            return localVarFp.apiFacilityDetailFacilityIdReviewsReviewIdDelete(facilityId, reviewId, options).then((request) => request(axios, basePath));
         },
         /**
          * 특정 리뷰의 내용을 수정합니다.
@@ -6264,8 +6264,8 @@ export const ReviewControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiFacilityDetailsFacilityIdReviewsReviewIdPut(facilityId: string, reviewId: number, reviewDTO: ReviewDTO, options?: RawAxiosRequestConfig): AxiosPromise<ReviewDTO> {
-            return localVarFp.apiFacilityDetailsFacilityIdReviewsReviewIdPut(facilityId, reviewId, reviewDTO, options).then((request) => request(axios, basePath));
+        apiFacilityDetailFacilityIdReviewsReviewIdPut(facilityId: string, reviewId: number, reviewDTO: ReviewDTO, options?: RawAxiosRequestConfig): AxiosPromise<ReviewDTO> {
+            return localVarFp.apiFacilityDetailFacilityIdReviewsReviewIdPut(facilityId, reviewId, reviewDTO, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6285,8 +6285,8 @@ export class ReviewControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ReviewControllerApi
      */
-    public apiFacilityDetailsFacilityIdReviewsGet(facilityId: string, options?: RawAxiosRequestConfig) {
-        return ReviewControllerApiFp(this.configuration).apiFacilityDetailsFacilityIdReviewsGet(facilityId, options).then((request) => request(this.axios, this.basePath));
+    public apiFacilityDetailFacilityIdReviewsGet(facilityId: string, options?: RawAxiosRequestConfig) {
+        return ReviewControllerApiFp(this.configuration).apiFacilityDetailFacilityIdReviewsGet(facilityId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6298,8 +6298,8 @@ export class ReviewControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ReviewControllerApi
      */
-    public apiFacilityDetailsFacilityIdReviewsPost(facilityId: string, reviewDTO: ReviewDTO, options?: RawAxiosRequestConfig) {
-        return ReviewControllerApiFp(this.configuration).apiFacilityDetailsFacilityIdReviewsPost(facilityId, reviewDTO, options).then((request) => request(this.axios, this.basePath));
+    public apiFacilityDetailFacilityIdReviewsPost(facilityId: string, reviewDTO: ReviewDTO, options?: RawAxiosRequestConfig) {
+        return ReviewControllerApiFp(this.configuration).apiFacilityDetailFacilityIdReviewsPost(facilityId, reviewDTO, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6311,8 +6311,8 @@ export class ReviewControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ReviewControllerApi
      */
-    public apiFacilityDetailsFacilityIdReviewsReviewIdDelete(facilityId: string, reviewId: number, options?: RawAxiosRequestConfig) {
-        return ReviewControllerApiFp(this.configuration).apiFacilityDetailsFacilityIdReviewsReviewIdDelete(facilityId, reviewId, options).then((request) => request(this.axios, this.basePath));
+    public apiFacilityDetailFacilityIdReviewsReviewIdDelete(facilityId: string, reviewId: number, options?: RawAxiosRequestConfig) {
+        return ReviewControllerApiFp(this.configuration).apiFacilityDetailFacilityIdReviewsReviewIdDelete(facilityId, reviewId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6325,8 +6325,8 @@ export class ReviewControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ReviewControllerApi
      */
-    public apiFacilityDetailsFacilityIdReviewsReviewIdPut(facilityId: string, reviewId: number, reviewDTO: ReviewDTO, options?: RawAxiosRequestConfig) {
-        return ReviewControllerApiFp(this.configuration).apiFacilityDetailsFacilityIdReviewsReviewIdPut(facilityId, reviewId, reviewDTO, options).then((request) => request(this.axios, this.basePath));
+    public apiFacilityDetailFacilityIdReviewsReviewIdPut(facilityId: string, reviewId: number, reviewDTO: ReviewDTO, options?: RawAxiosRequestConfig) {
+        return ReviewControllerApiFp(this.configuration).apiFacilityDetailFacilityIdReviewsReviewIdPut(facilityId, reviewId, reviewDTO, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
