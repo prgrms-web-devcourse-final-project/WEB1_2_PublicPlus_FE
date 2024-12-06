@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
@@ -12,12 +12,25 @@ export default function NewChatRoom() {
     'GROUP'
   );
   const [maxParticipants, setMaxParticipants] = useState<number>(3);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
 
+  useEffect(() => {
+    // 쿠키에서 토큰 추출
+    const authStorageCookie = Cookies.get('auth-storage');
+
+    if (authStorageCookie) {
+      try {
+        const parsedCookie = JSON.parse(authStorageCookie);
+        const token = parsedCookie.state.tokens.access_token;
+        setAccessToken(token);
+      } catch (error) {
+        console.error('토큰 파싱 중 오류:', error);
+        alert('인증 정보를 읽는 데 실패했습니다.');
+      }
+    }
+  }, []);
   const handleCreateChatRoom = async () => {
     try {
-      const accessToken = Cookies.get('accessToken');
-      console.log();
-
       if (!accessToken) {
         alert('로그인이 필요합니다.');
         return;
