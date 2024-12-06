@@ -1725,6 +1725,31 @@ export interface Events {
 /**
  *
  * @export
+ * @interface ExReviewDTO
+ */
+export interface ExReviewDTO {
+  /**
+   *
+   * @type {string}
+   * @memberof ExReviewDTO
+   */
+  title?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof ExReviewDTO
+   */
+  sourceUrl?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof ExReviewDTO
+   */
+  createdAt?: string;
+}
+/**
+ *
+ * @export
  * @interface FacilityDetailsResponseDTO
  */
 export interface FacilityDetailsResponseDTO {
@@ -2093,6 +2118,25 @@ export const FacilityResponseDTOFacilityCategoryEnum = {
 export type FacilityResponseDTOFacilityCategoryEnum =
   (typeof FacilityResponseDTOFacilityCategoryEnum)[keyof typeof FacilityResponseDTOFacilityCategoryEnum];
 
+/**
+ *
+ * @export
+ * @interface FacilityReviewsResponse
+ */
+export interface FacilityReviewsResponse {
+  /**
+   *
+   * @type {Array<ReviewDTO>}
+   * @memberof FacilityReviewsResponse
+   */
+  internalReviews?: Array<ReviewDTO>;
+  /**
+   *
+   * @type {Array<ExReviewDTO>}
+   * @memberof FacilityReviewsResponse
+   */
+  externalReviews?: Array<ExReviewDTO>;
+}
 /**
  *
  * @export
@@ -3132,22 +3176,67 @@ export interface ReviewDTO {
   rating?: number;
   /**
    *
-   * @type {Array<string>}
-   * @memberof ReviewDTO
-   */
-  tags?: Array<string>;
-  /**
-   *
    * @type {number}
    * @memberof ReviewDTO
    */
   likes?: number;
   /**
    *
-   * @type {number}
+   * @type {Array<string>}
    * @memberof ReviewDTO
    */
-  views?: number;
+  tags?: Array<string>;
+  /**
+   *
+   * @type {string}
+   * @memberof ReviewDTO
+   */
+  createdAt?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof ReviewDTO
+   */
+  updatedAt?: string;
+}
+/**
+ *
+ * @export
+ * @interface Schema
+ */
+export interface Schema {
+  /**
+   *
+   * @type {number}
+   * @memberof Schema
+   */
+  id?: number;
+}
+/**
+ *
+ * @export
+ * @interface Schema1
+ */
+export interface Schema1 {
+  /**
+   *
+   * @type {number}
+   * @memberof Schema1
+   */
+  id?: number;
+}
+/**
+ *
+ * @export
+ * @interface Schema2
+ */
+export interface Schema2 {
+  /**
+   *
+   * @type {number}
+   * @memberof Schema2
+   */
+  id?: number;
 }
 /**
  *
@@ -3368,7 +3457,7 @@ export const ActivityControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -3424,7 +3513,7 @@ export const ActivityControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -3473,7 +3562,7 @@ export const ActivityControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -3530,7 +3619,7 @@ export const ActivityControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -3874,7 +3963,7 @@ export const CalendarControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -3916,7 +4005,7 @@ export const CalendarControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -4103,7 +4192,7 @@ export const EmailControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -4158,7 +4247,7 @@ export const EmailControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -4384,7 +4473,7 @@ export const EventControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -4437,7 +4526,7 @@ export const EventControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -4486,7 +4575,7 @@ export const EventControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -4532,7 +4621,7 @@ export const EventControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -4847,7 +4936,7 @@ export const FacilityControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -4889,7 +4978,7 @@ export const FacilityControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -4939,7 +5028,7 @@ export const FacilityControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -4990,7 +5079,7 @@ export const FacilityControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -5040,7 +5129,7 @@ export const FacilityControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -5083,7 +5172,7 @@ export const FacilityControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -5130,7 +5219,7 @@ export const FacilityControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -5184,7 +5273,7 @@ export const FacilityControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -5235,7 +5324,7 @@ export const FacilityControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -5300,7 +5389,7 @@ export const FacilityControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -6004,7 +6093,7 @@ export const FcmControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -6164,7 +6253,7 @@ export const MeetingBoardControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -6220,7 +6309,7 @@ export const MeetingBoardControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -6262,7 +6351,7 @@ export const MeetingBoardControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -6311,7 +6400,7 @@ export const MeetingBoardControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -6368,7 +6457,7 @@ export const MeetingBoardControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -6753,7 +6842,7 @@ export const NotificationControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -6916,7 +7005,7 @@ export const OAuth2ControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -7069,7 +7158,7 @@ export const PushNotificationControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -7201,18 +7290,88 @@ export const ReviewControllerApiAxiosParamCreator = function (
 ) {
   return {
     /**
-     *
-     * @param {ReviewDTO} reviewDTO
+     * 특정 시설에 대한 내부 및 외부 리뷰를 조회합니다.
+     * @summary 시설 리뷰 조회
+     * @param {string} facilityId 시설 ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    createReview: async (
+    apiFacilityDetailFacilityIdReviewsGet: async (
+      facilityId: string,
+      options: RawAxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'facilityId' is not null or undefined
+      assertParamExists(
+        'apiFacilityDetailFacilityIdReviewsGet',
+        'facilityId',
+        facilityId
+      );
+      const localVarPath = `/api/facility-detail/{facilityId}/reviews`.replace(
+        `{${'facilityId'}}`,
+        encodeURIComponent(String(facilityId))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication BearerAuth required
+      // http bearer authentication required
+      await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions
+      };
+    },
+    /**
+     * 특정 시설에 대한 리뷰를 생성합니다.
+     * @summary 시설 리뷰 생성
+     * @param {string} facilityId 시설 ID
+     * @param {ReviewDTO} reviewDTO 생성할 리뷰 정보
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    apiFacilityDetailFacilityIdReviewsPost: async (
+      facilityId: string,
       reviewDTO: ReviewDTO,
       options: RawAxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
+      // verify required parameter 'facilityId' is not null or undefined
+      assertParamExists(
+        'apiFacilityDetailFacilityIdReviewsPost',
+        'facilityId',
+        facilityId
+      );
       // verify required parameter 'reviewDTO' is not null or undefined
-      assertParamExists('createReview', 'reviewDTO', reviewDTO);
-      const localVarPath = `/api/facility-details/{id}/reviews`;
+      assertParamExists(
+        'apiFacilityDetailFacilityIdReviewsPost',
+        'reviewDTO',
+        reviewDTO
+      );
+      const localVarPath = `/api/facility-detail/{facilityId}/reviews`.replace(
+        `{${'facilityId'}}`,
+        encodeURIComponent(String(facilityId))
+      );
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -7228,7 +7387,7 @@ export const ReviewControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -7254,22 +7413,34 @@ export const ReviewControllerApiAxiosParamCreator = function (
       };
     },
     /**
-     *
-     * @param {number} reviewId
+     * 특정 리뷰를 삭제합니다.
+     * @summary 시설 리뷰 삭제
+     * @param {string} facilityId 시설 ID
+     * @param {number} reviewId 리뷰 ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    deleteReview: async (
+    apiFacilityDetailFacilityIdReviewsReviewIdDelete: async (
+      facilityId: string,
       reviewId: number,
       options: RawAxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
+      // verify required parameter 'facilityId' is not null or undefined
+      assertParamExists(
+        'apiFacilityDetailFacilityIdReviewsReviewIdDelete',
+        'facilityId',
+        facilityId
+      );
       // verify required parameter 'reviewId' is not null or undefined
-      assertParamExists('deleteReview', 'reviewId', reviewId);
+      assertParamExists(
+        'apiFacilityDetailFacilityIdReviewsReviewIdDelete',
+        'reviewId',
+        reviewId
+      );
       const localVarPath =
-        `/api/facility-details/{id}/reviews/{reviewId}`.replace(
-          `{${'reviewId'}}`,
-          encodeURIComponent(String(reviewId))
-        );
+        `/api/facility-detail/{facilityId}/reviews/{reviewId}`
+          .replace(`{${'facilityId'}}`, encodeURIComponent(String(facilityId)))
+          .replace(`{${'reviewId'}}`, encodeURIComponent(String(reviewId)));
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -7285,7 +7456,7 @@ export const ReviewControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -7304,68 +7475,42 @@ export const ReviewControllerApiAxiosParamCreator = function (
       };
     },
     /**
-     *
+     * 특정 리뷰의 내용을 수정합니다.
+     * @summary 시설 리뷰 수정
+     * @param {string} facilityId 시설 ID
+     * @param {number} reviewId 리뷰 ID
+     * @param {ReviewDTO} reviewDTO 수정할 리뷰 정보
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getReviewsByFacility: async (
-      options: RawAxiosRequestConfig = {}
-    ): Promise<RequestArgs> => {
-      const localVarPath = `/api/facility-details/{id}/reviews`;
-      // use dummy base URL string because the URL constructor only accepts absolute URLs.
-      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-      let baseOptions;
-      if (configuration) {
-        baseOptions = configuration.baseOptions;
-      }
-
-      const localVarRequestOptions = {
-        method: 'GET',
-        ...baseOptions,
-        ...options
-      };
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication Bearer Authentication required
-      // http bearer authentication required
-      await setBearerAuthToObject(localVarHeaderParameter, configuration);
-
-      setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers
-      };
-
-      return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions
-      };
-    },
-    /**
-     *
-     * @param {number} reviewId
-     * @param {ReviewDTO} reviewDTO
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    updateReview: async (
+    apiFacilityDetailFacilityIdReviewsReviewIdPut: async (
+      facilityId: string,
       reviewId: number,
       reviewDTO: ReviewDTO,
       options: RawAxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
+      // verify required parameter 'facilityId' is not null or undefined
+      assertParamExists(
+        'apiFacilityDetailFacilityIdReviewsReviewIdPut',
+        'facilityId',
+        facilityId
+      );
       // verify required parameter 'reviewId' is not null or undefined
-      assertParamExists('updateReview', 'reviewId', reviewId);
+      assertParamExists(
+        'apiFacilityDetailFacilityIdReviewsReviewIdPut',
+        'reviewId',
+        reviewId
+      );
       // verify required parameter 'reviewDTO' is not null or undefined
-      assertParamExists('updateReview', 'reviewDTO', reviewDTO);
+      assertParamExists(
+        'apiFacilityDetailFacilityIdReviewsReviewIdPut',
+        'reviewDTO',
+        reviewDTO
+      );
       const localVarPath =
-        `/api/facility-details/{id}/reviews/{reviewId}`.replace(
-          `{${'reviewId'}}`,
-          encodeURIComponent(String(reviewId))
-        );
+        `/api/facility-detail/{facilityId}/reviews/{reviewId}`
+          .replace(`{${'facilityId'}}`, encodeURIComponent(String(facilityId)))
+          .replace(`{${'reviewId'}}`, encodeURIComponent(String(reviewId)));
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -7381,7 +7526,7 @@ export const ReviewControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -7418,83 +7563,31 @@ export const ReviewControllerApiFp = function (configuration?: Configuration) {
     ReviewControllerApiAxiosParamCreator(configuration);
   return {
     /**
-     *
-     * @param {ReviewDTO} reviewDTO
+     * 특정 시설에 대한 내부 및 외부 리뷰를 조회합니다.
+     * @summary 시설 리뷰 조회
+     * @param {string} facilityId 시설 ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async createReview(
-      reviewDTO: ReviewDTO,
-      options?: RawAxiosRequestConfig
-    ): Promise<
-      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewDTO>
-    > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.createReview(
-        reviewDTO,
-        options
-      );
-      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-      const localVarOperationServerBasePath =
-        operationServerMap['ReviewControllerApi.createReview']?.[
-          localVarOperationServerIndex
-        ]?.url;
-      return (axios, basePath) =>
-        createRequestFunction(
-          localVarAxiosArgs,
-          globalAxios,
-          BASE_PATH,
-          configuration
-        )(axios, localVarOperationServerBasePath || basePath);
-    },
-    /**
-     *
-     * @param {number} reviewId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async deleteReview(
-      reviewId: number,
-      options?: RawAxiosRequestConfig
-    ): Promise<
-      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>
-    > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.deleteReview(
-        reviewId,
-        options
-      );
-      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-      const localVarOperationServerBasePath =
-        operationServerMap['ReviewControllerApi.deleteReview']?.[
-          localVarOperationServerIndex
-        ]?.url;
-      return (axios, basePath) =>
-        createRequestFunction(
-          localVarAxiosArgs,
-          globalAxios,
-          BASE_PATH,
-          configuration
-        )(axios, localVarOperationServerBasePath || basePath);
-    },
-    /**
-     *
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async getReviewsByFacility(
+    async apiFacilityDetailFacilityIdReviewsGet(
+      facilityId: string,
       options?: RawAxiosRequestConfig
     ): Promise<
       (
         axios?: AxiosInstance,
         basePath?: string
-      ) => AxiosPromise<{ [key: string]: object }>
+      ) => AxiosPromise<FacilityReviewsResponse>
     > {
       const localVarAxiosArgs =
-        await localVarAxiosParamCreator.getReviewsByFacility(options);
+        await localVarAxiosParamCreator.apiFacilityDetailFacilityIdReviewsGet(
+          facilityId,
+          options
+        );
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
       const localVarOperationServerBasePath =
-        operationServerMap['ReviewControllerApi.getReviewsByFacility']?.[
-          localVarOperationServerIndex
-        ]?.url;
+        operationServerMap[
+          'ReviewControllerApi.apiFacilityDetailFacilityIdReviewsGet'
+        ]?.[localVarOperationServerIndex]?.url;
       return (axios, basePath) =>
         createRequestFunction(
           localVarAxiosArgs,
@@ -7504,29 +7597,105 @@ export const ReviewControllerApiFp = function (configuration?: Configuration) {
         )(axios, localVarOperationServerBasePath || basePath);
     },
     /**
-     *
-     * @param {number} reviewId
-     * @param {ReviewDTO} reviewDTO
+     * 특정 시설에 대한 리뷰를 생성합니다.
+     * @summary 시설 리뷰 생성
+     * @param {string} facilityId 시설 ID
+     * @param {ReviewDTO} reviewDTO 생성할 리뷰 정보
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async updateReview(
+    async apiFacilityDetailFacilityIdReviewsPost(
+      facilityId: string,
+      reviewDTO: ReviewDTO,
+      options?: RawAxiosRequestConfig
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewDTO>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.apiFacilityDetailFacilityIdReviewsPost(
+          facilityId,
+          reviewDTO,
+          options
+        );
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap[
+          'ReviewControllerApi.apiFacilityDetailFacilityIdReviewsPost'
+        ]?.[localVarOperationServerIndex]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+    /**
+     * 특정 리뷰를 삭제합니다.
+     * @summary 시설 리뷰 삭제
+     * @param {string} facilityId 시설 ID
+     * @param {number} reviewId 리뷰 ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async apiFacilityDetailFacilityIdReviewsReviewIdDelete(
+      facilityId: string,
+      reviewId: number,
+      options?: RawAxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<{ [key: string]: string }>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.apiFacilityDetailFacilityIdReviewsReviewIdDelete(
+          facilityId,
+          reviewId,
+          options
+        );
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap[
+          'ReviewControllerApi.apiFacilityDetailFacilityIdReviewsReviewIdDelete'
+        ]?.[localVarOperationServerIndex]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+    /**
+     * 특정 리뷰의 내용을 수정합니다.
+     * @summary 시설 리뷰 수정
+     * @param {string} facilityId 시설 ID
+     * @param {number} reviewId 리뷰 ID
+     * @param {ReviewDTO} reviewDTO 수정할 리뷰 정보
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async apiFacilityDetailFacilityIdReviewsReviewIdPut(
+      facilityId: string,
       reviewId: number,
       reviewDTO: ReviewDTO,
       options?: RawAxiosRequestConfig
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewDTO>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.updateReview(
-        reviewId,
-        reviewDTO,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.apiFacilityDetailFacilityIdReviewsReviewIdPut(
+          facilityId,
+          reviewId,
+          reviewDTO,
+          options
+        );
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
       const localVarOperationServerBasePath =
-        operationServerMap['ReviewControllerApi.updateReview']?.[
-          localVarOperationServerIndex
-        ]?.url;
+        operationServerMap[
+          'ReviewControllerApi.apiFacilityDetailFacilityIdReviewsReviewIdPut'
+        ]?.[localVarOperationServerIndex]?.url;
       return (axios, basePath) =>
         createRequestFunction(
           localVarAxiosArgs,
@@ -7550,59 +7719,80 @@ export const ReviewControllerApiFactory = function (
   const localVarFp = ReviewControllerApiFp(configuration);
   return {
     /**
-     *
-     * @param {ReviewDTO} reviewDTO
+     * 특정 시설에 대한 내부 및 외부 리뷰를 조회합니다.
+     * @summary 시설 리뷰 조회
+     * @param {string} facilityId 시설 ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    createReview(
+    apiFacilityDetailFacilityIdReviewsGet(
+      facilityId: string,
+      options?: RawAxiosRequestConfig
+    ): AxiosPromise<FacilityReviewsResponse> {
+      return localVarFp
+        .apiFacilityDetailFacilityIdReviewsGet(facilityId, options)
+        .then(request => request(axios, basePath));
+    },
+    /**
+     * 특정 시설에 대한 리뷰를 생성합니다.
+     * @summary 시설 리뷰 생성
+     * @param {string} facilityId 시설 ID
+     * @param {ReviewDTO} reviewDTO 생성할 리뷰 정보
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    apiFacilityDetailFacilityIdReviewsPost(
+      facilityId: string,
       reviewDTO: ReviewDTO,
       options?: RawAxiosRequestConfig
     ): AxiosPromise<ReviewDTO> {
       return localVarFp
-        .createReview(reviewDTO, options)
+        .apiFacilityDetailFacilityIdReviewsPost(facilityId, reviewDTO, options)
         .then(request => request(axios, basePath));
     },
     /**
-     *
-     * @param {number} reviewId
+     * 특정 리뷰를 삭제합니다.
+     * @summary 시설 리뷰 삭제
+     * @param {string} facilityId 시설 ID
+     * @param {number} reviewId 리뷰 ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    deleteReview(
+    apiFacilityDetailFacilityIdReviewsReviewIdDelete(
+      facilityId: string,
       reviewId: number,
       options?: RawAxiosRequestConfig
-    ): AxiosPromise<object> {
+    ): AxiosPromise<{ [key: string]: string }> {
       return localVarFp
-        .deleteReview(reviewId, options)
+        .apiFacilityDetailFacilityIdReviewsReviewIdDelete(
+          facilityId,
+          reviewId,
+          options
+        )
         .then(request => request(axios, basePath));
     },
     /**
-     *
+     * 특정 리뷰의 내용을 수정합니다.
+     * @summary 시설 리뷰 수정
+     * @param {string} facilityId 시설 ID
+     * @param {number} reviewId 리뷰 ID
+     * @param {ReviewDTO} reviewDTO 수정할 리뷰 정보
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getReviewsByFacility(
-      options?: RawAxiosRequestConfig
-    ): AxiosPromise<{ [key: string]: object }> {
-      return localVarFp
-        .getReviewsByFacility(options)
-        .then(request => request(axios, basePath));
-    },
-    /**
-     *
-     * @param {number} reviewId
-     * @param {ReviewDTO} reviewDTO
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    updateReview(
+    apiFacilityDetailFacilityIdReviewsReviewIdPut(
+      facilityId: string,
       reviewId: number,
       reviewDTO: ReviewDTO,
       options?: RawAxiosRequestConfig
     ): AxiosPromise<ReviewDTO> {
       return localVarFp
-        .updateReview(reviewId, reviewDTO, options)
+        .apiFacilityDetailFacilityIdReviewsReviewIdPut(
+          facilityId,
+          reviewId,
+          reviewDTO,
+          options
+        )
         .then(request => request(axios, basePath));
     }
   };
@@ -7616,58 +7806,87 @@ export const ReviewControllerApiFactory = function (
  */
 export class ReviewControllerApi extends BaseAPI {
   /**
-   *
-   * @param {ReviewDTO} reviewDTO
+   * 특정 시설에 대한 내부 및 외부 리뷰를 조회합니다.
+   * @summary 시설 리뷰 조회
+   * @param {string} facilityId 시설 ID
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ReviewControllerApi
    */
-  public createReview(reviewDTO: ReviewDTO, options?: RawAxiosRequestConfig) {
+  public apiFacilityDetailFacilityIdReviewsGet(
+    facilityId: string,
+    options?: RawAxiosRequestConfig
+  ) {
     return ReviewControllerApiFp(this.configuration)
-      .createReview(reviewDTO, options)
+      .apiFacilityDetailFacilityIdReviewsGet(facilityId, options)
       .then(request => request(this.axios, this.basePath));
   }
 
   /**
-   *
-   * @param {number} reviewId
+   * 특정 시설에 대한 리뷰를 생성합니다.
+   * @summary 시설 리뷰 생성
+   * @param {string} facilityId 시설 ID
+   * @param {ReviewDTO} reviewDTO 생성할 리뷰 정보
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ReviewControllerApi
    */
-  public deleteReview(reviewId: number, options?: RawAxiosRequestConfig) {
+  public apiFacilityDetailFacilityIdReviewsPost(
+    facilityId: string,
+    reviewDTO: ReviewDTO,
+    options?: RawAxiosRequestConfig
+  ) {
     return ReviewControllerApiFp(this.configuration)
-      .deleteReview(reviewId, options)
+      .apiFacilityDetailFacilityIdReviewsPost(facilityId, reviewDTO, options)
       .then(request => request(this.axios, this.basePath));
   }
 
   /**
-   *
+   * 특정 리뷰를 삭제합니다.
+   * @summary 시설 리뷰 삭제
+   * @param {string} facilityId 시설 ID
+   * @param {number} reviewId 리뷰 ID
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ReviewControllerApi
    */
-  public getReviewsByFacility(options?: RawAxiosRequestConfig) {
+  public apiFacilityDetailFacilityIdReviewsReviewIdDelete(
+    facilityId: string,
+    reviewId: number,
+    options?: RawAxiosRequestConfig
+  ) {
     return ReviewControllerApiFp(this.configuration)
-      .getReviewsByFacility(options)
+      .apiFacilityDetailFacilityIdReviewsReviewIdDelete(
+        facilityId,
+        reviewId,
+        options
+      )
       .then(request => request(this.axios, this.basePath));
   }
 
   /**
-   *
-   * @param {number} reviewId
-   * @param {ReviewDTO} reviewDTO
+   * 특정 리뷰의 내용을 수정합니다.
+   * @summary 시설 리뷰 수정
+   * @param {string} facilityId 시설 ID
+   * @param {number} reviewId 리뷰 ID
+   * @param {ReviewDTO} reviewDTO 수정할 리뷰 정보
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ReviewControllerApi
    */
-  public updateReview(
+  public apiFacilityDetailFacilityIdReviewsReviewIdPut(
+    facilityId: string,
     reviewId: number,
     reviewDTO: ReviewDTO,
     options?: RawAxiosRequestConfig
   ) {
     return ReviewControllerApiFp(this.configuration)
-      .updateReview(reviewId, reviewDTO, options)
+      .apiFacilityDetailFacilityIdReviewsReviewIdPut(
+        facilityId,
+        reviewId,
+        reviewDTO,
+        options
+      )
       .then(request => request(this.axios, this.basePath));
   }
 }
@@ -7704,7 +7923,7 @@ export const TagControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -7853,7 +8072,7 @@ export const UserControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -7915,7 +8134,7 @@ export const UserControllerApiAxiosParamCreator = function (
         configuration.formDataCtor) ||
         FormData)();
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -7972,7 +8191,7 @@ export const UserControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -8022,7 +8241,7 @@ export const UserControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -8069,7 +8288,7 @@ export const UserControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -8123,7 +8342,7 @@ export const UserControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -8173,7 +8392,7 @@ export const UserControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -8224,7 +8443,7 @@ export const UserControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -8267,7 +8486,7 @@ export const UserControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -8325,7 +8544,7 @@ export const UserControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
@@ -8390,7 +8609,7 @@ export const UserControllerApiAxiosParamCreator = function (
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      // authentication Bearer Authentication required
+      // authentication BearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
