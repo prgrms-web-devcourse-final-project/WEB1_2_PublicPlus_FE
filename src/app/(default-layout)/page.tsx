@@ -10,6 +10,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Home = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -70,9 +71,16 @@ const Home = () => {
       {/* Hero Section */}
       <div className="relative h-[300px] overflow-hidden rounded-lg bg-blue-500">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-400 opacity-90" />
-        <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-white">
-          <h1 className="mb-4 text-4xl font-bold">스포츠 시설 & 모임</h1>
-          <p className="mb-8 text-center text-lg">
+        <div className="relative z-10 flex h-full flex-col items-center justify-center space-y-10 px-4 text-white">
+          <Image
+            src={'/images/hero-img.png'}
+            alt="히어로 이미지"
+            layout="fill"
+            objectFit="cover"
+            className="z-[-1] brightness-90"
+          />
+          <h1 className="mb-4 text-6xl font-bold">공공 체육 시설 & 모임</h1>
+          <p className="mb-8 text-center text-xl font-bold">
             원하는 시설을 찾고 함께할 운동 메이트를 만나보세요
           </p>
           <div className="flex space-x-4">
@@ -102,7 +110,16 @@ const Home = () => {
             <CalendarIcon className="h-5 w-5" />
           </button>
         </div>
-        <div className="overflow-x-auto">
+        <div
+          className="overflow-x-auto"
+          onWheel={e => {
+            if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) {
+              e.preventDefault();
+              const container = e.currentTarget;
+              container.scrollLeft += e.deltaY;
+            }
+          }}
+          style={{ overscrollBehavior: 'none' }}>
           <div className="flex min-w-full space-x-4 pb-2">
             {getDatesForCurrentMonth().map(date => (
               <button
@@ -159,7 +176,6 @@ const Home = () => {
           </div>
         </div>
       )}
-
       {/* Facilities Section */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
@@ -178,7 +194,6 @@ const Home = () => {
           />
         </div>
       </div>
-
       {/* Meetings Section */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">

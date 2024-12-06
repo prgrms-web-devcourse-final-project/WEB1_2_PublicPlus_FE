@@ -475,7 +475,6 @@ export function CreateMeetingForm({
 
   return (
     <div className="mx-auto max-w-2xl">
-      <h1 className="mb-6 text-center text-2xl font-bold">모임 등록</h1>
       {renderStepIndicator()}
       <form
         onSubmit={handleSubmit}
