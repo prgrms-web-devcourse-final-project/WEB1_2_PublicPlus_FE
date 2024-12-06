@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ChevronRight, Calendar as CalendarIcon } from 'lucide-react';
 import { Card } from '@/components/common/Cards/Card';
 import { FacilityFilters } from '@/widgets/facility/facility-filters';
@@ -66,6 +66,29 @@ const Home = () => {
     }
   }, [selectedDate]);
 
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+
+    const handleWheel = e => {
+      if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) {
+        e.preventDefault();
+        container.scrollLeft += e.deltaY;
+      }
+    };
+
+    if (container) {
+      container.addEventListener('wheel', handleWheel, { passive: false });
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener('wheel', handleWheel);
+      }
+    };
+  }, []);
+
   return (
     <div className="flex flex-col space-y-10">
       {/* Hero Section */}
@@ -110,15 +133,10 @@ const Home = () => {
             <CalendarIcon className="h-5 w-5" />
           </button>
         </div>
+
         <div
+          ref={containerRef}
           className="overflow-x-auto"
-          onWheel={e => {
-            if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) {
-              e.preventDefault();
-              const container = e.currentTarget;
-              container.scrollLeft += e.deltaY;
-            }
-          }}
           style={{ overscrollBehavior: 'none' }}>
           <div className="flex min-w-full space-x-4 pb-2">
             {getDatesForCurrentMonth().map(date => (
