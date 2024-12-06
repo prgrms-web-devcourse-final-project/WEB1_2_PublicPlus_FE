@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { validatePassword } from '@/features/auth/utils/validation';
 import { useUserQuery } from '@/entities/User/model/userQueries';
+import { emailService } from '@/entities/User/api/emailService';
 
 export const useChangePassword = (router: AppRouterInstance) => {
   const [password, setPassword] = useState('');
@@ -31,9 +32,7 @@ export const useChangePassword = (router: AppRouterInstance) => {
 
     setStep('verification');
     try {
-      await fetch(`/api/email?email=${encodeURIComponent(email)}`, {
-        method: 'POST'
-      });
+      await emailService.sendCode(email);
       setError('');
       return true;
     } catch (error) {
@@ -49,15 +48,7 @@ export const useChangePassword = (router: AppRouterInstance) => {
   // 인증 코드 검증
   const handleVerificationSubmit = async () => {
     try {
-      const response = await fetch(
-        `/api/email?email=${email}&code=${verificationCode}`,
-        { method: 'GET' }
-      );
-
-      if (!response.ok) {
-        throw new Error('인증 실패');
-      }
-
+      await emailService.verifyCode(email, verificationCode);
       setStep('newPassword');
       setError('');
       return true;

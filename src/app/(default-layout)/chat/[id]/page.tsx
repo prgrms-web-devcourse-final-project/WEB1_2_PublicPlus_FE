@@ -5,16 +5,7 @@ import { ChatMessage } from '@/components/common/Chat/ChatMessage';
 import { ChatInput } from '@/components/common/Chat/ChatInput';
 import { CustomHeader } from '@/components/common/Header/CustomHeader';
 import { ChatRoomInfoModal } from '@/features/chat/ui/ChatRoomInfoModal/ChatRoomInfoModal';
-interface ChatRoom {
-  id: string;
-  name: string;
-  latestMessage: string;
-  latestTimestamp: string;
-  type: 'group' | 'personal';
-  sports: string;
-  status: 'active' | 'completed';
-  messages: Message[];
-}
+import { ChatRoom } from '@/features/chat/types';
 
 interface Message {
   id: string;
@@ -29,103 +20,103 @@ const CHAT_ROOMS: ChatRoom[] = [
   {
     id: '1',
     name: '농구에 미친 사럼들',
-    latestMessage: '종합운동장에서 하는 거 맞나요??',
+    // latestMessage: '종합운동장에서 하는 거 맞나요??',
     latestTimestamp: '2024.11.28',
-    type: 'group',
-    sports: '농구',
-    status: 'active',
-    messages: [
-      {
-        id: '1',
-        message: '종합운동장 몇 시에 모일까요?',
-        timestamp: '오후 2:30',
-        isMine: false,
-        username: '농구러',
-        profileImage: ''
-      },
-      {
-        id: '2',
-        message: '오후 6시 종합운동장 농구장에서 만나요!',
-        timestamp: '오후 2:35',
-        isMine: true
-      }
-    ]
-  },
-  {
-    id: '2',
-    name: '김철수',
-    latestMessage: '오늘 저녁 러닝 ㄱ?',
-    latestTimestamp: '2024.11.28',
-    type: 'personal',
-    sports: '',
-    status: 'completed',
-    messages: [
-      {
-        id: '1',
-        message: '오늘 저녁 러닝 ㄱ?',
-        timestamp: '오후 2:31',
-        isMine: false,
-        username: '김철수',
-        profileImage: ''
-      },
-      {
-        id: '2',
-        message: '네, 몇 시쯤 갈까요?',
-        timestamp: '오후 2:32',
-        isMine: true
-      }
-    ]
-  },
-  {
-    id: '3',
-    name: '축구 동호회',
-    latestMessage: '다음 경기 일정 잡자',
-    latestTimestamp: '2024.11.27',
-    type: 'group',
-    sports: '축구',
-    status: 'active',
-    messages: [
-      {
-        id: '1',
-        message: '다음 경기 일정 언제로 할까요?',
-        timestamp: '오후 3:00',
-        isMine: false,
-        username: '축구러',
-        profileImage: ''
-      },
-      {
-        id: '2',
-        message: '다음 주 토요일 오후 2시 어떠세요?',
-        timestamp: '오후 3:05',
-        isMine: true
-      }
-    ]
-  },
-  {
-    id: '4',
-    name: '이영희',
-    latestMessage: '테니스 레슨 끝났어',
-    latestTimestamp: '2024.11.26',
-    type: 'personal',
-    sports: '',
-    status: 'completed',
-    messages: [
-      {
-        id: '1',
-        message: '테니스 레슨 끝났어',
-        timestamp: '오후 4:00',
-        isMine: false,
-        username: '이영희',
-        profileImage: ''
-      },
-      {
-        id: '2',
-        message: '수고하셨어요!',
-        timestamp: '오후 4:05',
-        isMine: true
-      }
-    ]
+    type: 'group'
+    // sports: '농구',
+    // status: 'active',
+    // messages: [
+    //   {
+    //     id: '1',
+    //     message: '종합운동장 몇 시에 모일까요?',
+    //     timestamp: '오후 2:30',
+    //     isMine: false,
+    //     username: '농구러',
+    //     profileImage: ''
+    //   },
+    //   {
+    //     id: '2',
+    //     message: '오후 6시 종합운동장 농구장에서 만나요!',
+    //     timestamp: '오후 2:35',
+    //     isMine: true
+    //   }
+    // ]
   }
+  // {
+  //   id: '2',
+  //   name: '김철수',
+  //   latestMessage: '오늘 저녁 러닝 ㄱ?',
+  //   latestTimestamp: '2024.11.28',
+  //   type: 'personal',
+  //   sports: '',
+  //   status: 'completed',
+  //   messages: [
+  //     {
+  //       id: '1',
+  //       message: '오늘 저녁 러닝 ㄱ?',
+  //       timestamp: '오후 2:31',
+  //       isMine: false,
+  //       username: '김철수',
+  //       profileImage: ''
+  //     },
+  //     {
+  //       id: '2',
+  //       message: '네, 몇 시쯤 갈까요?',
+  //       timestamp: '오후 2:32',
+  //       isMine: true
+  //     }
+  //   ]
+  // },
+  // {
+  //   id: '3',
+  //   name: '축구 동호회',
+  //   latestMessage: '다음 경기 일정 잡자',
+  //   latestTimestamp: '2024.11.27',
+  //   type: 'group',
+  //   sports: '축구',
+  //   status: 'active',
+  //   messages: [
+  //     {
+  //       id: '1',
+  //       message: '다음 경기 일정 언제로 할까요?',
+  //       timestamp: '오후 3:00',
+  //       isMine: false,
+  //       username: '축구러',
+  //       profileImage: ''
+  //     },
+  //     {
+  //       id: '2',
+  //       message: '다음 주 토요일 오후 2시 어떠세요?',
+  //       timestamp: '오후 3:05',
+  //       isMine: true
+  //     }
+  //   ]
+  // },
+  // {
+  //   id: '4',
+  //   name: '이영희',
+  //   latestMessage: '테니스 레슨 끝났어',
+  //   latestTimestamp: '2024.11.26',
+  //   type: 'personal',
+  //   sports: '',
+  //   status: 'completed',
+  //   messages: [
+  //     {
+  //       id: '1',
+  //       message: '테니스 레슨 끝났어',
+  //       timestamp: '오후 4:00',
+  //       isMine: false,
+  //       username: '이영희',
+  //       profileImage: ''
+  //     },
+  //     {
+  //       id: '2',
+  //       message: '수고하셨어요!',
+  //       timestamp: '오후 4:05',
+  //       isMine: true
+  //     }
+  //   ]
+  // }
 ];
 
 export default function ChatRoomDetail() {
@@ -142,7 +133,6 @@ export default function ChatRoomDetail() {
 
     if (selectedRoom) {
       setRoomInfo(selectedRoom);
-      setMessages(selectedRoom.messages);
     }
   }, [chatRoomId]);
 

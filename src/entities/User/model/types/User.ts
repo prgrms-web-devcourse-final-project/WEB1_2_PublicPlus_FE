@@ -1,5 +1,5 @@
 export interface UserType {
-  userId: string;
+  userid: string;
   email: string;
   nickname: string;
   profile_image?: string | null;

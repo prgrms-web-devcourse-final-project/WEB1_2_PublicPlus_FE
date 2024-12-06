@@ -2706,13 +2706,13 @@ export interface JwtToken {
    * @type {string}
    * @memberof JwtToken
    */
-  access_token?: string;
+  accessToken?: string;
   /**
    * access token 재발급을 위한 refresh token
    * @type {string}
    * @memberof JwtToken
    */
-  refresh_token?: string;
+  refreshToken?: string;
   /**
    * 사용자 고유번호
    * @type {string}
