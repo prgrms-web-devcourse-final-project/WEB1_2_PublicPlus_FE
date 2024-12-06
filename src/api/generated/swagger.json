@@ -177,7 +177,7 @@
         }
       }
     },
-    "/api/facility-details/{facilityId}/reviews/{reviewId}" : {
+    "/api/facility-detail/{facilityId}/reviews/{reviewId}" : {
       "put" : {
         "tags" : [ "ReviewController" ],
         "summary" : "시설 리뷰 수정",
@@ -983,7 +983,7 @@
         }
       }
     },
-    "/api/facility-details/{facilityId}/reviews" : {
+    "/api/facility-detail/{facilityId}/reviews" : {
       "get" : {
         "tags" : [ "ReviewController" ],
         "summary" : "시설 리뷰 조회",
