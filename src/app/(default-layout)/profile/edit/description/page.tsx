@@ -17,8 +17,8 @@ export default function DescriptionEditPage() {
 
   const handleSubmit = async () => {
     try {
-      if (userInfo?.userId) {
-        await userService.updateDescription(userInfo.userId, description);
+      if (userInfo?.userid) {
+        await userService.updateDescription(userInfo.userid, description);
         router.push('/profile/edit');
       }
     } catch (err) {

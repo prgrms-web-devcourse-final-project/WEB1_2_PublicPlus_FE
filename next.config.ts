@@ -68,7 +68,8 @@ const nextConfig: NextConfig = {
       'example.com',
       'yeyak.seoul.go.kr',
       '4gbw.org',
-      'yongsanyouth.or.kr'
+      'yongsanyouth.or.kr',
+      'localhost'
     ], // 허용할 외부 이미지 호스트네임
     remotePatterns: [
       {
@@ -76,6 +77,24 @@ const nextConfig: NextConfig = {
         hostname: 'avatars.githubusercontent.com',
         port: '',
         pathname: '**'
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3000',
+        pathname: '/_next/image/**'
+      },
+      {
+        protocol: 'http',
+        hostname: '15.165.2.3',
+        port: '8080',
+        pathname: '/**'
+      },
+      {
+        protocol: 'http',
+        hostname: '43.203.132.45',
+        port: '8080',
+        pathname: '/**'
       }
     ]
   }
