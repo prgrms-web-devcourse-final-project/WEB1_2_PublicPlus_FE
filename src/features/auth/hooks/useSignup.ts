@@ -1,5 +1,6 @@
+import { emailService } from './../../../entities/User/api/emailService';
+import axios from 'axios';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-
 import { useState } from 'react';
 import { userService } from '@/entities/User/api/userService';
 import {
@@ -26,42 +27,36 @@ export const useSignup = (router: AppRouterInstance) => {
     }
 
     try {
-      await fetch(`/api/email?email=${encodeURIComponent(email)}`, {
-        method: 'POST'
-      });
+      // await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/email`, null, {
+      //   params: { email }
+      // });
+      await emailService.sendCode(email);
       setStep('verification');
       setError('');
       return true;
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('이메일 인증 코드 발송에 실패했습니다');
-      }
+      setError(
+        axios.isAxiosError(error)
+          ? error.response?.data?.message ||
+              '이메일 인증 코드 발송에 실패했습니다'
+          : '이메일 인증 코드 발송에 실패했습니다'
+      );
       return false;
     }
   };
 
   const handleVerificationSubmit = async () => {
     try {
-      const response = await fetch(
-        `/api/email?email=${email}&code=${verificationCode}`,
-        { method: 'GET' }
-      );
-
-      if (!response.ok) {
-        throw new Error('인증 실패');
-      }
-
+      await emailService.verifyCode(email, verificationCode);
       setStep('details');
       setError('');
       return true;
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('알 수 없는 오류가 발생했습니다');
-      }
+      setError(
+        axios.isAxiosError(error)
+          ? error.response?.data?.message || '인증 실패'
+          : '알 수 없는 오류가 발생했습니다'
+      );
       return false;
     }
   };
@@ -99,7 +94,9 @@ export const useSignup = (router: AppRouterInstance) => {
       return true;
     } catch (error) {
       setError(
-        error instanceof Error ? error.message : '회원가입에 실패했습니다'
+        axios.isAxiosError(error)
+          ? error.response?.data?.message || '회원가입에 실패했습니다'
+          : '회원가입에 실패했습니다'
       );
       return false;
     }
