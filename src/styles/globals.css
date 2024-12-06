@@ -37,9 +37,6 @@
   --background: #ffffff;
   --foreground: #171717;
   --borderColor: #ececec;
-
-  --font-roboto: 'Roboto', system-ui, sans-serif;
-  --font-noto-sans-kr: 'Noto Sans KR', system-ui, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -49,28 +46,10 @@
   }
 }
 
-/* 기본 폰트 설정 - Noto Sans */
 html {
-  font-family: var(--font-noto-sans-kr);
   /* 16px 브라우저 글꼴 크기의 62.5%는 10px입니다 */
   /* 16px * 0.625 = 10px */
   font-size: 62.5%;
-}
-
-/* 영문 페이지에서만 Roboto 적용 */
-html[lang='en'] {
-  font-family: var(--font-roboto);
-}
-
-/* 한글을 제외한 모든 영문 텍스트는 Roboto로 유지 */
-html[lang='ko'] *:not([lang='ko']) {
-  font-family: var(--font-roboto);
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-size: 1.6rem; /* 1.6 * 10px = 16px */
 }
 
 .container {
@@ -94,11 +73,15 @@ body {
 }
 
 body {
+  color: var(--foreground);
+  background: var(--background);
+  font-size: 1.6rem; /* 1.6 * 10px = 16px */
   max-width: var(--max-width);
   width: 100%;
   margin: 0 auto;
   min-width: 340px;
   background-color: var(--layout-bg-color);
+  overflow-y: auto;
 }
 
 @media (min-width: 768px) {
@@ -124,20 +107,27 @@ body {
 
 /* 스크롤바 커스텀 */
 @supports selector(::-webkit-scrollbar) {
-  .scrollbar-custom::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     width: 1px;
   }
-  .scrollbar-custom::-webkit-scrollbar-track {
+  ::-webkit-scrollbar-track {
     background: rgba(241, 241, 241, 0.3);
   }
-  .scrollbar-custom::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb {
     background: rgba(193, 193, 193, 0.6);
     border-radius: 4px;
+  }
+  ::-webkit-scrollbar:horizontal {
+    height: 1px;
   }
 }
 
 /* Firefox */
-.scrollbar-custom {
+* {
   scrollbar-width: thin;
   scrollbar-color: rgba(193, 193, 193, 0.3) rgba(241, 241, 241, 0.6);
+}
+
+.overflow-x-auto {
+  scroll-behavior: smooth;
 }

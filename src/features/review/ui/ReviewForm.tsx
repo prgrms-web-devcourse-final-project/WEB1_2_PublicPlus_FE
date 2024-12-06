@@ -60,7 +60,7 @@ export const ReviewForm = ({
           <Button
             type="button"
             variant="line"
-            onclick={onCancel}>
+            onClick={onCancel}>
             취소
           </Button>
         )}

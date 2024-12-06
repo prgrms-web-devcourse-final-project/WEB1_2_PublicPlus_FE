@@ -11,7 +11,7 @@ interface HeaderProps {
 
 const getDefaultTitle = (pathname: string) => {
   if (pathname?.includes('/facility/')) return '시설 상세';
-  if (pathname?.includes('/meeting/create')) return '모임 상세';
+  if (pathname?.includes('/meeting/create')) return '모임 등록';
   if (pathname?.includes('/calendar')) return '일정 상세';
   return '상세 정보';
 };

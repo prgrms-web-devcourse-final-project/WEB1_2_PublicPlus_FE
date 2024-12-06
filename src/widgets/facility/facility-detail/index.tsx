@@ -34,6 +34,8 @@ export default function FacilityDetail() {
     }
   });
 
+  console.log('시설 정보 조회: ', facility);
+
   if (!id) {
     return (
       <div className="p-4 text-center text-gray-500">잘못된 접근입니다.</div>

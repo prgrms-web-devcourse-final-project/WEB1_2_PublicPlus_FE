@@ -12,7 +12,8 @@ export function QueryProvider({ children }: { children: React.ReactNode }) {
     <QueryClientProvider client={queryClient}>
       {children}
       {process.env.NODE_ENV === 'development' && (
-        <ReactQueryDevtools initialIsOpen={true} /> // Query 상태 관리 도구
+        // React Query 상태를 시각적으로 디버깅할 수 있는 도구
+        <ReactQueryDevtools initialIsOpen={false} />
       )}
     </QueryClientProvider>
   );

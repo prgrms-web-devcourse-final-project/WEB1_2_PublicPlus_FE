@@ -20,7 +20,7 @@ export default function EditLayout({
       </main>
       <div className="sticky bottom-32 w-full">
         <Button
-          onclick={onSubmit}
+          onClick={onSubmit}
           size="lg"
           disabled={!isValid}
           fullWidth>

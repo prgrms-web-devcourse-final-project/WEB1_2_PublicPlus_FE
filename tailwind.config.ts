@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 import forms from '@tailwindcss/forms';
 import { PluginAPI } from 'tailwindcss/types/config';
+/** @type {import('tailwindcss').Config} */
 
 export default {
   content: [
@@ -91,6 +92,9 @@ export default {
       spacing: {
         'safe-top': 'env(safe-area-inset-top)',
         'safe-bottom': 'env(safe-area-inset-bottom)'
+      },
+      fontFamily: {
+        pretendard: ['var(--font-pretendard)', 'sans-serif']
       },
       fontSize: {
         '2xs': ['1rem', { lineHeight: '0.875rem' }], // 10px

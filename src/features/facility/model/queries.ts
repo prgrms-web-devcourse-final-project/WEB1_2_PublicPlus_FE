@@ -60,10 +60,6 @@ export const useFacilities = (
     onError?: (error: Error) => void;
   }
 ) => {
-  const queryFn = filters
-    ? () => facilityService.getFacilitiesWithFilter(page, size, filters)
-    : () => facilityService.getFacilities(page, size);
-
   return useQuery<
     PageFacilityResponseDTO,
     Error,
@@ -71,7 +67,10 @@ export const useFacilities = (
     ReturnType<typeof QUERY_KEYS.facility.list>
   >({
     queryKey: QUERY_KEYS.facility.list(page, size, filters),
-    queryFn,
+    queryFn: () =>
+      filters
+        ? facilityService.getFacilitiesWithFilter(page, size, filters)
+        : facilityService.getFacilities(page, size),
     ...options
   });
 };
