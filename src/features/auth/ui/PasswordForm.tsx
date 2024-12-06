@@ -17,9 +17,7 @@ export function PasswordForm() {
   );
 
   const handleSubmit = () => {
-    // if (!passwordError && !confirmError && password === passwordConfirm) {
     router.push('/signup/nickname');
-    // }
   };
 
   return (
@@ -48,7 +46,7 @@ export function PasswordForm() {
         variant="line"
         fullWidth
         size="lg"
-        onclickHandler={handleSubmit}
+        onclick={handleSubmit}
         // disabled={!!passwordError || !!confirmError}
       >
         다음 단계

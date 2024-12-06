@@ -19,7 +19,7 @@ export const CategoryFilter = () => {
       <SwiperSlide>
         <Button
           variant={filters.facilityCategory === null ? 'primary' : 'gray'}
-          onclickHandler={() => handleCategoryChange(null)}>
+          onclick={() => handleCategoryChange(null)}>
           전체
         </Button>
       </SwiperSlide>
@@ -29,7 +29,7 @@ export const CategoryFilter = () => {
             variant={
               filters.facilityCategory === category.value ? 'primary' : 'gray'
             }
-            onclickHandler={() => handleCategoryChange(category.value)}>
+            onclick={() => handleCategoryChange(category.value)}>
             {category.label}
           </Button>
         </SwiperSlide>

@@ -4,8 +4,9 @@ interface ButtonProps {
   children: React.ReactNode;
   fullWidth?: boolean;
   disabled?: boolean;
-  onclickHandler?: () => void;
+  onclick?: () => void;
   className?: string;
+  type?: 'button' | 'submit' | 'reset' | undefined;
 }
 
 export const Button = ({
@@ -14,8 +15,9 @@ export const Button = ({
   children,
   fullWidth = false,
   disabled = false,
-  onclickHandler = () => {},
-  className = ''
+  onclick = () => {},
+  className = '',
+  type = 'button'
 }: ButtonProps) => {
   const baseStyle = 'rounded transition-colors focus:outline-none';
 
@@ -60,9 +62,10 @@ export const Button = ({
 
   return (
     <button
+      type={type}
       className={` ${baseStyle} ${variants[variant]} ${sizes[size]} ${fullWidthClass} ${className}`}
       disabled={disabled}
-      onClick={onclickHandler}>
+      onClick={onclick}>
       {children}
     </button>
   );

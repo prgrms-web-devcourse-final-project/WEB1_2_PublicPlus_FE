@@ -1,50 +1,27 @@
-import { Tag } from '@/components/common/Tag';
 import { UserInfoCard } from '@/components/common/Cards/UserInfoCard';
 import { useRouter } from 'next/navigation';
+import { useUserQuery } from '@/entities/User/model/userQueries';
 
-interface UserInfoProps {
-  description?: string;
-}
-
-interface UserInfoProps {
-  description?: string;
-}
-
-export const UserInfo = ({ description = '' }: UserInfoProps) => {
+export const UserInfo = () => {
+  const { data: userInfo } = useUserQuery();
   const router = useRouter();
+
   return (
     <div className="space-y-4">
       <UserInfoCard
         title="내 소개글"
         buttonLabel={
-          !description || description === '' ? '작성하기' : '수정하기'
+          !userInfo?.description || userInfo.description === ''
+            ? '작성하기'
+            : '수정하기'
         }
         onClick={() => router.push('/profile/edit/description')}>
         <div className="my-2">
           <p className="text-xs text-gray-600">
-            {!description || description === ''
+            {!userInfo?.description || userInfo.description === ''
               ? '아직 작성되지 않았습니다.'
-              : description}
+              : userInfo.description}
           </p>
-        </div>
-      </UserInfoCard>
-
-      <UserInfoCard
-        title="관심 운동"
-        onClick={() => alert('관심운동 구현한다면 추가될 예정입니다.')}>
-        <div className="my-2 flex flex-wrap gap-2">
-          <Tag
-            label="🏋️ 웨이트 트레이닝"
-            variant="line"
-          />
-          <Tag
-            label="🚴 사이클링"
-            variant="line"
-          />
-          <Tag
-            label="🧘 요가"
-            variant="line"
-          />
         </div>
       </UserInfoCard>
     </div>

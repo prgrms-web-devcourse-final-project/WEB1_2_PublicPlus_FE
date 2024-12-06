@@ -1,6 +1,11 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  output: 'standalone',
+  reactStrictMode: true,
+  env: {
+    NEXT_PUBLIC_KAKAO_MAP_API_KEY: process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY
+  },
   webpack: config => {
     config.resolve.fallback = {
       ...config.resolve.fallback,
@@ -21,6 +26,12 @@ const nextConfig: NextConfig = {
     config.module.rules.push({
       test: /[\\/]stories[\\/]/,
       loader: 'ignore-loader'
+    });
+
+    // Kakao Maps 스크립트를 로드하기 위한 설정
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack']
     });
 
     return config;

@@ -132,26 +132,8 @@ export const facilitiesDetail: FacilityDetailsResponseDTO[] = [
     facilityDescription: '축구장 설명',
     serviceStartDate: '2024-03-01',
     serviceEndDate: '2024-12-31',
-    externalReviews: [
-      {
-        title: '보라매공원 테니스장 시설 좋아요! 가족들과 함께~',
-        url: 'https://blog.naver.com/example1',
-        content:
-          '코트 상태가 매우 좋습니다. 조명도 밝고 바닥도 깨끗해요. 다음에 또 이용하고 싶네요!',
-        date: '2024.02.15',
-        thumbnail: 'https://picsum.photos/200'
-      }
-    ],
-    reviews: [
-      {
-        id: '1',
-        userName: '김테니스',
-        userImage: 'https://picsum.photos/200',
-        date: '2024.02.20',
-        content:
-          '코트 상태가 매우 좋습니다. 조명도 밝고 바닥도 깨끗해요. 다음에 또 이용하고 싶네요!'
-      }
-    ]
+    latitude: 37.51512,
+    longitude: 127.07317
   },
   {
     facilityId: 'S210401100008601454',
@@ -169,16 +151,8 @@ export const facilitiesDetail: FacilityDetailsResponseDTO[] = [
     facilityDescription: '수영장 설명',
     serviceStartDate: '2024-01-01',
     serviceEndDate: '2024-12-31',
-    externalReviews: [],
-    reviews: [
-      {
-        id: '4',
-        userName: '이수영',
-        userImage: 'https://picsum.photos/203',
-        date: '2024.01.10',
-        content: '깨끗하고 물 온도도 적당해서 가족들이 즐겁게 이용했습니다.'
-      }
-    ]
+    latitude: 37.4959854,
+    longitude: 127.0664091
   },
   {
     facilityId: 'S210401100008601455',
@@ -196,24 +170,8 @@ export const facilitiesDetail: FacilityDetailsResponseDTO[] = [
     facilityDescription: '테니스장 설명',
     serviceStartDate: '2024-02-01',
     serviceEndDate: '2024-11-30',
-    externalReviews: [
-      {
-        title: '조용하고 깔끔한 송파 테니스장 후기',
-        url: 'https://blog.naver.com/example3',
-        content: '테니스장 관리가 잘 되어있어 다음에 또 이용하고 싶습니다.',
-        date: '2024.02.08',
-        thumbnail: 'https://picsum.photos/204'
-      }
-    ],
-    reviews: [
-      {
-        id: '5',
-        userName: '홍테니스',
-        userImage: 'https://picsum.photos/205',
-        date: '2024.02.07',
-        content: '시설 상태가 매우 훌륭하며 예약도 편리했습니다.'
-      }
-    ]
+    latitude: 37.5145937,
+    longitude: 127.1016857
   },
   {
     facilityId: 'S210401100008601456',
@@ -231,16 +189,8 @@ export const facilitiesDetail: FacilityDetailsResponseDTO[] = [
     facilityDescription: '배드민턴장 설명',
     serviceStartDate: '2024-03-01',
     serviceEndDate: '2024-12-31',
-    externalReviews: [],
-    reviews: [
-      {
-        id: '6',
-        userName: '정배드민턴',
-        userImage: 'https://picsum.photos/206',
-        date: '2024.03.05',
-        content: '시설이 잘 관리되고 있으며, 주차 공간도 넉넉합니다.'
-      }
-    ]
+    latitude: 37.5704164,
+    longitude: 126.9922784
   },
   {
     facilityId: 'S210401100008601457',
@@ -258,8 +208,8 @@ export const facilitiesDetail: FacilityDetailsResponseDTO[] = [
     facilityDescription: '배드민턴장 설명',
     serviceStartDate: '2024-04-01',
     serviceEndDate: '2024-11-30',
-    externalReviews: [],
-    reviews: []
+    latitude: 37.4837121,
+    longitude: 127.0324112
   },
   {
     facilityId: 'S210401100008601458',
@@ -277,8 +227,8 @@ export const facilitiesDetail: FacilityDetailsResponseDTO[] = [
     facilityDescription: '배드민턴장 설명',
     serviceStartDate: '2024-01-15',
     serviceEndDate: '2024-12-15',
-    externalReviews: [],
-    reviews: []
+    latitude: 37.5270616,
+    longitude: 126.8561534
   },
   {
     facilityId: 'S210401100008601459',
@@ -296,8 +246,8 @@ export const facilitiesDetail: FacilityDetailsResponseDTO[] = [
     facilityDescription: '배드민턴장 설명',
     serviceStartDate: '2024-02-10',
     serviceEndDate: '2024-12-10',
-    externalReviews: [],
-    reviews: []
+    latitude: 37.6026969,
+    longitude: 126.9291698
   },
   {
     facilityId: 'S210401100008601460',
@@ -314,8 +264,8 @@ export const facilitiesDetail: FacilityDetailsResponseDTO[] = [
     facilityDescription: '체육관 설명',
     serviceStartDate: '2024-03-01',
     serviceEndDate: '2024-12-31',
-    externalReviews: [],
-    reviews: []
+    latitude: 37.5384843,
+    longitude: 127.0822631
   },
   {
     facilityId: 'S210401100008601461',
@@ -332,8 +282,8 @@ export const facilitiesDetail: FacilityDetailsResponseDTO[] = [
     facilityDescription: '체육관 설명',
     serviceStartDate: '2024-03-01',
     serviceEndDate: '2024-12-31',
-    externalReviews: [],
-    reviews: []
+    latitude: 37.5640907,
+    longitude: 126.9975894
   },
   {
     facilityId: 'S210401100008601462',
@@ -350,7 +300,7 @@ export const facilitiesDetail: FacilityDetailsResponseDTO[] = [
     facilityDescription: '시립 체육관 설명',
     serviceStartDate: '2024-01-01',
     serviceEndDate: '2024-12-31',
-    externalReviews: [],
-    reviews: []
+    latitude: 37.6541917,
+    longitude: 127.0564832
   }
 ];

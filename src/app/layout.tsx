@@ -1,5 +1,5 @@
 import '@/styles/globals.css';
-import { defaultMetadata } from '@/metadata/default-metadata';
+import { defaultMetadata } from '@/shared/config/metadata/default-metadata';
 import { MSWComponent } from '@/components/MSWComponent';
 import { Providers } from './providers';
 import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary';

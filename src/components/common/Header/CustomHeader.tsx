@@ -1,7 +1,6 @@
 'use client';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import styles from './CustomHeader.module.css';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface CustomHeaderProps {
   title?: string;
@@ -14,16 +13,24 @@ interface CustomHeaderProps {
 
 export const CustomHeader = ({ title, rightButton }: CustomHeaderProps) => {
   const router = useRouter();
+  const pathname = usePathname() ?? '/'; // null일 경우 기본값 '/' 사용
 
   const handleGoBack = () => {
-    router.back();
+    const pathSegments = pathname.split('/').filter(Boolean);
+
+    if (pathSegments.length > 1) {
+      const newPath = '/' + pathSegments.slice(0, -1).join('/');
+      router.push(newPath);
+    } else {
+      router.push('/');
+    }
   };
 
   return (
-    <header className={styles.customHeader}>
-      <div className={styles.headerContent}>
+    <header className="fixed left-0 right-0 top-0 z-40 mx-auto h-[56px] w-full max-w-[600px] bg-white">
+      <div className="flex h-full w-full items-center justify-between px-4 md:px-6">
         <button
-          className={styles.backButton}
+          className="flex items-center justify-center rounded-lg border border-gray-200 p-2"
           onClick={handleGoBack}>
           <Image
             src="/icons/left-arrow.png"
@@ -32,11 +39,11 @@ export const CustomHeader = ({ title, rightButton }: CustomHeaderProps) => {
             height={24}
           />
         </button>
-        {title && <h1 className={styles.headerTitle}>{title}</h1>}
+        {title && <h1 className="mx-auto text-m">{title}</h1>}
 
         {rightButton && (
           <button
-            className={styles.rightButton}
+            className="absolute right-4 flex items-center justify-center rounded-lg border border-gray-200 p-2"
             onClick={rightButton.onClick}>
             <Image
               src={rightButton.icon}

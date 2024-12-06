@@ -16,7 +16,7 @@ export const Pagination = ({
       <div className="flex items-center space-x-2">
         <Button
           variant="gray"
-          onclickHandler={() => onPageChange(currentPage - 1)}
+          onclick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 0}>
           이전
         </Button>
@@ -24,13 +24,13 @@ export const Pagination = ({
           <Button
             key={i}
             variant={i === currentPage ? 'primary' : 'gray'}
-            onclickHandler={() => onPageChange(i)}>
+            onclick={() => onPageChange(i)}>
             {i + 1}
           </Button>
         ))}
         <Button
           variant="gray"
-          onclickHandler={() => onPageChange(currentPage + 1)}
+          onclick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages - 1}>
           다음
         </Button>

@@ -130,6 +130,6 @@ export const AllVariants: Story = {
 export const WithClickHandler: Story = {
   args: {
     children: '클릭해보세요',
-    onclickHandler: () => alert('버튼이 클릭되었습니다!')
+    onclick: () => alert('버튼이 클릭되었습니다!')
   }
 };

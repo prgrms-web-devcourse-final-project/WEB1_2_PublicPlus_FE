@@ -1,11 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import type { FacilityFilterDTO } from '@/api/generated';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import type {
+  FacilityFilterDTO,
+  FacilityDetailsResponseDTO,
+  PageFacilityResponseDTO
+} from '@/api/generated';
 import { facilityService } from '@/entities/facility/api/facilityService';
-
-// 헬퍼 함수: 필터 유효성 검사
-const hasValidFilters = (filters?: FacilityFilterDTO): boolean => {
-  return filters ? Object.values(filters).some(value => value !== null) : false;
-};
 
 // Query Key 정의
 export const QUERY_KEYS = {
@@ -18,12 +17,29 @@ export const QUERY_KEYS = {
 } as const;
 
 // 시설 상세 정보 조회
-export const useFacilityDetail = (id: string) => {
-  return useQuery({
+export const useFacilityDetail = (
+  id: string,
+  options?: Omit<
+    UseQueryOptions<
+      FacilityDetailsResponseDTO,
+      Error,
+      FacilityDetailsResponseDTO,
+      ReturnType<typeof QUERY_KEYS.facility.detail>
+    >,
+    'queryKey' | 'queryFn'
+  > & {
+    onError?: (error: Error) => void;
+  }
+) => {
+  return useQuery<
+    FacilityDetailsResponseDTO,
+    Error,
+    FacilityDetailsResponseDTO,
+    ReturnType<typeof QUERY_KEYS.facility.detail>
+  >({
     queryKey: QUERY_KEYS.facility.detail(id),
     queryFn: () => facilityService.getFacilityDetail(id),
-    enabled: !!id, // id가 있어야만 쿼리 실행
-    retry: false // 필요 시 재시도 여부 설정
+    ...options
   });
 };
 
@@ -31,18 +47,31 @@ export const useFacilityDetail = (id: string) => {
 export const useFacilities = (
   page: number = 0,
   size: number = 5,
-  filters?: FacilityFilterDTO
+  filters?: FacilityFilterDTO,
+  options?: Omit<
+    UseQueryOptions<
+      PageFacilityResponseDTO,
+      Error,
+      PageFacilityResponseDTO,
+      ReturnType<typeof QUERY_KEYS.facility.list>
+    >,
+    'queryKey' | 'queryFn'
+  > & {
+    onError?: (error: Error) => void;
+  }
 ) => {
-  const hasFilters = hasValidFilters(filters);
+  const queryFn = filters
+    ? () => facilityService.getFacilitiesWithFilter(page, size, filters)
+    : () => facilityService.getFacilities(page, size);
 
-  return useQuery({
+  return useQuery<
+    PageFacilityResponseDTO,
+    Error,
+    PageFacilityResponseDTO,
+    ReturnType<typeof QUERY_KEYS.facility.list>
+  >({
     queryKey: QUERY_KEYS.facility.list(page, size, filters),
-    queryFn: () => {
-      if (hasFilters) {
-        return facilityService.getFacilitiesWithFilter(page, size, filters!);
-      }
-      return facilityService.getFacilities(page, size);
-    },
-    enabled: page >= 0 && size > 0 // 유효한 페이지와 크기일 경우만 활성화
+    queryFn,
+    ...options
   });
 };

@@ -1,21 +1,38 @@
 'use client';
-import EditLayout from '@/features/mypage/ui/EditLayout';
-import { useState } from 'react';
 
-const MAX_LENGTH = 50;
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+import { useUserQuery } from '@/entities/User/model/userQueries';
+import { userService } from '@/entities/User/api/userService';
+
+import EditLayout from '@/features/mypage/ui/EditLayout';
+import { USER_DESCRIPTION_CONSTRAINTS } from '@/features/mypage/model/constants/userProfile';
 
 export default function DescriptionEditPage() {
-  const [description, setDescription] = useState('');
+  const router = useRouter();
+  const { data: userInfo } = useUserQuery();
+  const [description, setDescription] = useState(userInfo?.description ?? '');
+  const [error, setError] = useState('');
 
-  const handleSubmit = () => {
-    // 소개글 저장 로직
-    alert('저장되었습니다.');
+  const handleSubmit = async () => {
+    try {
+      if (userInfo?.userId) {
+        await userService.updateDescription(userInfo.userId, description);
+        router.push('/profile/edit');
+      }
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : '소개글 변경에 실패했습니다.';
+      setError(errorMessage);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
-    if (value.length <= MAX_LENGTH) {
+    if (value.length <= USER_DESCRIPTION_CONSTRAINTS.MAX_LENGTH) {
       setDescription(value);
+      setError(''); // 입력 시 에러 초기화
     }
   };
 
@@ -31,8 +48,9 @@ export default function DescriptionEditPage() {
           className="input-form mt-1 block h-32 w-full resize-none rounded-md border-gray-300 p-4 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
           placeholder="자기 소개글을 입력해주세요."
         />
+        {error && <div className="mt-2 text-sm text-red-500">{error}</div>}
         <div className="mt-2 text-right text-sm text-gray-500">
-          {description.length}/{MAX_LENGTH}자
+          {description.length}/{USER_DESCRIPTION_CONSTRAINTS.MAX_LENGTH}자
         </div>
       </div>
     </EditLayout>
