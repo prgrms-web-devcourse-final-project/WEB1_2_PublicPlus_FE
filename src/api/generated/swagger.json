@@ -22,16 +22,48 @@
   ],
   "tags": [
     {
-      "name": "FacilityController",
-      "description": "시설 검색정보, 상세정보를 다루는 API입니다."
+      "name": "Activity ParticipantsController ",
+      "description": "모임 참가자에 대한 컨트롤러 입니다"
+    },
+    {
+      "name": "ChatRoom Controller",
+      "description": "채팅방 관련 API"
+    },
+    {
+      "name": "Message Controller",
+      "description": "채팅 메시지 관련 API"
     },
     {
       "name": "EmailController",
       "description": "이메일 인증메일을 보내거나 이메일에 대한 확인 검증을 합니다"
     },
     {
+      "name": "FacilityController",
+      "description": "FacilitySearch and FacilityDetailPage API"
+    },
+    {
       "name": "UserController",
       "description": "사용자 관련 처리를 하는 컨트롤러입니다(회원가입,로그인,로그아웃,토큰 등등)"
+    },
+    {
+      "name": "Chat Participant Controller",
+      "description": "채팅 참가자 관련 API"
+    },
+    {
+      "name": "Activity-MeetingBoard Controller",
+      "description": "모임과 모임게시판을 연결시켜 관리하는 api 입니다"
+    },
+    {
+      "name": "Meeting Board",
+      "description": "모임 게시판 관련 API"
+    },
+    {
+      "name": "ActivityController",
+      "description": "About googleCalendar And Activity API"
+    },
+    {
+      "name": "facility-Like Controller",
+      "description": "시설의 좋아요를 관리하는 컨트롤러입니다"
     },
     {
       "name": "OAuth2Controller",
@@ -41,15 +73,15 @@
   "paths": {
     "/api/meetingboard/{mbId}": {
       "get": {
-        "tags": ["meeting-board-controller"],
+        "tags": ["Meeting Board"],
+        "summary": "모임 상세 조회",
+        "description": "특정 ID의 모임을 조회합니다.",
         "operationId": "getMeetingBoardById",
         "parameters": [
           {
             "name": "mbId",
             "in": "path",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -58,11 +90,31 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "조회 성공",
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/MeetingBoardResponseDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "모임을 찾을 수 없습니다.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingBoardResponseDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "서버 내부 오류",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingBoardResponseDTO"
                 }
               }
             }
@@ -70,15 +122,15 @@
         }
       },
       "put": {
-        "tags": ["meeting-board-controller"],
+        "tags": ["Meeting Board"],
+        "summary": "모임 수정",
+        "description": "특정 ID의 모임 정보를 수정합니다.",
         "operationId": "updateMeetingBoard",
         "parameters": [
           {
             "name": "mbId",
             "in": "path",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -97,11 +149,41 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "수정 성공",
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/MeetingBoardResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "유효하지 않은 요청 데이터",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingBoardResponseDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "수정 권한 없음",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingBoardResponseDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "모임을 찾을 수 없음",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingBoardResponseDTO"
                 }
               }
             }
@@ -109,15 +191,15 @@
         }
       },
       "delete": {
-        "tags": ["meeting-board-controller"],
+        "tags": ["Meeting Board"],
+        "summary": "모임 삭제",
+        "description": "특정 ID의 모임 정보를 삭제합니다.",
         "operationId": "deleteMeetingBoard",
         "parameters": [
           {
             "name": "mbId",
             "in": "path",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -125,15 +207,14 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
+          "204": {
+            "description": "삭제 성공"
+          },
+          "403": {
+            "description": "삭제 권한 없음"
+          },
+          "404": {
+            "description": "모임을 찾을 수 없음"
           }
         }
       }
@@ -142,11 +223,21 @@
       "put": {
         "tags": ["event-controller"],
         "operationId": "updateEvent",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ActivityUpdateDTO"
+                "$ref": "#/components/schemas/ActivityRequestDTO"
               }
             }
           },
@@ -168,11 +259,21 @@
       "post": {
         "tags": ["event-controller"],
         "operationId": "createEvent",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ActivityCreateDTO"
+                "$ref": "#/components/schemas/ActivityRequestDTO"
               }
             }
           },
@@ -192,107 +293,6 @@
         }
       }
     },
-    "/api/facility-detail/{facilityId}/reviews/{reviewId}": {
-      "put": {
-        "tags": ["ReviewController"],
-        "summary": "시설 리뷰 수정",
-        "description": "특정 리뷰의 내용을 수정합니다.",
-        "parameters": [
-          {
-            "name": "facilityId",
-            "in": "path",
-            "description": "시설 ID",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "reviewId",
-            "in": "path",
-            "description": "리뷰 ID",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "수정할 리뷰 정보",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ReviewDTO"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "성공",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ReviewDTO"
-                }
-              }
-            }
-          }
-        },
-        "x-content-type": "application/json",
-        "x-accepts": ["application/json"]
-      },
-      "delete": {
-        "tags": ["ReviewController"],
-        "summary": "시설 리뷰 삭제",
-        "description": "특정 리뷰를 삭제합니다.",
-        "parameters": [
-          {
-            "name": "facilityId",
-            "in": "path",
-            "description": "시설 ID",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "reviewId",
-            "in": "path",
-            "description": "리뷰 ID",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "성공",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-accepts": ["application/json"]
-      }
-    },
     "/api/facility-detail/{facilityId}": {
       "get": {
         "tags": ["FacilityController"],
@@ -304,8 +304,6 @@
             "name": "facilityId",
             "in": "path",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -344,8 +342,6 @@
             "name": "facilityId",
             "in": "path",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -426,8 +422,6 @@
             "name": "facilityId",
             "in": "path",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -476,46 +470,23 @@
         }
       }
     },
-    "/api/activity/{activityId}": {
-      "get": {
-        "tags": ["activity-controller"],
-        "operationId": "getActivity",
-        "parameters": [
-          {
-            "name": "activityId",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ActivityResponseDTO"
-                }
-              }
-            }
-          }
-        }
-      },
+    "/api/facility-detail/{facilityId}/reviews/{reviewId}": {
       "put": {
-        "tags": ["activity-controller"],
-        "operationId": "updateActivity",
+        "tags": ["review-controller"],
+        "operationId": "updateReview",
         "parameters": [
           {
-            "name": "activityId",
+            "name": "facilityId",
             "in": "path",
             "required": true,
-            "style": "simple",
-            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -526,7 +497,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ActivityUpdateDTO"
+                "$ref": "#/components/schemas/ReviewDTO"
               }
             }
           },
@@ -538,7 +509,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ActivityResponseDTO"
+                  "$ref": "#/components/schemas/ReviewDTO"
                 }
               }
             }
@@ -546,15 +517,21 @@
         }
       },
       "delete": {
-        "tags": ["activity-controller"],
-        "operationId": "deleteActivity",
+        "tags": ["review-controller"],
+        "operationId": "deleteReview",
         "parameters": [
           {
-            "name": "activityId",
+            "name": "facilityId",
             "in": "path",
             "required": true,
-            "style": "simple",
-            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -564,6 +541,240 @@
         "responses": {
           "200": {
             "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/facade": {
+      "put": {
+        "tags": ["Activity-MeetingBoard Controller"],
+        "summary": "모임 수정하기",
+        "description": "모임 게시판과 모임을 동시에 수정합니다",
+        "operationId": "updateMeetingActivity",
+        "parameters": [
+          {
+            "name": "activityId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeetingBoardRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "업데이트 성공",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingBoardResponseDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "모임(게시판)을 찾을 수 없습니다",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingBoardResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Activity-MeetingBoard Controller"],
+        "summary": "모임 생성하기",
+        "description": "모임 게시판과 모임을 동시에 생성합니다",
+        "operationId": "createMeetingActivity",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeetingBoardRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "생성 성공",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingBoardResponseDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "회원을 찾을 수 없습니다",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingBoardResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/activity/{activityId}": {
+      "get": {
+        "tags": ["ActivityController"],
+        "summary": "모임을 ID로 검색",
+        "description": "특정 ID에 해당하는 모임 정보를 반환합니다.",
+        "operationId": "getActivity",
+        "parameters": [
+          {
+            "name": "activityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "검색 성공",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityResponseDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "해당 ID의 모임이 존재하지 않음",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["ActivityController"],
+        "summary": "모임 수정",
+        "description": "모임 정보를 업데이트하고, 수정된 정보를 반환합니다.",
+        "operationId": "updateActivity",
+        "parameters": [
+          {
+            "name": "activityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActivityRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "모임 수정 성공",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "요청 데이터가 유효하지 않음",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityResponseDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "해당 ID의 모임이 존재하지 않음",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["ActivityController"],
+        "summary": "모임 삭제",
+        "description": "특정 ID의 모임을 삭제합니다.",
+        "operationId": "deleteActivity",
+        "parameters": [
+          {
+            "name": "activityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "모임 삭제 성공",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "해당 ID의 모임이 존재하지 않음",
             "content": {
               "*/*": {
                 "schema": {
@@ -603,6 +814,16 @@
         "summary": "토큰 재발급",
         "description": "HTTP헤더에 담긴 refresh_token을 이용해 access_token을 재발급합니다",
         "operationId": "resignAccessTokenByHeader",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "정상 반환",
@@ -648,8 +869,6 @@
             "name": "refresh_token",
             "in": "cookie",
             "required": true,
-            "style": "form",
-            "explode": true,
             "schema": {
               "type": "string"
             }
@@ -700,8 +919,6 @@
             "name": "userId",
             "in": "path",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -711,7 +928,13 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/profile_userId_body"
+                "type": "object",
+                "properties": {
+                  "multipartFile": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
               }
             }
           }
@@ -769,8 +992,6 @@
             "name": "userId",
             "in": "path",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -835,11 +1056,8 @@
             "description": "정상 반환",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/JwtToken"
-                },
                 "example": {
-                  "authentication": "Bearer",
+                  "bearer": "Bearer",
                   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
                   "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
                   "userId": "sda1fsd3-ds6au-fs3fds5"
@@ -902,6 +1120,22 @@
       }
     },
     "/api/push/send": {
+      "get": {
+        "tags": ["push-notification-controller"],
+        "operationId": "sendPushNotification_2",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": ["push-notification-controller"],
         "operationId": "sendPushNotification",
@@ -950,17 +1184,78 @@
         }
       }
     },
-    "/api/meetingboard": {
-      "get": {
-        "tags": ["meeting-board-controller"],
-        "operationId": "getAllMeetingBoards",
+    "/api/messages": {
+      "post": {
+        "tags": ["Message Controller"],
+        "summary": "메시지 전송",
+        "description": "특정 채팅방에 메시지를 전송합니다.",
+        "operationId": "sendMessage",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/MessageResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/meetingboard": {
+      "get": {
+        "tags": ["Meeting Board"],
+        "summary": "모임 전체 조회",
+        "description": "등록된 모든 모임을 조회합니다.",
+        "operationId": "getAllMeetingBoards",
+        "responses": {
+          "200": {
+            "description": "조회 성공",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MeetingBoardResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "모임이 없습니다.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MeetingBoardResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "서버 내부 오류",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MeetingBoardResponseDTO"
+                  }
                 }
               }
             }
@@ -968,7 +1263,9 @@
         }
       },
       "post": {
-        "tags": ["meeting-board-controller"],
+        "tags": ["Meeting Board"],
+        "summary": "모임 생성",
+        "description": "새로운 모임을 생성합니다.",
         "operationId": "createMeetingBoard",
         "requestBody": {
           "content": {
@@ -981,12 +1278,160 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "OK",
+          "201": {
+            "description": "모임 생성 성공",
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/MeetingBoardResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "유효하지 않은 요청 데이터",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingBoardResponseDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "로그인이 필요합니다.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingBoardResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/meetingboard/filter": {
+      "post": {
+        "tags": ["Meeting Board"],
+        "summary": "모임 검색",
+        "description": "필터를 통해 모임게시판을 검색합니다",
+        "operationId": "filterSearch",
+        "parameters": [
+          {
+            "name": "pageable",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pageable"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BoardFilterDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "검색 성공",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "스포츠 카테고리가 올바르지 않습니다",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/like-facility": {
+      "post": {
+        "tags": ["facility-Like Controller"],
+        "summary": "좋아요",
+        "description": "시설 아이디를 받아 좋아요를 누릅니다",
+        "operationId": "addlike",
+        "parameters": [
+          {
+            "name": "facilityId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "좋아요",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "이미 좋아요를 눌렀습니다",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["facility-Like Controller"],
+        "summary": "좋아요 취소",
+        "description": "좋아요를 누른 상태라면 좋아요 취소버튼 활성화 또는 버튼을 다시 누르면 좋아요 취소",
+        "operationId": "dislike",
+        "parameters": [
+          {
+            "name": "facilityId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "좋아요 취소",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "유저(시설)을 찾을 수 없습니다",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
                 }
               }
             }
@@ -1024,17 +1469,13 @@
     },
     "/api/facility-detail/{facilityId}/reviews": {
       "get": {
-        "tags": ["ReviewController"],
-        "summary": "시설 리뷰 조회",
-        "description": "특정 시설에 대한 내부 및 외부 리뷰를 조회합니다.",
+        "tags": ["review-controller"],
+        "operationId": "getReviewsByFacility",
         "parameters": [
           {
             "name": "facilityId",
             "in": "path",
-            "description": "시설 ID",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -1042,37 +1483,34 @@
         ],
         "responses": {
           "200": {
-            "description": "성공",
+            "description": "OK",
             "content": {
-              "application/json": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/FacilityReviewsResponse"
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
                 }
               }
             }
           }
-        },
-        "x-accepts": ["application/json"]
+        }
       },
       "post": {
-        "tags": ["ReviewController"],
-        "summary": "시설 리뷰 생성",
-        "description": "특정 시설에 대한 리뷰를 생성합니다.",
+        "tags": ["review-controller"],
+        "operationId": "createReview",
         "parameters": [
           {
             "name": "facilityId",
             "in": "path",
-            "description": "시설 ID",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "string"
             }
           }
         ],
         "requestBody": {
-          "description": "생성할 리뷰 정보",
           "content": {
             "application/json": {
               "schema": {
@@ -1083,19 +1521,17 @@
           "required": true
         },
         "responses": {
-          "201": {
-            "description": "리뷰 생성 성공",
+          "200": {
+            "description": "OK",
             "content": {
-              "application/json": {
+              "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/ReviewDTO"
                 }
               }
             }
           }
-        },
-        "x-content-type": "application/json",
-        "x-accepts": ["application/json"]
+        }
       }
     },
     "/api/facility-detail/location": {
@@ -1121,7 +1557,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Page"
+                  "$ref": "#/components/schemas/PagedModel"
                 },
                 "example": {
                   "totalElements": 2,
@@ -1192,6 +1628,16 @@
         "summary": "시설 필터링 검색",
         "description": "시설 검색정보를 여러 조건으로 필터링하여 조회합니다.",
         "operationId": "facilityFilter",
+        "parameters": [
+          {
+            "name": "pageable",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pageable"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1208,7 +1654,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/PageFacilityResponseDTO"
+                  "$ref": "#/components/schemas/PagedModel"
                 }
               }
             }
@@ -1271,8 +1717,6 @@
             "in": "query",
             "description": "인증번호를 보낸 email 주소",
             "required": true,
-            "style": "form",
-            "explode": true,
             "schema": {
               "type": "string",
               "description": "인증번호를 보낸 email 주소",
@@ -1285,12 +1729,10 @@
             "in": "query",
             "description": "받은 인증번호",
             "required": true,
-            "style": "form",
-            "explode": true,
             "schema": {
               "type": "string",
               "description": "받은 인증번호",
-              "example": "123456"
+              "example": 123456
             },
             "example": 123456
           }
@@ -1311,9 +1753,6 @@
             "description": "인증 실패 : 인증번호 불일치",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                },
                 "example": {
                   "httpStatus": "BAD_REQUEST",
                   "message": "인증번호가 일치하지 않습니다"
@@ -1334,8 +1773,6 @@
             "in": "query",
             "description": "인증번호를 보낼 email 주소",
             "required": true,
-            "style": "form",
-            "explode": true,
             "schema": {
               "type": "string",
               "description": "인증번호를 보낼 email 주소",
@@ -1387,15 +1824,35 @@
         }
       }
     },
-    "/api/activity": {
+    "/api/chatroom": {
+      "get": {
+        "tags": ["ChatRoom Controller"],
+        "summary": "모든 채팅방 조회",
+        "description": "현재 존재하는 모든 채팅방을 조회합니다.",
+        "operationId": "getAllChatRooms",
+        "responses": {
+          "200": {
+            "description": "채팅방 목록 조회 성공",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatRoomResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
-        "tags": ["activity-controller"],
-        "operationId": "createActivity",
+        "tags": ["ChatRoom Controller"],
+        "summary": "그룹 채팅방 생성",
+        "description": "새로운 그룹 채팅방을 생성합니다.",
+        "operationId": "createChatRoom",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ActivityCreateDTO"
+                "$ref": "#/components/schemas/ChatRoomRequestDTO"
               }
             }
           },
@@ -1403,11 +1860,241 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "채팅방 생성 성공",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatRoomResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "잘못된 요청",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "잘못된 요청입니다."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chatroom/{chatRoomId}/join": {
+      "post": {
+        "tags": ["ChatRoom Controller"],
+        "summary": "특정 채팅방 입장",
+        "description": "사용자가 특정 채팅방에 입장합니다.",
+        "operationId": "joinChatRoom",
+        "parameters": [
+          {
+            "name": "chatRoomId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "채팅방 입장 성공",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "사용자가 채팅방에 입장했습니다."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "채팅방을 찾을 수 없음",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "채팅방을 찾을 수 없습니다."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/join": {
+      "post": {
+        "tags": ["admin-controller"],
+        "operationId": "joinAdmin",
+        "parameters": [
+          {
+            "name": "adminJoinDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AdminJoinDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/activity": {
+      "get": {
+        "tags": ["ActivityController"],
+        "summary": "내 모임 조회",
+        "description": "유저 아이디를 통해 유저의 모임들을 조회합니다",
+        "operationId": "findActivitiesByUserId",
+        "parameters": [
+          {
+            "name": "pageable",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pageable"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "조회성공",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "유저를 찾을 수 없습니다",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["ActivityController"],
+        "summary": "모임 생성",
+        "description": "새로운 모임을 생성하고, 생성된 모임 정보를 반환합니다.",
+        "operationId": "createActivity",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActivityRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "모임 생성 성공",
             "content": {
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/ActivityResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "생성 데이터가 유효하지 않음",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/activity-participants/{activityId}": {
+      "post": {
+        "tags": ["Activity ParticipantsController "],
+        "summary": "모임 참가",
+        "description": "모임 아이디를 기반으로 모임을 참가합니다",
+        "operationId": "joinActivity",
+        "parameters": [
+          {
+            "name": "activityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "참가 성공",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "모임에 더 참가할 수 없습니다",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Activity ParticipantsController "],
+        "summary": "모임 나가기",
+        "description": "모임 아이디 기반 모임 나가기",
+        "operationId": "quitActivity",
+        "parameters": [
+          {
+            "name": "activityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "모임을 찾을 수 없습니다",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
                 }
               }
             }
@@ -1426,8 +2113,6 @@
             "name": "userId",
             "in": "path",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -1482,8 +2167,6 @@
             "name": "userId",
             "in": "path",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -1563,8 +2246,6 @@
             "name": "userId",
             "in": "path",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -1575,13 +2256,10 @@
             "description": "정상 반환",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDTO"
-                },
                 "example": {
                   "userId": "adf2ds3-das4fs2daf-ds4a3fn23",
                   "email": "example@example.com",
-                  "profile_image": "이미지 주소가 들어갈 예정입니다",
+                  "profile_image": "BAD_REQUEST",
                   "nickname": "만득이",
                   "description": "안녕하세요. 반갑습니다",
                   "role": "USER"
@@ -1601,8 +2279,6 @@
             "name": "userId",
             "in": "path",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -1628,6 +2304,16 @@
         "summary": "로그아웃",
         "description": "로그아웃을 합니다.",
         "operationId": "logout",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "204": {
             "description": "로그아웃 완료"
@@ -1646,8 +2332,6 @@
             "name": "provider",
             "in": "path",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -1663,6 +2347,40 @@
                   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
                   "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
                   "userId": "sda1fsd3-ds6au-fs3fds5"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/messages/{chatRoomId}": {
+      "get": {
+        "tags": ["Message Controller"],
+        "summary": "특정 채팅방 메시지 조회",
+        "description": "특정 채팅방에 포함된 메시지를 조회합니다.",
+        "operationId": "getMessagesByChatRoom",
+        "parameters": [
+          {
+            "name": "chatRoomId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MessageResponseDTO"
+                  }
                 }
               }
             }
@@ -1699,8 +2417,6 @@
             "name": "facilityName",
             "in": "query",
             "required": true,
-            "style": "form",
-            "explode": true,
             "schema": {
               "type": "string"
             }
@@ -1736,6 +2452,16 @@
         "summary": "시설 목록 페이지 조회",
         "description": "모든 시설 목록을 페이지 단위로 조회합니다.",
         "operationId": "getAllFacilities",
+        "parameters": [
+          {
+            "name": "pageable",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pageable"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "시설 목록 조회 성공",
@@ -1797,13 +2523,255 @@
         "summary": "시설 상세 정보 목록 조회",
         "description": "모든 시설 상세 정보를 페이지 단위로 조회합니다.",
         "operationId": "getAllFacilityDetails",
+        "parameters": [
+          {
+            "name": "pageable",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pageable"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/PageFacilityDetailsResponseDTO"
+                  "$ref": "#/components/schemas/PagedModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chatroom/{chatRoomId}": {
+      "get": {
+        "tags": ["ChatRoom Controller"],
+        "summary": "특정 채팅방 정보 조회",
+        "description": "특정 채팅방의 정보를 조회합니다.",
+        "operationId": "getChatRoomById",
+        "parameters": [
+          {
+            "name": "chatRoomId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "채팅방 정보 조회 성공",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatRoomResponseDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "채팅방을 찾을 수 없음",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "채팅방을 찾을 수 없습니다."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chat/chatparticipant": {
+      "get": {
+        "tags": ["Chat Participant Controller"],
+        "summary": "채팅 참가자 정보 조회",
+        "description": "특정 채팅방에 속한 참가자의 정보를 조회합니다.",
+        "operationId": "getParticipant",
+        "parameters": [
+          {
+            "name": "chatRoomId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "참가자 정보 조회 성공",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatParticipantResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "잘못된 요청",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "잘못된 요청입니다."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/users": {
+      "get": {
+        "tags": ["admin-controller"],
+        "operationId": "findAllUsers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/super/codes": {
+      "get": {
+        "tags": ["admin-controller"],
+        "operationId": "findAllCode",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdminCode"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/super/code": {
+      "get": {
+        "tags": ["admin-controller"],
+        "operationId": "generateCode",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdminCode"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/super/admins": {
+      "get": {
+        "tags": ["admin-controller"],
+        "operationId": "findAllAdmins",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": ["controller"],
+        "operationId": "home",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/messages/{chatRoomId}/{messageId}": {
+      "delete": {
+        "tags": ["Message Controller"],
+        "summary": "메시지 삭제",
+        "description": "특정 메시지를 삭제합니다.",
+        "operationId": "deleteMessage",
+        "parameters": [
+          {
+            "name": "chatRoomId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "messageId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "requesterId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
                 }
               }
             }
@@ -1815,6 +2783,16 @@
       "delete": {
         "tags": ["event-controller"],
         "operationId": "deleteEvent",
+        "parameters": [
+          {
+            "name": "googleCalenderId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1859,46 +2837,98 @@
           }
         }
       }
+    },
+    "/api/chatroom/{chatRoomId}/leave": {
+      "delete": {
+        "tags": ["ChatRoom Controller"],
+        "summary": "채팅방 나가기",
+        "description": "참가자가 채팅방을 나갑니다.",
+        "operationId": "leaveChatRoom",
+        "parameters": [
+          {
+            "name": "chatRoomId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "채팅방 나가기 성공",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "채팅방을 성공적으로 나갔습니다."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "채팅방을 찾을 수 없음",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "채팅방을 찾을 수 없습니다."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/super/admin/{userId}": {
+      "delete": {
+        "tags": ["admin-controller"],
+        "operationId": "deleteAdmin",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
-      "LocalTime": {
-        "type": "object",
-        "properties": {
-          "hour": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "minute": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "second": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "nano": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
       "MeetingBoardRequestDTO": {
         "required": [
+          "endTime",
           "maxParticipants",
           "mbContent",
-          "mbDate",
-          "mbHost",
           "mbLocation",
-          "mbTime",
           "mbTitle",
-          "sportType"
+          "sportType",
+          "startTime"
         ],
         "type": "object",
         "properties": {
           "sportType": {
             "type": "string",
+            "description": "운동 종목 (예: SOCCER, BASEBALL)",
+            "example": "SOCCER",
             "enum": [
               "BADMINTON",
               "BASEBALL",
@@ -1909,108 +2939,146 @@
             ]
           },
           "mbTitle": {
-            "type": "string"
+            "type": "string",
+            "description": "모임 제목",
+            "example": "풋살 경기 참가자 모집"
           },
           "mbContent": {
             "maxLength": 500,
             "minLength": 0,
-            "type": "string"
-          },
-          "mbDate": {
             "type": "string",
-            "format": "date"
+            "description": "모임 내용",
+            "example": "이번 주 토요일 오후 3시에 함께 풋살하실 분 모집합니다!"
           },
-          "mbTime": {
-            "$ref": "#/components/schemas/LocalTime"
+          "startTime": {
+            "type": "string",
+            "description": "모임 시작 시간",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "description": "모임 종료 시간",
+            "format": "date-time"
           },
           "mbLocation": {
-            "type": "string"
-          },
-          "mbHost": {
-            "type": "string"
+            "type": "string",
+            "description": "모임 장소",
+            "example": "서울특별시 강남구 삼성동 풋살장"
           },
           "maxParticipants": {
             "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "ActivityUpdateDTO": {
-        "type": "object",
-        "properties": {
-          "activityId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "title": {
-            "type": "string"
-          },
-          "eventId": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "location": {
-            "type": "string"
-          },
-          "startTime": {
-            "type": "string"
-          },
-          "endTime": {
-            "type": "string"
-          },
-          "googleCalenderId": {
-            "type": "string"
-          },
-          "maxAttendees": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "ReviewDTO": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "facilityId": {
-            "type": "string"
-          },
-          "content": {
-            "type": "string"
-          },
-          "rating": {
-            "type": "number"
-          },
-          "likes": {
-            "type": "integer"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
+            "description": "최대 참여자 수",
+            "format": "int32",
+            "example": 10
           }
         },
-        "example": {
-          "createdAt": "2000-01-23T04:56:07.000+00:00",
-          "facilityId": "facilityId",
-          "rating": 6.027456183070403,
-          "id": 0,
-          "content": "content",
-          "likes": 1,
-          "tags": ["tags", "tags"],
-          "updatedAt": "2000-01-23T04:56:07.000+00:00"
+        "description": "모임 게시판 요청 DTO"
+      },
+      "MeetingBoardResponseDTO": {
+        "type": "object",
+        "properties": {
+          "mbId": {
+            "type": "integer",
+            "description": "모임 게시판 ID",
+            "format": "int64",
+            "example": 1001
+          },
+          "sportType": {
+            "type": "string",
+            "description": "운동 종목 (예: SOCCER, BASEBALL)",
+            "example": "SOCCER",
+            "enum": [
+              "BADMINTON",
+              "BASEBALL",
+              "BASKETBALL",
+              "SOCCER",
+              "SWIMMING",
+              "TENNIS"
+            ]
+          },
+          "mbTitle": {
+            "type": "string",
+            "description": "모임 제목",
+            "example": "풋살 경기 참가자 모집"
+          },
+          "mbContent": {
+            "type": "string",
+            "description": "모임 내용",
+            "example": "이번 주 토요일 오후 3시에 함께 풋살하실 분 모집합니다!"
+          },
+          "startTime": {
+            "type": "string",
+            "description": "모임 시작 시간",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "description": "모임 종료 시간",
+            "format": "date-time"
+          },
+          "mbLocation": {
+            "type": "string",
+            "description": "모임 장소",
+            "example": "서울특별시 강남구 삼성동 풋살장"
+          },
+          "maxParticipants": {
+            "type": "integer",
+            "description": "최대 참여자 수",
+            "format": "int32",
+            "example": 10
+          },
+          "mbCreatedDate": {
+            "type": "string",
+            "description": "생성 일자",
+            "format": "date-time"
+          },
+          "mbLastModifiedDate": {
+            "type": "string",
+            "description": "마지막 수정 일자",
+            "format": "date-time"
+          },
+          "mbHostId": {
+            "type": "string",
+            "description": "모임 주최자 ID",
+            "example": "user123"
+          }
+        },
+        "description": "모임 게시판 응답 DTO"
+      },
+      "ActivityRequestDTO": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "모임의 제목",
+            "example": "주간 팀 회의"
+          },
+          "description": {
+            "type": "string",
+            "description": "모임 설명",
+            "example": "주간 회의입니다."
+          },
+          "location": {
+            "type": "string",
+            "description": "모임 장소",
+            "example": "서울 컨퍼런스룸 A"
+          },
+          "startTime": {
+            "type": "string",
+            "description": "모임 시작 시간 (ISO 8601 형식)",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "description": "모임 종료 시간 (ISO 8601 형식)",
+            "format": "date-time"
+          },
+          "maxParticipants": {
+            "type": "integer",
+            "description": "모임 최대 참석자 수",
+            "format": "int32",
+            "example": 10
+          }
         }
       },
       "FacilityDetailsUpdateDTO": {
@@ -2223,37 +3291,120 @@
             "description": "경도",
             "format": "double",
             "example": 126.884
+          },
+          "liked": {
+            "type": "boolean",
+            "description": "좋아요 확인",
+            "example": false
+          },
+          "likeCount": {
+            "type": "integer",
+            "description": "좋아요 개수",
+            "format": "int32",
+            "example": 3
+          },
+          "views": {
+            "type": "integer",
+            "description": "조회수",
+            "format": "int32",
+            "example": 2
           }
         }
       },
-      "ActivityResponseDTO": {
+      "ReviewDTO": {
         "type": "object",
         "properties": {
-          "title": {
+          "reviewId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "facilityId": {
             "type": "string"
           },
-          "description": {
+          "content": {
             "type": "string"
           },
-          "location": {
-            "type": "string"
+          "rating": {
+            "type": "number",
+            "format": "double"
           },
-          "startTime": {
-            "type": "string"
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "YANGCHEON",
+                "GANGSEO",
+                "GURO",
+                "GEUMCHEON",
+                "GWANAK",
+                "DONGJAK",
+                "SEOCHO",
+                "GANGNAM",
+                "SONGPA",
+                "GANGDONG",
+                "GWANGJIN",
+                "SEONGDONG",
+                "JUNGGU",
+                "YONGSAN",
+                "YEONGDEUNGPO",
+                "MAPO",
+                "SEODAEMUN",
+                "EUNPYEONG",
+                "JONGNO",
+                "DONGDAEMUN",
+                "SEONGBUK",
+                "JUNGRANG",
+                "NOWON",
+                "DOBONG",
+                "GANGBUK",
+                "TENNIS",
+                "BASKETBALL",
+                "FOOTBALL",
+                "FUTSAL",
+                "BASEBALL",
+                "VOLLEYBALL",
+                "PINGPONG",
+                "BADMINTON",
+                "BOWLING",
+                "SWIMMING",
+                "HOCKEY",
+                "GOLF",
+                "ETC",
+                "CLEAN",
+                "SPACIOUS",
+                "FREE",
+                "CAFE",
+                "GOOD_LOCATION",
+                "EASY_RESERVATION",
+                "LARGE_RESERVATION",
+                "MODERN_EQUIPMENT",
+                "RENTAL_AVAILABLE",
+                "PARKING_AVAILABLE",
+                "EAT_AVAILABLE",
+                "SHOWER_AVAILABLE",
+                "CHILDCARE_AVAILABLE",
+                "CLASSES_AVAILABLE",
+                "EVENT_AVAILABLE",
+                "WHEELCHAIR_ACCESSIBLE",
+                "SAFE_ENVIRONMENT",
+                "CHANGING_ROOM",
+                "PET_FRIENDLY",
+                "ALL_HOURS"
+              ]
+            }
           },
-          "endTime": {
-            "type": "string"
-          },
-          "maxParticipants": {
+          "likes": {
             "type": "integer",
             "format": "int32"
           },
-          "currentParticipants": {
-            "type": "integer",
-            "format": "int32"
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           },
-          "eventId": {
-            "type": "string"
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -2264,13 +3415,11 @@
             "type": "string",
             "description": "인증 통신을 위한 bearer 고정값"
           },
-
           "accessToken": {
             "type": "string",
             "description": "사이트 권한을 위한 access token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
           },
-
           "refreshToken": {
             "type": "string",
             "description": "access token 재발급을 위한 refresh token",
@@ -2280,6 +3429,48 @@
             "type": "string",
             "description": "사용자 고유번호",
             "example": "sda1fsd3-ds6au-fs3fds5"
+          }
+        }
+      },
+      "ActivityResponseDTO": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "모임의 제목입니다",
+            "example": "주간 미팅"
+          },
+          "description": {
+            "type": "string",
+            "description": "모임의 설명입니다",
+            "example": "주간 회의를 위한 미팅입니다."
+          },
+          "location": {
+            "type": "string",
+            "description": "모임 지역입니다",
+            "example": "컨퍼런스 룸 A"
+          },
+          "startTime": {
+            "type": "string",
+            "description": "모임 시작시간입니다  (ISO 8601 로 이루어져있습니다)",
+            "example": "2024-12-01T10:00:00"
+          },
+          "endTime": {
+            "type": "string",
+            "description": "모임 종료시간입니다 (ISO 8601 format)",
+            "example": "2024-12-01T12:00:00"
+          },
+          "maxParticipants": {
+            "type": "integer",
+            "description": "최대 참가자 수 입니다",
+            "format": "int32",
+            "example": 20
+          },
+          "currentParticipants": {
+            "type": "integer",
+            "description": "현재 참가자 수 입니다",
+            "format": "int32",
+            "example": 1
           }
         }
       },
@@ -2366,6 +3557,7 @@
         }
       },
       "ChangePasswordDTO": {
+        "required": ["changePassword", "checkChangePassword", "email"],
         "type": "object",
         "properties": {
           "email": {
@@ -2375,17 +3567,18 @@
           },
           "changePassword": {
             "type": "string",
-            "description": "사용자 비밀번호",
-            "example": "password123"
+            "description": "변경할 비밀번호",
+            "example": "password12345"
           },
           "checkChangePassword": {
             "type": "string",
-            "description": "비밀번호 확인",
-            "example": "password123"
+            "description": "변경할 비밀번호 확인",
+            "example": "password12345"
           }
         }
       },
       "UserLoginDTO": {
+        "required": ["email", "password"],
         "type": "object",
         "properties": {
           "email": {
@@ -2397,10 +3590,17 @@
             "type": "string",
             "description": "사용자 비밀번호",
             "example": "password123"
+          },
+          "fcmToken": {
+            "type": "string"
+          },
+          "passwordEmpty": {
+            "type": "boolean"
           }
         }
       },
       "UserJoinDTO": {
+        "required": ["checkPassword", "email", "nickname", "password"],
         "type": "object",
         "properties": {
           "email": {
@@ -2434,6 +3634,9 @@
           },
           "body": {
             "type": "string"
+          },
+          "email": {
+            "type": "string"
           }
         }
       },
@@ -2455,49 +3658,132 @@
           }
         }
       },
-      "ActivityCreateDTO": {
+      "MessageRequestDTO": {
+        "required": ["chatRoomId", "content", "participantId"],
         "type": "object",
         "properties": {
-          "title": {
-            "type": "string",
-            "description": "모임의 제목",
-            "example": "Weekly Team Meeting"
-          },
-          "eventId": {
-            "type": "string",
-            "description": "구글 캘린더의 Event ID",
-            "example": "abc123xyz"
-          },
-          "description": {
-            "type": "string",
-            "description": "모임에 대한 설명",
-            "example": "This is our regular weekly meeting to discuss project updates."
-          },
-          "location": {
-            "type": "string",
-            "description": "모임 장소",
-            "example": "Seoul Conference Room A"
-          },
-          "startTime": {
-            "type": "string",
-            "description": "모임 시작 시간 (ISO 8601 형식)",
-            "example": "2024-11-30T09:00:00"
-          },
-          "endTime": {
-            "type": "string",
-            "description": "모임 종료 시간 (ISO 8601 형식)",
-            "example": "2024-11-30T11:00:00"
-          },
-          "googleCalenderId": {
-            "type": "string",
-            "description": "구글 캘린더 ID",
-            "example": "primary(기본 캘린더)"
-          },
-          "maxAttendees": {
+          "chatRoomId": {
             "type": "integer",
-            "description": "모임 최대 참석자 수",
-            "format": "int32",
-            "example": 10
+            "description": "채팅방 ID",
+            "format": "int64",
+            "example": 101
+          },
+          "participantId": {
+            "type": "integer",
+            "description": "참가자 ID",
+            "format": "int64",
+            "example": 202
+          },
+          "content": {
+            "type": "string",
+            "description": "메시지 내용",
+            "example": "안녕하세요!"
+          }
+        },
+        "description": "메시지 요청 DTO"
+      },
+      "MessageResponseDTO": {
+        "type": "object",
+        "properties": {
+          "messageId": {
+            "type": "integer",
+            "description": "메시지 ID",
+            "format": "int64",
+            "example": 1001
+          },
+          "content": {
+            "type": "string",
+            "description": "메시지 내용",
+            "example": "안녕하세요!"
+          },
+          "sender": {
+            "type": "string",
+            "description": "보낸 사람 닉네임",
+            "example": "홍길동"
+          },
+          "chatRoomId": {
+            "type": "integer",
+            "description": "채팅방 ID",
+            "format": "int64",
+            "example": 2002
+          },
+          "sentAt": {
+            "type": "string",
+            "description": "메시지 전송 시간",
+            "format": "date-time"
+          }
+        },
+        "description": "메시지 응답 DTO"
+      },
+      "BoardFilterDTO": {
+        "type": "object",
+        "properties": {
+          "타이틀": {
+            "type": "string"
+          },
+          "장소": {
+            "type": "string"
+          },
+          "스포츠 타입": {
+            "type": "string",
+            "description": "Enum에서 영어로 BADMINTON,SOCCER ... 으로 되어있습니다",
+            "example": "SOCCER"
+          }
+        }
+      },
+      "Pageable": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "PageMetadata": {
+        "type": "object",
+        "properties": {
+          "size": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "PagedModel": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/PageMetadata"
           }
         }
       },
@@ -2521,104 +3807,6 @@
             "description": "검색할 반경 (킬로미터 단위)",
             "format": "double",
             "example": 5
-          }
-        }
-      },
-      "Page": {
-        "type": "object",
-        "properties": {
-          "totalElements": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "totalPages": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "content": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "number": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "sort": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SortObject"
-            }
-          },
-          "first": {
-            "type": "boolean"
-          },
-          "last": {
-            "type": "boolean"
-          },
-          "numberOfElements": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "pageable": {
-            "$ref": "#/components/schemas/PageableObject"
-          },
-          "empty": {
-            "type": "boolean"
-          }
-        }
-      },
-      "PageableObject": {
-        "type": "object",
-        "properties": {
-          "offset": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "sort": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SortObject"
-            }
-          },
-          "paged": {
-            "type": "boolean"
-          },
-          "pageNumber": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "pageSize": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "unpaged": {
-            "type": "boolean"
-          }
-        }
-      },
-      "SortObject": {
-        "type": "object",
-        "properties": {
-          "direction": {
-            "type": "string"
-          },
-          "nullHandling": {
-            "type": "string"
-          },
-          "ascending": {
-            "type": "boolean"
-          },
-          "property": {
-            "type": "string"
-          },
-          "ignoreCase": {
-            "type": "boolean"
           }
         }
       },
@@ -2646,155 +3834,108 @@
             "description": "시설 가격 유형(무료/유료)",
             "example": true,
             "default": true
+          },
+          "likeOrder": {
+            "type": "integer",
+            "description": "좋아요 정렬 기준 (0: 정렬 없음, 1: 내림차순, 2: 오름차순)",
+            "format": "int32",
+            "example": 1,
+            "default": 0
+          },
+          "viewsOrder": {
+            "type": "integer",
+            "description": "조회수 정렬 기준(0): 정렬 없음, 1:내림차순, 2:오름차순",
+            "format": "int32"
           }
         }
       },
-      "FacilityResponseDTO": {
+      "ChatRoomRequestDTO": {
+        "required": ["chatRoomName", "chatRoomType"],
         "type": "object",
         "properties": {
-          "facilityId": {
+          "chatRoomName": {
             "type": "string",
-            "description": "시설 ID",
-            "example": "S241010135430829736"
+            "description": "채팅방 이름",
+            "example": "Fun Chat Room"
           },
-          "facilityName": {
+          "chatRoomType": {
             "type": "string",
-            "description": "시설 이름",
-            "example": "서울대공원 리틀야구장 2024. 11월(추첨)"
+            "description": "채팅방 타입 (GROUP 또는 PRIVATE)",
+            "example": "GROUP"
           },
-          "facilityCategory": {
+          "maxParticipants": {
+            "type": "integer",
+            "description": "채팅방 최대 참여 인원 (1대1 채팅 시 2)",
+            "format": "int32",
+            "example": 10
+          }
+        },
+        "description": "채팅방 생성 요청 DTO"
+      },
+      "ChatRoomResponseDTO": {
+        "type": "object",
+        "properties": {
+          "chatRoomId": {
+            "type": "integer",
+            "description": "채팅방 ID",
+            "format": "int64",
+            "example": 101
+          },
+          "chatRoomName": {
             "type": "string",
-            "description": "시설 카테고리",
-            "example": "BASEBALL_FIELD",
-            "enum": [
-              "FOOTBALL_FIELD",
-              "FUTSAL_FIELD",
-              "FOOT_VOLLEYBALL_FIELD",
-              "BASEBALL_FIELD",
-              "TENNIS_FIELD",
-              "BASKETBALL_FIELD",
-              "VOLLEYBALL_FIELD",
-              "MULTIPURPOSE_FIELD",
-              "SPORTS_FIELD",
-              "GYM",
-              "BADMINTON_FIELD",
-              "TABLE_TENNIS_FIELD",
-              "EDUCATIONAL_FACILITY",
-              "SWIMMING_POOL",
-              "GOLF_FIELD"
-            ]
+            "description": "채팅방 이름",
+            "example": "친구들과의 모임"
           },
-          "area": {
+          "chatRoomType": {
             "type": "string",
-            "description": "시설 지역",
-            "example": "과천시"
+            "description": "채팅방 타입 (GROUP 또는 PRIVATE)",
+            "example": "GROUP"
           },
-          "priceType": {
-            "type": "boolean",
-            "description": "시설 가격 정보",
-            "example": false
-          },
-          "facilityImage": {
+          "createdAt": {
             "type": "string",
-            "description": "시설 이미지 URL",
-            "example": "https://yeyak.seoul.go.kr/web/common/file/FileDown.do?file_id=1728536177983WXNLQGCX4V5595HK8AC80ADS8"
-          },
-          "reservationStartDate": {
-            "type": "string",
-            "description": "예약 시작 날짜",
+            "description": "채팅방 생성 시간",
             "format": "date-time"
-          },
-          "reservationEndDate": {
-            "type": "string",
-            "description": "예약 종료 날짜",
-            "format": "date-time"
           }
-        }
+        },
+        "description": "채팅방 응답 DTO"
       },
-      "PageFacilityResponseDTO": {
+      "AdminJoinDTO": {
+        "required": [
+          "adminCode",
+          "checkPassword",
+          "email",
+          "nickname",
+          "password"
+        ],
         "type": "object",
         "properties": {
-          "totalElements": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "totalPages": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "content": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FacilityResponseDTO"
-            }
-          },
-          "number": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "sort": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SortObject"
-            }
-          },
-          "first": {
-            "type": "boolean"
-          },
-          "last": {
-            "type": "boolean"
-          },
-          "numberOfElements": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "pageable": {
-            "$ref": "#/components/schemas/PageableObject"
-          },
-          "empty": {
-            "type": "boolean"
-          }
-        }
-      },
-      "UserDTO": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "string",
-            "description": "회원의 고유 ID",
-            "example": "adf2ds3-das4fs2daf-ds4a3fn23"
-          },
           "email": {
             "type": "string",
-            "description": "회원이 로그인할 ID 역할을 합니다",
+            "description": "관리자 이메일",
             "example": "example@example.com"
           },
-          "profile_image": {
+          "password": {
             "type": "string",
-            "description": "이미지 주소가 입력됩니다",
-            "example": "c:/user/~~~"
+            "description": "관리자 비밀번호",
+            "example": "password123"
+          },
+          "checkPassword": {
+            "type": "string",
+            "description": "비밀번호 확인",
+            "example": "password123"
           },
           "nickname": {
             "type": "string",
-            "description": "닉네임이 입력됩니다",
+            "description": "관리자 닉네임",
             "example": "만득이"
           },
-          "description": {
+          "adminCode": {
             "type": "string",
-            "description": "소개글 내용이 입력됩니다",
-            "example": "안녕하세요. 반갑습니다"
-          },
-          "role": {
-            "type": "string",
-            "description": "권한 정보가 들어갑니다",
-            "example": "USER",
-            "enum": ["USER", "ADMIN", "SUPER_ADMIN"]
+            "description": "관리자 가입 확인용 인증코드",
+            "example": "d3j-234hjfhj-234jg"
           }
-        }
+        },
+        "description": "회원가입 요청 데이터"
       },
       "UserChangeInfoDTO": {
         "type": "object",
@@ -2945,19 +4086,300 @@
             "type": "string"
           },
           "conferenceData": {
-            "$ref": "#/components/schemas/Event_conferenceData"
+            "type": "object",
+            "properties": {
+              "classInfo": {
+                "$ref": "#/components/schemas/ClassInfo"
+              },
+              "conferenceId": {
+                "type": "string"
+              },
+              "conferenceSolution": {
+                "type": "object",
+                "properties": {
+                  "classInfo": {
+                    "$ref": "#/components/schemas/ClassInfo"
+                  },
+                  "iconUri": {
+                    "type": "string"
+                  },
+                  "key": {
+                    "type": "object",
+                    "properties": {
+                      "classInfo": {
+                        "$ref": "#/components/schemas/ClassInfo"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "factory": {
+                        "$ref": "#/components/schemas/JsonFactory"
+                      },
+                      "unknownKeys": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "object"
+                        }
+                      },
+                      "empty": {
+                        "type": "boolean"
+                      }
+                    },
+                    "additionalProperties": {
+                      "type": "object"
+                    }
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "factory": {
+                    "$ref": "#/components/schemas/JsonFactory"
+                  },
+                  "unknownKeys": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "object"
+                    }
+                  },
+                  "empty": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": {
+                  "type": "object"
+                }
+              },
+              "createRequest": {
+                "type": "object",
+                "properties": {
+                  "classInfo": {
+                    "$ref": "#/components/schemas/ClassInfo"
+                  },
+                  "conferenceSolutionKey": {
+                    "type": "object",
+                    "properties": {
+                      "classInfo": {
+                        "$ref": "#/components/schemas/ClassInfo"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "factory": {
+                        "$ref": "#/components/schemas/JsonFactory"
+                      },
+                      "unknownKeys": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "object"
+                        }
+                      },
+                      "empty": {
+                        "type": "boolean"
+                      }
+                    },
+                    "additionalProperties": {
+                      "type": "object"
+                    }
+                  },
+                  "requestId": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "object",
+                    "properties": {
+                      "classInfo": {
+                        "$ref": "#/components/schemas/ClassInfo"
+                      },
+                      "statusCode": {
+                        "type": "string"
+                      },
+                      "factory": {
+                        "$ref": "#/components/schemas/JsonFactory"
+                      },
+                      "unknownKeys": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "object"
+                        }
+                      },
+                      "empty": {
+                        "type": "boolean"
+                      }
+                    },
+                    "additionalProperties": {
+                      "type": "object"
+                    }
+                  },
+                  "factory": {
+                    "$ref": "#/components/schemas/JsonFactory"
+                  },
+                  "unknownKeys": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "object"
+                    }
+                  },
+                  "empty": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": {
+                  "type": "object"
+                }
+              },
+              "entryPoints": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntryPoint"
+                }
+              },
+              "notes": {
+                "type": "string"
+              },
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "classInfo": {
+                    "$ref": "#/components/schemas/ClassInfo"
+                  },
+                  "addOnParameters": {
+                    "type": "object",
+                    "properties": {
+                      "classInfo": {
+                        "$ref": "#/components/schemas/ClassInfo"
+                      },
+                      "parameters": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      },
+                      "factory": {
+                        "$ref": "#/components/schemas/JsonFactory"
+                      },
+                      "unknownKeys": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "object"
+                        }
+                      },
+                      "empty": {
+                        "type": "boolean"
+                      }
+                    },
+                    "additionalProperties": {
+                      "type": "object"
+                    }
+                  },
+                  "factory": {
+                    "$ref": "#/components/schemas/JsonFactory"
+                  },
+                  "unknownKeys": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "object"
+                    }
+                  },
+                  "empty": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": {
+                  "type": "object"
+                }
+              },
+              "signature": {
+                "type": "string"
+              },
+              "factory": {
+                "$ref": "#/components/schemas/JsonFactory"
+              },
+              "unknownKeys": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object"
+                }
+              },
+              "empty": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": {
+              "type": "object"
+            }
           },
           "created": {
             "$ref": "#/components/schemas/DateTime"
           },
           "creator": {
-            "$ref": "#/components/schemas/Event_creator"
+            "type": "object",
+            "properties": {
+              "classInfo": {
+                "$ref": "#/components/schemas/ClassInfo"
+              },
+              "displayName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "self": {
+                "type": "boolean"
+              },
+              "factory": {
+                "$ref": "#/components/schemas/JsonFactory"
+              },
+              "unknownKeys": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object"
+                }
+              },
+              "empty": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": {
+              "type": "object"
+            }
           },
           "description": {
             "type": "string"
           },
           "end": {
-            "$ref": "#/components/schemas/Event_end"
+            "type": "object",
+            "properties": {
+              "classInfo": {
+                "$ref": "#/components/schemas/ClassInfo"
+              },
+              "date": {
+                "$ref": "#/components/schemas/DateTime"
+              },
+              "dateTime": {
+                "$ref": "#/components/schemas/DateTime"
+              },
+              "timeZone": {
+                "type": "string"
+              },
+              "factory": {
+                "$ref": "#/components/schemas/JsonFactory"
+              },
+              "unknownKeys": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object"
+                }
+              },
+              "empty": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": {
+              "type": "object"
+            }
           },
           "endTimeUnspecified": {
             "type": "boolean"
@@ -2966,10 +4388,91 @@
             "type": "string"
           },
           "extendedProperties": {
-            "$ref": "#/components/schemas/Event_extendedProperties"
+            "type": "object",
+            "properties": {
+              "classInfo": {
+                "$ref": "#/components/schemas/ClassInfo"
+              },
+              "shared": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "private": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "factory": {
+                "$ref": "#/components/schemas/JsonFactory"
+              },
+              "unknownKeys": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object"
+                }
+              },
+              "empty": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": {
+              "type": "object"
+            }
           },
           "gadget": {
-            "$ref": "#/components/schemas/Event_gadget"
+            "type": "object",
+            "properties": {
+              "classInfo": {
+                "$ref": "#/components/schemas/ClassInfo"
+              },
+              "display": {
+                "type": "string"
+              },
+              "height": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "iconLink": {
+                "type": "string"
+              },
+              "link": {
+                "type": "string"
+              },
+              "preferences": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "title": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "width": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "factory": {
+                "$ref": "#/components/schemas/JsonFactory"
+              },
+              "unknownKeys": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object"
+                }
+              },
+              "empty": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": {
+              "type": "object"
+            }
           },
           "guestsCanInviteOthers": {
             "type": "boolean"
@@ -2999,10 +4502,71 @@
             "type": "boolean"
           },
           "organizer": {
-            "$ref": "#/components/schemas/Event_creator"
+            "type": "object",
+            "properties": {
+              "classInfo": {
+                "$ref": "#/components/schemas/ClassInfo"
+              },
+              "displayName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "self": {
+                "type": "boolean"
+              },
+              "factory": {
+                "$ref": "#/components/schemas/JsonFactory"
+              },
+              "unknownKeys": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object"
+                }
+              },
+              "empty": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": {
+              "type": "object"
+            }
           },
           "originalStartTime": {
-            "$ref": "#/components/schemas/Event_end"
+            "type": "object",
+            "properties": {
+              "classInfo": {
+                "$ref": "#/components/schemas/ClassInfo"
+              },
+              "date": {
+                "$ref": "#/components/schemas/DateTime"
+              },
+              "dateTime": {
+                "$ref": "#/components/schemas/DateTime"
+              },
+              "timeZone": {
+                "type": "string"
+              },
+              "factory": {
+                "$ref": "#/components/schemas/JsonFactory"
+              },
+              "unknownKeys": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object"
+                }
+              },
+              "empty": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": {
+              "type": "object"
+            }
           },
           "privateCopy": {
             "type": "boolean"
@@ -3017,17 +4581,101 @@
             "type": "string"
           },
           "reminders": {
-            "$ref": "#/components/schemas/Event_reminders"
+            "type": "object",
+            "properties": {
+              "classInfo": {
+                "$ref": "#/components/schemas/ClassInfo"
+              },
+              "overrides": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EventReminder"
+                }
+              },
+              "useDefault": {
+                "type": "boolean"
+              },
+              "factory": {
+                "$ref": "#/components/schemas/JsonFactory"
+              },
+              "unknownKeys": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object"
+                }
+              },
+              "empty": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": {
+              "type": "object"
+            }
           },
           "sequence": {
             "type": "integer",
             "format": "int32"
           },
           "source": {
-            "$ref": "#/components/schemas/Event_source"
+            "type": "object",
+            "properties": {
+              "classInfo": {
+                "$ref": "#/components/schemas/ClassInfo"
+              },
+              "title": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "factory": {
+                "$ref": "#/components/schemas/JsonFactory"
+              },
+              "unknownKeys": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object"
+                }
+              },
+              "empty": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": {
+              "type": "object"
+            }
           },
           "start": {
-            "$ref": "#/components/schemas/Event_end"
+            "type": "object",
+            "properties": {
+              "classInfo": {
+                "$ref": "#/components/schemas/ClassInfo"
+              },
+              "date": {
+                "$ref": "#/components/schemas/DateTime"
+              },
+              "dateTime": {
+                "$ref": "#/components/schemas/DateTime"
+              },
+              "timeZone": {
+                "type": "string"
+              },
+              "factory": {
+                "$ref": "#/components/schemas/JsonFactory"
+              },
+              "unknownKeys": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object"
+                }
+              },
+              "empty": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": {
+              "type": "object"
+            }
           },
           "status": {
             "type": "string"
@@ -3252,7 +4900,71 @@
         "type": "object",
         "properties": {
           "field": {
-            "$ref": "#/components/schemas/FieldInfo_field"
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "modifiers": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "synthetic": {
+                "type": "boolean"
+              },
+              "declaredAnnotations": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "accessible": {
+                "type": "boolean",
+                "deprecated": true
+              },
+              "genericType": {
+                "type": "object",
+                "properties": {
+                  "typeName": {
+                    "type": "string"
+                  }
+                }
+              },
+              "enumConstant": {
+                "type": "boolean"
+              },
+              "annotatedType": {
+                "type": "object",
+                "properties": {
+                  "annotations": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "declaredAnnotations": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "type": {
+                    "type": "object",
+                    "properties": {
+                      "typeName": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "annotations": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            }
           },
           "name": {
             "type": "string"
@@ -3261,7 +4973,12 @@
             "type": "boolean"
           },
           "genericType": {
-            "$ref": "#/components/schemas/FieldInfo_field_genericType"
+            "type": "object",
+            "properties": {
+              "typeName": {
+                "type": "string"
+              }
+            }
           },
           "final": {
             "type": "boolean"
@@ -3273,7 +4990,576 @@
             "type": "array",
             "writeOnly": true,
             "items": {
-              "$ref": "#/components/schemas/FieldInfo_tersMethodForField"
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "modifiers": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "typeParameters": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "annotatedBounds": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "annotations": {
+                              "type": "array",
+                              "items": {
+                                "type": "object"
+                              }
+                            },
+                            "declaredAnnotations": {
+                              "type": "array",
+                              "items": {
+                                "type": "object"
+                              }
+                            },
+                            "type": {
+                              "type": "object",
+                              "properties": {
+                                "typeName": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "bounds": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "typeName": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "typeName": {
+                        "type": "string"
+                      },
+                      "annotations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object"
+                        }
+                      },
+                      "declaredAnnotations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object"
+                        }
+                      }
+                    }
+                  }
+                },
+                "synthetic": {
+                  "type": "boolean"
+                },
+                "declaredAnnotations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "accessible": {
+                  "type": "boolean",
+                  "deprecated": true
+                },
+                "varArgs": {
+                  "type": "boolean"
+                },
+                "parameterCount": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "parameterAnnotations": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "genericParameterTypes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "typeName": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "genericExceptionTypes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "typeName": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "default": {
+                  "type": "boolean"
+                },
+                "genericReturnType": {
+                  "type": "object",
+                  "properties": {
+                    "typeName": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "bridge": {
+                  "type": "boolean"
+                },
+                "defaultValue": {
+                  "type": "object"
+                },
+                "annotatedReturnType": {
+                  "type": "object",
+                  "properties": {
+                    "annotations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "declaredAnnotations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "type": {
+                      "type": "object",
+                      "properties": {
+                        "typeName": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "annotatedParameterTypes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "annotations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object"
+                        }
+                      },
+                      "declaredAnnotations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object"
+                        }
+                      },
+                      "type": {
+                        "type": "object",
+                        "properties": {
+                          "typeName": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "parameters": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "modifiers": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "synthetic": {
+                        "type": "boolean"
+                      },
+                      "annotations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object"
+                        }
+                      },
+                      "declaredAnnotations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object"
+                        }
+                      },
+                      "annotatedType": {
+                        "type": "object",
+                        "properties": {
+                          "annotations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object"
+                            }
+                          },
+                          "declaredAnnotations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object"
+                            }
+                          },
+                          "type": {
+                            "type": "object",
+                            "properties": {
+                              "typeName": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "parameterizedType": {
+                        "type": "object",
+                        "properties": {
+                          "typeName": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "varArgs": {
+                        "type": "boolean"
+                      },
+                      "namePresent": {
+                        "type": "boolean"
+                      },
+                      "declaringExecutable": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "modifiers": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "typeParameters": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "genericDeclaration": {
+                                  "type": "object"
+                                },
+                                "annotatedBounds": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "annotations": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object"
+                                        }
+                                      },
+                                      "declaredAnnotations": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object"
+                                        }
+                                      },
+                                      "type": {
+                                        "type": "object",
+                                        "properties": {
+                                          "typeName": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "bounds": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "typeName": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "typeName": {
+                                  "type": "string"
+                                },
+                                "annotations": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object"
+                                  }
+                                },
+                                "declaredAnnotations": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "synthetic": {
+                            "type": "boolean"
+                          },
+                          "declaredAnnotations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object"
+                            }
+                          },
+                          "varArgs": {
+                            "type": "boolean"
+                          },
+                          "annotatedParameterTypes": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "annotations": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object"
+                                  }
+                                },
+                                "declaredAnnotations": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object"
+                                  }
+                                },
+                                "type": {
+                                  "type": "object",
+                                  "properties": {
+                                    "typeName": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "parameterCount": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "parameterAnnotations": {
+                            "type": "array",
+                            "items": {
+                              "type": "array",
+                              "items": {
+                                "type": "object"
+                              }
+                            }
+                          },
+                          "genericParameterTypes": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "typeName": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "genericExceptionTypes": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "typeName": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "annotatedReturnType": {
+                            "type": "object",
+                            "properties": {
+                              "annotations": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object"
+                                }
+                              },
+                              "declaredAnnotations": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object"
+                                }
+                              },
+                              "type": {
+                                "type": "object",
+                                "properties": {
+                                  "typeName": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "annotatedReceiverType": {
+                            "type": "object",
+                            "properties": {
+                              "annotations": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object"
+                                }
+                              },
+                              "declaredAnnotations": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object"
+                                }
+                              },
+                              "type": {
+                                "type": "object",
+                                "properties": {
+                                  "typeName": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "annotatedExceptionTypes": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "annotations": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object"
+                                  }
+                                },
+                                "declaredAnnotations": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object"
+                                  }
+                                },
+                                "type": {
+                                  "type": "object",
+                                  "properties": {
+                                    "typeName": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "annotations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object"
+                            }
+                          },
+                          "accessible": {
+                            "type": "boolean",
+                            "deprecated": true
+                          }
+                        }
+                      },
+                      "implicit": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                },
+                "annotatedReceiverType": {
+                  "type": "object",
+                  "properties": {
+                    "annotations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "declaredAnnotations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "type": {
+                      "type": "object",
+                      "properties": {
+                        "typeName": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "annotatedExceptionTypes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "annotations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object"
+                        }
+                      },
+                      "declaredAnnotations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object"
+                        }
+                      },
+                      "type": {
+                        "type": "object",
+                        "properties": {
+                          "typeName": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "annotations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
             }
           }
         }
@@ -3284,964 +5570,372 @@
       "FacilityPageResponseDTO": {
         "type": "object"
       },
-      "PageFacilityDetailsResponseDTO": {
+      "ChatParticipantResponseDTO": {
         "type": "object",
         "properties": {
-          "totalElements": {
+          "participantId": {
+            "type": "integer",
+            "description": "참가자 ID",
+            "format": "int64",
+            "example": 12345
+          },
+          "userId": {
+            "type": "string",
+            "description": "유저 ID",
+            "example": "user123"
+          }
+        },
+        "description": "채팅방 참가자 응답 DTO"
+      },
+      "Activity": {
+        "type": "object",
+        "properties": {
+          "activity_Id": {
             "type": "integer",
             "format": "int64"
           },
-          "totalPages": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "content": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FacilityDetailsResponseDTO"
-            }
-          },
-          "number": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "sort": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SortObject"
-            }
-          },
-          "first": {
-            "type": "boolean"
-          },
-          "last": {
-            "type": "boolean"
-          },
-          "numberOfElements": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "pageable": {
-            "$ref": "#/components/schemas/PageableObject"
-          },
-          "empty": {
-            "type": "boolean"
-          }
-        }
-      },
-      "Schema": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          }
-        }
-      },
-      "Schema1": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          }
-        }
-      },
-      "Schema2": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          }
-        }
-      },
-      "ExReviewDTO": {
-        "type": "object",
-        "properties": {
           "title": {
             "type": "string"
           },
-          "sourceUrl": {
+          "description": {
             "type": "string"
           },
-          "createdAt": {
+          "location": {
+            "type": "string"
+          },
+          "startTime": {
             "type": "string",
             "format": "date-time"
-          }
-        },
-        "example": {
-          "sourceUrl": "sourceUrl",
-          "createdAt": "2000-01-23T04:56:07.000+00:00",
-          "title": "title"
-        }
-      },
-      "FacilityReviewsResponse": {
-        "type": "object",
-        "properties": {
-          "internalReviews": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ReviewDTO"
-            }
           },
-          "externalReviews": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ExReviewDTO"
-            }
-          }
-        },
-        "example": {
-          "internalReviews": [
-            {
-              "createdAt": "2000-01-23T04:56:07.000+00:00",
-              "facilityId": "facilityId",
-              "rating": 6.027456183070403,
-              "id": 0,
-              "content": "content",
-              "likes": 1,
-              "tags": ["tags", "tags"],
-              "updatedAt": "2000-01-23T04:56:07.000+00:00"
-            },
-            {
-              "createdAt": "2000-01-23T04:56:07.000+00:00",
-              "facilityId": "facilityId",
-              "rating": 6.027456183070403,
-              "id": 0,
-              "content": "content",
-              "likes": 1,
-              "tags": ["tags", "tags"],
-              "updatedAt": "2000-01-23T04:56:07.000+00:00"
-            }
-          ],
-          "externalReviews": [
-            {
-              "sourceUrl": "sourceUrl",
-              "createdAt": "2000-01-23T04:56:07.000+00:00",
-              "title": "title"
-            },
-            {
-              "sourceUrl": "sourceUrl",
-              "createdAt": "2000-01-23T04:56:07.000+00:00",
-              "title": "title"
-            }
-          ]
-        }
-      },
-      "profile_userId_body": {
-        "type": "object",
-        "properties": {
-          "multipartFile": {
+          "endTime": {
             "type": "string",
-            "format": "binary"
+            "format": "date-time"
+          },
+          "maxParticipants": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currentParticipants": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "meetingBoard": {
+            "$ref": "#/components/schemas/MeetingBoard"
+          },
+          "participants": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ActivityParticipants"
+            }
           }
         }
       },
-      "Event_conferenceData_conferenceSolution_key": {
+      "ActivityParticipants": {
         "type": "object",
         "properties": {
-          "classInfo": {
-            "$ref": "#/components/schemas/ClassInfo"
+          "participantId": {
+            "type": "integer",
+            "format": "int64"
           },
-          "type": {
+          "activity": {
+            "$ref": "#/components/schemas/Activity"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["ADMIN", "USER"]
+          }
+        }
+      },
+      "ChatParticipant": {
+        "type": "object",
+        "properties": {
+          "participantId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "chatRoom": {
+            "$ref": "#/components/schemas/ChatRoom"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "email": {
             "type": "string"
           },
-          "factory": {
-            "$ref": "#/components/schemas/JsonFactory"
+          "role": {
+            "type": "string",
+            "enum": ["HOST", "MEMBER"]
           },
-          "unknownKeys": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object"
-            }
-          },
-          "empty": {
+          "host": {
             "type": "boolean"
           }
-        },
-        "additionalProperties": {
-          "type": "object"
         }
       },
-      "Event_conferenceData_conferenceSolution": {
+      "ChatRoom": {
         "type": "object",
         "properties": {
-          "classInfo": {
-            "$ref": "#/components/schemas/ClassInfo"
-          },
-          "iconUri": {
-            "type": "string"
-          },
-          "key": {
-            "$ref": "#/components/schemas/Event_conferenceData_conferenceSolution_key"
+          "chatRoomId": {
+            "type": "integer",
+            "format": "int64"
           },
           "name": {
             "type": "string"
           },
-          "factory": {
-            "$ref": "#/components/schemas/JsonFactory"
+          "type": {
+            "type": "string",
+            "enum": ["GROUP", "PRIVATE"]
           },
-          "unknownKeys": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object"
-            }
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
           },
-          "empty": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": {
-          "type": "object"
-        }
-      },
-      "Event_conferenceData_createRequest_status": {
-        "type": "object",
-        "properties": {
-          "classInfo": {
-            "$ref": "#/components/schemas/ClassInfo"
-          },
-          "statusCode": {
-            "type": "string"
-          },
-          "factory": {
-            "$ref": "#/components/schemas/JsonFactory"
-          },
-          "unknownKeys": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object"
-            }
-          },
-          "empty": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": {
-          "type": "object"
-        }
-      },
-      "Event_conferenceData_createRequest": {
-        "type": "object",
-        "properties": {
-          "classInfo": {
-            "$ref": "#/components/schemas/ClassInfo"
-          },
-          "conferenceSolutionKey": {
-            "$ref": "#/components/schemas/Event_conferenceData_conferenceSolution_key"
-          },
-          "requestId": {
-            "type": "string"
-          },
-          "status": {
-            "$ref": "#/components/schemas/Event_conferenceData_createRequest_status"
-          },
-          "factory": {
-            "$ref": "#/components/schemas/JsonFactory"
-          },
-          "unknownKeys": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object"
-            }
-          },
-          "empty": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": {
-          "type": "object"
-        }
-      },
-      "Event_conferenceData_parameters_addOnParameters": {
-        "type": "object",
-        "properties": {
-          "classInfo": {
-            "$ref": "#/components/schemas/ClassInfo"
-          },
-          "parameters": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            }
-          },
-          "factory": {
-            "$ref": "#/components/schemas/JsonFactory"
-          },
-          "unknownKeys": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object"
-            }
-          },
-          "empty": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": {
-          "type": "object"
-        }
-      },
-      "Event_conferenceData_parameters": {
-        "type": "object",
-        "properties": {
-          "classInfo": {
-            "$ref": "#/components/schemas/ClassInfo"
-          },
-          "addOnParameters": {
-            "$ref": "#/components/schemas/Event_conferenceData_parameters_addOnParameters"
-          },
-          "factory": {
-            "$ref": "#/components/schemas/JsonFactory"
-          },
-          "unknownKeys": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object"
-            }
-          },
-          "empty": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": {
-          "type": "object"
-        }
-      },
-      "Event_conferenceData": {
-        "type": "object",
-        "properties": {
-          "classInfo": {
-            "$ref": "#/components/schemas/ClassInfo"
-          },
-          "conferenceId": {
-            "type": "string"
-          },
-          "conferenceSolution": {
-            "$ref": "#/components/schemas/Event_conferenceData_conferenceSolution"
-          },
-          "createRequest": {
-            "$ref": "#/components/schemas/Event_conferenceData_createRequest"
-          },
-          "entryPoints": {
+          "chatParticipants": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/EntryPoint"
+              "$ref": "#/components/schemas/ChatParticipant"
             }
           },
-          "notes": {
-            "type": "string"
-          },
-          "parameters": {
-            "$ref": "#/components/schemas/Event_conferenceData_parameters"
-          },
-          "signature": {
-            "type": "string"
-          },
-          "factory": {
-            "$ref": "#/components/schemas/JsonFactory"
-          },
-          "unknownKeys": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object"
+          "messages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Message"
             }
           },
-          "empty": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "maxParticipants": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "deleted": {
             "type": "boolean"
           }
-        },
-        "additionalProperties": {
-          "type": "object"
         }
       },
-      "Event_creator": {
+      "MeetingBoard": {
         "type": "object",
         "properties": {
-          "classInfo": {
-            "$ref": "#/components/schemas/ClassInfo"
+          "mbId": {
+            "type": "integer",
+            "format": "int64"
           },
-          "displayName": {
+          "sportType": {
+            "type": "string",
+            "enum": [
+              "BADMINTON",
+              "BASEBALL",
+              "BASKETBALL",
+              "SOCCER",
+              "SWIMMING",
+              "TENNIS"
+            ]
+          },
+          "mbTitle": {
+            "type": "string"
+          },
+          "mbContent": {
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "mbLocation": {
+            "type": "string"
+          },
+          "mbHost": {
+            "$ref": "#/components/schemas/User"
+          },
+          "maxParticipants": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mbCreatedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "mbLastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "mbDeletedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "activity": {
+            "$ref": "#/components/schemas/Activity"
+          }
+        }
+      },
+      "Message": {
+        "type": "object",
+        "properties": {
+          "messageId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "chatRoom": {
+            "$ref": "#/components/schemas/ChatRoom"
+          },
+          "participant": {
+            "$ref": "#/components/schemas/ChatParticipant"
+          },
+          "content": {
+            "type": "string"
+          },
+          "sentAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Notification": {
+        "type": "object",
+        "properties": {
+          "notification_Id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "title": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "notificationTitleType": {
+            "type": "string",
+            "enum": [
+              "CHAT_NEW_MESSAGE",
+              "ACTIVITY_REMINDER",
+              "ACTIVITY_INVITED",
+              "ACTIVITY_PARTICIPATE"
+            ]
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "read": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Oauth": {
+        "type": "object",
+        "properties": {
+          "oauthId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "providerId": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "userId": {
             "type": "string"
           },
           "email": {
             "type": "string"
           },
+          "password": {
+            "type": "string"
+          },
+          "profilePath": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["ADMIN", "USER", "SUPER_ADMIN"]
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "oauthList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Oauth"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fcmToken": {
+            "type": "string"
+          },
+          "googleCalenderId": {
+            "type": "string"
+          },
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            }
+          },
+          "activityParticipants": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ActivityParticipants"
+            }
+          },
+          "chatParticipants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatParticipant"
+            }
+          },
           "id": {
             "type": "string"
           },
-          "self": {
-            "type": "boolean"
-          },
-          "factory": {
-            "$ref": "#/components/schemas/JsonFactory"
-          },
-          "unknownKeys": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object"
-            }
-          },
-          "empty": {
+          "new": {
             "type": "boolean"
           }
-        },
-        "additionalProperties": {
-          "type": "object"
         }
       },
-      "Event_end": {
+      "AdminCode": {
         "type": "object",
         "properties": {
-          "classInfo": {
-            "$ref": "#/components/schemas/ClassInfo"
-          },
-          "date": {
-            "$ref": "#/components/schemas/DateTime"
-          },
-          "dateTime": {
-            "$ref": "#/components/schemas/DateTime"
-          },
-          "timeZone": {
-            "type": "string"
-          },
-          "factory": {
-            "$ref": "#/components/schemas/JsonFactory"
-          },
-          "unknownKeys": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object"
-            }
-          },
-          "empty": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": {
-          "type": "object"
-        }
-      },
-      "Event_extendedProperties": {
-        "type": "object",
-        "properties": {
-          "classInfo": {
-            "$ref": "#/components/schemas/ClassInfo"
-          },
-          "shared": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            }
-          },
-          "private": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            }
-          },
-          "factory": {
-            "$ref": "#/components/schemas/JsonFactory"
-          },
-          "unknownKeys": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object"
-            }
-          },
-          "empty": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": {
-          "type": "object"
-        }
-      },
-      "Event_gadget": {
-        "type": "object",
-        "properties": {
-          "classInfo": {
-            "$ref": "#/components/schemas/ClassInfo"
-          },
-          "display": {
-            "type": "string"
-          },
-          "height": {
+          "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
           },
-          "iconLink": {
+          "code": {
             "type": "string"
-          },
-          "link": {
-            "type": "string"
-          },
-          "preferences": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            }
-          },
-          "title": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          },
-          "width": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "factory": {
-            "$ref": "#/components/schemas/JsonFactory"
-          },
-          "unknownKeys": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object"
-            }
-          },
-          "empty": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": {
-          "type": "object"
-        }
-      },
-      "Event_reminders": {
-        "type": "object",
-        "properties": {
-          "classInfo": {
-            "$ref": "#/components/schemas/ClassInfo"
-          },
-          "overrides": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/EventReminder"
-            }
-          },
-          "useDefault": {
-            "type": "boolean"
-          },
-          "factory": {
-            "$ref": "#/components/schemas/JsonFactory"
-          },
-          "unknownKeys": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object"
-            }
-          },
-          "empty": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": {
-          "type": "object"
-        }
-      },
-      "Event_source": {
-        "type": "object",
-        "properties": {
-          "classInfo": {
-            "$ref": "#/components/schemas/ClassInfo"
-          },
-          "title": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "factory": {
-            "$ref": "#/components/schemas/JsonFactory"
-          },
-          "unknownKeys": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object"
-            }
-          },
-          "empty": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": {
-          "type": "object"
-        }
-      },
-      "FieldInfo_field_genericType": {
-        "type": "object",
-        "properties": {
-          "typeName": {
-            "type": "string"
-          }
-        }
-      },
-      "FieldInfo_field_annotatedType": {
-        "type": "object",
-        "properties": {
-          "annotations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "declaredAnnotations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "type": {
-            "$ref": "#/components/schemas/FieldInfo_field_genericType"
-          }
-        }
-      },
-      "FieldInfo_field": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "modifiers": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "synthetic": {
-            "type": "boolean"
-          },
-          "declaredAnnotations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "accessible": {
-            "type": "boolean",
-            "deprecated": true
-          },
-          "genericType": {
-            "$ref": "#/components/schemas/FieldInfo_field_genericType"
-          },
-          "enumConstant": {
-            "type": "boolean"
-          },
-          "annotatedType": {
-            "$ref": "#/components/schemas/FieldInfo_field_annotatedType"
-          },
-          "annotations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          }
-        }
-      },
-      "FieldInfo_typeParameters": {
-        "type": "object",
-        "properties": {
-          "annotatedBounds": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldInfo_field_annotatedType"
-            }
-          },
-          "name": {
-            "type": "string"
-          },
-          "bounds": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldInfo_field_genericType"
-            }
-          },
-          "typeName": {
-            "type": "string"
-          },
-          "annotations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "declaredAnnotations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          }
-        }
-      },
-      "FieldInfo_declaringExecutable_typeParameters": {
-        "type": "object",
-        "properties": {
-          "genericDeclaration": {
-            "type": "object"
-          },
-          "annotatedBounds": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldInfo_field_annotatedType"
-            }
-          },
-          "name": {
-            "type": "string"
-          },
-          "bounds": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldInfo_field_genericType"
-            }
-          },
-          "typeName": {
-            "type": "string"
-          },
-          "annotations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "declaredAnnotations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          }
-        }
-      },
-      "FieldInfo_declaringExecutable": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "modifiers": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "typeParameters": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldInfo_declaringExecutable_typeParameters"
-            }
-          },
-          "synthetic": {
-            "type": "boolean"
-          },
-          "declaredAnnotations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "varArgs": {
-            "type": "boolean"
-          },
-          "annotatedParameterTypes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldInfo_field_annotatedType"
-            }
-          },
-          "parameterCount": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "parameterAnnotations": {
-            "type": "array",
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "object"
-              }
-            }
-          },
-          "genericParameterTypes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldInfo_field_genericType"
-            }
-          },
-          "genericExceptionTypes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldInfo_field_genericType"
-            }
-          },
-          "annotatedReturnType": {
-            "$ref": "#/components/schemas/FieldInfo_field_annotatedType"
-          },
-          "annotatedReceiverType": {
-            "$ref": "#/components/schemas/FieldInfo_field_annotatedType"
-          },
-          "annotatedExceptionTypes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldInfo_field_annotatedType"
-            }
-          },
-          "annotations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "accessible": {
-            "type": "boolean",
-            "deprecated": true
-          }
-        }
-      },
-      "FieldInfo_parameters": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "modifiers": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "synthetic": {
-            "type": "boolean"
-          },
-          "annotations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "declaredAnnotations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "annotatedType": {
-            "$ref": "#/components/schemas/FieldInfo_field_annotatedType"
-          },
-          "parameterizedType": {
-            "$ref": "#/components/schemas/FieldInfo_field_genericType"
-          },
-          "varArgs": {
-            "type": "boolean"
-          },
-          "namePresent": {
-            "type": "boolean"
-          },
-          "declaringExecutable": {
-            "$ref": "#/components/schemas/FieldInfo_declaringExecutable"
-          },
-          "implicit": {
-            "type": "boolean"
-          }
-        }
-      },
-      "FieldInfo_tersMethodForField": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "modifiers": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "typeParameters": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldInfo_typeParameters"
-            }
-          },
-          "synthetic": {
-            "type": "boolean"
-          },
-          "declaredAnnotations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "accessible": {
-            "type": "boolean",
-            "deprecated": true
-          },
-          "varArgs": {
-            "type": "boolean"
-          },
-          "parameterCount": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "parameterAnnotations": {
-            "type": "array",
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "object"
-              }
-            }
-          },
-          "genericParameterTypes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldInfo_field_genericType"
-            }
-          },
-          "genericExceptionTypes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldInfo_field_genericType"
-            }
-          },
-          "default": {
-            "type": "boolean"
-          },
-          "genericReturnType": {
-            "$ref": "#/components/schemas/FieldInfo_field_genericType"
-          },
-          "bridge": {
-            "type": "boolean"
-          },
-          "defaultValue": {
-            "type": "object"
-          },
-          "annotatedReturnType": {
-            "$ref": "#/components/schemas/FieldInfo_field_annotatedType"
-          },
-          "annotatedParameterTypes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldInfo_field_annotatedType"
-            }
-          },
-          "parameters": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldInfo_parameters"
-            }
-          },
-          "annotatedReceiverType": {
-            "$ref": "#/components/schemas/FieldInfo_field_annotatedType"
-          },
-          "annotatedExceptionTypes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldInfo_field_annotatedType"
-            }
-          },
-          "annotations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
           }
         }
       }
@@ -4249,7 +5943,7 @@
     "securitySchemes": {
       "BearerAuth": {
         "type": "http",
-        "scheme": "bearer",
+        "scheme": "Bearer",
         "bearerFormat": "JWT"
       }
     }

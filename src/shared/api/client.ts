@@ -3,7 +3,7 @@ import {
   ReviewControllerApi,
   UserControllerApi,
   EmailControllerApi,
-  MeetingBoardControllerApi,
+  ActivityMeetingBoardControllerApi,
   ConfigurationParameters,
   Configuration
 } from '@/api/generated';
@@ -38,7 +38,7 @@ export const api = {
   reviewClient: new ReviewControllerApi(new CustomConfiguration({}, false)),
   user: new UserControllerApi(new CustomConfiguration()),
   email: new EmailControllerApi(new CustomConfiguration()),
-  meetingBoard: new MeetingBoardControllerApi(
+  meetingBoard: new ActivityMeetingBoardControllerApi(
     new CustomConfiguration({}, false)
   )
 };
