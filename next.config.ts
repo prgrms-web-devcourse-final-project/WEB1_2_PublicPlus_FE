@@ -69,6 +69,11 @@ const nextConfig: NextConfig = {
         hostname: 'avatars.githubusercontent.com',
         port: '',
         pathname: '**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'yeyak.seoul.go.kr',
+        pathname: '/web/common/file/**'
       }
     ]
   }

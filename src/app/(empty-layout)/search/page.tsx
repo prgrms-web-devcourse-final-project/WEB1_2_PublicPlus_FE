@@ -13,7 +13,6 @@ export default function SearchPage() {
   };
 
   const handleSearch = () => {
-    // 검색어가 있을 경우 검색 실행
     if (searchQuery.trim()) {
       console.log('검색어:', searchQuery);
     }
