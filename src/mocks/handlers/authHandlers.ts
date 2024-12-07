@@ -7,7 +7,7 @@ import {
   ErrorResponseDTO,
   UserChangeInfoDTO,
   ChangePasswordDTO
-} from '@/api/generated';
+} from '@/shared/api/generated';
 
 const emailVerificationCodes: Record<string, string> = {};
 

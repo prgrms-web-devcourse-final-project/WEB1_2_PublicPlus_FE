@@ -1,7 +1,7 @@
-import { MeetingBoardRequestDTO } from '@/api/generated';
+import { MeetingBoardRequestDTO } from '@/shared/api/generated';
 import { api } from '@/shared/api/client';
 
-export const meetingBoardService = {
+export const meetingService = {
   createMeetingBoard: async (
     meetingBoardData: MeetingBoardRequestDTO,
     tokens: string

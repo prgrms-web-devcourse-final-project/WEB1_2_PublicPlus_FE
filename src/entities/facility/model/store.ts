@@ -1,4 +1,4 @@
-import { FacilityResponseDTO } from '@/api/generated';
+import { FacilityResponseDTO } from '@/shared/api/generated';
 import { create } from 'zustand';
 
 interface FacilityStore {

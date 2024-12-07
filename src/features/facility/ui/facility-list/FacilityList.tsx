@@ -1,7 +1,7 @@
 import { FacilityCard } from '@/components/common/Cards/FacilityCard';
 import { useFilterStore } from '@/features/facility/filter/model/store';
 import { Pagination } from '@/features/facility/pagination/ui/pagination';
-import { FacilityDetailsResponseDTO } from '@/api/generated';
+import { FacilityDetailsResponseDTO } from '@/shared/api/generated';
 import { useState } from 'react';
 import { useFacilities } from '@/features/facility/model/queries';
 

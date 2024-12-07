@@ -1,4 +1,4 @@
-import { FacilityDetailsResponseDTO } from '@/api/generated';
+import { FacilityDetailsResponseDTO } from '@/shared/api/generated';
 import { Tag } from '../Tag';
 import { LinkCard } from './LinkCard';
 

@@ -4,8 +4,8 @@ import {
   UseQueryOptions,
   UseMutationResult
 } from '@tanstack/react-query';
-import { MeetingBoardRequestDTO } from '@/api/generated';
-import { meetingBoardService } from '@/entities/meetingBoard/api/meetingBoardService';
+import { MeetingBoardRequestDTO } from '@/shared/api/generated';
+import { meetingService } from '@/features/meeting/api/meetingService';
 
 // Query Key 정의
 export const QUERY_KEYS = {
@@ -35,7 +35,7 @@ export const useMeetingBoards = (
     ReturnType<typeof QUERY_KEYS.meetingBoard.list>
   >({
     queryKey: QUERY_KEYS.meetingBoard.list(),
-    queryFn: meetingBoardService.getAllMeetingBoards,
+    queryFn: meetingService.getAllMeetingBoards,
     ...options
   });
 };
@@ -62,7 +62,7 @@ export const useMeetingBoardDetail = (
     ReturnType<typeof QUERY_KEYS.meetingBoard.detail>
   >({
     queryKey: QUERY_KEYS.meetingBoard.detail(mbId),
-    queryFn: () => meetingBoardService.getMeetingBoardById(mbId),
+    queryFn: () => meetingService.getMeetingBoardById(mbId),
     ...options
   });
 };
@@ -77,7 +77,7 @@ export const useCreateMeetingBoard = (
 > => {
   return useMutation({
     mutationFn: meetingBoardData =>
-      meetingBoardService.createMeetingBoard(meetingBoardData, tokens)
+      meetingService.createMeetingBoard(meetingBoardData, tokens)
   });
 };
 
@@ -85,13 +85,13 @@ export const useCreateMeetingBoard = (
 export const useUpdateMeetingBoard = (mbId: number) => {
   return useMutation<void, Error, MeetingBoardRequestDTO>({
     mutationFn: meetingBoardData =>
-      meetingBoardService.updateMeetingBoard(mbId, meetingBoardData)
+      meetingService.updateMeetingBoard(mbId, meetingBoardData)
   });
 };
 
 // 모임 삭제
 export const useDeleteMeetingBoard = () => {
   return useMutation<void, Error, number>({
-    mutationFn: meetingBoardService.deleteMeetingBoard
+    mutationFn: meetingService.deleteMeetingBoard
   });
 };

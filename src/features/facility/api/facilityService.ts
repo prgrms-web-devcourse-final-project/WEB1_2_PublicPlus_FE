@@ -4,7 +4,7 @@ import {
   FacilityFilterDTO,
   PagedModel,
   Pageable
-} from '@/api/generated';
+} from '@/shared/api/generated';
 
 export const facilityService = {
   // 시설 상세 정보 조회

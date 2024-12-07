@@ -1,4 +1,4 @@
-import { MeetingBoardRequestDTO } from '@/api/generated';
+import { MeetingBoardRequestDTO } from '@/shared/api/generated';
 import Image from 'next/image';
 
 interface MeetingHeaderProps {

@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import type { ReviewDTO } from '@/api/generated';
-import { reviewService } from '@/entities/review/api/reviewService';
+import type { ReviewDTO } from '@/shared/api/generated';
+import { reviewService } from '../api/reviewService';
 
 // Query Key 정의
 export const QUERY_KEYS = {

@@ -1,5 +1,6 @@
 'use client';
-import { FacilityList } from '.';
+
+import { FacilityList } from '@/features/facility/ui/facility-list/FacilityList';
 
 export const MainFacilityList = () => {
   return (

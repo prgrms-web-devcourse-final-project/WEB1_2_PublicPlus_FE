@@ -1,5 +1,5 @@
+import MeetingDetail from '@/features/meeting/ui/meeting-detail/MeetingDetail';
 import { generateMetadata } from '@/shared/config/metadata/generate-metadata';
-import MeetingDetail from '@/widgets/meeting/meeting-detail';
 
 export const metadata = generateMetadata({
   title: '모임 상세 정보',

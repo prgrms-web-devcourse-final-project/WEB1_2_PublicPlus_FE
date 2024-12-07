@@ -1,10 +1,10 @@
 'use client';
 
-import { FacilityList } from '@/widgets/facility/facility-list';
 import { FacilityFilters } from '@/widgets/facility/facility-filters';
 import { useFilterStore } from '@/features/facility/filter/model/store';
 import { Button } from '@/shared/ui/components/button/Button';
 import { X } from 'lucide-react';
+import { FacilityList } from '@/features/facility/ui/facility-list/FacilityList';
 
 export default function FacilityPage() {
   const { filters, clearFilter } = useFilterStore();

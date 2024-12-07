@@ -2,7 +2,7 @@ import { Tag } from '../Tag';
 import {
   MeetingBoardRequestDTO,
   MeetingBoardRequestDTOSportTypeEnum
-} from '@/api/generated';
+} from '@/shared/api/generated';
 import { LinkCard } from './LinkCard';
 
 interface MeetingCardProps extends Omit<MeetingBoardRequestDTO, 'id'> {

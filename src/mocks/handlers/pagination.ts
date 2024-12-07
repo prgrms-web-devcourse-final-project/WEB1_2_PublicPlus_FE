@@ -1,4 +1,4 @@
-import { PageFacilityDetailsResponseDTO } from '@/api/generated';
+import { PageFacilityDetailsResponseDTO } from '@/shared/api/generated';
 
 interface PaginationParams {
   page: number;

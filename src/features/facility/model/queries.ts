@@ -3,8 +3,8 @@ import type {
   FacilityFilterDTO,
   FacilityDetailsResponseDTO,
   PageFacilityResponseDTO
-} from '@/api/generated';
-import { facilityService } from '@/entities/facility/api/facilityService';
+} from '@/shared/api/generated';
+import { facilityService } from '@/features/facility/api/facilityService';
 
 // Query Key 정의
 export const QUERY_KEYS = {

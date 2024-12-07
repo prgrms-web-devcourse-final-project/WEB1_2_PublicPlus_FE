@@ -1,5 +1,5 @@
 import { api } from '@/shared/api/client';
-import type { ReviewDTO } from '@/api/generated';
+import type { ReviewDTO } from '@/shared/api/generated';
 
 export const reviewService = {
   // 시설별 리뷰 조회

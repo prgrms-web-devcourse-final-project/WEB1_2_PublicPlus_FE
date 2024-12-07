@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation';
-import { FacilityDetailsResponseDTO, ReviewDTO } from '@/api/generated';
+import { FacilityDetailsResponseDTO, ReviewDTO } from '@/shared/api/generated';
 import { Card } from '@/components/common/Cards/Card';
 import { Button } from '@/shared/ui/components/button/Button';
 import { useReviews } from '@/features/review/model/queries';

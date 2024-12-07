@@ -1,6 +1,6 @@
 'use client';
 
-import { MeetingBoardRequestDTO } from '@/api/generated';
+import { MeetingBoardRequestDTO } from '@/shared/api/generated';
 import { MeetingCard } from '@/components/common/Cards/MeetingCard';
 import React from 'react';
 import { useMeetingBoards } from '@/features/meeting/model/queries';

@@ -8,7 +8,7 @@ import {
   Configuration,
   MeetingBoardApi,
   FacilityLikeControllerApi
-} from '@/api/generated';
+} from '@/shared/api/generated';
 import Cookies from 'js-cookie';
 import { axiosInstance } from './axiosInstance';
 

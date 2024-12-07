@@ -1,6 +1,6 @@
 import { api } from '@/shared/api/client';
 import axios from 'axios';
-import type { ErrorResponseDTO } from '@/api/generated';
+import type { ErrorResponseDTO } from '@/shared/api/generated';
 
 export const emailService = {
   // 이메일 인증 코드 발송

@@ -5,7 +5,7 @@ import { ChatMessage } from '@/components/common/Chat/ChatMessage';
 import { ChatInput } from '@/components/common/Chat/ChatInput';
 import { CustomHeader } from '@/components/common/Header/CustomHeader';
 import { ChatRoomInfoModal } from '@/features/chat/ui/ChatRoomInfoModal/ChatRoomInfoModal';
-import { ChatRoom } from '@/features/chat/types';
+import { ChatRoom } from '@/features/chat/model/types';
 
 interface Message {
   id: string;

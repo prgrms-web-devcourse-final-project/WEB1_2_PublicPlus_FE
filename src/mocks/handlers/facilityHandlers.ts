@@ -1,6 +1,9 @@
 import { HttpResponse, http } from 'msw';
 import { facilities, facilitiesDetail } from '../data/facilityData';
-import { FacilityFilterDTO, FacilityDetailsResponseDTO } from '@/api/generated';
+import {
+  FacilityFilterDTO,
+  FacilityDetailsResponseDTO
+} from '@/shared/api/generated';
 import { createPaginatedResponse, getPageParams } from './pagination';
 
 const filterFacilities = (

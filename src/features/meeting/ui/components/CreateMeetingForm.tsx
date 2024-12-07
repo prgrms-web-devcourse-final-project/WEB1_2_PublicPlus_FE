@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {
   MeetingBoardRequestDTO,
   MeetingBoardRequestDTOSportTypeEnum
-} from '@/api/generated';
+} from '@/shared/api/generated';
 import { useAuthStore } from '@/entities/User/model/store/authStore';
 
 interface CreateMeetingFormProps {

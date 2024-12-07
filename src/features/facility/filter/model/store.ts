@@ -1,4 +1,4 @@
-import { FacilityFilterDTO } from '@/api/generated';
+import { FacilityFilterDTO } from '@/shared/api/generated';
 import { create } from 'zustand';
 
 interface FilterStore {

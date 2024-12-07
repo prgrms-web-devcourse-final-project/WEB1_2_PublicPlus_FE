@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import type { MeetingBoardRequestDTO } from '@/api/generated';
+import type { MeetingBoardRequestDTO } from '@/shared/api/generated';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   useCreateMeetingBoard,
   QUERY_KEYS
 } from '@/features/meeting/model/queries';
-import { CreateMeetingForm } from '@/features/meeting/ui/CreateMeetingForm';
+import { CreateMeetingForm } from '@/features/meeting/ui/components/CreateMeetingForm';
 import { useAuthStore } from '@/entities/User';
 
 export default function MeetingBoardCreation() {
