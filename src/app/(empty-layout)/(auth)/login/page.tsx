@@ -2,14 +2,12 @@
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-
 import { toast } from 'react-toastify';
-import { SocialProvider, useAuthStore } from '@/entities/User';
 import useRedirect from '@/features/auth/hooks/useRedirect';
-
 import { SOCIAL_PROVIDERS } from '@/features/auth/model/constants';
 import { SocialLoginButton } from '@/features/auth/ui/SocialLoginButton';
 import LoginContainer from '@/features/auth/ui/LoginContainer';
+import { useAuthStore, SocialProvider } from '@/entities/user';
 
 export default function LoginPage() {
   const router = useRouter();

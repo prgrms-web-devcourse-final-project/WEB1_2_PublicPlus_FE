@@ -2,8 +2,8 @@
 import { useState } from 'react';
 import LoginForm from './LoginForm';
 import { useRouter } from 'next/navigation';
-import ErrorMessage from '@/components/common/ErrorMsg';
-import { useAuthStore } from '@/entities/User';
+import { useAuthStore } from '@/entities/user';
+import ErrorMessage from '@/shared/ui/components/Error/ErrorMsg';
 
 export default function LoginContainer() {
   const router = useRouter();

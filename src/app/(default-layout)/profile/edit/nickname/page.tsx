@@ -1,15 +1,13 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-
 import { useUserQuery } from '@/entities/User/model/userQueries';
-import { userService } from '@/entities/User/api/userService';
-
 import EditLayout from '@/features/mypage/ui/EditLayout';
 import {
   USER_NICKNAME_CONSTRAINTS,
   VALIDATION_MESSAGES
 } from '@/features/mypage/model/constants/userProfile';
+import { userService } from '@/entities/User/api/userService';
 
 export default function NicknameEditPage() {
   const router = useRouter();

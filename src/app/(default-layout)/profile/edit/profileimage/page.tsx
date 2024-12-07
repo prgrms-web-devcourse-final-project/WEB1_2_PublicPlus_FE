@@ -3,10 +3,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useUserQuery } from '@/entities/User/model/userQueries';
-import { userService } from '@/entities/User/api/userService';
-
 import { Plus } from 'lucide-react';
 import EditLayout from '@/features/mypage/ui/EditLayout';
+import { userService } from '@/entities/User/api/userService';
 
 export default function ProfileImageEditPage() {
   const router = useRouter();

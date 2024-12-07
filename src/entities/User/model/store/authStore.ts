@@ -2,8 +2,8 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 import { UserJoinDTO, UserLoginDTO } from '@/shared/api/generated';
-import { AuthState } from '../types/AuthState';
-import { userService } from '../../api/userService';
+import type { AuthState } from '../types/AuthState';
+import type { userService } from '../../api/userService';
 
 export type SocialProvider = 'kakao' | 'google' | 'naver';
 

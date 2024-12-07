@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { MeetingBoardRequestDTO } from '@/shared/api/generated';
 import { useQueryClient } from '@tanstack/react-query';
@@ -29,12 +29,17 @@ export default function MeetingBoardCreation() {
     tokens?.access_token ?? ''
   );
 
+  useEffect(() => {
+    if (!tokens?.access_token) {
+      setToast({
+        show: true,
+        message: 'Access token is missing. Please log in again.',
+        type: 'error'
+      });
+    }
+  }, [tokens?.access_token]);
+
   if (!tokens?.access_token) {
-    setToast({
-      show: true,
-      message: 'Access token is missing. Please log in again.',
-      type: 'error'
-    });
     return null;
   }
 

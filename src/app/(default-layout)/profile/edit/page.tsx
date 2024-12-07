@@ -1,14 +1,12 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-
-import { useUserQuery } from '@/entities/User/model/userQueries';
-import { useAuthStore } from '@/entities/User';
-
 import { toast } from 'react-toastify';
-import { Modal } from '@/components/common/Modal';
 import { CustomHeader } from '@/widgets/Header/ui/CustomHeader';
-import { EditCard } from '@/components/common/Cards/EditCard';
+import { useAuthStore } from '@/entities/user';
+import { useUserQuery } from '@/entities/user/model/userQueries';
+import { EditCard } from '@/shared/ui/components/Card/EditCard';
+import { Modal } from '@/shared/ui/components/Modal/Modal';
 
 export default function ProfileEditPage() {
   const router = useRouter();

@@ -1,6 +1,5 @@
+import { UserJoinDTO, UserLoginDTO } from '@/shared/api/generated';
 import { SocialProvider } from '../store/authStore';
-import { UserLoginDTO } from './UserLogin';
-import { UserJoinDTO } from './UserSignup';
 
 export interface AuthState {
   userId: string | null;

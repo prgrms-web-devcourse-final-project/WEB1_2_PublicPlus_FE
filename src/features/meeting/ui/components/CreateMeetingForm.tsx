@@ -10,17 +10,11 @@ interface CreateMeetingFormProps {
   isLoading: boolean;
 }
 
-interface FormErrors {
-  startTime?: string;
-  endTime?: string;
-}
-
 export function CreateMeetingForm({
   onSubmit,
   isLoading
 }: CreateMeetingFormProps) {
   const [step, setStep] = useState(1);
-  const [errors, setErrors] = useState<FormErrors>({});
   const [formData, setFormData] = useState<MeetingBoardRequestDTO>({
     sportType: MeetingBoardRequestDTOSportTypeEnum.Soccer,
     mbTitle: '',
