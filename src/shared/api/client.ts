@@ -6,7 +6,8 @@ import {
   ActivityMeetingBoardControllerApi,
   ConfigurationParameters,
   Configuration,
-  MeetingBoardApi
+  MeetingBoardApi,
+  FacilityLikeControllerApi
 } from '@/api/generated';
 import Cookies from 'js-cookie';
 import { axiosInstance } from './axiosInstance';
@@ -42,5 +43,8 @@ export const api = {
   activityMeetingBoard: new ActivityMeetingBoardControllerApi(
     new CustomConfiguration({}, false)
   ),
-  meetingBoard: new MeetingBoardApi(new CustomConfiguration({}, false))
+  meetingBoard: new MeetingBoardApi(new CustomConfiguration({}, false)),
+  facilityLike: new FacilityLikeControllerApi(
+    new CustomConfiguration({}, false)
+  )
 };
