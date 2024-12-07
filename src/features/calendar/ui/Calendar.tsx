@@ -118,10 +118,6 @@ export const Calendar: FC = () => {
           locale="ko"
           dayHeaderFormat={{ weekday: 'short' }}
           className="calendar-custom"
-          buttonText={{
-            prev: '이전',
-            next: '다음'
-          }}
           dayCellClassNames="hover:bg-blue-50 transition-colors cursor-pointer"
           eventContent={eventInfo => {
             const event = eventInfo.event;

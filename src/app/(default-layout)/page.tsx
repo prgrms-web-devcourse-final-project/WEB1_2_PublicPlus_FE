@@ -12,6 +12,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MainFacilityList } from '@/widgets/facility/facility-list/MainFacilityList';
+import { Button } from '@/components/common/Button/Button';
 
 const Home = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -162,8 +163,10 @@ const Home = () => {
 
       {/* Calendar Modal */}
       {isCalendarOpen && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center space-y-4 bg-black bg-opacity-50 p-4">
-          <div className="h-[80%] w-[80%] rounded-lg bg-white shadow-sm">
+        <div
+          style={{ margin: 0 }}
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center space-y-4 bg-black bg-opacity-50 p-4">
+          <div className="h-[80%] w-[80%] rounded-lg bg-white p-4 shadow-lg">
             <FullCalendar
               plugins={[dayGridPlugin, interactionPlugin]}
               initialView="dayGridMonth"
@@ -178,6 +181,7 @@ const Home = () => {
               height="100%"
               locale="ko"
               dayHeaderFormat={{ weekday: 'short' }}
+              className="calendar-custom"
               dayCellClassNames={arg => {
                 if (arg.date.toDateString() === selectedDate.toDateString()) {
                   return 'selected-date';
@@ -185,12 +189,12 @@ const Home = () => {
                 return '';
               }}
             />
-            <div className="mt-4 flex justify-end">
-              <button
-                onClick={() => setIsCalendarOpen(false)}
-                className="rounded bg-gray-200 px-4 py-2 text-sm">
+            <div className="mt-6 flex justify-end">
+              <Button
+                variant="gray"
+                onClick={() => setIsCalendarOpen(false)}>
                 닫기
-              </button>
+              </Button>
             </div>
           </div>
         </div>
