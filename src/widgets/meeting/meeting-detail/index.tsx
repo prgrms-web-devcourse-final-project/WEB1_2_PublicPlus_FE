@@ -8,6 +8,7 @@ import { FullScreenLoading } from '@/components/common/Loading';
 import ErrorFallback from '@/components/ErrorBoundary/ErrorFallback';
 import { useAuthStore } from '@/entities/User/model/store/authStore';
 import { MeetingHeader, MeetingInfo, MeetingTabs } from '@/features/meeting';
+import Link from 'next/link';
 
 export default function MeetingDetail() {
   const params = useParams();
@@ -39,10 +40,6 @@ export default function MeetingDetail() {
       }
       return;
     }
-  };
-
-  const handleChatClick = () => {
-    router.push(`/chat/meeting/${id}`);
   };
 
   if (!id) {
@@ -88,11 +85,12 @@ export default function MeetingDetail() {
             모임 참여하기
           </button>
         ) : (
-          <button
-            onClick={handleChatClick}
-            className="w-full rounded-lg bg-blue-500 py-3 font-bold text-white transition-colors hover:bg-blue-600">
+          <Link
+            href={meeting.openChatLink ?? ''}
+            target="_blank"
+            className="flex w-full justify-center rounded-lg bg-blue-500 py-3 font-bold text-white transition-colors hover:bg-blue-600">
             채팅 참여하기
-          </button>
+          </Link>
         )}
       </div>
     </div>

@@ -28,7 +28,8 @@ export function CreateMeetingForm({
     startTime: '',
     endTime: '',
     mbLocation: '',
-    maxParticipants: 2
+    maxParticipants: 2,
+    openChatLink: ''
   });
 
   const [dateTime, setDateTime] = useState({
@@ -95,7 +96,8 @@ export function CreateMeetingForm({
         ...formData,
         mbTitle: formData.mbTitle.trim(),
         mbContent: formData.mbContent.trim(),
-        mbLocation: formData.mbLocation.trim()
+        mbLocation: formData.mbLocation.trim(),
+        openChatLink: formData.openChatLink.trim()
       };
       onSubmit(submitData);
     }
@@ -109,7 +111,8 @@ export function CreateMeetingForm({
         ...formData,
         mbTitle: formData.mbTitle.trim(),
         mbContent: formData.mbContent.trim(),
-        mbLocation: formData.mbLocation.trim()
+        mbLocation: formData.mbLocation.trim(),
+        openChatLink: formData.openChatLink.trim()
       };
       onSubmit(submitData);
     }
@@ -285,6 +288,20 @@ export function CreateMeetingForm({
           required
         />
       </div>
+
+      <div>
+        <label className="mb-1 block text-sm font-medium text-gray-700">
+          카카오톡 오픈채팅 주소
+        </label>
+        <input
+          type="text"
+          className="w-full rounded-lg border border-gray-300 p-2 focus:border-blue-500 focus:ring-blue-500"
+          placeholder="예) https://open.kakao.com/"
+          value={formData.openChatLink}
+          onChange={e => handleChange('openChatLink', e.target.value)}
+          required
+        />
+      </div>
     </div>
   );
 
@@ -300,6 +317,7 @@ export function CreateMeetingForm({
         <li>• 설명: {formData.mbContent}</li>
         <li>• 장소: {formData.mbLocation}</li>
         <li>• 참여 인원: {formData.maxParticipants}명</li>
+        <li>• 카카오톡 오픈채팅 주소: {formData.openChatLink}명</li>
       </ul>
     </div>
   );
