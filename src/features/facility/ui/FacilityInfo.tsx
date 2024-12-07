@@ -1,5 +1,5 @@
 import { FacilityDetailsResponseDTO } from '@/shared/api/generated';
-import { LinkCard } from '@/components/common/Cards/LinkCard';
+import { LinkCard } from '@/shared/ui/components/card/LinkCard';
 import { MapContainer } from '@/shared/ui/map/Map';
 import { LinkIcon } from 'lucide-react';
 import Link from 'next/link';

@@ -2,16 +2,15 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronRight, Calendar as CalendarIcon } from 'lucide-react';
-import { Card } from '@/components/common/Cards/Card';
-import { FacilityFilters } from '@/widgets/facility/facility-filters';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import Link from 'next/link';
 import Image from 'next/image';
-import { MainFacilityList } from '@/widgets/facility/facility-list/MainFacilityList';
 import { Button } from '@/shared/ui/components/button/Button';
 import MeetingBoardList from '@/features/meeting/ui/meeting-list/MeetingList';
+import { Card } from '@/shared/ui/components/card/Card';
+import { FacilityFilters } from '@/features/facility/ui/facility-filters';
+import { MainFacilityList } from '@/features/facility/ui/facility-list/MainFacilityList';
 
 const Home = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -205,7 +204,7 @@ const Home = () => {
             <ChevronRight className="h-4 w-4" />
           </button>
         </div>
-        <MeetingBoardList selectedDate={selectedDate} />
+        <MeetingBoardList />
       </div>
     </div>
   );

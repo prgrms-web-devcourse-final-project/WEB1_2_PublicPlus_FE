@@ -3,14 +3,14 @@ import { useState } from 'react';
 import Link from 'next/link';
 import ColorPalette from '@/components/ColorPalette';
 import { Button } from '@/shared/ui/components/button/Button';
-import { Card } from '@/components/common/Cards/Card';
 import { Header } from '@/widgets/header/ui';
-import { SearchBar } from '@/components/common/SearchBar';
-import { NotificationItem } from '@/components/common/NotificationItem';
-import { Navigation } from '@/components/common/Navigation/Navigation';
 import { Loading } from '@/components/common/Loading';
-import ErrorMessage from '@/components/common/ErrorMsg';
 import { Modal } from '@/shared/ui/components/modal/Modal';
+import ErrorMessage from '@/shared/ui/components/error/ErrorMsg';
+import { NotificationItem } from '@/shared/ui/components/notification/NotificationItem';
+import { SearchBar } from '@/shared/ui/components/search/SearchBar';
+import { Navigation } from 'lucide-react';
+import { Card } from '@/shared/ui/components/card/Card';
 
 export default function StyleGuidePage() {
   const [search, setSearch] = useState('');

@@ -18,14 +18,14 @@ export const NAV_ITEMS: NavItemType[] = [
       active: '/icons/nav/facilities-active.png'
     }
   },
-  {
-    label: '채팅',
-    href: '/chat',
-    iconSrc: {
-      default: '/icons/nav/chat.png',
-      active: '/icons/nav/chat-active.png'
-    }
-  },
+  // {
+  //   label: '채팅',
+  //   href: '/chat',
+  //   iconSrc: {
+  //     default: '/icons/nav/chat.png',
+  //     active: '/icons/nav/chat-active.png'
+  //   }
+  // },
   {
     label: '모임',
     href: '/meeting',

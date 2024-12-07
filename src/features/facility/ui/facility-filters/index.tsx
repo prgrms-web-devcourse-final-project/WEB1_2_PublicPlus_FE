@@ -4,12 +4,12 @@ import { AreaFilter } from '@/features/facility/filter/ui/area-filter';
 import { PriceFilter } from '@/features/facility/filter/ui/price-filter';
 import { Button } from '@/shared/ui/components/button/Button';
 import { useFilterStore } from '@/features/facility/filter/model/store';
-import { SearchBar } from '@/components/common/SearchBar';
+import { SearchBar } from '@/shared/ui/components/search/SearchBar';
 
 export const FacilityFilters = ({
-  showSearchBar = false
+  showSearchBar = true
 }: {
-  showSearchBar: boolean;
+  showSearchBar?: boolean;
 }) => {
   const { filters, setFilters, isFilterMenuOpen, toggleFilterMenu } =
     useFilterStore();

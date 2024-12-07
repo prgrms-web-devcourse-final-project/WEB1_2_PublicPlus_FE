@@ -1,6 +1,6 @@
-import { UserInfoCard } from '@/components/common/Cards/UserInfoCard';
 import { useRouter } from 'next/navigation';
 import { useUserQuery } from '@/entities/User/model/userQueries';
+import { UserInfoCard } from '@/features/user/ui/components/UserInfoCard';
 
 export const UserInfo = () => {
   const { data: userInfo } = useUserQuery();

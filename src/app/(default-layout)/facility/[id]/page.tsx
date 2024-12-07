@@ -1,4 +1,4 @@
-import FacilityDetail from '@/widgets/facility/facility-detail';
+import FacilityDetail from '@/features/facility/ui/facility-detail';
 import { generateMetadata } from '@/shared/config/metadata/generate-metadata';
 
 export const metadata = generateMetadata({

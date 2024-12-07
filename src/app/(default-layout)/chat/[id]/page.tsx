@@ -1,11 +1,11 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { ChatMessage } from '@/components/common/Chat/ChatMessage';
-import { ChatInput } from '@/components/common/Chat/ChatInput';
 import { CustomHeader } from '@/components/common/Header/CustomHeader';
 import { ChatRoomInfoModal } from '@/features/chat/ui/ChatRoomInfoModal/ChatRoomInfoModal';
 import { ChatRoom } from '@/features/chat/model/types';
+import { ChatInput } from '@/features/chat/ui/components/ChatInput';
+import { ChatMessage } from '@/features/chat/ui/components/ChatMessage';
 
 interface Message {
   id: string;
