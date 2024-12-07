@@ -1,4 +1,4 @@
-import { SocialProvider, useAuthStore } from '@/entities/User';
+import { useAuthStore } from '@/entities/User';
 import { userService } from '@/entities/User/api/userService';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 export default function LoginCallbackPage() {
   const router = useRouter();
-  const { socialLogin } = useAuthStore();
+  const { socialLoginComplete } = useAuthStore();
 
   useEffect(() => {
     const handleSocialLoginCallback = async () => {
@@ -14,10 +14,6 @@ export default function LoginCallbackPage() {
       const code = urlParams.get('code');
       const state = urlParams.get('state');
 
-      // 구글 고정 (URL 기반으로 provider 결정)
-      const provider: SocialProvider = 'google';
-
-      // state 검증 로직 추가
       const savedState = localStorage.getItem('oauth_state');
       if (state !== savedState) {
         toast.error('인증 상태가 일치하지 않습니다.');
@@ -27,14 +23,11 @@ export default function LoginCallbackPage() {
 
       if (code) {
         try {
-          const result = await userService.socialLoginCallback(
-            provider, // provider 명시
-            code
-          );
+          const result = await userService.socialLoginCallback('google', code);
 
-          // 인증 스토어 업데이트
+          // 로그인 완료 처리
           if (result) {
-            socialLogin(result);
+            await socialLoginComplete(result);
             toast.success('로그인 성공');
             router.push('/');
           } else {
@@ -43,7 +36,6 @@ export default function LoginCallbackPage() {
         } catch (error) {
           console.error('소셜 로그인 에러:', error);
 
-          // 더 구체적인 에러 메시지
           const errorMessage =
             error instanceof Error
               ? error.message
@@ -56,7 +48,7 @@ export default function LoginCallbackPage() {
     };
 
     handleSocialLoginCallback();
-  }, [router, socialLogin]);
+  }, [router]);
 
   return <div>로그인 처리 중...</div>;
 }

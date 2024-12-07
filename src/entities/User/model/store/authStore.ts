@@ -63,13 +63,11 @@ export const useAuthStore = create<AuthState>()(
       // 소셜 로그인
       socialLogin: async provider => {
         try {
-          // 소셜 제공자의 인증 URL로 리다이렉트
           const authorizationUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/oauth2/${provider}`;
           window.location.href = authorizationUrl;
 
           return true;
         } catch (error) {
-          // 에러 처리 로직
           set({
             isAuthenticated: false,
             isLoading: false,
@@ -77,6 +75,36 @@ export const useAuthStore = create<AuthState>()(
           });
           return false;
         }
+      },
+      socialLoginComplete: async (loginResponse: {
+        bearer: string;
+        access_token: string;
+        refresh_token: string;
+        userId: string;
+      }) => {
+        document.cookie = `auth-storage=${JSON.stringify({
+          state: {
+            userId: loginResponse.userId,
+            tokens: {
+              access_token: loginResponse.access_token,
+              refresh_token: loginResponse.refresh_token
+            },
+            isAuthenticated: true
+          }
+        })}; path=/; secure; samesite=strict; max-age=86400`;
+
+        set({
+          userId: loginResponse.userId,
+          tokens: {
+            access_token: loginResponse.access_token,
+            refresh_token: loginResponse.refresh_token
+          },
+          isAuthenticated: true,
+          isLoading: false,
+          error: null
+        });
+
+        return true;
       },
 
       join: async (joinData: UserJoinDTO) => {

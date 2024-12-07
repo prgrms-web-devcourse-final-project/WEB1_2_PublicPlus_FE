@@ -18,4 +18,5 @@ export interface AuthState {
   logout: () => void;
   refreshToken: () => Promise<boolean>;
   deleteUser: () => Promise<boolean>;
+  socialLoginComplete: () => void;
 }
