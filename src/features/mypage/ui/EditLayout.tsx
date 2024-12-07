@@ -1,4 +1,4 @@
-import { Button } from '@/components/common/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 import { CustomHeader } from '@/components/common/Header/CustomHeader';
 
 interface EditLayoutProps {

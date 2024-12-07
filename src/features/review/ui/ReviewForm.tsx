@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ReviewDTO } from '@/api/generated';
-import { Button } from '@/components/common/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 import { Rating } from '@/widgets/rating/Rating';
 import { TagInput } from '@/widgets/tag-input/TagInput';
 

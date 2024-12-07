@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { LucidePanelRightClose } from 'lucide-react';
-import { Button } from '@/components/common/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 import { Modal } from '@/components/common/Modal';
 import { ChatRoomDetailInfo } from './ChatRoomDetailInfo';
 import { SideModalProps } from '../../types';

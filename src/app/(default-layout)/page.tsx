@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ChevronRight, Calendar as CalendarIcon } from 'lucide-react';
 import { Card } from '@/components/common/Cards/Card';
 import { FacilityFilters } from '@/widgets/facility/facility-filters';
-import { FacilityList } from '@/widgets/facility/facility-list';
 import MeetingBoardList from '@/widgets/meeting/meeting-list';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -12,7 +11,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MainFacilityList } from '@/widgets/facility/facility-list/MainFacilityList';
-import { Button } from '@/components/common/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 
 const Home = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());

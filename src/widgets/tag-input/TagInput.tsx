@@ -1,7 +1,7 @@
 import { useState, KeyboardEvent } from 'react';
 import { X } from 'lucide-react';
-import { Input } from '@/components/common/Input';
 import { cn } from '@/shared/lib/utils';
+import { Input } from '@/shared/ui/components/input/Input';
 
 interface TagInputProps {
   value: string[];

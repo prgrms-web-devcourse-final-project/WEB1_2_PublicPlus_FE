@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import { FacilityDetailsResponseDTO, ReviewDTO } from '@/api/generated';
 import { Card } from '@/components/common/Cards/Card';
-import { Button } from '@/components/common/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 import { useReviews } from '@/features/review/model/queries';
 import { ReviewForm } from '@/features/review/ui/ReviewForm';
 import { Rating } from '@/widgets/rating/Rating';

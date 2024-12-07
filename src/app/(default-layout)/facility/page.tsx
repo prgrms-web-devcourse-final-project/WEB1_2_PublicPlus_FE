@@ -3,7 +3,7 @@
 import { FacilityList } from '@/widgets/facility/facility-list';
 import { FacilityFilters } from '@/widgets/facility/facility-filters';
 import { useFilterStore } from '@/features/facility/filter/model/store';
-import { Button } from '@/components/common/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 import { X } from 'lucide-react';
 
 export default function FacilityPage() {

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Button } from '@/components/common/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 
 interface NotificationItemProps {
   message: string;

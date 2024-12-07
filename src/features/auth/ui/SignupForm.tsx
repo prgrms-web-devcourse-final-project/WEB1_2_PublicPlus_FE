@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { EmailInput } from './EmailInput';
 import { VerificationInput } from './VerificationInput';
-import { Button } from '@/components/common/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 import { useRouter } from 'next/navigation';
 
 export function SignupForm() {

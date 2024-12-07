@@ -6,9 +6,9 @@ import {
   useDeleteMeetingBoard
 } from '@/features/meeting/model/queries';
 import { useMeetingBoardStore } from '../model/store';
-import { Input } from '@/components/common/Input';
-import { Button } from '@/components/common/Button/Button';
-import { useToast } from '@/components/common/Toast/Toast';
+import { Input } from '@/shared/ui/components/input/Input';
+import { Button } from '@/shared/ui/components/button/Button';
+import { useToast } from '@/shared/ui/components/toast/Toast';
 
 interface EventFormData {
   mbTitle: string;

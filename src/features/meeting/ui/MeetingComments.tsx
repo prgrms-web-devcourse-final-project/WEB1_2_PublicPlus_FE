@@ -1,4 +1,4 @@
-import { Button } from '@/components/common/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 import { Card } from '@/components/common/Cards/Card';
 import { useAuthStore } from '@/entities/User/model/store/authStore';
 

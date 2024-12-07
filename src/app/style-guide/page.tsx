@@ -1,17 +1,16 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-
 import ColorPalette from '@/components/ColorPalette';
-import { Button } from '@/components/common/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 import { Card } from '@/components/common/Cards/Card';
 import { Header } from '@/components/common/Header';
 import { SearchBar } from '@/components/common/SearchBar';
-import { Modal } from '@/components/common/Modal';
 import { NotificationItem } from '@/components/common/NotificationItem';
 import { Navigation } from '@/components/common/Navigation/Navigation';
 import { Loading } from '@/components/common/Loading';
 import ErrorMessage from '@/components/common/ErrorMsg';
+import { Modal } from '@/shared/ui/components/modal/Modal';
 
 export default function StyleGuidePage() {
   const [search, setSearch] = useState('');

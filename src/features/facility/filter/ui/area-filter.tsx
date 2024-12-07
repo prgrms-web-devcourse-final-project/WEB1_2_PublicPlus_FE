@@ -1,6 +1,6 @@
 import { AREAS } from '@/shared/config/constants';
 import { useFilterStore } from '../model/store';
-import { Button } from '@/components/common/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 
 export const AreaFilter = () => {
   const { filters, setFilters, isFilterMenuOpen, toggleFilterMenu } =

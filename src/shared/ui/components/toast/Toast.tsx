@@ -1,7 +1,5 @@
-// components/common/Toast/Toast.tsx
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import styles from './Toast.module.css';
 
 type ToastType = 'success' | 'error' | 'warning' | 'info';
 

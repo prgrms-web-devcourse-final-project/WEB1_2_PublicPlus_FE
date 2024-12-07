@@ -2,7 +2,7 @@ import { Filter } from 'lucide-react';
 import { CategoryFilter } from '@/features/facility/filter/ui/category-filter';
 import { AreaFilter } from '@/features/facility/filter/ui/area-filter';
 import { PriceFilter } from '@/features/facility/filter/ui/price-filter';
-import { Button } from '@/components/common/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 import { useFilterStore } from '@/features/facility/filter/model/store';
 import { SearchBar } from '@/components/common/SearchBar';
 

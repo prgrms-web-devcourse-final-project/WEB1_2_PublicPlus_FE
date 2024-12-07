@@ -2,10 +2,10 @@ import '@/styles/globals.css';
 import { defaultMetadata } from '@/shared/config/metadata/default-metadata';
 // import { MSWComponent } from '@/components/MSWComponent';
 import { Providers } from './providers';
-import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary';
 import { Suspense } from 'react';
-import Loading from '@/components/Suspense/Loading';
 import localFont from 'next/font/local';
+import ErrorBoundary from '@/shared/ui/components/error-boundary/ErrorBoundary';
+import Loading from '@/shared/ui/components/suspense/Loading';
 
 const pretendard = localFont({
   src: '../../public/font/PretendardVariable.woff2',
