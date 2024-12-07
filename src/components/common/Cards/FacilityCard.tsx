@@ -1,55 +1,40 @@
-// components/common/cards/FacilityCard.tsx
+import { FacilityDetailsResponseDTO } from '@/api/generated';
 import { Tag } from '../Tag';
 import { LinkCard } from './LinkCard';
 
-export interface FacilityCardProps {
-  image?: string;
-  title: string;
-  price: string;
-  tags: string[];
-  reservationType: '국민체육센터' | '주민센터 문의' | '온라인 직접 예약';
-  domain: string;
-  id: string;
-}
-
 export const FacilityCard = ({
-  image,
-  title,
-  price,
-  tags,
+  facilityImage,
+  facilityName,
+  priceType,
+  facilityCategory,
   reservationType,
   domain,
-  id
-}: FacilityCardProps) => (
+  facilityId,
+  reservationStartDate,
+  reservationEndDate
+}: FacilityDetailsResponseDTO) => (
   <LinkCard
-    imageSrc={image}
-    imageAlt={title}
-    title={title}
+    imageSrc={facilityImage ?? '/default-image.jpg'}
+    imageAlt={facilityName}
+    title={facilityName}
     className="min-h-[10rem]"
     content={
-      <div className="flex flex-wrap gap-1">
-        {tags.map(tag => (
-          <Tag
-            key={tag}
-            label={tag}
-          />
-        ))}
-      </div>
-    }
-    footer={
       <>
         <div className="mb-2 text-xs text-gray-500">
-          예약 방법: {reservationType}
+          예약 방법: {reservationType ?? '온라인 예약'}
         </div>
-        <div className="flex items-center justify-between">
-          <div className="text-sm text-gray-500">
-            <span className="font-semibold text-gray-900">{price}</span> /
-            기본요금
-          </div>
+        <div className="mb-2 text-xs text-gray-500">
+          예약 기간: {reservationStartDate} ~ {reservationEndDate}
+        </div>
+        <div className="text-sm text-gray-500">
+          <span className="font-semibold text-gray-900">
+            {priceType ? '무료' : '유료'} 이용
+          </span>
         </div>
       </>
     }
+    footer={<Tag label={facilityCategory ?? ''} />}
     domain={domain}
-    id={id}
+    id={facilityId}
   />
 );

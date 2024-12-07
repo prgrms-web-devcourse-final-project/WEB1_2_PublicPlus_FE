@@ -32,18 +32,22 @@ export const FacilityList = ({
   if (error) return <p>시설 정보를 불러오는 데 실패했습니다.</p>;
   if (!data?.content?.length) return <p>검색 결과가 없습니다.</p>;
 
+  console.log('시설 목록 데이터: ', data);
+
   return (
     <div className="space-y-4">
       {data.content.map((facility: FacilityDetailsResponseDTO) => (
         <FacilityCard
-          key={facility.facilityId ?? 'default-key'}
           domain="facility"
-          id={facility.facilityId ?? ''}
-          title={facility.facilityName ?? '시설 이름 없음'}
-          price={facility.priceType ? '무료' : '유료'}
-          tags={['깨끗함', '와이파이 제공', '주차장 무료']}
-          reservationType={'국민체육센터'}
-          image={facility.facilityImage ?? '/default-image.jpg'}
+          key={facility.facilityId}
+          facilityId={facility.facilityId}
+          facilityName={facility.facilityName}
+          priceType={facility.priceType}
+          facilityCategory={facility.facilityCategory}
+          reservationType={facility.reservationType}
+          facilityImage={facility.facilityImage}
+          reservationStartDate={facility.reservationStartDate}
+          reservationEndDate={facility.reservationEndDate}
         />
       ))}
       {showPagination && (

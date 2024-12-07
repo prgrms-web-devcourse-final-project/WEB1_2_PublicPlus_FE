@@ -6,7 +6,11 @@ import { Button } from '@/components/common/Button/Button';
 import { useFilterStore } from '@/features/facility/filter/model/store';
 import { SearchBar } from '@/components/common/SearchBar';
 
-export const FacilityFilters = () => {
+export const FacilityFilters = ({
+  showSearchBar = false
+}: {
+  showSearchBar: boolean;
+}) => {
   const { filters, setFilters, isFilterMenuOpen, toggleFilterMenu } =
     useFilterStore();
 
@@ -74,13 +78,15 @@ export const FacilityFilters = () => {
       </div>
 
       {/* 시설 검색 입력 필드 */}
-      <div className="relative flex-1">
-        <SearchBar
-          placeholder="시설 검색"
-          value={filters.facilityName || ''}
-          onChange={handleSearchChange}
-        />
-      </div>
+      {showSearchBar && (
+        <div className="relative flex-1">
+          <SearchBar
+            placeholder="시설 검색"
+            value={filters.facilityName || ''}
+            onChange={handleSearchChange}
+          />
+        </div>
+      )}
 
       {isFilterMenuOpen === 'category' && <CategoryFilter />}
       {isFilterMenuOpen === 'area' && <AreaFilter />}

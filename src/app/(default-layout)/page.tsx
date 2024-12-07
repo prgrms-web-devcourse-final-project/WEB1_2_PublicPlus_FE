@@ -11,6 +11,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import Link from 'next/link';
 import Image from 'next/image';
+import { MainFacilityList } from '@/widgets/facility/facility-list/MainFacilityList';
 
 const Home = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -204,12 +205,8 @@ const Home = () => {
           </button>
         </div>
         <div className="space-y-6">
-          <FacilityFilters />
-          <FacilityList
-            maxItems={4}
-            showPagination={false}
-            selectedDate={selectedDate}
-          />
+          <FacilityFilters showSearchBar={false} />
+          <MainFacilityList />
         </div>
       </div>
       {/* Meetings Section */}
@@ -221,10 +218,7 @@ const Home = () => {
             <ChevronRight className="h-4 w-4" />
           </button>
         </div>
-        <MeetingBoardList
-          maxItems={4}
-          selectedDate={selectedDate}
-        />
+        <MeetingBoardList selectedDate={selectedDate} />
       </div>
     </div>
   );
