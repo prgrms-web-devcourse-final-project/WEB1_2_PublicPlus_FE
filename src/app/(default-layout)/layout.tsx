@@ -30,7 +30,7 @@ export default function RootLayout({
   };
 
   return (
-    <div className="relative mx-auto min-h-screen w-full max-w-[768px]">
+    <div className="relative mx-auto min-h-screen w-full">
       <div className="flex min-h-screen flex-col">
         <Header />
         <main className="container flex-grow px-4">{children}</main>

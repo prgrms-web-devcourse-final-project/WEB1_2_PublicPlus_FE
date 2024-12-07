@@ -44,7 +44,7 @@ export const Header = ({ detailTitle }: HeaderProps) => {
   // 디테일 페이지용 헤더
   if (isDetailPage) {
     return (
-      <header className="fixed left-0 right-0 top-0 z-40 mx-auto h-[56px] w-full max-w-[600px] bg-white">
+      <header className="fixed left-0 right-0 top-0 z-40 mx-auto h-[56px] w-full bg-white">
         <div className="relative flex h-full w-full items-center justify-center px-4 md:px-6">
           <button
             className="absolute left-[1.5rem] flex cursor-pointer items-center rounded-lg border border-none border-gray-200 bg-none p-2"
@@ -66,7 +66,7 @@ export const Header = ({ detailTitle }: HeaderProps) => {
 
   // 기본 헤더
   return (
-    <header className="fixed left-0 right-0 top-0 z-40 mx-auto h-[56px] w-full max-w-[600px] bg-white">
+    <header className="fixed left-0 right-0 top-0 z-40 mx-auto h-[56px] w-full bg-white">
       <div className="flex h-full w-full items-center justify-between px-4 md:px-6">
         <Link
           href="/"

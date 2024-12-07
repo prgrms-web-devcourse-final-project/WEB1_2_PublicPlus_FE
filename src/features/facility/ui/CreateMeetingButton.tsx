@@ -9,7 +9,7 @@ export const CreateMeetingButton = ({
 }: CreateMeetingButtonProps) => {
   return (
     <div
-      className={`sticky bottom-[80px] z-[90] mx-auto w-full max-w-[600px] bg-white px-6 ${className}`}>
+      className={`sticky bottom-[80px] z-[90] mx-auto w-full bg-white px-6 ${className}`}>
       <Link
         href="/meeting/create"
         className="block">

@@ -68,7 +68,7 @@ html {
 
 /* 최대너비 지정 */
 :root {
-  --max-width: 600px;
+  --max-width: 2560px;
   --layout-bg-color: #ffffff;
 }
 

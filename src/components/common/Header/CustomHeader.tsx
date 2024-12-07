@@ -27,7 +27,7 @@ export const CustomHeader = ({ title, rightButton }: CustomHeaderProps) => {
   };
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-40 mx-auto h-[56px] w-full max-w-[600px] bg-white">
+    <header className="fixed left-0 right-0 top-0 z-40 mx-auto h-[56px] w-full bg-white">
       <div className="flex h-full w-full items-center justify-between px-4 md:px-6">
         <button
           className="flex items-center justify-center rounded-lg border border-gray-200 p-2"
