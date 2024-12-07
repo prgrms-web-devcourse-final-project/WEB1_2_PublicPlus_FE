@@ -1,5 +1,5 @@
 // constants.ts
-import { NavItemType } from '../../../components/common/Navigation/types';
+import { NavItemType } from './types';
 
 export const NAV_ITEMS: NavItemType[] = [
   {

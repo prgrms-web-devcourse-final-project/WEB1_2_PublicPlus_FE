@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import { useFacilityStore } from '../model/store';
+import { useFacilityStore } from '../../model/store';
 import { FacilityDetailsResponseDTO } from '@/shared/api/generated';
-import { useAddLike, useRemoveLike } from '../like/model/queries';
+import { useAddLike, useRemoveLike } from '../../like/model/queries';
 import { useAuthStore } from '@/entities/User';
 
 interface FacilityHeaderProps {

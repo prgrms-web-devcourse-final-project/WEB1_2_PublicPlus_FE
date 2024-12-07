@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './NavItem.module.css';
-import { NavItemProps } from './types';
+import { NavItemProps } from '../model/types';
 
 export const NavItem = ({ label, href, iconSrc, active }: NavItemProps) => {
   return (

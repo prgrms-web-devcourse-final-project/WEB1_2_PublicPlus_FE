@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { CustomHeader } from '@/components/common/Header/CustomHeader';
+import { CustomHeader } from '@/widgets/Header/ui/CustomHeader';
 import { ChatRoomInfoModal } from '@/features/chat/ui/ChatRoomInfoModal/ChatRoomInfoModal';
 import { ChatRoom } from '@/features/chat/model/types';
 import { ChatInput } from '@/features/chat/ui/components/ChatInput';

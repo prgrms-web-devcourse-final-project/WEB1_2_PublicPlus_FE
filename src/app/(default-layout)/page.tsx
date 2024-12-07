@@ -7,10 +7,10 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import Image from 'next/image';
 import { Button } from '@/shared/ui/components/button/Button';
-import MeetingBoardList from '@/features/meeting/ui/meeting-list/MeetingList';
+import MeetingBoardList from '@/features/meeting/ui/MeetingList/MeetingList';
 import { Card } from '@/shared/ui/components/card/Card';
-import { FacilityFilters } from '@/features/facility/ui/facility-filters';
-import { MainFacilityList } from '@/features/facility/ui/facility-list/MainFacilityList';
+import { FacilityFilters } from '@/features/facility/ui/FacilityFilters/FacilityFilters';
+import { MainFacilityList } from '@/features/facility/ui/FacilityList/MainFacilityList';
 
 const Home = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());

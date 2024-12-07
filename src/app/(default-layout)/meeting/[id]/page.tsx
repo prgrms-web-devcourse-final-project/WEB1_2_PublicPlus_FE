@@ -1,4 +1,4 @@
-import MeetingDetail from '@/features/meeting/ui/meeting-detail/MeetingDetail';
+import MeetingDetail from '@/features/meeting/ui/MeetingDetail/MeetingDetail';
 import { generateMetadata } from '@/shared/config/metadata/generate-metadata';
 
 export const metadata = generateMetadata({

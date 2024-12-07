@@ -1,4 +1,4 @@
-import { useFacilityStore } from '../model/store';
+import { useFacilityStore } from '../../model/store';
 
 type TabType = 'info' | 'review' | 'rules';
 

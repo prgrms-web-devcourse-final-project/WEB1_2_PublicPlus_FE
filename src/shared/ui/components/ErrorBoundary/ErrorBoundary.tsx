@@ -1,6 +1,6 @@
 'use client';
 
-import ErrorFallback from '@/components/ErrorBoundary/ErrorFallback';
+import ErrorFallback from '@/shared/ui/components/ErrorBoundary/ErrorFallback';
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 
 interface Props {

@@ -1,4 +1,4 @@
-import MeetingBoardList from '@/features/meeting/ui/meeting-list/MeetingList';
+import MeetingBoardList from '@/features/meeting/ui/MeetingList/MeetingList';
 
 export default function FacilityPage() {
   return (

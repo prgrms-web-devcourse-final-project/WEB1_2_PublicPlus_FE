@@ -1,11 +1,11 @@
 import '@/styles/globals.css';
 import { defaultMetadata } from '@/shared/config/metadata/default-metadata';
-// import { MSWComponent } from '@/components/MSWComponent';
 import { Providers } from './providers';
 import { Suspense } from 'react';
 import localFont from 'next/font/local';
-import ErrorBoundary from '@/shared/ui/components/error-boundary/ErrorBoundary';
-import Loading from '@/shared/ui/components/suspense/Loading';
+import { Loading } from '@/shared/ui/components/Loading/Loading';
+import ErrorBoundary from '@/shared/ui/components/ErrorBoundary/ErrorBoundary';
+// import { MSWComponent } from '@/shared/lib/MSW/MSWComponent';
 
 const pretendard = localFont({
   src: '../../public/font/PretendardVariable.woff2',

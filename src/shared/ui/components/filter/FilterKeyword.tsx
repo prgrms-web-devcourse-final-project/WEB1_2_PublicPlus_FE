@@ -1,4 +1,3 @@
-// components/common/search/FilterKeyword.tsx
 interface FilterKeywordProps {
   filters: Array<{
     id: string;

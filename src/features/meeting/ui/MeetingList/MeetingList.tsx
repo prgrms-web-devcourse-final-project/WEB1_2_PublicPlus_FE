@@ -3,7 +3,7 @@
 import { MeetingBoardRequestDTO } from '@/shared/api/generated';
 import React from 'react';
 import { useMeetingBoards } from '@/features/meeting/model/queries';
-import { MeetingCard } from '@/widgets/meeting-card/ui/MeetingCard';
+import { MeetingCard } from '@/widgets/MeetingCard/ui/MeetingCard';
 
 const MeetingBoardList = () => {
   const { data, isLoading } = useMeetingBoards();

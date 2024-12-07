@@ -1,10 +1,10 @@
 import { Filter } from 'lucide-react';
-import { CategoryFilter } from '@/features/facility/filter/ui/category-filter';
-import { AreaFilter } from '@/features/facility/filter/ui/area-filter';
-import { PriceFilter } from '@/features/facility/filter/ui/price-filter';
 import { Button } from '@/shared/ui/components/button/Button';
-import { useFilterStore } from '@/features/facility/filter/model/store';
-import { SearchBar } from '@/shared/ui/components/search/SearchBar';
+import { SearchBar } from '@/shared/ui/components/Search/SearchBar';
+import { useFilterStore } from '../../filter/model/store';
+import { AreaFilter } from '../../filter/ui/AreaFilter';
+import { CategoryFilter } from '../../filter/ui/CategoryFilter';
+import { PriceFilter } from '../../filter/ui/PriceFilter';
 
 export const FacilityFilters = ({
   showSearchBar = true

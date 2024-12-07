@@ -7,7 +7,7 @@ import { useAuthStore } from '@/entities/User';
 
 import { toast } from 'react-toastify';
 import { Modal } from '@/components/common/Modal';
-import { CustomHeader } from '@/components/common/Header/CustomHeader';
+import { CustomHeader } from '@/widgets/Header/ui/CustomHeader';
 import { EditCard } from '@/components/common/Cards/EditCard';
 
 export default function ProfileEditPage() {

@@ -8,7 +8,7 @@ export const MSWComponent = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const init = async () => {
       if (process.env.NODE_ENV === 'development') {
-        const initMsw = await import('../mocks').then(res => res.initMsw);
+        const initMsw = await import('../../../mocks').then(res => res.initMsw);
         await initMsw();
         setMswReady(true);
       } else {

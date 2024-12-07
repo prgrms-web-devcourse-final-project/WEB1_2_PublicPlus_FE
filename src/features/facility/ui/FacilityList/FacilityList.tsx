@@ -6,7 +6,7 @@ import { useFacilities } from '@/features/facility/model/queries';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FacilityCard } from '@/widgets/facility-card/ui/FacilityCard';
+import { FacilityCard } from '@/widgets/FacilityCard/ui/FacilityCard';
 export const FacilityList = ({
   maxItems,
   showPagination = true

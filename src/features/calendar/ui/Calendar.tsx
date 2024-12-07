@@ -7,9 +7,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import { EventClickArg } from '@fullcalendar/core';
-import { useToast } from '@/shared/ui/components/toast/Toast';
 import { useMeetingBoards } from '@/features/meeting/model/queries';
 import './calendar-styles.css';
+import { useToast } from '@/shared/ui/components/Toast/Toast';
 
 interface MeetingEvent {
   mbId: number;

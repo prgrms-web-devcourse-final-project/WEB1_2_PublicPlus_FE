@@ -11,11 +11,10 @@ import {
   CreateMeetingButton
 } from '@/features/facility';
 import { useFacilityDetail } from '@/features/facility/model/queries';
-import { FullScreenLoading } from '@/components/common/Loading';
-import ErrorFallback from '@/components/ErrorBoundary/ErrorFallback';
-
+import { FullScreenLoading } from '@/shared/ui/components/Loading/Loading';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ErrorFallback from '@/shared/ui/components/ErrorBoundary/ErrorFallback';
 
 export default function FacilityDetail() {
   const params = useParams();

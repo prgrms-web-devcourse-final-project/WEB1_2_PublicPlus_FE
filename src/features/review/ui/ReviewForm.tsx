@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { ReviewDTO } from '@/shared/api/generated';
 import { Button } from '@/shared/ui/components/button/Button';
-import { TagInput } from '@/shared/ui/components/tag-input/TagInput';
-import { Rating } from '@/shared/ui/components/rating/Rating';
+import { TagInput } from '@/shared/ui/components/TagInput/TagInput';
+import { Rating } from '@/shared/ui/components/Rating/Rating';
 
 interface ReviewFormProps {
   onSubmit: (review: ReviewDTO) => void;

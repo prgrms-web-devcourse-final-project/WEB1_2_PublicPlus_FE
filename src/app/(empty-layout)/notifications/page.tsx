@@ -1,5 +1,5 @@
 'use client';
-import { CustomHeader } from '@/components/common/Header/CustomHeader';
+import { CustomHeader } from '@/widgets/Header/ui/CustomHeader';
 import { NotificationList } from '@/features/notifications/ui/NotificationList';
 
 export default function NotificationsPage() {
