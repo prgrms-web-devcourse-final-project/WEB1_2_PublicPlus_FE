@@ -6,10 +6,7 @@ export const reviewService = {
   getReviewsByFacility: async (facilityId: string) => {
     console.log('요청하는 facilityId:', facilityId);
     try {
-      const response =
-        await api.reviewClient.apiFacilityDetailFacilityIdReviewsGet(
-          facilityId
-        );
+      const response = await api.reviewClient.getReviewsByFacility(facilityId);
       console.log('API 응답 데이터:', response.data); // 응답 데이터 구조 확인
       return response.data;
     } catch (error) {
@@ -23,11 +20,7 @@ export const reviewService = {
   createReview: async (facilityId: string, review: ReviewDTO) => {
     console.log('리뷰 생성 API 요청 데이터: ', facilityId, review);
     try {
-      const response =
-        await api.reviewClient.apiFacilityDetailFacilityIdReviewsPost(
-          facilityId,
-          review
-        );
+      const response = await api.reviewClient.createReview(facilityId, review);
       console.log('리뷰 생성 API 응답 데이터:', response.data); // 응답 데이터 구조 확인
       return response.data;
     } catch (error) {
@@ -51,12 +44,11 @@ export const reviewService = {
       reviewDTO
     );
     try {
-      const response =
-        await api.reviewClient.apiFacilityDetailFacilityIdReviewsReviewIdPut(
-          facilityId,
-          reviewId,
-          reviewDTO
-        );
+      const response = await api.reviewClient.updateReview(
+        facilityId,
+        reviewId,
+        reviewDTO
+      );
       return response.data;
     } catch (error) {
       console.error('API 에러:', error);
@@ -67,11 +59,7 @@ export const reviewService = {
 
   // 리뷰 삭제
   deleteReview: async (facilityId: string, reviewId: number) => {
-    const response =
-      await api.reviewClient.apiFacilityDetailFacilityIdReviewsReviewIdDelete(
-        facilityId,
-        reviewId
-      );
+    const response = await api.reviewClient.deleteReview(facilityId, reviewId);
     return response.data;
   }
 };

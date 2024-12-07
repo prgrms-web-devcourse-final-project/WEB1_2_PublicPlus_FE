@@ -7,12 +7,7 @@ import { useMeetingBoardDetail } from '@/features/meeting/model/queries';
 import { FullScreenLoading } from '@/components/common/Loading';
 import ErrorFallback from '@/components/ErrorBoundary/ErrorFallback';
 import { useAuthStore } from '@/entities/User/model/store/authStore';
-import {
-  MeetingComments,
-  MeetingHeader,
-  MeetingInfo,
-  MeetingTabs
-} from '@/features/meeting';
+import { MeetingHeader, MeetingInfo, MeetingTabs } from '@/features/meeting';
 
 export default function MeetingDetail() {
   const params = useParams();
@@ -39,19 +34,14 @@ export default function MeetingDetail() {
 
   const handleParticipateClick = () => {
     if (!session) {
-      // 로그인 필요 얼럿
       if (confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {
         router.push('/auth/signin');
       }
       return;
     }
-
-    // 여기에 모임 참여 로직 구현
-    // participateMutation.mutate(id);
   };
 
   const handleChatClick = () => {
-    // 채팅방 입장 로직
     router.push(`/chat/meeting/${id}`);
   };
 
@@ -78,20 +68,12 @@ export default function MeetingDetail() {
   return (
     <div className="flex flex-col">
       <MeetingHeader meeting={meeting} />
-
-      {/* 참여한 경우에만 댓글 탭 표시 */}
       <MeetingTabs
         activeTab={activeTab}
         onTabChange={setActiveTab}
         showComments={isJoined}
       />
-
-      {activeTab === 'info' && <MeetingInfo meeting={meeting} />}
-      {activeTab === 'comments' && isJoined && (
-        <MeetingComments meetingId={id} />
-      )}
-
-      {/* 하단 고정 버튼 */}
+      {activeTab === 'info' && <MeetingInfo meeting={meeting} />}{' '}
       <div className="sticky bottom-[80px] z-[90] mx-auto w-full max-w-[600px] bg-white px-6">
         {!session ? (
           <button

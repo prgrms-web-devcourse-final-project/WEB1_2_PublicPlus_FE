@@ -1,4 +1,4 @@
-.fc {
+/* .fc {
   background-color: #007aff;
   --fc-today-bg-color: transparent;
   --fc-button-bg-color: #007aff;
@@ -83,4 +83,90 @@
 
 .fc .fc-button {
   border-radius: 1.2rem;
+} */
+
+:root {
+  --fc-border-color: #e5e7eb;
+  --fc-today-bg-color: #f3f4f6;
+  --fc-event-bg-color: transparent;
+  --fc-event-border-color: transparent;
+}
+
+.calendar-wrapper .calendar-custom {
+  --fc-border-color: #e5e7eb;
+  --fc-today-bg-color: #f3f4f6;
+  --fc-event-bg-color: transparent;
+  --fc-event-border-color: transparent;
+}
+
+.fc-h-event {
+  background-color: var(--fc-event-bg-color, transparent) !important;
+  border: 1px solid var(--fc-event-border-color, transparent) !important;
+}
+
+.calendar-custom .fc-header-toolbar {
+  padding: 0 0.5rem;
+  margin-bottom: 1rem !important;
+}
+
+.calendar-custom .fc-toolbar-title {
+  font-size: 1.25rem !important;
+  font-weight: 600;
+  color: #111827;
+}
+
+.calendar-custom .fc-button {
+  background-color: white !important;
+  border: 1px solid #e5e7eb !important;
+  color: #4b5563 !important;
+  font-weight: 500 !important;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.2s !important;
+}
+
+.calendar-custom .fc-button:hover {
+  background-color: #f9fafb !important;
+  border-color: #d1d5db !important;
+}
+
+.calendar-custom .fc-day-today {
+  background-color: #f3f4f6 !important;
+}
+
+.calendar-custom .fc-daygrid-day-frame {
+  padding: 4px !important;
+}
+
+.calendar-custom .fc-daygrid-day {
+  transition: background-color 0.2s;
+}
+
+.calendar-custom .fc-daygrid-day:hover {
+  background-color: #f9fafb;
+}
+
+.calendar-custom .fc-daygrid-day-number {
+  font-size: 0.875rem;
+  color: #374151;
+  padding: 0.25rem !important;
+}
+
+.calendar-custom .fc-daygrid-day-events {
+  padding: 0 2px !important;
+}
+
+.calendar-custom .fc-event {
+  margin: 1px 0 !important;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .calendar-custom .fc-toolbar {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .calendar-custom .fc-toolbar-title {
+    font-size: 1rem !important;
+  }
 }

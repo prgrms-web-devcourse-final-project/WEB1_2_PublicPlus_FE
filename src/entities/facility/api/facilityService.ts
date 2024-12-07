@@ -2,7 +2,8 @@ import { api } from '@/shared/api/client';
 import {
   FacilityDetailsResponseDTO,
   FacilityFilterDTO,
-  PageFacilityResponseDTO
+  PagedModel,
+  Pageable
 } from '@/api/generated';
 
 export const facilityService = {
@@ -18,10 +19,13 @@ export const facilityService = {
   getFacilities: async (
     page: number = 0,
     size: number = 5
-  ): Promise<PageFacilityResponseDTO> => {
-    const { data } = await api.facility.getAllFacilities({
-      params: { page, size }
-    });
+  ): Promise<PagedModel> => {
+    const pageable: Pageable = {
+      page,
+      size,
+      sort: []
+    };
+    const { data } = await api.facility.getAllFacilityDetails(pageable);
     return data;
   },
 
@@ -30,10 +34,13 @@ export const facilityService = {
     page: number = 0,
     size: number = 5,
     filter: FacilityFilterDTO
-  ): Promise<PageFacilityResponseDTO> => {
-    const { data } = await api.facility.facilityFilter(filter, {
-      params: { page, size }
-    });
+  ): Promise<PagedModel> => {
+    const pageable: Pageable = {
+      page,
+      size,
+      sort: []
+    };
+    const { data } = await api.facility.facilityFilter(pageable, filter);
     return data;
   }
 };

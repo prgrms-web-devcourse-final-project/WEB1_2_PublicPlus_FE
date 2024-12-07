@@ -68,13 +68,16 @@ export const useMeetingBoardDetail = (
 };
 
 // 모임 생성// 모임 생성 훅
-export const useCreateMeetingBoard = (): UseMutationResult<
+export const useCreateMeetingBoard = (
+  tokens: string
+): UseMutationResult<
   void, // 성공 결과 타입
   Error, // 오류 타입
   MeetingBoardRequestDTO // 입력 데이터 타입
 > => {
   return useMutation({
-    mutationFn: meetingBoardService.createMeetingBoard
+    mutationFn: meetingBoardData =>
+      meetingBoardService.createMeetingBoard(meetingBoardData, tokens)
   });
 };
 

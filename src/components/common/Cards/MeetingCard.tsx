@@ -1,5 +1,8 @@
 import { Tag } from '../Tag';
-import { MeetingBoardRequestDTO } from '@/api/generated';
+import {
+  MeetingBoardRequestDTO,
+  MeetingBoardRequestDTOSportTypeEnum
+} from '@/api/generated';
 import { LinkCard } from './LinkCard';
 
 interface MeetingCardProps extends Omit<MeetingBoardRequestDTO, 'id'> {
@@ -9,19 +12,20 @@ interface MeetingCardProps extends Omit<MeetingBoardRequestDTO, 'id'> {
   id: string;
   domain: string;
   endDate: string;
+  startDate: string;
+  sportType: MeetingBoardRequestDTOSportTypeEnum;
 }
 
 export const MeetingCard = ({
   id,
   mbTitle,
-  mbDate,
   endDate,
-  mbTime,
+  startDate,
   mbLocation,
   maxParticipants,
   image,
   currentMembers,
-  tags = [],
+  sportType,
   domain
 }: MeetingCardProps) => (
   <LinkCard
@@ -65,24 +69,14 @@ export const MeetingCard = ({
               d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
             />
           </svg>
-          {mbDate}
-          {endDate ? ` ~ ${endDate}` : ''} / {mbTime}
+          {startDate ? ` ${startDate}` : ''} {endDate ? ` ~ ${endDate}` : ''}
         </p>
         <p className="flex items-center">
           {currentMembers || 0}/{maxParticipants}명
         </p>
       </div>
     }
-    footer={
-      <div className="flex flex-wrap gap-1">
-        {tags.map(tag => (
-          <Tag
-            key={tag}
-            label={tag}
-          />
-        ))}
-      </div>
-    }
+    footer={<Tag label={sportType} />}
     domain={domain}
     id={id}
   />

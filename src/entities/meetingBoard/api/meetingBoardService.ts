@@ -3,9 +3,15 @@ import { api } from '@/shared/api/client';
 
 export const meetingBoardService = {
   createMeetingBoard: async (
-    meetingBoardData: MeetingBoardRequestDTO
+    meetingBoardData: MeetingBoardRequestDTO,
+    tokens: string
   ): Promise<void> => {
-    await api.meetingBoard.createMeetingBoard(meetingBoardData);
+    console.log('토큰: ', tokens, '모임 생성 데이터: ', meetingBoardData);
+    await api.activityMeetingBoard.createMeetingActivity(meetingBoardData, {
+      headers: {
+        Authorization: `Bearer ${tokens}`
+      }
+    });
   },
 
   deleteMeetingBoard: async (mbId: number): Promise<void> => {
@@ -26,6 +32,9 @@ export const meetingBoardService = {
     mbId: number,
     meetingBoardData: MeetingBoardRequestDTO
   ): Promise<void> => {
-    await api.meetingBoard.updateMeetingBoard(mbId, meetingBoardData);
+    await api.activityMeetingBoard.updateMeetingActivity(
+      mbId,
+      meetingBoardData
+    );
   }
 };

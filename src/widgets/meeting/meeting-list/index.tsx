@@ -5,15 +5,6 @@ import { MeetingCard } from '@/components/common/Cards/MeetingCard';
 import React from 'react';
 import { useMeetingBoards } from '@/features/meeting/model/queries';
 
-// 시간을 `hh:mm` 형식으로 변환하는 함수
-const formatTime = (time?: { hour: number; minute: number }) => {
-  if (!time) return '';
-
-  const hours = time.hour.toString().padStart(2, '0');
-  const minutes = time.minute.toString().padStart(2, '0');
-  return `${hours}:${minutes}`;
-};
-
 const MeetingBoardList = () => {
   const { data, isLoading } = useMeetingBoards();
 
@@ -30,6 +21,7 @@ const MeetingBoardList = () => {
         <p className="text-gray-500">검색 결과가 없습니다.</p>
       </div>
     );
+  console.log('모임 목록 조회: ', data);
 
   return (
     <div className="space-y-4">
@@ -39,12 +31,12 @@ const MeetingBoardList = () => {
           sportType={meeting.sportType}
           mbTitle={meeting.mbTitle}
           mbContent={meeting.mbContent}
-          mbDate={meeting.mbDate}
-          mbTime={meeting.mbTime ? formatTime(meeting.mbTime) : ''}
-          endDate={meeting.recurringSchedule?.endDate}
+          startDate={meeting.startTime?.slice(0, 10)}
+          startTime={meeting.startTime?.slice(11, 19)}
+          endDate={meeting.endTime?.slice(0, 10)}
+          endTime={meeting.endTime?.slice(11, 19)}
           mbLocation={meeting.mbLocation}
-          mbHost={meeting.mbHost}
-          currentMembers={meeting.currentMembers}
+          currentMembers={meeting.currentMembers || 0} // currentMembers가 없으면 0으로 설정
           maxParticipants={meeting.maxParticipants}
           tags={meeting.tags || []}
           domain="meeting"
