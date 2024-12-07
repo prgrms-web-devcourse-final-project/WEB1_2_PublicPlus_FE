@@ -1,8 +1,7 @@
-// Navigation.tsx
-import { NavigationProps } from './types';
-import { NavItem } from './NavItem';
-import { NAV_ITEMS } from './constants';
+import { NavigationProps } from '@/components/common/Navigation/types';
 import styles from './Navigation.module.css';
+import { NAV_ITEMS } from '@/widgets/navigation/model/constants';
+import { NavItem } from '@/components/common/Navigation/NavItem';
 
 export const Navigation = ({ activeTab }: NavigationProps) => {
   return (

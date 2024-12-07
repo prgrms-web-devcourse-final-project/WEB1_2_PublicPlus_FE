@@ -93,7 +93,7 @@ const Home = () => {
   return (
     <div className="flex flex-col space-y-10">
       {/* Hero Section */}
-      <div className="relative h-[300px] overflow-hidden rounded-lg bg-blue-500">
+      <div className="relative aspect-[457/200] overflow-hidden rounded-lg bg-blue-500">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-400 opacity-90" />
         <div className="relative z-10 flex h-full flex-col items-center justify-center space-y-10 px-4 text-white">
           <Image
@@ -101,24 +101,8 @@ const Home = () => {
             alt="히어로 이미지"
             layout="fill"
             objectFit="cover"
-            className="z-[-1] brightness-90"
+            className="z-[-1] object-top"
           />
-          <h1 className="mb-4 text-6xl font-bold">공공 체육 시설 & 모임</h1>
-          <p className="mb-8 text-center text-xl font-bold">
-            원하는 시설을 찾고 함께할 운동 메이트를 만나보세요
-          </p>
-          <div className="flex space-x-4">
-            <Link
-              href="/facility"
-              className="rounded-full bg-white px-6 py-2 font-semibold text-blue-500 hover:bg-blue-50">
-              시설 찾기
-            </Link>
-            <Link
-              href="/meeting"
-              className="rounded-full border-2 border-white px-6 py-2 font-semibold text-white hover:bg-white hover:text-blue-500">
-              모임 찾기
-            </Link>
-          </div>
         </div>
       </div>
 

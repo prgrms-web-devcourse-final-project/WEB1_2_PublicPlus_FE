@@ -1,6 +1,6 @@
+import { LinkCard } from '@/components/common/Cards/LinkCard';
+import { Tag } from '@/components/common/Tag';
 import { FacilityDetailsResponseDTO } from '@/shared/api/generated';
-import { Tag } from '../Tag';
-import { LinkCard } from './LinkCard';
 
 export const FacilityCard = ({
   facilityImage,

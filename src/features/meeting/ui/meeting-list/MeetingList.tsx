@@ -1,9 +1,9 @@
 'use client';
 
 import { MeetingBoardRequestDTO } from '@/shared/api/generated';
-import { MeetingCard } from '@/components/common/Cards/MeetingCard';
 import React from 'react';
 import { useMeetingBoards } from '@/features/meeting/model/queries';
+import { MeetingCard } from '@/widgets/meeting-card/ui/MeetingCard';
 
 const MeetingBoardList = () => {
   const { data, isLoading } = useMeetingBoards();

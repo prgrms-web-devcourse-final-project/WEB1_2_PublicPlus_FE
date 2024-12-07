@@ -1,4 +1,3 @@
-import { FacilityCard } from '@/components/common/Cards/FacilityCard';
 import { useFilterStore } from '@/features/facility/filter/model/store';
 import { Pagination } from '@/features/facility/pagination/ui/pagination';
 import { FacilityDetailsResponseDTO } from '@/shared/api/generated';
@@ -7,6 +6,7 @@ import { useFacilities } from '@/features/facility/model/queries';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FacilityCard } from '@/widgets/facility-card/ui/FacilityCard';
 export const FacilityList = ({
   maxItems,
   showPagination = true

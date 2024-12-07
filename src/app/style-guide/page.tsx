@@ -4,7 +4,7 @@ import Link from 'next/link';
 import ColorPalette from '@/components/ColorPalette';
 import { Button } from '@/shared/ui/components/button/Button';
 import { Card } from '@/components/common/Cards/Card';
-import { Header } from '@/components/common/Header';
+import { Header } from '@/widgets/header/ui';
 import { SearchBar } from '@/components/common/SearchBar';
 import { NotificationItem } from '@/components/common/NotificationItem';
 import { Navigation } from '@/components/common/Navigation/Navigation';
