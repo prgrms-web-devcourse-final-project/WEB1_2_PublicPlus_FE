@@ -61,43 +61,19 @@ export const useAuthStore = create<AuthState>()(
         }
       },
       // 소셜 로그인
-      socialLogin: async (provider: SocialProvider) => {
-        set({ isLoading: true, error: null });
-
+      socialLogin: async provider => {
         try {
-          const response = await userService.socialLogin(provider);
-
-          document.cookie = `auth-storage=${JSON.stringify({
-            state: {
-              userId: response.userId,
-              tokens: {
-                access_token: response.access_token,
-                refresh_token: response.refresh_token
-              },
-              isAuthenticated: true
-            }
-          })}; path=/; secure; samesite=strict; max-age=86400`;
-
-          set({
-            userId: response.userId,
-            tokens: {
-              access_token: response.access_token ?? null,
-              refresh_token: response.refresh_token ?? null
-            },
-            isAuthenticated: true,
-            isLoading: false,
-            error: null
-          });
+          // 소셜 제공자의 인증 URL로 리다이렉트
+          const authorizationUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/oauth2/${provider}`;
+          window.location.href = authorizationUrl;
 
           return true;
         } catch (error) {
-          const errorMessage =
-            error instanceof Error ? error.message : '소셜 로그인 실패';
-
+          // 에러 처리 로직
           set({
             isAuthenticated: false,
             isLoading: false,
-            error: errorMessage
+            error: error instanceof Error ? error.message : '소셜 로그인 실패'
           });
           return false;
         }

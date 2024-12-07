@@ -1,11 +1,15 @@
-import '@/styles/globals.css';
+import { Suspense } from 'react';
 import { defaultMetadata } from '@/shared/config/metadata/default-metadata';
-// import { MSWComponent } from '@/components/MSWComponent';
+import localFont from 'next/font/local';
+
+import '@/styles/globals.css';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { Providers } from './providers';
 import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary';
-import { Suspense } from 'react';
 import Loading from '@/components/Suspense/Loading';
-import localFont from 'next/font/local';
+import { NotificationHandler } from '@/features/notifications/hooks/NotificationHandler';
+import { ToastContainer } from 'react-toastify';
 
 const pretendard = localFont({
   src: '../../public/font/PretendardVariable.woff2',
@@ -35,9 +39,11 @@ export default function RootLayout({
       <body className="font-pretendard">
         <ErrorBoundary>
           <Suspense fallback={<Loading />}>
-            {/* <MSWComponent> */}
-            <Providers>{children}</Providers>
-            {/* </MSWComponent> */}
+            <Providers>
+              {children}
+              <NotificationHandler />
+              <ToastContainer />
+            </Providers>
           </Suspense>
         </ErrorBoundary>
       </body>

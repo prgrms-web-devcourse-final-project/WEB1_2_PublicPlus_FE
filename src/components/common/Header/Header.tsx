@@ -2,8 +2,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import { DETAIL_PAGE_PATTERNS } from '@/shared/config/constants';
+import { useNotifications } from '@/shared/hooks/useNotifications';
 
 interface HeaderProps {
   detailTitle?: string;
@@ -17,29 +17,17 @@ const getDefaultTitle = (pathname: string) => {
 };
 
 export const Header = ({ detailTitle }: HeaderProps) => {
-  const [hasNotifications, setHasNotifications] = useState(false);
+  const { hasNewNotifications } = useNotifications();
   const router = useRouter();
   const pathname = usePathname();
 
-  useEffect(() => {
-    const checkNewNotifications = async () => {
-      try {
-        setHasNotifications(true);
-      } catch (error) {
-        console.error('Failed to fetch notifications:', error);
-      }
-    };
-
-    checkNewNotifications();
-  }, []);
+  const notificationIcon = hasNewNotifications
+    ? '/icons/notification-new.png'
+    : '/icons/notification.png';
 
   const isDetailPage = DETAIL_PAGE_PATTERNS.some(pattern =>
     pathname?.includes(pattern)
   );
-
-  const notificationIcon = hasNotifications
-    ? '/icons/notification-new.png'
-    : '/icons/notification.png';
 
   // 디테일 페이지용 헤더
   if (isDetailPage) {

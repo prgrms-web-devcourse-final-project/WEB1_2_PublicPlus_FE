@@ -1,13 +1,19 @@
 'use client';
 import { CustomHeader } from '@/components/common/Header/CustomHeader';
 import { NotificationList } from '@/features/notifications/ui/NotificationList';
+import { useNotifications } from '@/shared/hooks/useNotifications';
 
 export default function NotificationsPage() {
+  const { notifications, markNotificationAsRead } = useNotifications();
+
   return (
     <div className="flex flex-col">
       <CustomHeader title="알림" />
       <main className="flex-1">
-        <NotificationList />
+        <NotificationList
+          notifications={notifications}
+          onMarkAsRead={markNotificationAsRead}
+        />
       </main>
     </div>
   );

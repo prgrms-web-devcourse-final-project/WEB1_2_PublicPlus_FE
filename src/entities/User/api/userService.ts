@@ -1,5 +1,5 @@
 import { api } from '@/shared/api/client';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import type {
   UserLoginDTO,
   UserJoinDTO,
@@ -35,28 +35,30 @@ export const userService = {
       throw error;
     }
   },
-  socialLogin: async (provider: SocialProvider) => {
+  socialLoginCallback: async (params: {
+    provider: SocialProvider;
+    code: string;
+    state: string;
+  }) => {
     try {
-      const response = await axiosInstance.get(`/api/oauth2/${provider}`);
+      const response = await axiosInstance.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/oauth2/${params.provider}/callback`,
+        { provider: params.provider, code: params.code, state: params.state }
+      );
 
       if (!response.data || !response.data.userId) {
         throw new Error('소셜 로그인 정보를 받아올 수 없습니다.');
       }
 
       return {
+        authentication: 'Bearer',
         userId: response.data.userId,
-        authentication: response.data.authentication,
-        access_token: response.data.access_token,
-        refresh_token: response.data.refresh_token
+        access_token: response.data.accessToken,
+        refresh_token: response.data.refreshToken
       };
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const errorResponse = error.response?.data as ErrorResponseDTO;
-        throw new Error(
-          errorResponse?.message || '소셜 로그인에 실패했습니다.'
-        );
-      }
-      throw error;
+      const errorMessage = error as AxiosError;
+      console.error(errorMessage);
     }
   },
 
