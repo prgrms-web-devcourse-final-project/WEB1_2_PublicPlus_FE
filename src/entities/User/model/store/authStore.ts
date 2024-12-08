@@ -60,8 +60,7 @@ export const useAuthStore = create<AuthState>()(
           return false;
         }
       },
-      // 소셜 로그인
-      socialLogin: async provider => {
+      socialLogin: async (provider: 'google' | 'kakao' | 'naver') => {
         try {
           const authorizationUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/oauth2/${provider}`;
           window.location.href = authorizationUrl;
@@ -77,7 +76,7 @@ export const useAuthStore = create<AuthState>()(
         }
       },
       socialLoginComplete: async (loginResponse: {
-        bearer: string;
+        authentication: string;
         access_token: string;
         refresh_token: string;
         userId: string;
