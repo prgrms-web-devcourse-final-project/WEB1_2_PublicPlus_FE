@@ -15,7 +15,9 @@ export const useFilterStore = create<FilterStore>(set => ({
   filters: {
     facilityCategory: undefined,
     area: undefined,
-    priceType: undefined
+    priceType: undefined,
+    likeOrder: 0,
+    viewsOrder: 0
   },
   sort: 'latest',
   isFilterMenuOpen: null,

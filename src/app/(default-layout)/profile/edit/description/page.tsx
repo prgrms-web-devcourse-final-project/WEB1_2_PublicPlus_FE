@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useUserQuery } from '@/entities/User/model/userQueries';
 import EditLayout from '@/features/mypage/ui/EditLayout';
 import { USER_DESCRIPTION_CONSTRAINTS } from '@/features/mypage/model/constants/userProfile';
-import { userService } from '@/entities/User/api/userService';
+import { userService } from '@/entities/user/api/userService';
+import { useUserQuery } from '@/entities/user/model/userQueries';
 
 export default function DescriptionEditPage() {
   const router = useRouter();

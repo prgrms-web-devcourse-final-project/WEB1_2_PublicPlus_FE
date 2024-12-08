@@ -2,7 +2,7 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import type {
   FacilityFilterDTO,
   FacilityDetailsResponseDTO,
-  PageFacilityResponseDTO
+  Pageable
 } from '@/shared/api/generated';
 import { facilityService } from '@/features/facility/api/facilityService';
 
@@ -50,9 +50,9 @@ export const useFacilities = (
   filters?: FacilityFilterDTO,
   options?: Omit<
     UseQueryOptions<
-      PageFacilityResponseDTO,
+      Pageable,
       Error,
-      PageFacilityResponseDTO,
+      Pageable,
       ReturnType<typeof QUERY_KEYS.facility.list>
     >,
     'queryKey' | 'queryFn'
@@ -61,9 +61,9 @@ export const useFacilities = (
   }
 ) => {
   return useQuery<
-    PageFacilityResponseDTO,
+    Pageable,
     Error,
-    PageFacilityResponseDTO,
+    Pageable,
     ReturnType<typeof QUERY_KEYS.facility.list>
   >({
     queryKey: QUERY_KEYS.facility.list(page, size, filters),

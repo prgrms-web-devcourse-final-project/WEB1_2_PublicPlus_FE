@@ -1,5 +1,5 @@
 import { Filter } from 'lucide-react';
-import { Button } from '@/shared/ui/components/button/Button';
+import { Button } from '@/shared/ui/components/Button/Button';
 import { SearchBar } from '@/shared/ui/components/Search/SearchBar';
 import { useFilterStore } from '../../filter/model/store';
 import { AreaFilter } from '../../filter/ui/AreaFilter';
@@ -18,41 +18,59 @@ export const FacilityFilters = ({
     setFilters({ ...filters, facilityName: value });
   };
 
-  const handleSortChange = (type: 'likes' | 'views', order: number) => {
+  const handleSortChange = (type: 'likes' | 'views') => {
+    const getNextOrder = (currentOrder: number = 0): number => {
+      return (currentOrder + 1) % 3; // 0 -> 1 -> 2 -> 0
+    };
+
     if (type === 'likes') {
-      setFilters({ ...filters, likeOrder: order, viewsOrder: undefined });
+      setFilters({
+        ...filters,
+        likeOrder: getNextOrder(filters.likeOrder),
+        viewsOrder: 0
+      });
     } else {
-      setFilters({ ...filters, viewsOrder: order, likeOrder: undefined });
+      setFilters({
+        ...filters,
+        viewsOrder: getNextOrder(filters.viewsOrder),
+        likeOrder: 0
+      });
     }
     toggleFilterMenu(null);
+  };
+
+  const getSortIcon = (order: number = 0) => {
+    switch (order) {
+      case 1:
+        return '↓'; // 내림차순
+      case 2:
+        return '↑'; // 오름차순
+      default:
+        return '-'; // 정렬 없음
+    }
   };
 
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        {/* 정렬 버튼들 */}
         <div className="flex gap-2">
           {/* 조회순 정렬 */}
           <Button
             variant="gray"
-            onClick={() =>
-              handleSortChange('views', filters.viewsOrder === 1 ? 2 : 1)
-            }
+            onClick={() => handleSortChange('views')}
             className={`flex gap-2 ${filters.viewsOrder === 1 ? 'bg-blue-100' : ''}`}>
-            조회순 {filters.viewsOrder === 1 ? '↓' : '↑'}
+            조회순 {getSortIcon(filters.viewsOrder)}
           </Button>
 
           {/* 좋아요순 정렬 */}
           <Button
             variant="gray"
-            onClick={() =>
-              handleSortChange('likes', filters.likeOrder === 1 ? 2 : 1)
-            }
+            onClick={() => handleSortChange('likes')}
             className={`flex gap-2 ${filters.likeOrder === 1 ? 'bg-blue-100' : ''}`}>
-            좋아요순 {filters.likeOrder === 1 ? '↓' : '↑'}
+            좋아요순 {getSortIcon(filters.likeOrder)}
           </Button>
 
-          {/* 필터 버튼들 */}
+          {/* 필터 버튼들 - 변경 없음 */}
           <Button
             variant="gray"
             onClick={() => toggleFilterMenu('category')}
@@ -77,7 +95,7 @@ export const FacilityFilters = ({
         </div>
       </div>
 
-      {/* 시설 검색 입력 필드 */}
+      {/* 나머지 코드는 동일 */}
       {showSearchBar && (
         <div className="relative flex-1">
           <SearchBar

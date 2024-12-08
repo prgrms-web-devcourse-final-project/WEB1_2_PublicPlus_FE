@@ -3,7 +3,7 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 import { UserJoinDTO, UserLoginDTO } from '@/shared/api/generated';
 import type { AuthState } from '../types/AuthState';
-import type { userService } from '../../api/userService';
+import { userService } from '../../api/userService';
 
 export type SocialProvider = 'kakao' | 'google' | 'naver';
 

@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import { userService } from '@/entities/User/api/userService';
+import { userService } from '@/entities/user/api/userService';
+import { useUserQuery } from '@/entities/user/model/userQueries';
 import { useCountdown } from '@/features/auth/hooks/useCountdown';
 import { emailService } from '@/entities/user/api/emailService';
-import { useUserQuery } from '@/entities/user/model/userQueries';
 import { validatePassword } from '@/features/auth/lib/Validation';
 
 export const useChangePassword = (router: AppRouterInstance) => {

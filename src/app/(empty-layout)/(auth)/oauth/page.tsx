@@ -1,6 +1,6 @@
 'use client';
 
-import { userService } from '@/entities/User/api/userService';
+import { userService } from '@/entities/user/api/userService';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 

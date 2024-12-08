@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useState } from 'react';
-import { userService } from '@/entities/User/api/userService';
+import { userService } from '@/entities/user/api/userService';
 import { useCountdown } from '@/features/auth/hooks/useCountdown';
 import { emailService } from '@/entities/user/api/emailService';
 import {
