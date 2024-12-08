@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Button } from '@/shared/ui/components/button/Button';
+import { Button } from '@/shared/ui/components/Button/Button';
 
 export interface NotificationItemProps {
   id: number;

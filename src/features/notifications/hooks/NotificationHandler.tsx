@@ -5,9 +5,8 @@ import {
   requestNotificationPermission
 } from '@/shared/lib/firebase/messaging';
 import { useEffect } from 'react';
-import { toast, Id } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import { MessagePayload } from 'firebase/messaging';
 
 export function NotificationHandler() {
   const router = useRouter();
@@ -16,37 +15,29 @@ export function NotificationHandler() {
     const initNotifications = async () => {
       await requestNotificationPermission();
 
-      const messageListener = async () => {
-        try {
-          const payload = await onMessageListener();
-          if (payload) {
-            const notificationToast: Id = toast.info(
-              (payload as MessagePayload).notification?.title || '새로운 알림',
-              {
-                position: 'top-right',
-                autoClose: 5000,
-                onClick: () => {
-                  router.push('/notifications');
-                  toast.dismiss(notificationToast);
-                }
-              }
-            );
+      const unsubscribe = onMessageListener().then((payload: any) => {
+        // 알림 toast 표시
+        const notificationToast = toast.info(
+          payload.notification?.title || '새로운 알림',
+          {
+            position: 'top-right',
+            autoClose: 5000,
+            onClick: () => {
+              // 알림 클릭 시 알림 페이지로 이동
+              router.push('/notifications');
+              toast.dismiss(notificationToast);
+            }
           }
-        } catch (error) {
-          console.error('Failed to process notification:', error);
-        }
-      };
+        );
+      });
 
-      messageListener();
-
-      // cleanup function
       return () => {
-        // cleanup logic if needed
+        unsubscribe;
       };
     };
 
     initNotifications();
-  }, [router]);
+  }, []);
 
   return null;
 }

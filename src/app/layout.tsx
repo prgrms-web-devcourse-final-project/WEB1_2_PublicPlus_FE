@@ -2,14 +2,13 @@ import { Suspense } from 'react';
 import { defaultMetadata } from '@/shared/config/metadata/default-metadata';
 import { Providers } from './providers';
 import localFont from 'next/font/local';
-import { Loading } from '@/shared/ui/components/Loading/Loading';
 import ErrorBoundary from '@/shared/ui/components/ErrorBoundary/ErrorBoundary';
 // import { MSWComponent } from '@/shared/lib/MSW/MSWComponent';
-
 import '@/styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { NotificationHandler } from '@/features/notifications/hooks/NotificationHandler';
 import { ToastContainer } from 'react-toastify';
+import Loading from '@/shared/ui/components/Suspense/Loading';
 
 const pretendard = localFont({
   src: '../../public/font/PretendardVariable.woff2',

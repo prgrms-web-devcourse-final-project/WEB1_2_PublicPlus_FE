@@ -6,8 +6,8 @@ import useRedirect from '@/features/auth/hooks/useRedirect';
 import { SOCIAL_PROVIDERS } from '@/features/auth/model/constants';
 import { SocialLoginButton } from '@/features/auth/ui/SocialLoginButton';
 import LoginContainer from '@/features/auth/ui/LoginContainer';
-import { useAuthStore, SocialProvider } from '@/entities/user';
 import { AxiosError } from 'axios';
+import { useAuthStore, SocialProvider } from '@/entities/user';
 
 export default function LoginPage() {
   const { isAuthenticated, userId, tokens, socialLogin } = useAuthStore();
