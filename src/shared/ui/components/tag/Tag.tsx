@@ -2,9 +2,15 @@ interface TagProps {
   label: string;
   variant?: 'gray' | 'blue' | 'line';
   size?: 'sm' | 'md';
+  styleName?: object;
 }
 
-export const Tag = ({ label, variant = 'blue', size = 'sm' }: TagProps) => {
+export const Tag = ({
+  label,
+  variant = 'blue',
+  size = 'sm',
+  styleName
+}: TagProps) => {
   const baseStyles =
     'rounded-full inline-flex items-center justify-center whitespace-nowrap';
   const variantStyles = {
@@ -19,6 +25,7 @@ export const Tag = ({ label, variant = 'blue', size = 'sm' }: TagProps) => {
 
   return (
     <span
+      style={styleName}
       className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]}`}>
       {label}
     </span>

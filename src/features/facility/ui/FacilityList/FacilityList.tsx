@@ -1,12 +1,11 @@
 import { useFilterStore } from '@/features/facility/filter/model/store';
-import { Pagination } from '@/features/facility/pagination/ui/pagination';
 import { FacilityDetailsResponseDTO } from '@/shared/api/generated';
 import { useState } from 'react';
 import { useFacilities } from '@/features/facility/model/queries';
-
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FacilityCard } from '@/widgets/FacilityCard/ui/FacilityCard';
+import { Pagination } from '@/shared/ui/Pagination/Pagination';
 export const FacilityList = ({
   maxItems,
   showPagination = true
@@ -28,6 +27,8 @@ export const FacilityList = ({
     }
   });
 
+  console.log('>>>>>>>>>>data', data);
+
   if (isLoading) return <p>시설 목록을 불러오는 중입니다...</p>;
   if (error) return <p>시설 정보를 불러오는 데 실패했습니다.</p>;
   if (!data?.content?.length) return <p>검색 결과가 없습니다.</p>;
@@ -48,6 +49,8 @@ export const FacilityList = ({
           facilityImage={facility.facilityImage}
           reservationStartDate={facility.reservationStartDate}
           reservationEndDate={facility.reservationEndDate}
+          likeCoount={facility.likes}
+          viewCoount={facility.views}
         />
       ))}
       {showPagination && (
