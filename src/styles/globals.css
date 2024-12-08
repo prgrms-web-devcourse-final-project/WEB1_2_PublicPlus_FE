@@ -84,7 +84,7 @@ body {
   overflow-y: auto;
 }
 
-/* @media (min-width: 768px) {
+@media (min-width: 768px) {
   body::before,
   body::after {
     content: '';
@@ -97,13 +97,13 @@ body {
   }
 
   body::before {
-    left: calc(50% - 300px); 
+    left: calc(50% - 300px);
   }
 
   body::after {
-    right: calc(50% - 300px); 
+    right: calc(50% - 300px);
   }
-} */
+}
 
 /* 스크롤바 커스텀 */
 @supports selector(::-webkit-scrollbar) {

@@ -38,9 +38,9 @@ export const LinkCard = ({
       target={target}
       className={`${styles.card} ${className} ${bgColor} flex`}>
       <div className="mr-4 flex flex-1 flex-col justify-between space-y-4">
-        {title && <h3 className="text-m">{title}</h3>}
-        {content && <div className="space-y-3">{content}</div>}
-        {footer && <div>{footer}</div>}
+        {title && <h3 className="text-xl font-medium">{title}</h3>}
+        {content && <div className="space-y-3 text-base">{content}</div>}
+        {footer && <div className="text-base">{footer}</div>}
       </div>
       {imageSrc && (
         <div className={styles.cardImage}>

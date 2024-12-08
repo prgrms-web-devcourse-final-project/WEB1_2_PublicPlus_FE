@@ -56,19 +56,19 @@ export const FacilityCard = ({
     title={facilityName}
     className="min-h-[10rem]"
     content={
-      <>
-        <div className="mb-2 text-xs text-gray-500">
+      <div className="mt-2 flex flex-col gap-2">
+        <div className="mb-2 text-sm text-gray-500">
           예약 방법: {reservationType ?? '온라인 예약'}
         </div>
-        <div className="mb-2 text-xs text-gray-500">
+        <div className="mb-2 text-sm text-gray-500">
           예약 기간: {reservationStartDate} ~ {reservationEndDate}
         </div>
-        <div className="text-sm text-gray-500">
-          <span className="font-semibold text-gray-900">
+        <div className="text-base text-gray-500">
+          <span className="text-sm font-semibold text-gray-900">
             {priceType ? '무료' : '유료'} 이용
           </span>
         </div>
-      </>
+      </div>
     }
     footer={
       <div className="flex gap-2">
@@ -85,7 +85,7 @@ export const FacilityCard = ({
               ] ?? '#E5E7EB'
           }}
         />
-        <div className="flex gap-2">
+        <div className="flex gap-2 text-base">
           <Image
             src={'/icons/heart-filled.png'}
             alt="좋아요"
@@ -94,7 +94,7 @@ export const FacilityCard = ({
           />
           {likeCoount}
         </div>
-        <div className="flex gap-2">👁️ {viewCoount}</div>
+        <div className="flex gap-2 text-base">👁️ {viewCoount}</div>
       </div>
     }
     domain={domain}

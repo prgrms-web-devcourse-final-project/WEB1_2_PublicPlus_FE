@@ -16,7 +16,7 @@ export default {
   darkMode: 'media',
   theme: {
     screens: {
-      lg: '2560px' // 큰 화면
+      md: '600px'
     },
     extend: {
       container: {

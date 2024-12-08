@@ -58,7 +58,7 @@ export const FacilityFilters = ({
           <Button
             variant="gray"
             onClick={() => handleSortChange('views')}
-            className={`flex gap-2 ${filters.viewsOrder === 1 ? 'bg-blue-100' : ''}`}>
+            className={`flex items-center gap-2 ${filters.viewsOrder === 1 ? 'bg-blue-100' : ''}`}>
             조회순 {getSortIcon(filters.viewsOrder)}
           </Button>
 
@@ -66,7 +66,7 @@ export const FacilityFilters = ({
           <Button
             variant="gray"
             onClick={() => handleSortChange('likes')}
-            className={`flex gap-2 ${filters.likeOrder === 1 ? 'bg-blue-100' : ''}`}>
+            className={`flex items-center gap-2 ${filters.likeOrder === 1 ? 'bg-blue-100' : ''}`}>
             좋아요순 {getSortIcon(filters.likeOrder)}
           </Button>
 
@@ -74,21 +74,21 @@ export const FacilityFilters = ({
           <Button
             variant="gray"
             onClick={() => toggleFilterMenu('category')}
-            className={`flex gap-2 ${isFilterMenuOpen === 'category' ? 'bg-blue-100' : ''}`}>
+            className={`flex items-center gap-2 ${isFilterMenuOpen === 'category' ? 'bg-blue-100' : ''}`}>
             <Filter className="h-6 w-6" />
             종목
           </Button>
           <Button
             variant="gray"
             onClick={() => toggleFilterMenu('area')}
-            className={`flex gap-2 ${isFilterMenuOpen === 'area' ? 'bg-blue-100' : ''}`}>
+            className={`flex items-center gap-2 ${isFilterMenuOpen === 'area' ? 'bg-blue-100' : ''}`}>
             <Filter className="h-6 w-6" />
             지역
           </Button>
           <Button
             variant="gray"
             onClick={() => toggleFilterMenu('price')}
-            className={`flex gap-2 ${isFilterMenuOpen === 'price' ? 'bg-blue-100' : ''}`}>
+            className={`flex items-center gap-2 ${isFilterMenuOpen === 'price' ? 'bg-blue-100' : ''}`}>
             <Filter className="h-6 w-6" />
             요금
           </Button>
