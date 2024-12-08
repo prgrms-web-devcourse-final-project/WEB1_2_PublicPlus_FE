@@ -1,17 +1,16 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-
-import ColorPalette from '@/components/ColorPalette';
-import { Button } from '@/components/common/Button/Button';
-import { Card } from '@/components/common/Cards/Card';
-import { Header } from '@/components/common/Header';
-import { SearchBar } from '@/components/common/SearchBar';
-import { Modal } from '@/components/common/Modal';
-import { NotificationItem } from '@/components/common/NotificationItem';
-import { Navigation } from '@/components/common/Navigation/Navigation';
-import { Loading } from '@/components/common/Loading';
-import ErrorMessage from '@/components/common/ErrorMsg';
+import { Button } from '@/shared/ui/components/button/Button';
+import { Header } from '@/widgets/Header/ui';
+import { Loading } from '@/shared/ui/components/Loading/Loading';
+import { Card } from '@/shared/ui/components/Card/Card';
+import ColorPalette from '@/shared/ui/components/ColorPalette/ColorPalette';
+import ErrorMessage from '@/shared/ui/components/Error/ErrorMsg';
+import { Modal } from '@/shared/ui/components/Modal/Modal';
+import { NotificationItem } from '@/shared/ui/components/Notification/NotificationItem';
+import { SearchBar } from '@/shared/ui/components/Search/SearchBar';
+import { Navigation } from '@/widgets/Navigation/ui/Navigation';
 
 export default function StyleGuidePage() {
   const [search, setSearch] = useState('');
@@ -124,7 +123,7 @@ export default function StyleGuidePage() {
       {/* 그림자 및 테두리 반경 데모 ---------------------------------------------------- */}
       <section>
         <h2 className="mb-4 text-xl font-semibold">그림자 및 테두리 반경</h2>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+        <div className="md:grid-cols-4 grid grid-cols-2 gap-4">
           <div className="rounded-sm bg-white p-4 shadow-sm">Shadow SM</div>
           <div className="rounded bg-white p-4 shadow">Shadow Default</div>
           <div className="rounded-lg bg-white p-4 shadow-md">Shadow md</div>
@@ -134,7 +133,7 @@ export default function StyleGuidePage() {
       {/* 반응형 중단점 데모----------------------------------------------------  */}
       <section>
         <h2 className="mb-4 text-xl font-semibold">반응형 중단점</h2>
-        <div className="xl:bg-gray-700 2xl:bg-gray-800 w-full bg-gray-200 p-4 text-center text-gray-50 xs:bg-gray-300 sm:bg-gray-400 md:bg-gray-500 lg:bg-gray-600">
+        <div className="xl:bg-gray-700 2xl:bg-gray-800 xs:bg-gray-300 sm:bg-gray-400 md:bg-gray-500 w-full bg-gray-200 p-4 text-center text-gray-50 lg:bg-gray-600">
           반응형 중단점 테스트 (화면 크기에 따라 배경색 변경)
         </div>
       </section>

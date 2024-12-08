@@ -4,7 +4,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Toggle } from '@/components/common/Toggle';
-import { ChatRoom } from '../../types';
+import { ChatRoom } from '../../model/types';
 
 interface BackendChatRoom {
   chatRoomId: number;

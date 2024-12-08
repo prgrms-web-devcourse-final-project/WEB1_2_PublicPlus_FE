@@ -1,4 +1,4 @@
-import { ReviewDTO } from '@/api/generated';
+import { ReviewDTO } from '@/shared/api/generated';
 import { http, HttpResponse } from 'msw';
 import { reviewDb } from '../db/reviewDb';
 

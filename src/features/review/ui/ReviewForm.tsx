@@ -1,18 +1,16 @@
 import { useState } from 'react';
-import { ReviewDTO } from '@/api/generated';
-import { Button } from '@/components/common/Button/Button';
-import { Rating } from '@/widgets/rating/Rating';
-import { TagInput } from '@/widgets/tag-input/TagInput';
+import { ReviewDTO } from '@/shared/api/generated';
+import { Button } from '@/shared/ui/components/button/Button';
+import { TagInput } from '@/shared/ui/components/TagInput/TagInput';
+import { Rating } from '@/shared/ui/components/Rating/Rating';
 
 interface ReviewFormProps {
-  facilityId: string;
   onSubmit: (review: ReviewDTO) => void;
   initialData?: ReviewDTO;
   onCancel?: () => void;
 }
 
 export const ReviewForm = ({
-  facilityId,
   onSubmit,
   initialData,
   onCancel
@@ -24,12 +22,9 @@ export const ReviewForm = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit({
-      facilityId,
       content,
       rating,
-      tags,
-      likes: initialData?.likes || 0,
-      views: initialData?.views || 0
+      tags
     });
   };
 

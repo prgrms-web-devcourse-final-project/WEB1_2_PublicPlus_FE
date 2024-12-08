@@ -1,4 +1,4 @@
-import { Button } from '@/components/common/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 
 interface EmailInputProps {
   email: string;

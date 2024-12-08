@@ -1,9 +1,9 @@
 'use client';
 
-import { FacilityList } from '@/widgets/facility/facility-list';
-import { FacilityFilters } from '@/widgets/facility/facility-filters';
 import { useFilterStore } from '@/features/facility/filter/model/store';
-import { Button } from '@/components/common/Button/Button';
+import { FacilityFilters } from '@/features/facility/ui/FacilityFilters/FacilityFilters';
+import { FacilityList } from '@/features/facility/ui/FacilityList/FacilityList';
+import { Button } from '@/shared/ui/components/Button/Button';
 import { X } from 'lucide-react';
 
 export default function FacilityPage() {

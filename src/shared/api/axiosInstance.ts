@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/entities/User';
+import { useAuthStore } from '@/entities/user';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 

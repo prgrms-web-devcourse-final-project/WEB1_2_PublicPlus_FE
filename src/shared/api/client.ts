@@ -5,8 +5,10 @@ import {
   EmailControllerApi,
   ActivityMeetingBoardControllerApi,
   ConfigurationParameters,
-  Configuration
-} from '@/api/generated';
+  Configuration,
+  MeetingBoardApi,
+  FacilityLikeControllerApi
+} from '@/shared/api/generated';
 import Cookies from 'js-cookie';
 import axiosInstance from './axiosInstance';
 
@@ -40,7 +42,11 @@ export const api = {
   reviewClient: new ReviewControllerApi(new CustomConfiguration({}, false)),
   user: new UserControllerApi(new CustomConfiguration()),
   email: new EmailControllerApi(new CustomConfiguration()),
-  meetingBoard: new ActivityMeetingBoardControllerApi(
+  activityMeetingBoard: new ActivityMeetingBoardControllerApi(
+    new CustomConfiguration({}, false)
+  ),
+  meetingBoard: new MeetingBoardApi(new CustomConfiguration({}, false)),
+  facilityLike: new FacilityLikeControllerApi(
     new CustomConfiguration({}, false)
   )
 };

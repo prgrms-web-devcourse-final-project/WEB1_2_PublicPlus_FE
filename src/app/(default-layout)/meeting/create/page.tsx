@@ -1,14 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import type { MeetingBoardRequestDTO } from '@/api/generated';
+import type { MeetingBoardRequestDTO } from '@/shared/api/generated';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   useCreateMeetingBoard,
   QUERY_KEYS
 } from '@/features/meeting/model/queries';
-import { CreateMeetingForm } from '@/features/meeting/ui/CreateMeetingForm';
+import { CreateMeetingForm } from '@/features/meeting/ui/components/CreateMeetingForm';
+import { useAuthStore } from '@/entities/User';
 
 export default function MeetingBoardCreation() {
   const router = useRouter();
@@ -22,8 +23,25 @@ export default function MeetingBoardCreation() {
     message: string;
     type: 'success' | 'error';
   }>({ show: false, message: '', type: 'success' });
+  const { tokens } = useAuthStore();
 
-  const { mutateAsync, isPending, error } = useCreateMeetingBoard();
+  const { mutateAsync, isPending, error } = useCreateMeetingBoard(
+    tokens?.access_token ?? ''
+  );
+
+  useEffect(() => {
+    if (!tokens?.access_token) {
+      setToast({
+        show: true,
+        message: 'Access token is missing. Please log in again.',
+        type: 'error'
+      });
+    }
+  }, [tokens?.access_token]);
+
+  if (!tokens?.access_token) {
+    return null;
+  }
 
   // 토스트 메시지 표시 함수
   const showToast = (message: string, type: 'success' | 'error') => {

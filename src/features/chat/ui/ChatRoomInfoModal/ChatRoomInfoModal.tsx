@@ -1,10 +1,10 @@
 'use client';
 import { useState } from 'react';
 import { LucidePanelRightClose } from 'lucide-react';
-import { Button } from '@/components/common/Button/Button';
-import { Modal } from '@/components/common/Modal';
+import { Button } from '@/shared/ui/components/button/Button';
 import { ChatRoomDetailInfo } from './ChatRoomDetailInfo';
-import { SideModalProps } from '../../types';
+import { SideModalProps } from '../../model/types';
+import { Modal } from '@/shared/ui/components/Modal/Modal';
 
 export const ChatRoomInfoModal = ({ roomInfo, onClose }: SideModalProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

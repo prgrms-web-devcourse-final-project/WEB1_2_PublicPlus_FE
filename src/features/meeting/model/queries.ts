@@ -4,8 +4,8 @@ import {
   UseQueryOptions,
   UseMutationResult
 } from '@tanstack/react-query';
-import { MeetingBoardRequestDTO } from '@/api/generated';
-import { meetingBoardService } from '@/entities/meetingBoard/api/meetingBoardService';
+import { MeetingBoardRequestDTO } from '@/shared/api/generated';
+import { meetingService } from '@/features/meeting/api/meetingService';
 
 // Query Key 정의
 export const QUERY_KEYS = {
@@ -35,7 +35,7 @@ export const useMeetingBoards = (
     ReturnType<typeof QUERY_KEYS.meetingBoard.list>
   >({
     queryKey: QUERY_KEYS.meetingBoard.list(),
-    queryFn: meetingBoardService.getAllMeetingBoards,
+    queryFn: meetingService.getAllMeetingBoards,
     ...options
   });
 };
@@ -62,19 +62,22 @@ export const useMeetingBoardDetail = (
     ReturnType<typeof QUERY_KEYS.meetingBoard.detail>
   >({
     queryKey: QUERY_KEYS.meetingBoard.detail(mbId),
-    queryFn: () => meetingBoardService.getMeetingBoardById(mbId),
+    queryFn: () => meetingService.getMeetingBoardById(mbId),
     ...options
   });
 };
 
 // 모임 생성// 모임 생성 훅
-export const useCreateMeetingBoard = (): UseMutationResult<
+export const useCreateMeetingBoard = (
+  tokens: string
+): UseMutationResult<
   void, // 성공 결과 타입
   Error, // 오류 타입
   MeetingBoardRequestDTO // 입력 데이터 타입
 > => {
   return useMutation({
-    mutationFn: meetingBoardService.createMeetingBoard
+    mutationFn: meetingBoardData =>
+      meetingService.createMeetingBoard(meetingBoardData, tokens)
   });
 };
 
@@ -82,13 +85,13 @@ export const useCreateMeetingBoard = (): UseMutationResult<
 export const useUpdateMeetingBoard = (mbId: number) => {
   return useMutation<void, Error, MeetingBoardRequestDTO>({
     mutationFn: meetingBoardData =>
-      meetingBoardService.updateMeetingBoard(mbId, meetingBoardData)
+      meetingService.updateMeetingBoard(mbId, meetingBoardData)
   });
 };
 
 // 모임 삭제
 export const useDeleteMeetingBoard = () => {
   return useMutation<void, Error, number>({
-    mutationFn: meetingBoardService.deleteMeetingBoard
+    mutationFn: meetingService.deleteMeetingBoard
   });
 };

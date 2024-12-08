@@ -1,4 +1,4 @@
-import { CustomHeader } from '@/components/common/Header/CustomHeader';
+import { CustomHeader } from '@/widgets/Header/ui/CustomHeader';
 
 export default function SignupLayout({
   children

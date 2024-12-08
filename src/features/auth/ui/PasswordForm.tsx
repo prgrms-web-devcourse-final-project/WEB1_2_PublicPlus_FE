@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { PasswordField } from './PasswordField';
 import { PasswordConfirmField } from './PasswordConfirmField';
-import { Button } from '@/components/common/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 import { usePasswordValidation } from '../hooks/usePasswordValidation';
 
 export function PasswordForm() {

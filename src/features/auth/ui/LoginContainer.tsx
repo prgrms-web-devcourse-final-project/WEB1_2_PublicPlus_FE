@@ -2,8 +2,8 @@
 import { useEffect, useState } from 'react';
 import LoginForm from './LoginForm';
 import { useRouter } from 'next/navigation';
-import ErrorMessage from '@/components/common/ErrorMsg';
-import { useAuthStore } from '@/entities/User';
+import { useAuthStore } from '@/entities/user';
+import ErrorMessage from '@/shared/ui/components/Error/ErrorMsg';
 import { requestNotificationPermission } from '@/shared/lib/firebase';
 
 export default function LoginContainer() {

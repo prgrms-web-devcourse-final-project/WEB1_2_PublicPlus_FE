@@ -1,0 +1,12 @@
+/* Card.module.css */
+.card {
+  @apply overflow-hidden rounded-lg p-4 shadow-md transition-shadow hover:shadow-lg;
+}
+
+.cardImage {
+  @apply relative h-[auto] w-[13rem] object-cover;
+}
+
+.cardContent {
+  @apply p-4;
+}

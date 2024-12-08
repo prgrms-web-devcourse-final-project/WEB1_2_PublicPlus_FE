@@ -1,5 +1,5 @@
 import { SocialProvider } from '../store/authStore';
-import { LoginResponse, UserLoginDTO } from './UserLogin';
+import { UserLoginDTO, LoginResponse } from './UserLogin';
 import { UserJoinDTO } from './UserSignup';
 
 export interface AuthState {

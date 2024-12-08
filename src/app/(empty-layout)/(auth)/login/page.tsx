@@ -1,15 +1,13 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-
-import { SocialProvider, useAuthStore } from '@/entities/User';
+import { toast } from 'react-toastify';
 import useRedirect from '@/features/auth/hooks/useRedirect';
-
 import { SOCIAL_PROVIDERS } from '@/features/auth/model/constants';
 import { SocialLoginButton } from '@/features/auth/ui/SocialLoginButton';
 import LoginContainer from '@/features/auth/ui/LoginContainer';
-import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
+import { useAuthStore, SocialProvider } from '@/entities/user';
 
 export default function LoginPage() {
   const { isAuthenticated, userId, tokens, socialLogin } = useAuthStore();

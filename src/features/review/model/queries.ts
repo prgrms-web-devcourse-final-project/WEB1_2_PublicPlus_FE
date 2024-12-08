@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import type { ReviewDTO } from '@/api/generated';
-import { reviewService } from '@/entities/review/api/reviewService';
+import type { ReviewDTO } from '@/shared/api/generated';
+import { reviewService } from '../api/reviewService';
 
 // Query Key 정의
 export const QUERY_KEYS = {
@@ -37,15 +37,18 @@ export const useReviews = (facilityId: string | undefined) => {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({
-      reviewId,
-      review
-    }: {
+    mutationFn: (params: {
+      facilityId: string;
       reviewId: number;
-      review: ReviewDTO;
+      ReviewDTO: ReviewDTO;
     }) => {
+      console.log('mutationFn params:', params);
       if (!facilityId) throw new Error('Facility ID is required');
-      return reviewService.updateReview(facilityId, reviewId, review);
+      return reviewService.updateReview(
+        params.facilityId,
+        params.reviewId,
+        params.ReviewDTO
+      );
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey })
   });

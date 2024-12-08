@@ -1,8 +1,8 @@
 'use client';
-import { Header } from '@/components/common/Header';
-import { TabType } from '@/components/common/Navigation';
-import { Navigation } from '@/components/common/Navigation/Navigation';
+import { TabType } from '@/widgets/Navigation';
 import { usePathname } from 'next/navigation';
+import { Navigation } from '@/widgets/Navigation/ui/Navigation';
+import { Header } from '@/widgets/Header/ui/Header';
 
 export default function RootLayout({
   children
@@ -30,7 +30,7 @@ export default function RootLayout({
   };
 
   return (
-    <div className="relative mx-auto min-h-screen w-full max-w-[768px]">
+    <div className="relative mx-auto min-h-screen w-full">
       <div className="flex min-h-screen flex-col">
         <Header />
         <main className="container flex-grow px-4">{children}</main>

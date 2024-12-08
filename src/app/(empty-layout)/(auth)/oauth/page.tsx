@@ -1,6 +1,7 @@
-// pages/oauth/callback.tsx
-import { userService } from '@/entities/User/api/userService';
-import { useRouter } from 'next/router';
+'use client';
+
+import { userService } from '@/entities/user/api/userService';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function OAuthCallback() {

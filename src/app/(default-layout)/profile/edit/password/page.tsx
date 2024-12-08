@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 
-import { Button } from '@/components/common/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 import { useChangePassword } from '@/features/mypage/hooks/useChangePassword';
 
 export default function EditPasswordForm() {

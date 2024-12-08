@@ -16,10 +16,7 @@ export default {
   darkMode: 'media',
   theme: {
     screens: {
-      xs: '',
-      sm: '',
-      md: '768px', // 중간 해상도
-      lg: '1024px' // 큰 화면
+      md: '600px'
     },
     extend: {
       container: {

@@ -1,4 +1,4 @@
-import { ReviewDTO } from '@/api/generated';
+import { ReviewDTO } from '@/shared/api/generated';
 import { reviewData } from '../data/reviewData';
 
 interface Review {

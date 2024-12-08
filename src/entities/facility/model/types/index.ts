@@ -1,4 +1,4 @@
-import { ExternalReview, Review } from '@/entities/review/model/types';
+import { Review, ExternalReview } from '@/entities/review/model/types/types';
 
 // 기본 시설 정보 인터페이스
 export interface Facility {

@@ -1,4 +1,4 @@
-import { FacilityFilterDTO } from '@/api/generated';
+import { FacilityFilterDTO } from '@/shared/api/generated';
 import { create } from 'zustand';
 
 interface FilterStore {
@@ -15,7 +15,9 @@ export const useFilterStore = create<FilterStore>(set => ({
   filters: {
     facilityCategory: undefined,
     area: undefined,
-    priceType: undefined
+    priceType: undefined,
+    likeOrder: 0,
+    viewsOrder: 0
   },
   sort: 'latest',
   isFilterMenuOpen: null,

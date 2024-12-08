@@ -1,11 +1,10 @@
-// app/chat/page.tsx
 'use client';
-import { Button } from '@/components/common/Button/Button';
-import { ChatInput } from '@/components/common/Chat/ChatInput';
-import { ChatMessage } from '@/components/common/Chat/ChatMessage';
-import { CustomHeader } from '@/components/common/Header/CustomHeader';
-import { useToast } from '@/components/common/Toast/Toast';
+import { Button } from '@/shared/ui/components/button/Button';
+import { CustomHeader } from '@/widgets/Header/ui/CustomHeader';
+import { useToast } from '@/shared/ui/components/Toast/Toast';
 import { useState } from 'react';
+import { ChatInput } from '@/features/chat/ui/components/ChatInput';
+import { ChatMessage } from '@/features/chat/ui/components/ChatMessage';
 
 export default function ChatPage() {
   const { showToast, ToastComponent } = useToast();

@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { Button } from '@/components/common/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 import { useSignup } from '@/features/auth/hooks/useSignup';
 
 export default function SignupForm() {

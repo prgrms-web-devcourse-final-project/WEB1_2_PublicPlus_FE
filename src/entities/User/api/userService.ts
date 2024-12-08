@@ -5,7 +5,7 @@ import type {
   UserJoinDTO,
   ChangePasswordDTO,
   ErrorResponseDTO
-} from '@/api/generated';
+} from '@/shared/api/generated';
 import { SocialProvider } from '../model/store/authStore';
 import axiosInstance from '../../../shared/api/axiosInstance';
 

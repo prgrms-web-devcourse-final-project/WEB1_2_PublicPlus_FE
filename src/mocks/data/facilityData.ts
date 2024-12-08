@@ -1,7 +1,7 @@
 import {
   FacilityDetailsResponseDTO,
   FacilityDetailsResponseDTOFacilityCategoryEnum
-} from '@/api/generated';
+} from '@/shared/api/generated';
 
 // 시설 목록 데이터
 export const facilities: FacilityDetailsResponseDTO[] = [
