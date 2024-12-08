@@ -10,15 +10,17 @@ import {
   FacilityLikeControllerApi
 } from '@/shared/api/generated';
 import Cookies from 'js-cookie';
-import { axiosInstance } from './axiosInstance';
+import axiosInstance from './axiosInstance';
+
+const getTokenFromCookie = () => {
+  const authStorageCookie = Cookies.get('auth-storage');
+  const parsedCookie = authStorageCookie ? JSON.parse(authStorageCookie) : null;
+  return parsedCookie?.state?.tokens?.access_token;
+};
 
 class CustomConfiguration extends Configuration {
   constructor(params: ConfigurationParameters = {}, useCustomConfig = true) {
-    const authStorageCookie = Cookies.get('auth-storage');
-    const parsedCookie = authStorageCookie
-      ? JSON.parse(authStorageCookie)
-      : null;
-    const token = parsedCookie?.state?.tokens?.access_token;
+    const token = getTokenFromCookie();
 
     super({
       ...params,
@@ -29,7 +31,7 @@ class CustomConfiguration extends Configuration {
           ...(useCustomConfig && token && { Authorization: `Bearer ${token}` }),
           ...params.baseOptions?.headers
         },
-        axios: useCustomConfig ? axiosInstance : undefined
+        ...(useCustomConfig && { axios: axiosInstance })
       }
     });
   }

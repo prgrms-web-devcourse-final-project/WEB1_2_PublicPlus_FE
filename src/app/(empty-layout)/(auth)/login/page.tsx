@@ -1,5 +1,4 @@
 'use client';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
@@ -8,23 +7,19 @@ import { SOCIAL_PROVIDERS } from '@/features/auth/model/constants';
 import { SocialLoginButton } from '@/features/auth/ui/SocialLoginButton';
 import LoginContainer from '@/features/auth/ui/LoginContainer';
 import { useAuthStore, SocialProvider } from '@/entities/user';
+import { AxiosError } from 'axios';
 
 export default function LoginPage() {
-  const router = useRouter();
   const { isAuthenticated, userId, tokens, socialLogin } = useAuthStore();
 
   useRedirect(isAuthenticated, userId, tokens);
   const handleSocialLogin = async (provider: SocialProvider) => {
     try {
-      const success = await socialLogin(provider);
-
-      if (success) {
-        toast.success('로그인 되었습니다.');
-        // alert('로그인 되었습니다.');
-        router.push('/');
-      }
+      await socialLogin(provider);
     } catch (error) {
-      console.error('소셜 로그인 실패', error);
+      const errorMsg = error as AxiosError;
+      console.error(errorMsg);
+      toast.error('소셜 로그인 실패');
     }
   };
   const SocialLoginButtons = () => (
