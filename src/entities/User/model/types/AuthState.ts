@@ -1,5 +1,5 @@
 import { SocialProvider } from '../store/authStore';
-import { UserLoginDTO } from './UserLogin';
+import { LoginResponse, UserLoginDTO } from './UserLogin';
 import { UserJoinDTO } from './UserSignup';
 
 export interface AuthState {
@@ -18,4 +18,5 @@ export interface AuthState {
   logout: () => void;
   refreshToken: () => Promise<boolean>;
   deleteUser: () => Promise<boolean>;
+  socialLoginComplete: (loginResponse: LoginResponse) => Promise<boolean>;
 }

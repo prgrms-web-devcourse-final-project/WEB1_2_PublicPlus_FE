@@ -1,20 +1,24 @@
 import Image from 'next/image';
 import { Button } from '@/components/common/Button/Button';
 
-interface NotificationItemProps {
+export interface NotificationItemProps {
+  id: number;
+  title: string;
   message: string;
-  time?: string;
-  onAccept?: () => void;
-  variant?: 'default' | 'new';
+  isRead: boolean;
+  createdAt: string;
+  onMarkAsRead?: () => void;
 }
 
 export const NotificationItem = ({
+  id,
+  title,
   message,
-  time = '방금 전',
-  onAccept,
-  variant = 'default'
+  isRead,
+  createdAt,
+  onMarkAsRead
 }: NotificationItemProps) => {
-  const bgColor = variant === 'new' ? 'bg-primary-50' : 'bg-white';
+  const bgColor = !isRead ? 'bg-primary-50' : 'bg-white';
 
   return (
     <div
@@ -31,16 +35,21 @@ export const NotificationItem = ({
         </div>
 
         <div className="flex flex-1 flex-col justify-between">
-          <p className="text-sm text-gray-900">{message}</p>
-          {onAccept && (
+          <div>
+            <h3 className="text-sm font-semibold text-gray-900">{title}</h3>
+            <p className="text-sm text-gray-700">{message}</p>
+          </div>
+          {!isRead && onMarkAsRead && (
             <div
               className="mt-4"
-              onClick={onAccept}>
-              <Button size="sm">수락</Button>
+              onClick={onMarkAsRead}>
+              <Button size="sm">읽음</Button>
             </div>
           )}
         </div>
-        <div className="ml-2 flex-shrink-0 text-xs text-gray-500">{time}</div>
+        <div className="ml-2 flex-shrink-0 text-xs text-gray-500">
+          {new Date(createdAt).toLocaleString()}
+        </div>
       </div>
     </div>
   );

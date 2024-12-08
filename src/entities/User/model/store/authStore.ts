@@ -60,47 +60,50 @@ export const useAuthStore = create<AuthState>()(
           return false;
         }
       },
-      // 소셜 로그인
-      socialLogin: async (provider: SocialProvider) => {
-        set({ isLoading: true, error: null });
-
+      socialLogin: async (provider: 'google' | 'kakao' | 'naver') => {
         try {
-          const response = await userService.socialLogin(provider);
-
-          document.cookie = `auth-storage=${JSON.stringify({
-            state: {
-              userId: response.userId,
-              tokens: {
-                access_token: response.access_token,
-                refresh_token: response.refresh_token
-              },
-              isAuthenticated: true
-            }
-          })}; path=/; secure; samesite=strict; max-age=86400`;
-
-          set({
-            userId: response.userId,
-            tokens: {
-              access_token: response.access_token ?? null,
-              refresh_token: response.refresh_token ?? null
-            },
-            isAuthenticated: true,
-            isLoading: false,
-            error: null
-          });
+          const authorizationUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/oauth2/${provider}`;
+          window.location.href = authorizationUrl;
 
           return true;
         } catch (error) {
-          const errorMessage =
-            error instanceof Error ? error.message : '소셜 로그인 실패';
-
           set({
             isAuthenticated: false,
             isLoading: false,
-            error: errorMessage
+            error: error instanceof Error ? error.message : '소셜 로그인 실패'
           });
           return false;
         }
+      },
+      socialLoginComplete: async (loginResponse: {
+        authentication: string;
+        access_token: string;
+        refresh_token: string;
+        userId: string;
+      }) => {
+        document.cookie = `auth-storage=${JSON.stringify({
+          state: {
+            userId: loginResponse.userId,
+            tokens: {
+              access_token: loginResponse.access_token,
+              refresh_token: loginResponse.refresh_token
+            },
+            isAuthenticated: true
+          }
+        })}; path=/; secure; samesite=strict; max-age=86400`;
+
+        set({
+          userId: loginResponse.userId,
+          tokens: {
+            access_token: loginResponse.access_token,
+            refresh_token: loginResponse.refresh_token
+          },
+          isAuthenticated: true,
+          isLoading: false,
+          error: null
+        });
+
+        return true;
       },
 
       join: async (joinData: UserJoinDTO) => {
