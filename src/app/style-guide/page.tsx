@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Button } from '@/shared/ui/components/button/Button';
 import { Header } from '@/widgets/Header/ui';
 import { Loading } from '@/shared/ui/components/Loading/Loading';
-import { Card } from '@/shared/ui/components/card/Card';
+import { Card } from '@/shared/ui/components/Card/Card';
 import ColorPalette from '@/shared/ui/components/ColorPalette/ColorPalette';
 import ErrorMessage from '@/shared/ui/components/Error/ErrorMsg';
 import { Modal } from '@/shared/ui/components/Modal/Modal';

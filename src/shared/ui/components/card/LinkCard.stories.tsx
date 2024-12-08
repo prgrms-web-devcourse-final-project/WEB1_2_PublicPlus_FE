@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { LinkCard } from './LinkCard';
-import { Tag } from '../Tag';
+import { Tag } from '../Tag/Tag';
+import React from 'react';
 
 const meta = {
   title: 'Common/Cards/LinkCard',

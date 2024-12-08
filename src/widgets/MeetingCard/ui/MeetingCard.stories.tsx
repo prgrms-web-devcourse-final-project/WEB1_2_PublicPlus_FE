@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { MeetingCard } from './MeetingCard';
+import React from 'react';
 
 const meta = {
   title: 'Common/Cards/MeetingCard',
@@ -66,6 +67,8 @@ export const MeetingStatus: Story = {
         maxParticipants={10}
         tags={['축구', '저녁운동', '실력무관']}
         domain="meeting"
+        startDate={''}
+        sportType={undefined}
       />
       <MeetingCard
         id="3"
@@ -78,6 +81,8 @@ export const MeetingStatus: Story = {
         maxParticipants={10}
         tags={['테니스', '주말운동', '마감임박']}
         domain="meeting"
+        startDate={''}
+        sportType={undefined}
       />
     </div>
   )

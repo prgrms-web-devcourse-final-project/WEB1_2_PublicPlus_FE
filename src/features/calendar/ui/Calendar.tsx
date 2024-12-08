@@ -117,7 +117,7 @@ export const Calendar: FC = () => {
           height="100%"
           locale="ko"
           dayHeaderFormat={{ weekday: 'short' }}
-          className="calendar-custom"
+          slotLaneClassNames="calendar-custom"
           dayCellClassNames="hover:bg-blue-50 transition-colors cursor-pointer"
           eventContent={eventInfo => {
             const event = eventInfo.event;

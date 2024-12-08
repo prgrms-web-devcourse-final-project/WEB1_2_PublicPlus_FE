@@ -1,9 +1,9 @@
-import { LinkCard } from '@/shared/ui/components/card/LinkCard';
+import { LinkCard } from '@/shared/ui/components/Card/LinkCard';
 import {
   MeetingBoardRequestDTO,
   MeetingBoardRequestDTOSportTypeEnum
 } from '@/shared/api/generated';
-import { Tag } from '@/shared/ui/components/tag/Tag';
+import { Tag } from '@/shared/ui/components/Tag/Tag';
 
 interface MeetingCardProps extends Omit<MeetingBoardRequestDTO, 'id'> {
   image?: string;

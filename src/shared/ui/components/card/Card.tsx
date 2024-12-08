@@ -1,4 +1,3 @@
-// components/common/Cards/Card.tsx
 import Image from 'next/image';
 import styles from './Card.module.css';
 import { ReactNode } from 'react';
