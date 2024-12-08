@@ -11,7 +11,6 @@ export interface NotificationItemProps {
 }
 
 export const NotificationItem = ({
-  id,
   title,
   message,
   isRead,

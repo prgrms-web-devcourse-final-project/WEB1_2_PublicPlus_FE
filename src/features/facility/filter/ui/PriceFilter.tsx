@@ -20,17 +20,16 @@ export const PriceFilter = () => {
   if (isFilterMenuOpen !== 'price') return null;
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-[1000] bg-black/50"
-      onClick={handleBackdropClick}
-    >
-      <div className="fixed bottom-[60px] left-0 right-0 z-[1000] m-auto w-full max-w-screen-lg rounded-t-2xl bg-white p-4 shadow-lg transition-transform md:bottom-auto md:left-auto md:right-0 md:top-16 md:w-[320px] md:rounded-lg">
-        <h3 className="text-lg font-semibold mb-2">이용 요금</h3>
-        <div className="flex gap-2 max-h-[300px] overflow-y-auto flex-wrap">
+      onClick={handleBackdropClick}>
+      <div className="max-w-screen-lg fixed bottom-0 left-0 right-0 z-[1000] m-auto w-full max-w-[600px] rounded-t-2xl bg-white p-4 shadow-lg transition-transform">
+        <h3 className="mb-2 text-lg font-semibold">이용 요금</h3>
+        <div className="flex max-h-[300px] flex-wrap gap-2 overflow-y-auto">
           <Button
             variant={filters.priceType === undefined ? 'primary' : 'gray'}
             onClick={() => handlePriceChange(undefined)}
-            className="min-h-[36px] max-h-[36px] w-full">
+            className="max-h-[36px] min-h-[36px] w-full">
             전체
           </Button>
           {PRICE_TYPES.map(price => (
@@ -39,8 +38,8 @@ export const PriceFilter = () => {
               variant={
                 filters.priceType === Boolean(price.value) ? 'primary' : 'gray'
               }
-              onClick={() => handlePriceChange(Boolean(price.value))}              
-              className="min-h-[36px] max-h-[36px] w-full">
+              onClick={() => handlePriceChange(Boolean(price.value))}
+              className="max-h-[36px] min-h-[36px] w-full">
               {price.label}
             </Button>
           ))}

@@ -1,5 +1,7 @@
-import { useAuthStore } from '@/entities/User';
-import { userService } from '@/entities/User/api/userService';
+'use client';
+
+import { useAuthStore } from '@/entities/user';
+import { userService } from '@/entities/user/api/userService';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';

@@ -85,16 +85,16 @@ export const FacilityCard = ({
               ] ?? '#E5E7EB'
           }}
         />
-        <div className="flex gap-2 text-base">
+        <div className="flex items-center gap-2 text-m">
           <Image
             src={'/icons/heart-filled.png'}
             alt="좋아요"
-            width={24}
-            height={24}
+            width={16}
+            height={16}
           />
           {likeCoount}
         </div>
-        <div className="flex gap-2 text-base">👁️ {viewCoount}</div>
+        <div className="flex items-center gap-2 text-m">👁️ {viewCoount}</div>
       </div>
     }
     domain={domain}
