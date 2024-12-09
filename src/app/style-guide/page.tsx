@@ -8,8 +8,8 @@ import { Card } from '@/shared/ui/components/card/Card';
 import ColorPalette from '@/shared/ui/components/ColorPalette/ColorPalette';
 import ErrorMessage from '@/shared/ui/components/error/ErrorMsg';
 import { Modal } from '@/shared/ui/components/modal/Modal';
-import { NotificationItem } from '@/shared/ui/components/Notification/NotificationItem';
-import { SearchBar } from '@/shared/ui/components/Search/SearchBar';
+import { NotificationItem } from '@/shared/ui/components/notification/NotificationItem';
+import { SearchBar } from '@/shared/ui/components/search/SearchBar';
 import { Navigation } from '@/widgets/navigation/ui/Navigation';
 
 export default function StyleGuidePage() {

@@ -4,9 +4,9 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { CustomHeader } from '@/widgets/header/ui/CustomHeader';
 import { useAuthStore } from '@/entities/User';
-import { useUserQuery } from '@/entities/User/model/userQueries';
 import { EditCard } from '@/shared/ui/components/card/EditCard';
 import { Modal } from '@/shared/ui/components/modal/Modal';
+import { useUserQuery } from '@/entities/user/model/userQueries';
 
 export default function ProfileEditPage() {
   const router = useRouter();

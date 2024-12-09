@@ -8,7 +8,7 @@ import {
   validateEmail,
   validatePassword,
   validateNickname
-} from '../lib/Validation';
+} from '../Lib/Validation';
 
 export const useSignup = (router: AppRouterInstance) => {
   const [email, setEmail] = useState('');
