@@ -60,11 +60,13 @@ export const useAuthStore = create<AuthState>()(
           return false;
         }
       },
-      socialLogin: async (provider: 'google' | 'kakao' | 'naver') => {
+      socialLogin: async (provider: SocialProvider, state?: string) => {
         try {
-          const authorizationUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/oauth2/${provider}`;
-          window.location.href = authorizationUrl;
+          const authorizationUrl = state
+            ? `${process.env.NEXT_PUBLIC_API_URL}/api/oauth2/${provider}?state=${encodeURIComponent(state)}`
+            : `${process.env.NEXT_PUBLIC_API_URL}/api/oauth2/${provider}`;
 
+          window.location.href = authorizationUrl;
           return true;
         } catch (error) {
           set({
@@ -75,12 +77,27 @@ export const useAuthStore = create<AuthState>()(
           return false;
         }
       },
+      kakaoLogin: async (state: string) => {
+        try {
+          const authorizationUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/oauth2/kakao?state=${encodeURIComponent(state)}`;
+          window.location.href = authorizationUrl;
+          return true;
+        } catch (error) {
+          set({
+            isAuthenticated: false,
+            isLoading: false,
+            error: error instanceof Error ? error.message : '카카오 로그인 실패'
+          });
+          return false;
+        }
+      },
       socialLoginComplete: async (loginResponse: {
         authentication: string;
         access_token: string;
         refresh_token: string;
         userId: string;
       }) => {
+        // 기존 로그인 완료 로직과 동일
         document.cookie = `auth-storage=${JSON.stringify({
           state: {
             userId: loginResponse.userId,

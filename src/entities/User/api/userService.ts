@@ -1,5 +1,5 @@
 import { api } from '@/shared/api/client';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import type {
   UserLoginDTO,
   UserJoinDTO,
@@ -43,12 +43,12 @@ export const userService = {
     try {
       const response = await axiosInstance.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/oauth2/${params.provider}/callback`,
-        { provider: params.provider, code: params.code, state: params.state }
+        {
+          provider: params.provider,
+          code: params.code,
+          state: params.state
+        }
       );
-
-      if (!response.data || !response.data.userId) {
-        throw new Error('소셜 로그인 정보를 받아올 수 없습니다.');
-      }
 
       return {
         authentication: 'Bearer',
@@ -57,11 +57,38 @@ export const userService = {
         refresh_token: response.data.refreshToken
       };
     } catch (error) {
-      const errorMessage = error as AxiosError;
-      console.error(errorMessage);
+      if (axios.isAxiosError(error)) {
+        const errorResponse = error.response?.data;
+        throw new Error(
+          errorResponse?.message || '소셜 로그인에 실패했습니다.'
+        );
+      }
+      throw error;
     }
   },
+  kakaoLoginCallback: async (code: string, state: string) => {
+    try {
+      const response = await axiosInstance.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/oauth2/kakao/callback`,
+        { code, state }
+      );
 
+      return {
+        authentication: 'Bearer',
+        userId: response.data.userId,
+        access_token: response.data.accessToken,
+        refresh_token: response.data.refreshToken
+      };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorResponse = error.response?.data;
+        throw new Error(
+          errorResponse?.message || '카카오 로그인에 실패했습니다.'
+        );
+      }
+      throw error;
+    }
+  },
   join: async (joinData: UserJoinDTO) => {
     if (!joinData.email) {
       throw new Error('이메일을 입력해주세요.');

@@ -26,11 +26,9 @@ export enum NotificationMessageType {
 
 // 알림 응답 타입
 export interface NotificationResponse {
-  id: number;
+  notificationId: number;
   title: string;
   message: string;
-  isRead: boolean;
-  createdAt: string;
 }
 
 class PushService {
@@ -44,7 +42,8 @@ class PushService {
 
   // 알림 목록 조회
   async getNotifications(): Promise<NotificationResponse[]> {
-    const response = await axios.get<NotificationResponse[]>('/api/push');
+    const response =
+      await axios.get<NotificationResponse[]>('/api/notifications');
     return response.data;
   }
 
@@ -52,7 +51,10 @@ class PushService {
   async createNotification(
     data: NotificationCreateDTO
   ): Promise<NotificationResponse> {
-    const response = await axios.post<NotificationResponse>('/api/push', data);
+    const response = await axios.post<NotificationResponse>(
+      '/api/notifications',
+      data
+    );
     return response.data;
   }
 
@@ -68,7 +70,7 @@ class PushService {
     await axios.post('/api/notification/topic/message', data);
   }
 
-  // 특정 타입의 토픽 메시지 발송 (예: 모임 알림)
+  // 특정 타입의 토픽 메시지 발송
   async sendTopicTypeMessage(data: TopicSendTypeDTO): Promise<void> {
     await axios.post('/api/notification', data);
   }

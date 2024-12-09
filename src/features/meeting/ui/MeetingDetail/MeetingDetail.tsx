@@ -6,9 +6,9 @@ import { toast } from 'react-toastify';
 import { useMeetingBoardDetail } from '@/features/meeting/model/queries';
 import { FullScreenLoading } from '@/shared/ui/components/Loading/Loading';
 import ErrorFallback from '@/shared/ui/components/ErrorBoundary/ErrorFallback';
-import { useAuthStore } from '@/entities/User/model/store/authStore';
 import { MeetingHeader, MeetingInfo, MeetingTabs } from '@/features/meeting';
 import Link from 'next/link';
+import { useAuthStore } from '@/entities/user';
 
 export default function MeetingDetail() {
   const params = useParams();

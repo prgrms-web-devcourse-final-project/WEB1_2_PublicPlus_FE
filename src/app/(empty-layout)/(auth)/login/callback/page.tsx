@@ -1,67 +1,53 @@
 'use client';
-
-import { useAuthStore } from '@/entities/user';
-import { userService } from '@/entities/user/api/userService';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { useAuthStore } from '@/entities/User';
+import { userService } from '@/entities/User/api/userService';
 
 export default function LoginCallbackPage() {
   const router = useRouter();
   const { socialLoginComplete } = useAuthStore();
 
   useEffect(() => {
-    const handleSocialLoginCallback = async () => {
+    const handleKakaoLoginCallback = async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const code = urlParams.get('code');
       const state = urlParams.get('state');
-      const provider = urlParams.get('provider');
 
-      const savedState = localStorage.getItem(`oauth_state_${provider}`);
+      // state 검증
+      const savedState = localStorage.getItem('kakao_oauth_state');
       if (!state || state !== savedState) {
         toast.error('인증 상태가 일치하지 않습니다.');
         router.push('/login');
         return;
       }
 
-      if (!code || !provider) {
+      if (!code) {
         toast.error('유효하지 않은 인증 정보입니다.');
         router.push('/login');
         return;
       }
 
       try {
-        const result = await userService.socialLoginCallback({
-          provider,
-          code,
-          state
-        });
+        const result = await userService.kakaoLoginCallback(code, state);
+        await socialLoginComplete(result);
 
-        if (result) {
-          await socialLoginComplete(result);
-          toast.success('로그인 성공');
+        // state 제거
+        localStorage.removeItem('kakao_oauth_state');
 
-          // 로컬 스토리지 상태 초기화
-          localStorage.removeItem(`oauth_state_${provider}`);
-
-          router.push('/');
-        } else {
-          throw new Error('로그인 정보를 받아오지 못했습니다.');
-        }
+        toast.success('카카오 로그인 성공');
+        router.push('/');
       } catch (error) {
-        console.error('소셜 로그인 에러:', error);
-
-        const errorMessage =
-          error instanceof Error
-            ? error.message
-            : '소셜 로그인에 실패했습니다.';
-
-        toast.error(errorMessage);
+        console.error('카카오 로그인 에러:', error);
+        toast.error(
+          error instanceof Error ? error.message : '카카오 로그인 실패'
+        );
         router.push('/login');
       }
     };
 
-    handleSocialLoginCallback();
+    handleKakaoLoginCallback();
   }, [router, socialLoginComplete]);
 
   return <div>로그인 처리 중...</div>;

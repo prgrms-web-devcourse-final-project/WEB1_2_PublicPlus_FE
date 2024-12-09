@@ -19,4 +19,5 @@ export interface AuthState {
   refreshToken: () => Promise<boolean>;
   deleteUser: () => Promise<boolean>;
   socialLoginComplete: (loginResponse: LoginResponse) => Promise<boolean>;
+  kakaoLogin: (state: string) => Promise<boolean>;
 }
