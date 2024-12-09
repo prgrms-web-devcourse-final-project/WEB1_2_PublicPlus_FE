@@ -10,8 +10,10 @@ import { useUserQuery } from '@/entities/User/model/userQueries';
 export default function ProfileImageEditPage() {
   const router = useRouter();
   const { data: userInfo } = useUserQuery();
+  console.log('프로필 이미지: ', userInfo);
   const [imageUrl, setImageUrl] = useState(userInfo?.profile_image);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   const handleSubmit = async () => {
     if (!selectedFile) {
       alert('선택된 이미지가 없습니다.');
