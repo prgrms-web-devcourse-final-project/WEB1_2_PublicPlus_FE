@@ -93,27 +93,45 @@ export const useAuthStore = create<AuthState>()(
       },
       socialLoginComplete: async (loginResponse: {
         authentication: string;
-        access_token: string;
-        refresh_token: string;
+        accessToken?: string;
+        refreshToken?: string;
         userId: string;
       }) => {
-        // 기존 로그인 완료 로직과 동일
+        // 키 이름 유연하게 처리
+        const access_token = loginResponse.accessToken;
+        const refresh_token = loginResponse.refreshToken;
+
+        // 쿠키에 사용자 토큰 정보 저장
         document.cookie = `auth-storage=${JSON.stringify({
           state: {
             userId: loginResponse.userId,
             tokens: {
-              access_token: loginResponse.access_token,
-              refresh_token: loginResponse.refresh_token
+              access_token,
+              refresh_token
             },
             isAuthenticated: true
           }
         })}; path=/; secure; samesite=strict; max-age=86400`;
 
+        // 로컬 스토리지에 사용자 정보 저장
+        localStorage.setItem(
+          'auth-storage',
+          JSON.stringify({
+            userId: loginResponse.userId,
+            tokens: {
+              access_token,
+              refresh_token
+            },
+            isAuthenticated: true
+          })
+        );
+
+        // Zustand 스토어 상태 업데이트
         set({
           userId: loginResponse.userId,
           tokens: {
-            access_token: loginResponse.access_token,
-            refresh_token: loginResponse.refresh_token
+            access_token,
+            refresh_token
           },
           isAuthenticated: true,
           isLoading: false,
@@ -122,7 +140,6 @@ export const useAuthStore = create<AuthState>()(
 
         return true;
       },
-
       join: async (joinData: UserJoinDTO) => {
         set({ isLoading: true, error: null });
 

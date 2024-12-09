@@ -65,7 +65,6 @@ export const authHandlers = [
     const verificationCode = faker.string.numeric(6);
 
     emailVerificationCodes[email] = verificationCode;
-    console.log(`Verification code for ${email}: ${verificationCode}`);
 
     return HttpResponse.json(null, { status: 200 });
   }),

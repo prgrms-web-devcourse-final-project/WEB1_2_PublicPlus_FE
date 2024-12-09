@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { toast } from 'react-toastify';
 import useRedirect from '@/features/auth/hooks/useRedirect';
 import LoginContainer from '@/features/auth/ui/LoginContainer';
-import { useAuthStore } from '@/entities/user';
+import { useAuthStore } from '@/entities/User';
 
 export default function LoginPage() {
   const { isAuthenticated, userId, tokens, kakaoLogin } = useAuthStore();
@@ -14,7 +14,7 @@ export default function LoginPage() {
   const handleKakaoLogin = async () => {
     try {
       // 상태(state) 생성 및 저장
-      const state = crypto.randomUUID();
+      const state = window.btoa(crypto.randomUUID());
       localStorage.setItem('kakao_oauth_state', state);
 
       // 카카오 로그인 URL로 리다이렉트

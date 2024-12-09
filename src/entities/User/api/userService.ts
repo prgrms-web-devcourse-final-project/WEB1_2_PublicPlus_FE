@@ -66,13 +66,20 @@ export const userService = {
       throw error;
     }
   },
-  kakaoLoginCallback: async (code: string, state: string) => {
+  kakaoLoginCallback: async (
+    code: string,
+    state: string,
+    fcmToken?: string
+  ) => {
     try {
       const response = await axiosInstance.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/oauth2/kakao/callback`,
-        { code, state }
+        {
+          code,
+          state,
+          fcmToken
+        }
       );
-
       return {
         authentication: 'Bearer',
         userId: response.data.userId,
@@ -117,7 +124,7 @@ export const userService = {
 
   logout: async () => {
     try {
-      await api.user.logout();
+      await api.user.logout('Bearer');
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorResponse = error.response?.data as ErrorResponseDTO;

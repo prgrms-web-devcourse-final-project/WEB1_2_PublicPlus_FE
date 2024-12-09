@@ -12,30 +12,30 @@ export default function LoginCallbackPage() {
   useEffect(() => {
     const handleKakaoLoginCallback = async () => {
       const urlParams = new URLSearchParams(window.location.search);
-      const code = urlParams.get('code');
-      const state = urlParams.get('state');
 
-      // state 검증
-      const savedState = localStorage.getItem('kakao_oauth_state');
-      if (!state || state !== savedState) {
-        toast.error('인증 상태가 일치하지 않습니다.');
-        router.push('/login');
-        return;
-      }
+      const accessToken = urlParams.get('accessToken');
+      const refreshToken = urlParams.get('refreshToken');
+      const userId = urlParams.get('userId');
 
-      if (!code) {
-        toast.error('유효하지 않은 인증 정보입니다.');
+      // 토큰 유효성 검사
+      if (!accessToken || !refreshToken || !userId) {
+        toast.error('유효하지 않은 로그인 정보입니다.');
         router.push('/login');
         return;
       }
 
       try {
-        const result = await userService.kakaoLoginCallback(code, state);
-        await socialLoginComplete(result);
+        const loginResult = {
+          authentication: 'Bearer',
+          access_token: accessToken,
+          refresh_token: refreshToken,
+          userId
+        };
 
-        // state 제거
+        // 소셜 로그인 완료 처리
+        await socialLoginComplete(loginResult);
+
         localStorage.removeItem('kakao_oauth_state');
-
         toast.success('카카오 로그인 성공');
         router.push('/');
       } catch (error) {
