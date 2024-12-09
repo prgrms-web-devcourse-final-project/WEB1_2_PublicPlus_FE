@@ -2,9 +2,8 @@
 import { useEffect, useState } from 'react';
 import LoginForm from './LoginForm';
 import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/entities/user';
-import ErrorMessage from '@/shared/ui/components/Error/ErrorMsg';
 import { requestNotificationPermission } from '@/shared/lib/firebase';
+import { useAuthStore } from '@/entities/User';
 
 export default function LoginContainer() {
   const router = useRouter();
@@ -33,8 +32,7 @@ export default function LoginContainer() {
     const success = await login({
       email,
       password,
-      fcmToken,
-      passwordEmpty: true
+      fcmToken
     });
 
     if (success) {

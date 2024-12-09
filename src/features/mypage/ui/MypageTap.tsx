@@ -1,7 +1,6 @@
 'use client';
 import { useMemo, useState } from 'react';
 import { UserInfo } from './UserInfo';
-import { UserReviews } from '@/features/review/ui/UserReviews';
 
 type ProfileTabType = 'intro' | 'review' | 'favorites';
 
@@ -12,8 +11,6 @@ export const MypageTap = () => {
     switch (activeTab) {
       case 'intro':
         return <UserInfo />;
-      case 'review':
-        return <UserReviews />;
     }
   }, [activeTab]);
 
@@ -29,11 +26,7 @@ export const MypageTap = () => {
                 ? 'border-b-2 border-primary-800 text-primary-800'
                 : 'border-b-2 border-white text-gray-500'
             }`}>
-            {tab === 'intro'
-              ? '소개글'
-              : tab === 'review'
-                ? '내 후기'
-                : '즐겨찾기'}
+            {tab === 'intro' ? '소개글' : ''}
           </button>
         ))}
       </div>
