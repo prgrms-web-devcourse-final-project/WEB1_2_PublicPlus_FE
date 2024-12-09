@@ -71,7 +71,7 @@ export default function MeetingDetail() {
         showComments={isJoined}
       />
       {activeTab === 'info' && <MeetingInfo meeting={meeting} />}{' '}
-      <div className="sticky bottom-[80px] z-[90] mx-auto w-full bg-white px-6">
+      <div className="sticky bottom-[80px] z-[90] mx-auto w-full bg-white">
         {!session ? (
           <button
             onClick={handleParticipateClick}

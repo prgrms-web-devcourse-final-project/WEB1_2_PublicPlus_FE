@@ -79,7 +79,7 @@ export default function MeetingBoardCreation() {
   };
 
   return (
-    <div className="relative mx-auto bg-gray-50 py-6">
+    <div className="relative mx-auto py-20">
       {/* 로딩 오버레이 */}
       {isPending && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
@@ -104,10 +104,11 @@ export default function MeetingBoardCreation() {
       {showDialog && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <div className="max-w-md rounded-lg bg-white p-6">
-            <h3 className="mb-2 text-lg font-semibold">모임 생성 확인</h3>
+            <h3 className="mb-2 text-center text-lg font-semibold">
+              모임 생성 확인
+            </h3>
             <p className="mb-4 text-gray-600">
-              입력하신 내용으로 모임을 생성하시겠습니까? 생성 후에는 일부 정보만
-              수정이 가능합니다.
+              입력하신 내용으로 모임을 생성하시겠습니까?
             </p>
             <div className="flex justify-end gap-2">
               <button

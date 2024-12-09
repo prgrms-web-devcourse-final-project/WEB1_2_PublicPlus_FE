@@ -14,8 +14,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  console.log('Pathname222222:', pathname);
-  console.log('Auth Token222222222:', authToken);
   return NextResponse.next();
 }
 

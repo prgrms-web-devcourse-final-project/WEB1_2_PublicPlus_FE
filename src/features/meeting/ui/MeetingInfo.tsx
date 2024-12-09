@@ -1,10 +1,28 @@
+import {
+  User,
+  Calendar,
+  Clock,
+  FileText,
+  ScrollText,
+  MapPin,
+  Users
+} from 'lucide-react';
+
+type SportType =
+  | 'BADMINTON'
+  | 'BASEBALL'
+  | 'BASKETBALL'
+  | 'SOCCER'
+  | 'SWIMMING'
+  | 'TENNIS';
+
 interface MeetingInfoProps {
   meeting?: {
     mbHostId: string;
     startTime: string;
     endTime: string;
     mbTitle: string;
-    sportType: string;
+    sportType: SportType;
     mbContent: string;
     mbLocation: string;
     maxParticipants: number;
@@ -33,17 +51,64 @@ export function MeetingInfo({ meeting }: MeetingInfoProps) {
     : '정보 없음';
 
   return (
-    <div className="space-y-6">
-      <ul className="space-y-2 text-gray-700">
-        <li>• 관리자: {meeting.mbHostId}</li>
-        <li>• 시작 일시: {startTimeFormatted}</li>
-        <li>• 종료 일시: {endTimeFormatted}</li>
-        <li>• 제목: {meeting.mbTitle}</li>
-        <li>• 종목: {meeting.sportType}</li>
-        <li>• 설명: {meeting.mbContent}</li>
-        <li>• 장소: {meeting.mbLocation}</li>
-        <li>• 참여 인원: {meeting.maxParticipants}명</li>
-      </ul>
+    <div className="space-y-14 p-4 pb-20 pt-10">
+      <div className="divide-y divide-gray-100 text-m">
+        <div className="flex items-center justify-between py-6">
+          <div className="flex w-80 items-center gap-3 text-gray-600">
+            <User className="h-5 w-5" />
+            <span>관리자</span>
+          </div>
+          <span className="font-medium text-gray-900">{meeting.mbHostId}</span>
+        </div>
+        <div className="flex items-center justify-between py-6">
+          <div className="flex w-80 items-center gap-3 text-gray-600">
+            <Calendar className="h-5 w-5" />
+            <span>시작 일시</span>
+          </div>
+          <span className="font-medium text-gray-900">
+            {startTimeFormatted}
+          </span>
+        </div>
+        <div className="flex items-center justify-between py-6">
+          <div className="flex w-80 items-center gap-3 text-gray-600">
+            <Clock className="h-5 w-5" />
+            <span>종료 일시</span>
+          </div>
+          <span className="font-medium text-gray-900">{endTimeFormatted}</span>
+        </div>
+        <div className="flex items-center justify-between py-6">
+          <div className="flex w-80 items-center gap-3 text-gray-600">
+            <FileText className="h-5 w-5" />
+            <span>제목</span>
+          </div>
+          <span className="font-medium text-gray-900">{meeting.mbTitle}</span>
+        </div>
+        <div className="flex items-center justify-between py-6">
+          <div className="flex w-80 items-center gap-3 text-gray-600">
+            <ScrollText className="h-5 w-5" />
+            <span className="flex-0.5">설명</span>
+          </div>
+          <span className="font-medium text-gray-900">{meeting.mbContent}</span>
+        </div>
+        <div className="flex items-center justify-between py-6">
+          <div className="flex w-80 items-center gap-3 text-gray-600">
+            <MapPin className="h-5 w-5" />
+            <span>장소</span>
+          </div>
+          <span className="font-medium text-gray-900">
+            {meeting.mbLocation}
+          </span>
+        </div>
+        <div className="flex items-center justify-between py-6">
+          <div className="flex w-80 items-center gap-3 text-gray-600">
+            <Users className="h-5 w-5" />
+            <span>참여 인원</span>
+          </div>
+          <span className="font-medium text-gray-900">
+            {meeting.maxParticipants}
+          </span>
+        </div>
+      </div>
     </div>
   );
 }

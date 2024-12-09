@@ -38,7 +38,7 @@ export function MapControls() {
 
       <div className="space-y-4">
         {/* 기본 컨트롤 */}
-        <div className="space-y-2">
+        <div className="flex gap-3 space-y-2">
           <label className="flex cursor-pointer items-center gap-2 rounded p-1 hover:bg-gray-50">
             <input
               type="checkbox"
@@ -73,7 +73,7 @@ export function MapControls() {
           <h3 className="border-t pt-2 font-medium text-gray-800">
             카테고리 필터
           </h3>
-          <div className="space-y-2">
+          <div className="flex gap-3 space-y-2">
             {Object.entries(categoryNames).map(([code, name]) => (
               <label
                 key={code}

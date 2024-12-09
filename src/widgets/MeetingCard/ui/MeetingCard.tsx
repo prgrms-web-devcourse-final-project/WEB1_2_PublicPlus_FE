@@ -5,6 +5,24 @@ import {
 } from '@/shared/api/generated';
 import { Tag } from '@/shared/ui/components/tag/Tag';
 
+const MeetingBoardSportTypeEnum = {
+  BADMINTON: '🏸 배드민턴',
+  BASEBALL: '⚾ 야구',
+  BASKETBALL: '🏀 농구',
+  SOCCER: '⚽ 축구',
+  SWIMMING: '🏊‍♂️ 수영',
+  TENNIS: '🎾 테니스'
+};
+
+const CategoryColors = {
+  BADMINTON: '#A7F3D0',
+  BASEBALL: '#FDE047',
+  BASKETBALL: '#F97316',
+  SOCCER: '#6EE7B7',
+  SWIMMING: '#60A5FA',
+  TENNIS: '#84CC16'
+};
+
 interface MeetingCardProps extends Omit<MeetingBoardRequestDTO, 'id'> {
   image?: string;
   currentMembers: number;
@@ -34,10 +52,10 @@ export const MeetingCard = ({
     imageAlt={mbTitle}
     title={mbTitle}
     content={
-      <div className="space-y-2 text-sm text-gray-600">
-        <p className="flex items-center gap-2">
+      <div className="mt-2 flex flex-col gap-2">
+        <div className="mb-2 flex gap-2 text-sm text-gray-500">
           <svg
-            className="h-4 w-4"
+            className="h-5 w-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24">
@@ -54,11 +72,11 @@ export const MeetingCard = ({
               d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
             />
           </svg>
-          {mbLocation}
-        </p>
-        <p className="flex items-center gap-2">
+          <span>모임 장소: {mbLocation}</span>
+        </div>
+        <div className="mb-2 flex gap-2 text-sm text-gray-500">
           <svg
-            className="h-4 w-4"
+            className="h-5 w-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24">
@@ -69,14 +87,49 @@ export const MeetingCard = ({
               d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
             />
           </svg>
-          {startDate ? ` ${startDate}` : ''} {endDate ? ` ~ ${endDate}` : ''}
-        </p>
-        <p className="flex items-center">
-          {currentMembers || 0}/{maxParticipants}명
-        </p>
+          <span>
+            모임 기간:
+            {startDate ? ` ${startDate}` : ''} {endDate ? ` ~ ${endDate}` : ''}
+          </span>
+        </div>
+        <div className="mb-2 flex gap-2 text-sm text-gray-500">
+          <svg
+            className="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+            />
+          </svg>
+          <span>
+            참여 인원: {currentMembers || 0}/{maxParticipants}명
+          </span>
+        </div>
       </div>
     }
-    footer={<Tag label={sportType} />}
+    footer={
+      <div className="flex gap-2">
+        <Tag
+          label={
+            sportType
+              ? (MeetingBoardSportTypeEnum[sportType] ?? '기타')
+              : '기타'
+          }
+          styleName={{
+            className:
+              'inline-block rounded-lg px-3 py-1.5 text-base font-medium',
+            backgroundColor:
+              CategoryColors[sportType as keyof typeof CategoryColors] ??
+              '#E5E7EB'
+          }}
+        />
+      </div>
+    }
     domain={domain}
     id={id}
   />

@@ -11,21 +11,21 @@ interface FacilityHeaderProps {
 }
 
 const FacilityCategoryLabels = {
-  FOOTBALL_FIELD: '축구장',
-  FUTSAL_FIELD: '풋살장',
-  FOOT_VOLLEYBALL_FIELD: '족구장',
-  BASEBALL_FIELD: '야구장',
-  TENNIS_FIELD: '테니스장',
-  BASKETBALL_FIELD: '농구장',
-  VOLLEYBALL_FIELD: '배구장',
-  MULTIPURPOSE_FIELD: '다목적구장',
-  SPORTS_FIELD: '운동장',
-  GYM: '체육관',
-  BADMINTON_FIELD: '배드민턴장',
-  TABLE_TENNIS_FIELD: '탁구장',
-  EDUCATIONAL_FACILITY: '교육시설',
-  SWIMMING_POOL: '수영장',
-  GOLF_FIELD: '골프장'
+  FOOTBALL_FIELD: '⚽ 축구장',
+  FUTSAL_FIELD: '⚽ 풋살장',
+  FOOT_VOLLEYBALL_FIELD: '🏐 족구장',
+  BASEBALL_FIELD: '⚾ 야구장',
+  TENNIS_FIELD: '🎾 테니스장',
+  BASKETBALL_FIELD: '🏀 농구장',
+  VOLLEYBALL_FIELD: '🏐 배구장',
+  MULTIPURPOSE_FIELD: '🎯 다목적구장',
+  SPORTS_FIELD: '🏃 운동장',
+  GYM: '🏋️‍♂️ 체육관',
+  BADMINTON_FIELD: '🏸 배드민턴장',
+  TABLE_TENNIS_FIELD: '🏓 탁구장',
+  EDUCATIONAL_FACILITY: '📚 교육시설',
+  SWIMMING_POOL: '🏊‍♂️ 수영장',
+  GOLF_FIELD: '⛳ 골프장'
 };
 const FacilityCategoryColors = {
   FOOTBALL_FIELD: '#10B981',
@@ -87,7 +87,7 @@ export const FacilityHeader = ({ facility }: FacilityHeaderProps) => {
   };
 
   return (
-    <>
+    <div>
       <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.2rem]">
         <Image
           src={facility.facilityImage || defaultImage}
@@ -110,10 +110,16 @@ export const FacilityHeader = ({ facility }: FacilityHeaderProps) => {
                 height={24}
               />
             </button>
-            <div className="rounded-2 flex h-6 w-auto items-center justify-center bg-white p-2">
-              <span className="text-sm font-medium text-black">
-                {likeCount}
-              </span>
+            <div
+              style={{
+                borderRadius: '5px',
+                padding: '0px',
+                width: '28px',
+                height: '20px',
+                textAlign: 'center'
+              }}
+              className="flex h-6 w-auto items-center justify-center rounded bg-white p-2">
+              {likeCount}
             </div>
           </div>
         )}
@@ -126,7 +132,7 @@ export const FacilityHeader = ({ facility }: FacilityHeaderProps) => {
                 ? (FacilityCategoryLabels[facility.facilityCategory] ?? '기타')
                 : '기타'
             }
-            styleName={{'inline-block rounded px-2 py-1 text-sm',
+            styleName={{
               backgroundColor:
                 FacilityCategoryColors[
                   facility.facilityCategory as keyof typeof FacilityCategoryColors
@@ -144,6 +150,6 @@ export const FacilityHeader = ({ facility }: FacilityHeaderProps) => {
           {facility.facilityLocation || '위치 정보 없음'}
         </p>
       </div>
-    </>
+    </div>
   );
 };

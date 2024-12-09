@@ -4,6 +4,7 @@ import {
   MeetingBoardRequestDTOSportTypeEnum
 } from '@/shared/api/generated';
 import { useAuthStore } from '@/entities/User/model/store/authStore';
+import { Modal } from '@/shared/ui/components/modal/Modal';
 
 interface CreateMeetingFormProps {
   onSubmit: (data: MeetingBoardRequestDTO) => void;
@@ -15,6 +16,12 @@ export function CreateMeetingForm({
   isLoading
 }: CreateMeetingFormProps) {
   const [step, setStep] = useState(1);
+  const [modalInfo, setModalInfo] = useState({
+    isOpen: false,
+    title: '',
+    message: ''
+  });
+
   const [formData, setFormData] = useState<MeetingBoardRequestDTO>({
     sportType: MeetingBoardRequestDTOSportTypeEnum.Soccer,
     mbTitle: '',
@@ -34,6 +41,135 @@ export function CreateMeetingForm({
   });
 
   const { userId } = useAuthStore();
+
+  const validateStep1 = () => {
+    if (!formData.mbTitle.trim()) {
+      setModalInfo({
+        isOpen: true,
+        title: '제목 오류',
+        message: '제목을 입력해주세요'
+      });
+      return false;
+    }
+
+    if (formData.mbTitle.trim().length < 5) {
+      setModalInfo({
+        isOpen: true,
+        title: '제목 오류',
+        message: '제목은 5자 이상 입력해주세요'
+      });
+      return false;
+    }
+
+    if (!formData.mbContent.trim()) {
+      setModalInfo({
+        isOpen: true,
+        title: '설명 오류',
+        message: '설명을 입력해주세요'
+      });
+      return false;
+    }
+
+    if (formData.mbContent.trim().length < 10) {
+      setModalInfo({
+        isOpen: true,
+        title: '설명 오류',
+        message: '설명은 10자 이상 입력해주세요'
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  const validateStep2 = () => {
+    const currentDate = new Date();
+    const startDateTime = new Date(formData.startTime);
+    const endDateTime = new Date(formData.endTime);
+
+    if (!dateTime.startDate || !dateTime.startTime) {
+      setModalInfo({
+        isOpen: true,
+        title: '시작 일시 오류',
+        message: '시작 일시를 입력해주세요'
+      });
+      return false;
+    }
+
+    if (startDateTime < currentDate) {
+      setModalInfo({
+        isOpen: true,
+        title: '시작 일시 오류',
+        message: '시작 일시는 현재 시간 이후여야 합니다'
+      });
+      return false;
+    }
+
+    if (!dateTime.endDate || !dateTime.endTime) {
+      setModalInfo({
+        isOpen: true,
+        title: '종료 일시 오류',
+        message: '종료 일시를 입력해주세요'
+      });
+      return false;
+    }
+
+    if (endDateTime <= startDateTime) {
+      setModalInfo({
+        isOpen: true,
+        title: '종료 일시 오류',
+        message: '종료 일시는 시작 일시 이후여야 합니다'
+      });
+      return false;
+    }
+
+    if (!formData.mbLocation.trim()) {
+      setModalInfo({
+        isOpen: true,
+        title: '장소 오류',
+        message: '모임 장소를 입력해주세요'
+      });
+      return false;
+    }
+
+    if (!formData.openChatLink.trim()) {
+      setModalInfo({
+        isOpen: true,
+        title: '오픈채팅 주소 오류',
+        message: '오픈채팅 주소를 입력해주세요'
+      });
+      return false;
+    }
+
+    if (!formData.openChatLink.includes('open.kakao.com')) {
+      setModalInfo({
+        isOpen: true,
+        title: '오픈채팅 주소 오류',
+        message: '올바른 카카오톡 오픈채팅 주소를 입력해주세요'
+      });
+      return false;
+    }
+
+    if (formData.maxParticipants < 2) {
+      setModalInfo({
+        isOpen: true,
+        title: '참여 인원 오류',
+        message: '참여 인원은 최소 2명 이상이어야 합니다'
+      });
+      return false;
+    }
+
+    if (formData.maxParticipants > 50) {
+      setModalInfo({
+        isOpen: true,
+        title: '참여 인원 오류',
+        message: '참여 인원은 최대 50명까지 가능합니다'
+      });
+      return false;
+    }
+
+    return true;
+  };
 
   const handleSportTypeChange = (value: string) => {
     setFormData(prev => ({
@@ -62,10 +198,7 @@ export function CreateMeetingForm({
         );
         setFormData(prev => ({
           ...prev,
-          startTime: startDateTime
-            .toISOString()
-            .slice(0, 19) // 'YYYY-MM-DDTHH:MM:SS' 형식
-            .replace('T', ' ') // 'YYYY-MM-DD HH:MM:SS' 형식으로 변환
+          startTime: startDateTime.toISOString().slice(0, 19).replace('T', ' ')
         }));
       }
 
@@ -83,7 +216,7 @@ export function CreateMeetingForm({
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (step === 3) {
       const submitData: MeetingBoardRequestDTO = {
@@ -98,17 +231,39 @@ export function CreateMeetingForm({
   };
 
   const handleNextOrSubmit = () => {
-    if (step < 3) {
-      setStep(prev => prev + 1);
-    } else {
-      const submitData: MeetingBoardRequestDTO = {
-        ...formData,
-        mbTitle: formData.mbTitle.trim(),
-        mbContent: formData.mbContent.trim(),
-        mbLocation: formData.mbLocation.trim(),
-        openChatLink: formData.openChatLink.trim()
-      };
-      onSubmit(submitData);
+    let isValid = true;
+
+    if (step === 1) {
+      isValid = validateStep1();
+    } else if (step === 2) {
+      isValid = validateStep2();
+    }
+
+    if (isValid) {
+      if (step < 3) {
+        setStep(prev => prev + 1);
+      } else {
+        // 타입 안전한 가짜 이벤트 객체 생성
+        const fakeEvent: React.FormEvent<HTMLFormElement> = {
+          nativeEvent: new Event('submit'),
+          currentTarget: null,
+          target: null,
+          bubbles: true,
+          cancelable: true,
+          defaultPrevented: false,
+          eventPhase: 0,
+          isTrusted: true,
+          preventDefault: () => {},
+          isDefaultPrevented: () => false,
+          stopPropagation: () => {},
+          isPropagationStopped: () => false,
+          persist: () => {},
+          timeStamp: Date.now(),
+          type: 'submit'
+        };
+
+        handleSubmit(fakeEvent);
+      }
     }
   };
 
@@ -136,7 +291,7 @@ export function CreateMeetingForm({
   const renderStep1 = () => (
     <div className="space-y-6">
       <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">
+        <label className="mb-3 block text-sm font-medium text-gray-700">
           관리자
         </label>
         <input
@@ -147,7 +302,7 @@ export function CreateMeetingForm({
         />
       </div>
       <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">
+        <label className="mb-3 block text-sm font-medium text-gray-700">
           제목
         </label>
         <input
@@ -161,7 +316,7 @@ export function CreateMeetingForm({
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">
+        <label className="mb-3 block text-sm font-medium text-gray-700">
           종목
         </label>
         <select
@@ -190,7 +345,7 @@ export function CreateMeetingForm({
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">
+        <label className="mb-3 block text-sm font-medium text-gray-700">
           설명
         </label>
         <textarea
@@ -207,7 +362,7 @@ export function CreateMeetingForm({
   const renderStep2 = () => (
     <div className="space-y-6">
       <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">
+        <label className="mb-3 block text-sm font-medium text-gray-700">
           시작 일시
         </label>
         <div className="flex gap-2">
@@ -230,7 +385,7 @@ export function CreateMeetingForm({
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">
+        <label className="mb-3 block text-sm font-medium text-gray-700">
           종료 일시
         </label>
         <div className="flex gap-2">
@@ -253,7 +408,7 @@ export function CreateMeetingForm({
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">
+        <label className="mb-3 block text-sm font-medium text-gray-700">
           모임 장소
         </label>
         <input
@@ -267,7 +422,7 @@ export function CreateMeetingForm({
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">
+        <label className="mb-3 block text-sm font-medium text-gray-700">
           참여 인원
         </label>
         <input
@@ -284,7 +439,7 @@ export function CreateMeetingForm({
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">
+        <label className="mb-3 block text-sm font-medium text-gray-700">
           카카오톡 오픈채팅 주소
         </label>
         <input
@@ -344,6 +499,14 @@ export function CreateMeetingForm({
           </button>
         </div>
       </form>
+
+      <Modal
+        isOpen={modalInfo.isOpen}
+        onClose={() => setModalInfo(prev => ({ ...prev, isOpen: false }))}
+        title={modalInfo.title}
+        message={modalInfo.message}
+        confirmText="확인"
+      />
     </div>
   );
 }

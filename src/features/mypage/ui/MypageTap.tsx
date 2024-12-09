@@ -16,15 +16,15 @@ export const MypageTap = () => {
 
   return (
     <div>
-      <div className="mb-8 flex justify-start">
-        {['intro', 'review'].map(tab => (
+      <div className="flex border-b">
+        {['intro'].map(tab => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab as ProfileTabType)}
-            className={`px-4 py-2 ${
+            className={`flex-1 py-3 text-center ${
               activeTab === tab
-                ? 'border-b-2 border-primary-800 text-primary-800'
-                : 'border-b-2 border-white text-gray-500'
+                ? 'border-b-2 border-blue-500 font-bold text-blue-500'
+                : 'text-gray-500'
             }`}>
             {tab === 'intro' ? '소개글' : ''}
           </button>

@@ -23,7 +23,7 @@ export const FacilityInfo = ({
     : [];
 
   return (
-    <div className="space-y-14 p-4 pb-20 pt-10">
+    <div className="space-y-16 p-4 pb-20 pt-10">
       <div>
         <h3 className="mb-6 flex items-center gap-2 text-xl font-bold text-gray-800">
           <span
@@ -35,7 +35,7 @@ export const FacilityInfo = ({
         </h3>
         <div className="divide-y divide-gray-100 text-m">
           <div className="flex items-center justify-between py-6">
-            <div className="flex items-center gap-2 text-gray-600">
+            <div className="flex w-80 items-center gap-3 text-gray-600">
               <Globe className="h-5 w-5" />
               <span>제공기관</span>
             </div>
@@ -45,7 +45,7 @@ export const FacilityInfo = ({
           </div>
 
           <div className="flex items-center justify-between py-6">
-            <div className="flex items-center gap-2 text-gray-600">
+            <div className="flex w-80 items-center gap-3 text-gray-600">
               <Phone className="h-5 w-5" />
               <span>담당자 연락처</span>
             </div>
@@ -55,7 +55,7 @@ export const FacilityInfo = ({
           </div>
 
           <div className="flex items-center justify-between py-6">
-            <div className="flex items-center gap-2 text-gray-600">
+            <div className="flex w-80 items-center gap-3 text-gray-600">
               <Calendar className="h-5 w-5" />
               <span>예약 안내</span>
             </div>
@@ -66,7 +66,7 @@ export const FacilityInfo = ({
 
           {facility.reservationURL && (
             <div className="flex items-center justify-between py-6">
-              <div className="flex items-center gap-2 text-gray-600">
+              <div className="flex w-80 items-center gap-3 text-gray-600">
                 <LinkIcon className="h-5 w-5" />
                 <span>예약 링크</span>
               </div>
@@ -81,7 +81,7 @@ export const FacilityInfo = ({
           )}
 
           <div className="flex items-center justify-between py-6">
-            <div className="flex items-center gap-2 text-gray-600">
+            <div className="flex w-80 items-center gap-3 text-gray-600">
               <Users className="h-5 w-5" />
               <span>이용 대상</span>
             </div>
@@ -89,7 +89,7 @@ export const FacilityInfo = ({
           </div>
 
           <div className="flex items-center justify-between py-6">
-            <div className="flex items-center gap-2 text-gray-600">
+            <div className="flex w-80 items-center gap-3 text-gray-600">
               <Calendar className="h-5 w-5" />
               <span>예약 기간</span>
             </div>
