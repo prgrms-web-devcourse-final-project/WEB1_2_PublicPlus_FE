@@ -1,13 +1,13 @@
 import { useRouter } from 'next/navigation';
 import { FacilityDetailsResponseDTO, ReviewDTO } from '@/shared/api/generated';
-import { Card } from '@/shared/ui/components/Card/Card';
-import { Button } from '@/shared/ui/components/Button/Button';
+import { Card } from '@/shared/ui/components/card/Card';
+import { Button } from '@/shared/ui/components/button/Button';
 import { useReviews } from '@/features/review/model/queries';
 import { ReviewForm } from '@/features/review/ui/ReviewForm';
 import { useReviewStore } from '@/features/review/model/store';
-import { Rating } from '@/shared/ui/components/Rating/Rating';
+import { Rating } from '@/shared/ui/components/rating/Rating';
 import { useEffect, useRef } from 'react';
-import { useAuthStore } from '@/entities/user';
+import { useAuthStore } from '@/entities/User';
 import { Edit2, Trash2, MessageSquarePlus } from 'lucide-react';
 
 interface FacilityReviewsProps {

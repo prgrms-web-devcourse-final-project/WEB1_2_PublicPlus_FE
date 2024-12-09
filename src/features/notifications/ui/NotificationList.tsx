@@ -1,5 +1,5 @@
 'use client';
-import { NotificationItem } from '@/shared/ui/components/Notification/NotificationItem';
+import { NotificationItem } from '@/shared/ui/components/notification/NotificationItem';
 import { NotificationResponse } from '@/features/notifications/api/pushService';
 
 interface NotificationListProps {

@@ -2,9 +2,9 @@ import Image from 'next/image';
 import { useFacilityStore } from '../../model/store';
 import { FacilityDetailsResponseDTO } from '@/shared/api/generated';
 import { useAddLike, useRemoveLike } from '../../like/model/queries';
-import { useAuthStore } from '@/entities/user';
+import { useAuthStore } from '@/entities/User';
 import { useEffect } from 'react';
-import { Tag } from '@/shared/ui/components/Tag/Tag';
+import { Tag } from '@/shared/ui/components/tag/Tag';
 
 interface FacilityHeaderProps {
   facility: FacilityDetailsResponseDTO;

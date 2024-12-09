@@ -1,14 +1,31 @@
 import { useState } from 'react';
 import { ReviewDTO } from '@/shared/api/generated';
-import { Button } from '@/shared/ui/components/Button/Button';
-import { Rating } from '@/shared/ui/components/Rating/Rating';
+import { Button } from '@/shared/ui/components/button/Button';
+import { Rating } from '@/shared/ui/components/rating/Rating';
 
 const AVAILABLE_TAGS = [
-  '깨끗함', '넓음', '무료 이용', '카페 운영', '편리한 위치', '예약이 쉬움',
-  '단체예약 가능', '최신 장비 구비', '장비대여 가능', '주차 가능', '취식 가능', 
-  '샤워 시설 구비', '아이 돌봄 서비스', '강습 프로그램 운영', '행사 운영',
-  '휠체어 접근 가능', '안전한 환경', '탈의실 구비', '반려동물 동반 가능',
-  '와이파이 무료', '24시간 운영', '역과 가까움'
+  '깨끗함',
+  '넓음',
+  '무료 이용',
+  '카페 운영',
+  '편리한 위치',
+  '예약이 쉬움',
+  '단체예약 가능',
+  '최신 장비 구비',
+  '장비대여 가능',
+  '주차 가능',
+  '취식 가능',
+  '샤워 시설 구비',
+  '아이 돌봄 서비스',
+  '강습 프로그램 운영',
+  '행사 운영',
+  '휠체어 접근 가능',
+  '안전한 환경',
+  '탈의실 구비',
+  '반려동물 동반 가능',
+  '와이파이 무료',
+  '24시간 운영',
+  '역과 가까움'
 ] as const;
 
 interface ReviewFormProps {
@@ -44,15 +61,21 @@ export const ReviewForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <form
+      onSubmit={handleSubmit}
+      className="mx-auto max-w-2xl rounded-lg bg-white p-6 shadow-lg">
       <div className="space-y-6">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">리뷰 작성하기</h2>
+          <h2 className="mb-2 text-2xl font-bold text-gray-800">
+            리뷰 작성하기
+          </h2>
           <p className="text-gray-600">이용하신 시설은 어떠셨나요?</p>
         </div>
 
         <div className="flex flex-col items-center space-y-2">
-          <label className="text-gray-700 font-medium">별점을 선택해주세요</label>
+          <label className="font-medium text-gray-700">
+            별점을 선택해주세요
+          </label>
           <Rating
             value={rating}
             onChange={setRating}
@@ -61,7 +84,7 @@ export const ReviewForm = ({
         </div>
 
         <div className="space-y-2">
-          <label className="block text-gray-700 font-medium">리뷰 내용</label>
+          <label className="block font-medium text-gray-700">리뷰 내용</label>
           <textarea
             value={content}
             onChange={e => setContent(e.target.value)}
@@ -72,24 +95,23 @@ export const ReviewForm = ({
 
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <label className="text-gray-700 font-medium">태그 선택</label>
+            <label className="font-medium text-gray-700">태그 선택</label>
             <span className="text-sm text-gray-500">
               {tags.length}/5개 선택됨
             </span>
           </div>
-          <div className="flex flex-wrap gap-2 p-4 bg-gray-50 rounded-lg">
+          <div className="flex flex-wrap gap-2 rounded-lg bg-gray-50 p-4">
             {AVAILABLE_TAGS.map(tag => (
               <Button
                 key={tag}
                 type="button"
-                variant={tags.includes(tag) ? "primary" : "line"}
+                variant={tags.includes(tag) ? 'primary' : 'line'}
                 onClick={() => handleTagClick(tag)}
-                className={`!px-4 !py-2 text-sm rounded-full transition-all ${
-                  tags.includes(tag) 
-                    ? "bg-blue-500 text-white hover:bg-blue-600" 
-                    : "bg-white hover:bg-gray-100"
-                }`}
-              >
+                className={`rounded-full !px-4 !py-2 text-sm transition-all ${
+                  tags.includes(tag)
+                    ? 'bg-blue-500 text-white hover:bg-blue-600'
+                    : 'bg-white hover:bg-gray-100'
+                }`}>
                 {tag}
               </Button>
             ))}
@@ -97,21 +119,19 @@ export const ReviewForm = ({
         </div>
       </div>
 
-      <div className="flex justify-end gap-3 mt-8">
+      <div className="mt-8 flex justify-end gap-3">
         {onCancel && (
           <Button
             type="button"
             variant="line"
             onClick={onCancel}
-            className="px-6 py-2 hover:bg-gray-100"
-          >
+            className="px-6 py-2 hover:bg-gray-100">
             취소
           </Button>
         )}
-        <Button 
+        <Button
           type="submit"
-          className="px-6 py-2 bg-blue-500 text-white hover:bg-blue-600"
-        >
+          className="bg-blue-500 px-6 py-2 text-white hover:bg-blue-600">
           {initialData ? '수정하기' : '작성하기'}
         </Button>
       </div>

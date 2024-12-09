@@ -8,7 +8,7 @@ import '@/styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { NotificationHandler } from '@/features/notifications/hooks/NotificationHandler';
 import { ToastContainer } from 'react-toastify';
-import Loading from '@/shared/ui/components/Suspense/Loading';
+import Loading from '@/shared/ui/components/suspense/Loading';
 
 const pretendard = localFont({
   src: '../../public/font/PretendardVariable.woff2',

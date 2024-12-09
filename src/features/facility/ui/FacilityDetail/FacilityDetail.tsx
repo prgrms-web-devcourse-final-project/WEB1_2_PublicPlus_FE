@@ -7,7 +7,6 @@ import {
   FacilityTabs,
   FacilityInfo,
   FacilityReviews,
-  FacilityRules,
   CreateMeetingButton
 } from '@/features/facility';
 import { useFacilityDetail } from '@/features/facility/model/queries';
@@ -15,7 +14,7 @@ import { FullScreenLoading } from '@/shared/ui/components/Loading/Loading';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ErrorFallback from '@/shared/ui/components/ErrorBoundary/ErrorFallback';
-import { useAuthStore } from '@/entities/user';
+import { useAuthStore } from '@/entities/User';
 
 export default function FacilityDetail() {
   const params = useParams();

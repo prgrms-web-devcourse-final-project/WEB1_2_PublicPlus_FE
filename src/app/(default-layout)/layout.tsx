@@ -1,8 +1,8 @@
 'use client';
-import { TabType } from '@/widgets/Navigation';
 import { usePathname } from 'next/navigation';
-import { Navigation } from '@/widgets/Navigation/ui/Navigation';
-import { Header } from '@/widgets/Header/ui/Header';
+import { Navigation } from '@/widgets/navigation/ui/Navigation';
+import { TabType } from '@/widgets/Navigation/model/types';
+import { Header } from '@/widgets/header/ui/Header';
 
 export default function RootLayout({
   children

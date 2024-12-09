@@ -8,7 +8,7 @@ import { FullScreenLoading } from '@/shared/ui/components/Loading/Loading';
 import ErrorFallback from '@/shared/ui/components/ErrorBoundary/ErrorFallback';
 import { MeetingHeader, MeetingInfo, MeetingTabs } from '@/features/meeting';
 import Link from 'next/link';
-import { useAuthStore } from '@/entities/user';
+import { useAuthStore } from '@/entities/User';
 
 export default function MeetingDetail() {
   const params = useParams();

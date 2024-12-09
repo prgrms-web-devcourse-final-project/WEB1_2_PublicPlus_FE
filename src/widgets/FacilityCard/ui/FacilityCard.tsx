@@ -1,6 +1,6 @@
-import { LinkCard } from '@/shared/ui/components/Card/LinkCard';
+import { LinkCard } from '@/shared/ui/components/card/LinkCard';
 import { FacilityDetailsResponseDTO } from '@/shared/api/generated';
-import { Tag } from '@/shared/ui/components/Tag/Tag';
+import { Tag } from '@/shared/ui/components/tag/Tag';
 import Image from 'next/image';
 const FacilityCategoryLabels = {
   FOOTBALL_FIELD: '축구장',

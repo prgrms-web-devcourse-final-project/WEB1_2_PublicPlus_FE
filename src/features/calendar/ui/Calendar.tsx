@@ -9,7 +9,7 @@ import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import { EventClickArg } from '@fullcalendar/core';
 import { useMeetingBoards } from '@/features/meeting/model/queries';
 import './calendar-styles.css';
-import { useToast } from '@/shared/ui/components/Toast/Toast';
+import { useToast } from '@/shared/ui/components/toast/Toast';
 
 interface MeetingEvent {
   mbId: number;

@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Plus } from 'lucide-react';
 import EditLayout from '@/features/mypage/ui/EditLayout';
-import { userService } from '@/entities/user/api/userService';
-import { useUserQuery } from '@/entities/user/model/userQueries';
+import { userService } from '@/entities/User/api/userService';
+import { useUserQuery } from '@/entities/User/model/userQueries';
 
 export default function ProfileImageEditPage() {
   const router = useRouter();

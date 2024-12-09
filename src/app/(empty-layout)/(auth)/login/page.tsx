@@ -7,7 +7,7 @@ import { SOCIAL_PROVIDERS } from '@/features/auth/model/constants';
 import { SocialLoginButton } from '@/features/auth/ui/SocialLoginButton';
 import LoginContainer from '@/features/auth/ui/LoginContainer';
 import { AxiosError } from 'axios';
-import { useAuthStore, SocialProvider } from '@/entities/user';
+import { useAuthStore, SocialProvider } from '@/entities/User';
 
 export default function LoginPage() {
   const { isAuthenticated, userId, tokens, socialLogin } = useAuthStore();

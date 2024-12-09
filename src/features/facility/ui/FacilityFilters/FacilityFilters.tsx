@@ -1,6 +1,6 @@
 import { Filter } from 'lucide-react';
-import { Button } from '@/shared/ui/components/Button/Button';
-import { SearchBar } from '@/shared/ui/components/Search/SearchBar';
+import { Button } from '@/shared/ui/components/button/Button';
+import { SearchBar } from '@/shared/ui/components/search/SearchBar';
 import { useFilterStore } from '../../filter/model/store';
 import { AreaFilter } from '../../filter/ui/AreaFilter';
 import { CategoryFilter } from '../../filter/ui/CategoryFilter';

@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@/shared/ui/components/button/Button';
-import { CustomHeader } from '@/widgets/Header/ui/CustomHeader';
-import { useToast } from '@/shared/ui/components/Toast/Toast';
+import { CustomHeader } from '@/widgets/header/ui/CustomHeader';
+import { useToast } from '@/shared/ui/components/toast/Toast';
 import { useState } from 'react';
 import { ChatInput } from '@/features/chat/ui/components/ChatInput';
 import { ChatMessage } from '@/features/chat/ui/components/ChatMessage';

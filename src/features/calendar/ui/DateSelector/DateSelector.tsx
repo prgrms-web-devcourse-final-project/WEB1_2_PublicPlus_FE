@@ -2,7 +2,7 @@
 
 import { useRef, useEffect } from 'react';
 import { Calendar as CalendarIcon } from 'lucide-react';
-import { Card } from '@/shared/ui/components/Card/Card';
+import { Card } from '@/shared/ui/components/card/Card';
 import { CalendarModal } from '../CalendarModal/CalendarModal';
 import { getDatesForCurrentMonth, getDayName, isToday } from '../../lib/utils';
 import type { DateSelectorProps } from '../../model/types';

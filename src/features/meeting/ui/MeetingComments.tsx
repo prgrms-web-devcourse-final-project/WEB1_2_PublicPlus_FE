@@ -1,5 +1,5 @@
 import { Button } from '@/shared/ui/components/button/Button';
-import { Card } from '@/shared/ui/components/Card/Card';
+import { Card } from '@/shared/ui/components/card/Card';
 import { useAuthStore } from '@/entities/User/model/store/authStore';
 
 // 테스트용 임시 데이터
