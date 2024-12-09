@@ -13,7 +13,7 @@ interface CustomHeaderProps {
 
 export const CustomHeader = ({ title, rightButton }: CustomHeaderProps) => {
   const router = useRouter();
-  const pathname = usePathname() ?? '/'; // null일 경우 기본값 '/' 사용
+  const pathname = usePathname() ?? '/';
 
   const handleGoBack = () => {
     const pathSegments = pathname.split('/').filter(Boolean);

@@ -2,8 +2,8 @@
 import Image from 'next/image';
 import { LogOut, Pencil } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/entities/User';
-import { useUserQuery } from '@/entities/User/model/userQueries';
+import { useAuthStore } from '@/entities/user';
+import { useUserQuery } from '@/entities/user/model/userQueries';
 
 export const UserProfile = () => {
   const router = useRouter();

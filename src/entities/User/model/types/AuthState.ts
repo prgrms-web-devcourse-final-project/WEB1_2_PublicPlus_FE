@@ -15,8 +15,9 @@ export interface AuthState {
   login: (loginData: UserLoginDTO) => Promise<boolean>;
   socialLogin: (provider: SocialProvider) => Promise<boolean>;
   join: (joinData: UserJoinDTO) => Promise<boolean>;
-  logout: () => void;
+  logout: (authorization: string) => Promise<boolean>;
   refreshToken: () => Promise<boolean>;
   deleteUser: () => Promise<boolean>;
   socialLoginComplete: (loginResponse: LoginResponse) => Promise<boolean>;
+  kakaoLogin: (state: string) => Promise<boolean>;
 }

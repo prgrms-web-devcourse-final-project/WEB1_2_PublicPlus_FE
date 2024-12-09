@@ -26,15 +26,12 @@ export function useNotifications() {
         setHasNewNotifications(true);
 
         const newNotification: NotificationResponse = {
-          id: Date.now(), // 임시 ID
+          notificationId: Date.now(), // 임시 ID
           title:
             (listener as FirebaseNotification).notification?.title ||
             '새로운 알림',
           message:
-            (listener as FirebaseNotification).notification?.body ||
-            '알림 내용',
-          isRead: false,
-          createdAt: new Date().toISOString()
+            (listener as FirebaseNotification).notification?.body || '알림 내용'
         };
 
         // 새 알림을 리스트 맨 앞에 추가
@@ -53,7 +50,7 @@ export function useNotifications() {
   const markNotificationAsRead = (id: number) => {
     setNotifications(prev =>
       prev.map(notification =>
-        notification.id === id
+        notification.notificationId === id
           ? { ...notification, isRead: true }
           : notification
       )

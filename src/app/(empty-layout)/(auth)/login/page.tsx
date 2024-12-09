@@ -3,36 +3,27 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import useRedirect from '@/features/auth/hooks/useRedirect';
-import { SOCIAL_PROVIDERS } from '@/features/auth/model/constants';
-import { SocialLoginButton } from '@/features/auth/ui/SocialLoginButton';
 import LoginContainer from '@/features/auth/ui/LoginContainer';
-import { AxiosError } from 'axios';
-import { useAuthStore, SocialProvider } from '@/entities/User';
+import { useAuthStore } from '@/entities/User';
 
 export default function LoginPage() {
-  const { isAuthenticated, userId, tokens, socialLogin } = useAuthStore();
+  const { isAuthenticated, userId, tokens, kakaoLogin } = useAuthStore();
 
   useRedirect(isAuthenticated, userId, tokens);
-  const handleSocialLogin = async (provider: SocialProvider) => {
+
+  const handleKakaoLogin = async () => {
     try {
-      await socialLogin(provider);
+      // 상태(state) 생성 및 저장
+      const state = window.btoa(crypto.randomUUID());
+      localStorage.setItem('kakao_oauth_state', state);
+
+      // 카카오 로그인 URL로 리다이렉트
+      await kakaoLogin(state);
     } catch (error) {
-      const errorMsg = error as AxiosError;
-      console.error(errorMsg);
-      toast.error('소셜 로그인 실패');
+      console.error(error);
+      toast.error('카카오 로그인 실패');
     }
   };
-  const SocialLoginButtons = () => (
-    <div className="mb-8 mt-8 flex justify-center gap-4">
-      {SOCIAL_PROVIDERS.map(provider => (
-        <SocialLoginButton
-          key={provider.name}
-          provider={provider}
-          onLogin={handleSocialLogin}
-        />
-      ))}
-    </div>
-  );
 
   return (
     <div className="item-center flex min-h-[80vh] flex-col justify-center space-y-16 text-center">
@@ -48,7 +39,13 @@ export default function LoginPage() {
         </Link>
       </section>
       <LoginContainer />
-      <SocialLoginButtons />
+      <div className="mb-8 mt-8 flex justify-center gap-4">
+        <button
+          onClick={handleKakaoLogin}
+          className="rounded bg-[#FEE500] px-4 py-2 text-black">
+          카카오 로그인
+        </button>
+      </div>
       <div className="text-sm text-primary-800">
         <Link href={'/signup'}>회원가입</Link>
       </div>

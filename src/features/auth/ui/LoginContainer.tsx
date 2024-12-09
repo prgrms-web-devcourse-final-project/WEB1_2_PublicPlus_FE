@@ -4,7 +4,6 @@ import LoginForm from './LoginForm';
 import { useRouter } from 'next/navigation';
 import { requestNotificationPermission } from '@/shared/lib/firebase';
 import { useAuthStore } from '@/entities/User';
-import ErrorMessage from '@/shared/ui/components/error/ErrorMsg';
 
 export default function LoginContainer() {
   const router = useRouter();
@@ -33,8 +32,7 @@ export default function LoginContainer() {
     const success = await login({
       email,
       password,
-      fcmToken,
-      passwordEmpty: true
+      fcmToken
     });
 
     if (success) {
