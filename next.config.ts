@@ -62,16 +62,35 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    domains: [
-      'picsum.photos',
-      'placehold.co',
-      'example.com',
-      'yeyak.seoul.go.kr',
-      '4gbw.org',
-      'yongsanyouth.or.kr',
-      'localhost'
-    ], // 허용할 외부 이미지 호스트네임
     remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos'
+      },
+      {
+        protocol: 'https',
+        hostname: 'placehold.co'
+      },
+      {
+        protocol: 'https',
+        hostname: 'example.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'yeyak.seoul.go.kr'
+      },
+      {
+        protocol: 'https',
+        hostname: '4gbw.org'
+      },
+      {
+        protocol: 'https',
+        hostname: 'yongsanyouth.or.kr'
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost'
+      },
       {
         protocol: 'https',
         hostname: 'avatars.githubusercontent.com',
@@ -95,6 +114,16 @@ const nextConfig: NextConfig = {
         hostname: '43.203.132.45',
         port: '8080',
         pathname: '/**'
+      },
+      {
+        protocol: 'http',
+        hostname: '3.38.84.145',
+        port: '8080'
+      },
+      {
+        protocol: 'http',
+        hostname: '3.38.84.145',
+        port: '3000'
       }
     ]
   }
