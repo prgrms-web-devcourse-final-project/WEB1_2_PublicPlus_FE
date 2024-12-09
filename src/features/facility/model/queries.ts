@@ -19,6 +19,7 @@ export const QUERY_KEYS = {
 // 시설 상세 정보 조회
 export const useFacilityDetail = (
   id: string,
+  tokens: string,
   options?: Omit<
     UseQueryOptions<
       FacilityDetailsResponseDTO,
@@ -38,7 +39,7 @@ export const useFacilityDetail = (
     ReturnType<typeof QUERY_KEYS.facility.detail>
   >({
     queryKey: QUERY_KEYS.facility.detail(id),
-    queryFn: () => facilityService.getFacilityDetail(id),
+    queryFn: () => facilityService.getFacilityDetail(id, tokens),
     ...options
   });
 };

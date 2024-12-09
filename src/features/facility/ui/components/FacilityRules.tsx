@@ -1,8 +1,10 @@
 export const FacilityRules = () => {
   return (
-    <div className="space-y-4 p-4 pb-20">
+    <div className="space-y-4 pb-10 pt-20">
       <div className="rounded-lg bg-white p-4">
-        <h3 className="mb-3 text-lg font-bold">이용 안내</h3>
+        <h3 className="mb-6 flex items-center gap-2 text-xl font-bold text-gray-800">
+          이용 안내
+        </h3>
         <div className="space-y-3 text-sm">
           {/* 이용 규칙 내용 추가 */}
           <div className="flex justify-between border-b py-2">

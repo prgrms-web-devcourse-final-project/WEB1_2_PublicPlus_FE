@@ -12,7 +12,6 @@ export const likeService = {
   },
 
   removeLikeService: async (facilityId: string, tokens: string) => {
-    // tokens가 객체라면 토큰을 추출합니다.
     console.log('토큰: ', tokens, '좋아요 취소한 시설 아이디: ', facilityId);
     await api.facilityLike.dislike(facilityId, {
       headers: {

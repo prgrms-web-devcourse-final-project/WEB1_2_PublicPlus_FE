@@ -4,11 +4,46 @@ import { FacilityDetailsResponseDTO } from '@/shared/api/generated';
 import { useAddLike, useRemoveLike } from '../../like/model/queries';
 import { useAuthStore } from '@/entities/user';
 import { useEffect } from 'react';
+import { Tag } from '@/shared/ui/components/Tag/Tag';
 
 interface FacilityHeaderProps {
   facility: FacilityDetailsResponseDTO;
 }
 
+const FacilityCategoryLabels = {
+  FOOTBALL_FIELD: '축구장',
+  FUTSAL_FIELD: '풋살장',
+  FOOT_VOLLEYBALL_FIELD: '족구장',
+  BASEBALL_FIELD: '야구장',
+  TENNIS_FIELD: '테니스장',
+  BASKETBALL_FIELD: '농구장',
+  VOLLEYBALL_FIELD: '배구장',
+  MULTIPURPOSE_FIELD: '다목적구장',
+  SPORTS_FIELD: '운동장',
+  GYM: '체육관',
+  BADMINTON_FIELD: '배드민턴장',
+  TABLE_TENNIS_FIELD: '탁구장',
+  EDUCATIONAL_FACILITY: '교육시설',
+  SWIMMING_POOL: '수영장',
+  GOLF_FIELD: '골프장'
+};
+const FacilityCategoryColors = {
+  FOOTBALL_FIELD: '#10B981',
+  FUTSAL_FIELD: '#34D399',
+  FOOT_VOLLEYBALL_FIELD: '#6EE7B7',
+  BASEBALL_FIELD: '#FDE047',
+  TENNIS_FIELD: '#84CC16',
+  BASKETBALL_FIELD: '#F97316',
+  VOLLEYBALL_FIELD: '#FB923C',
+  MULTIPURPOSE_FIELD: '#E879F9',
+  SPORTS_FIELD: '#A78BFA',
+  GYM: '#C084FC',
+  BADMINTON_FIELD: '#A7F3D0',
+  TABLE_TENNIS_FIELD: '#99F6E4',
+  EDUCATIONAL_FACILITY: '#D1D5DB',
+  SWIMMING_POOL: '#60A5FA',
+  GOLF_FIELD: '#4ADE80'
+};
 export const FacilityHeader = ({ facility }: FacilityHeaderProps) => {
   const { isLiked, getLikeCount, toggleLike, initializeLike, revertLikeState } =
     useFacilityStore();
@@ -63,12 +98,7 @@ export const FacilityHeader = ({ facility }: FacilityHeaderProps) => {
         />
         {facilityId && (
           <div className="absolute right-4 top-4 flex flex-col items-center gap-1">
-            <button
-              onClick={handleLikeToggle}
-              className={`rounded-full bg-white p-2 ${
-                facilityIsLiked ? 'cursor-not-allowed opacity-50' : ''
-              }`}
-              disabled={facilityIsLiked}>
+            <button onClick={handleLikeToggle}>
               <Image
                 src={
                   facilityIsLiked
@@ -80,15 +110,29 @@ export const FacilityHeader = ({ facility }: FacilityHeaderProps) => {
                 height={24}
               />
             </button>
-            <span className="text-sm font-medium text-white">{likeCount}</span>
+            <div className="rounded-2 flex h-6 w-auto items-center justify-center bg-white p-2">
+              <span className="text-sm font-medium text-black">
+                {likeCount}
+              </span>
+            </div>
           </div>
         )}
       </div>
       <div className="bg-white p-4">
         <div className="mb-4">
-          <span className="inline-block rounded bg-blue-100 px-2 py-1 text-sm text-blue-600">
-            {facility.facilityCategory || '카테고리 없음'}
-          </span>
+          <Tag
+            label={
+              facility.facilityCategory
+                ? (FacilityCategoryLabels[facility.facilityCategory] ?? '기타')
+                : '기타'
+            }
+            styleName={{'inline-block rounded px-2 py-1 text-sm',
+              backgroundColor:
+                FacilityCategoryColors[
+                  facility.facilityCategory as keyof typeof FacilityCategoryColors
+                ] ?? '#E5E7EB'
+            }}
+          />
         </div>
         <h1 className="mb-2 text-xl font-bold">
           {facility.facilityName || '이름 없음'}

@@ -15,17 +15,20 @@ import { FullScreenLoading } from '@/shared/ui/components/Loading/Loading';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ErrorFallback from '@/shared/ui/components/ErrorBoundary/ErrorFallback';
+import { useAuthStore } from '@/entities/user';
 
 export default function FacilityDetail() {
   const params = useParams();
   const id = params?.id as string;
   const { activeTab } = useFacilityStore();
+  const { tokens } = useAuthStore();
+  const isToken = tokens?.access_token ?? '';
 
   const {
     data: facility,
     isLoading,
     error
-  } = useFacilityDetail(id, {
+  } = useFacilityDetail(id, isToken, {
     enabled: Boolean(id),
     retry: false,
     onError: () => {
@@ -62,7 +65,6 @@ export default function FacilityDetail() {
 
       {activeTab === 'info' && <FacilityInfo facility={facility} />}
       {activeTab === 'review' && <FacilityReviews facility={facility} />}
-      {activeTab === 'rules' && <FacilityRules />}
 
       <CreateMeetingButton />
     </div>

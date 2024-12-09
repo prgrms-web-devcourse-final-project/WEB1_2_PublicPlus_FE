@@ -1,5 +1,5 @@
+import { likeService } from '@/entities/facility/like/api/likeService';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
-import { likeService } from '@/entities/facility/Like/api/likeService';
 
 // Query Key 정의
 export const QUERY_KEYS = {

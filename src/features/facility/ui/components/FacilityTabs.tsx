@@ -12,8 +12,7 @@ export const FacilityTabs = () => {
 
   const tabMenu: TabMenuItem[] = [
     { label: '상세정보', value: 'info' },
-    { label: '이용 후기', value: 'review' },
-    { label: '이용안내', value: 'rules' }
+    { label: '이용 후기', value: 'review' }
   ];
 
   return (
