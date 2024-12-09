@@ -1,7 +1,7 @@
-import { NavigationProps } from '@/widgets/Navigation/model/types';
+import { NavigationProps } from '@/widgets/navigation/model/types';
 import styles from './Navigation.module.css';
-import { NAV_ITEMS } from '@/widgets/Navigation/model/constants';
-import { NavItem } from '@/widgets/Navigation/ui/NavItem';
+import { NAV_ITEMS } from '@/widgets/navigation/model/constants';
+import { NavItem } from '@/widgets/navigation/ui/NavItem';
 
 export const Navigation = ({ activeTab }: NavigationProps) => {
   return (

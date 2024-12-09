@@ -9,9 +9,16 @@ import {
 export const facilityService = {
   // 시설 상세 정보 조회
   getFacilityDetail: async (
-    id: string
+    id: string,
+    tokens: string
   ): Promise<FacilityDetailsResponseDTO> => {
-    const { data } = await api.facility.readFacilityDetails(id);
+    // tokens가 객체라면 토큰을 추출합니다.
+    console.log('토큰: ', tokens, '상세 조회 시설 아이디: ', id);
+    const { data } = await api.facility.readFacilityDetails(id, {
+      headers: {
+        Authorization: `Bearer ${tokens}`
+      }
+    });
     return data;
   },
 

@@ -1,5 +1,5 @@
 interface TagProps {
-  label: string;
+  label: string | number;
   variant?: 'gray' | 'blue' | 'line';
   size?: 'sm' | 'md';
   styleName?: object;

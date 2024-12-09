@@ -1,5 +1,5 @@
 'use client';
-import { FilterKeyword } from '@/shared/ui/components/Filter/FilterKeyword';
+import { FilterKeyword } from '@/shared/ui/components/filter/FilterKeyword';
 import { useState, useEffect } from 'react';
 
 interface ListItem {

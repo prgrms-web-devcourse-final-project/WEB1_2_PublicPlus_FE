@@ -3,7 +3,7 @@
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { Button } from '@/shared/ui/components/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 import { Dispatch, SetStateAction } from 'react';
 import { DateSelectHandler } from '../../model/types';
 

@@ -1,5 +1,5 @@
 'use client';
-import { CustomHeader } from '@/widgets/Header/ui/CustomHeader';
+import { CustomHeader } from '@/widgets/header/ui/CustomHeader';
 import { NotificationList } from '@/features/notifications/ui/NotificationList';
 import { useNotifications } from '@/shared/hooks/useNotifications';
 

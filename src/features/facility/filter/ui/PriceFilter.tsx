@@ -1,6 +1,6 @@
 import { PRICE_TYPES } from '@/shared/config/constants';
 import { useFilterStore } from '../model/store';
-import { Button } from '@/shared/ui/components/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 
 export const PriceFilter = () => {
   const { filters, setFilters, isFilterMenuOpen, toggleFilterMenu } =

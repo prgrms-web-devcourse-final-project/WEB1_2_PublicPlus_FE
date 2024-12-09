@@ -1,5 +1,6 @@
 import { MeetingBoardRequestDTO } from '@/shared/api/generated';
 import Image from 'next/image';
+import { Tag } from '@/shared/ui/components/tag/Tag';
 
 interface MeetingHeaderProps {
   meeting: MeetingBoardRequestDTO & {
@@ -8,6 +9,32 @@ interface MeetingHeaderProps {
     meetingName: string;
   };
 }
+
+type SportType =
+  | 'BADMINTON'
+  | 'BASEBALL'
+  | 'BASKETBALL'
+  | 'SOCCER'
+  | 'SWIMMING'
+  | 'TENNIS';
+
+const MeetingBoardSportTypeEnum: Record<SportType, string> = {
+  BADMINTON: '🏸 배드민턴',
+  BASEBALL: '⚾ 야구',
+  BASKETBALL: '🏀 농구',
+  SOCCER: '⚽ 축구',
+  SWIMMING: '🏊‍♂️ 수영',
+  TENNIS: '🎾 테니스'
+};
+
+const CategoryColors: Record<SportType, string> = {
+  BADMINTON: '#A7F3D0',
+  BASEBALL: '#FDE047',
+  BASKETBALL: '#F97316',
+  SOCCER: '#6EE7B7',
+  SWIMMING: '#60A5FA',
+  TENNIS: '#84CC16'
+};
 
 export function MeetingHeader({ meeting }: MeetingHeaderProps) {
   return (
@@ -33,17 +60,19 @@ export function MeetingHeader({ meeting }: MeetingHeaderProps) {
       </div>
       <div className="bg-white p-4">
         <div className="mb-4">
-          <span className="inline-block rounded bg-blue-100 px-2 py-1 text-sm text-blue-600">
-            {meeting.sportType}
-          </span>
+          <Tag
+            label={MeetingBoardSportTypeEnum[meeting.sportType] ?? '기타'}
+            styleName={{
+              className:
+                'inline-block rounded-lg px-3 py-1.5 text-base font-medium',
+              backgroundColor: CategoryColors[meeting.sportType] ?? '#E5E7EB'
+            }}
+          />
         </div>
         <h1 className="mb-2 text-xl font-bold">{meeting.mbTitle}</h1>
-        <div className="mb-4 flex items-center text-sm text-gray-600">
-          <span className="mr-4">주최자: {meeting.mbHost}</span>
-          <span>
-            참여인원: {meeting.currentParticipants}/{meeting.maxParticipants}명
-          </span>
-        </div>
+        <p className="mt-2 text-gray-600">
+          참여인원: {meeting.currentParticipants}/{meeting.maxParticipants}명
+        </p>
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import { Button } from '@/shared/ui/components/Button/Button';
+import { Button } from '@/shared/ui/components/button/Button';
 
 interface PaginationProps {
   currentPage: number;

@@ -1,5 +1,5 @@
 import { Button } from '@/shared/ui/components/button/Button';
-import { CustomHeader } from '@/widgets/Header/ui/CustomHeader';
+import { CustomHeader } from '@/widgets/header/ui/CustomHeader';
 
 interface EditLayoutProps {
   children: React.ReactNode;

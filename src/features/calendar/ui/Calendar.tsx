@@ -9,7 +9,7 @@ import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import { EventClickArg } from '@fullcalendar/core';
 import { useMeetingBoards } from '@/features/meeting/model/queries';
 import './calendar-styles.css';
-import { useToast } from '@/shared/ui/components/Toast/Toast';
+import { useToast } from '@/shared/ui/components/toast/Toast';
 
 interface MeetingEvent {
   mbId: number;
@@ -24,10 +24,10 @@ interface MeetingEvent {
 }
 
 const formatTime = (time: Date) => {
-  return time.toLocaleTimeString('ko-KR', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false
+  return time.toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
   });
 };
 

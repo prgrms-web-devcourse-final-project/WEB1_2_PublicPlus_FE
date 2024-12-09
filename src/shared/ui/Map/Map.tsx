@@ -24,7 +24,7 @@ export function MapContainer({ latitude, longitude, name }: MapContainerProps) {
 
       {/* Controls Panel - 버튼 아래에 표시 */}
       {showControls && (
-        <div className="absolute left-4 top-16 z-10">
+        <div className="absolute left-4 top-20 z-10">
           <MapControls />
         </div>
       )}

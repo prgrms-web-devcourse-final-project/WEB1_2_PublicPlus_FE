@@ -8,8 +8,7 @@ export const CreateMeetingButton = ({
   className = ''
 }: CreateMeetingButtonProps) => {
   return (
-    <div
-      className={`sticky bottom-[80px] z-[90] mx-auto w-full bg-white px-6 ${className}`}>
+    <div className={`sticky bottom-[80px] z-[90] mx-auto w-full ${className}`}>
       <Link
         href="/meeting/create"
         className="block">

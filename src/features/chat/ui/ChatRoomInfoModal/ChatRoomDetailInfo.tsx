@@ -1,6 +1,6 @@
 import { User } from 'lucide-react';
 import { ChatRoom } from '../../model/types';
-import { Tag } from '@/shared/ui/components/Tag/Tag';
+import { Tag } from '@/shared/ui/components/tag/Tag';
 
 export const ChatRoomDetailInfo = ({ roomInfo }: { roomInfo: ChatRoom }) => {
   return (

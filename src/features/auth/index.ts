@@ -1,2 +1,2 @@
 export * from './hooks/useUser';
-export * from './types';
+export * from './model/Types/index';

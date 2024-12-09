@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useAuthStore } from '@/entities/User';
-import { userService } from '@/entities/User/api/userService';
 
 export default function LoginCallbackPage() {
   const router = useRouter();
